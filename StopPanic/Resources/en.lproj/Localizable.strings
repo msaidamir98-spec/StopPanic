@@ -1,0 +1,92 @@
+"app.name" = "StopPanic";
+"general.done" = "Done";
+"general.cancel" = "Cancel";
+"general.save" = "Save";
+"general.next" = "Next →";
+"general.skip" = "Skip";
+"general.start" = "Start";
+"general.stop" = "Stop";
+"general.close" = "Close";
+"general.important" = "Important";
+
+"tabs.home" = "Home";
+"tabs.tools" = "Tools";
+"tabs.heart" = "Heart";
+"tabs.journal" = "Journal";
+"tabs.profile" = "Profile";
+
+"home.sos.button" = "SOS";
+"home.sos.subtitle" = "Tap if panicking";
+"home.quickActions" = "Quick Actions";
+"home.breathe" = "Breathe";
+"home.grounding" = "Grounding";
+"home.aiTherapist" = "AI Therapist";
+"home.heartCheck" = "Heart";
+
+"sos.title" = "SOS — I'm panicking";
+"sos.stepByStep" = "Step-by-step help right now";
+"sos.breatheIn" = "Breathe In";
+"sos.hold" = "Hold";
+"sos.breatheOut" = "Breathe Out";
+"sos.youAreSafe" = "You are safe";
+"sos.panicWillPass" = "The panic will pass. It's temporary.";
+
+"breathing.ready" = "Ready?";
+"breathing.inhale" = "Inhale";
+"breathing.hold" = "Hold";
+"breathing.exhale" = "Exhale";
+"breathing.pause" = "Pause";
+"breathing.complete" = "Done!";
+"breathing.excellent" = "Excellent! 🎉";
+"breathing.cycles" = "cycles";
+"breathing.time" = "time";
+"breathing.throughNose" = "through nose 🫁";
+"breathing.calmly" = "calmly 🧘";
+"breathing.throughMouth" = "through mouth 💨";
+"breathing.relax" = "relax";
+
+"journal.title" = "Journal";
+"journal.entries" = "entries";
+"journal.episodes" = "Episodes";
+"journal.mood" = "Mood";
+"journal.insights" = "Insights";
+"journal.empty.title" = "Journal is empty";
+"journal.empty.subtitle" = "Log episodes to see patterns";
+"journal.perWeek" = "this week";
+"journal.avgIntensity" = "avg intensity";
+"journal.trend" = "trend";
+
+"profile.member" = "StopPanic Member";
+"profile.setName" = "Set name";
+"profile.entries" = "Entries";
+"profile.sessions" = "Sessions";
+"profile.breathingMin" = "min";
+"profile.awards" = "Awards";
+"profile.sosContacts" = "SOS Contacts";
+"profile.settings" = "Settings";
+"profile.notifications" = "Notifications";
+"profile.crisisLine" = "Crisis Line";
+
+"onboarding.tagline" = "Your pocket shield\nagainst panic attacks";
+"onboarding.name" = "What's your name?";
+"onboarding.howOften" = "How often do you\nexperience panic attacks?";
+"onboarding.whatGoals" = "What do you want to achieve?";
+"onboarding.allReady" = "All set";
+"onboarding.startUsing" = "Start using";
+"onboarding.notAlone" = "You're not alone anymore.";
+"onboarding.disclaimer" = "StopPanic is a helper, NOT a replacement for a doctor. If you suspect a heart problem, always call emergency services.";
+
+"premium.title" = "StopPanic Pro";
+"premium.subtitle" = "Get the most out of fighting anxiety";
+"premium.startTrial" = "Start free week";
+"premium.restore" = "Restore purchases";
+"premium.month" = "Month";
+"premium.year" = "Year";
+"premium.lifetime" = "Lifetime";
+"premium.best" = "BEST";
+"premium.welcome" = "Welcome\nto Pro! 🎉";
+
+"greeting.morning" = "Good morning";
+"greeting.afternoon" = "Good afternoon";
+"greeting.evening" = "Good evening";
+"greeting.night" = "Good night";

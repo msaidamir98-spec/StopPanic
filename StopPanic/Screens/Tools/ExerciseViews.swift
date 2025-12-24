@@ -1,0 +1,609 @@
+import SwiftUI
+
+// MARK: - Grounding Exercise 5-4-3-2-1 — Premium
+// ✨ Glass cards, staggered items, particle background, celebration
+
+struct GroundingExerciseView: View {
+    @Environment(\.dismiss) private var dismiss
+    @Environment(AppCoordinator.self) var coordinator
+
+    @State private var currentStep = 0
+    @State private var inputs: [[String]] = [[], [], [], [], []]
+    @State private var currentInput = ""
+    @State private var isComplete = false
+    @State private var appear = false
+    @State private var completionScale: CGFloat = 0.3
+    @FocusState private var isFocused: Bool
+
+    private let steps: [(emoji: String, count: Int, sense: String, verb: String, color: Color)] = [
+        ("👁️", 5, "ВИДИШЬ", "вижу", SP.Colors.accent),
+        ("✋", 4, "ТРОГАЕШЬ", "касаюсь", SP.Colors.calm),
+        ("👂", 3, "СЛЫШИШЬ", "слышу", SP.Colors.warmth),
+        ("👃", 2, "ЧУВСТВУЕШЬ", "чувствую запах", SP.Colors.success),
+        ("👅", 1, "ОЩУЩАЕШЬ", "ощущаю вкус", SP.Colors.accent),
+    ]
+
+    var body: some View {
+        ZStack {
+            AmbientBackground(
+                primaryColor: isComplete ? SP.Colors.success : steps[min(currentStep, 4)].color,
+                secondaryColor: SP.Colors.calm
+            )
+
+            if isComplete {
+                completionView
+            } else {
+                exerciseView
+            }
+        }
+        .navigationBarHidden(true)
+        .onAppear {
+            withAnimation(.easeOut(duration: 0.5)) {
+                appear = true
+            }
+        }
+    }
+
+    // MARK: - Exercise View
+
+    private var exerciseView: some View {
+        let step = steps[currentStep]
+
+        return VStack(spacing: 24) {
+            // Top bar
+            HStack {
+                Button {
+                    dismiss()
+                } label: {
+                    Image(systemName: "xmark")
+                        .font(.system(size: 14, weight: .bold))
+                        .foregroundColor(SP.Colors.textSecondary)
+                        .frame(width: 36, height: 36)
+                        .background(Circle().fill(.ultraThinMaterial))
+                        .overlay(Circle().stroke(Color.white.opacity(0.1), lineWidth: 0.5))
+                }
+                Spacer()
+                Text("Шаг \(currentStep + 1) из 5")
+                    .font(SP.Typography.caption)
+                    .foregroundColor(SP.Colors.textTertiary)
+            }
+            .padding(.horizontal, SP.Layout.padding)
+            .padding(.top, 12)
+
+            // Progress with glow
+            HStack(spacing: 6) {
+                ForEach(0..<5, id: \.self) { i in
+                    Capsule()
+                        .fill(i <= currentStep ? step.color : Color.white.opacity(0.1))
+                        .frame(height: 4)
+                        .shadow(
+                            color: i <= currentStep ? step.color.opacity(0.4) : .clear, radius: 4
+                        )
+                        .animation(SP.Anim.springSnappy.delay(Double(i) * 0.05), value: currentStep)
+                }
+            }
+            .padding(.horizontal, SP.Layout.padding)
+
+            Spacer()
+
+            // Big prompt
+            Text(step.emoji)
+                .font(.system(size: 72))
+                .scaleEffect(appear ? 1 : 0.5)
+                .animation(.spring(response: 0.6, dampingFraction: 0.5), value: currentStep)
+
+            Text("Назови \(step.count)")
+                .font(SP.Typography.heroTitle)
+                .foregroundColor(step.color)
+
+            Text("то, что ты \(step.sense)")
+                .font(SP.Typography.title3)
+                .foregroundColor(SP.Colors.textSecondary)
+
+            // Entered items with staggered animation
+            VStack(spacing: 8) {
+                ForEach(Array(inputs[currentStep].enumerated()), id: \.offset) { index, item in
+                    HStack {
+                        Image(systemName: "checkmark.circle.fill")
+                            .foregroundColor(step.color)
+                            .font(.system(size: 16))
+                        Text("Я \(step.verb): \(item)")
+                            .font(SP.Typography.callout)
+                            .foregroundColor(SP.Colors.textPrimary)
+                        Spacer()
+                    }
+                    .padding(.horizontal, 16)
+                    .padding(.vertical, 10)
+                    .background(
+                        RoundedRectangle(cornerRadius: 12, style: .continuous)
+                            .fill(.ultraThinMaterial)
+                            .overlay(
+                                RoundedRectangle(cornerRadius: 12, style: .continuous)
+                                    .stroke(step.color.opacity(0.2), lineWidth: 0.5)
+                            )
+                    )
+                    .transition(
+                        .asymmetric(
+                            insertion: .scale(scale: 0.8).combined(with: .opacity),
+                            removal: .opacity
+                        ))
+                }
+            }
+            .padding(.horizontal, SP.Layout.padding)
+
+            Spacer()
+
+            // Input
+            if inputs[currentStep].count < step.count {
+                HStack(spacing: 12) {
+                    TextField("Введи...", text: $currentInput)
+                        .textFieldStyle(.plain)
+                        .padding(14)
+                        .background(
+                            RoundedRectangle(cornerRadius: 14, style: .continuous)
+                                .fill(.ultraThinMaterial)
+                        )
+                        .foregroundColor(.white)
+                        .focused($isFocused)
+                        .onSubmit { addItem() }
+
+                    Button {
+                        addItem()
+                    } label: {
+                        Image(systemName: "plus.circle.fill")
+                            .font(.system(size: 36))
+                            .foregroundColor(step.color)
+                    }
+                    .disabled(currentInput.trimmingCharacters(in: .whitespaces).isEmpty)
+                }
+                .padding(.horizontal, SP.Layout.padding)
+            } else {
+                Button {
+                    SP.Haptic.success()
+                    withAnimation(SP.Anim.spring) {
+                        if currentStep < 4 {
+                            currentStep += 1
+                        } else {
+                            isComplete = true
+                            coordinator.completedSession()
+                        }
+                    }
+                } label: {
+                    Text(currentStep < 4 ? "Дальше →" : "Завершить")
+                        .spPrimaryButton()
+                }
+                .buttonStyle(PremiumButtonStyle())
+                .padding(.horizontal, SP.Layout.padding)
+                .glowPulse(color: step.color)
+            }
+
+            Spacer().frame(height: 20)
+        }
+    }
+
+    // MARK: - Completion
+
+    private var completionView: some View {
+        VStack(spacing: 24) {
+            Spacer()
+
+            ZStack {
+                // Celebration rings
+                ForEach(0..<3, id: \.self) { i in
+                    Circle()
+                        .stroke(SP.Colors.success.opacity(0.1 - Double(i) * 0.03), lineWidth: 1)
+                        .frame(width: CGFloat(130 + i * 25), height: CGFloat(130 + i * 25))
+                        .scaleEffect(completionScale)
+                }
+
+                Circle()
+                    .fill(SP.Colors.success.opacity(0.15))
+                    .frame(width: 130, height: 130)
+
+                Image(systemName: "checkmark.circle.fill")
+                    .font(.system(size: 64))
+                    .foregroundColor(SP.Colors.success)
+                    .scaleEffect(completionScale)
+            }
+            .onAppear {
+                withAnimation(.spring(response: 0.6, dampingFraction: 0.5)) {
+                    completionScale = 1.0
+                }
+            }
+
+            Text("Ты заземлился 🌍")
+                .font(SP.Typography.heroTitle)
+                .foregroundColor(SP.Colors.textPrimary)
+
+            Text(
+                "Ты переключил внимание с тревоги на реальность.\nТвой мозг сейчас работает в логическом режиме."
+            )
+            .font(SP.Typography.body)
+            .foregroundColor(SP.Colors.textSecondary)
+            .multilineTextAlignment(.center)
+            .padding(.horizontal, 32)
+
+            Spacer()
+
+            Button {
+                dismiss()
+            } label: {
+                Text("Готово")
+                    .spPrimaryButton()
+            }
+            .buttonStyle(PremiumButtonStyle())
+            .padding(.horizontal, SP.Layout.padding)
+            .padding(.bottom, 40)
+        }
+    }
+
+    // MARK: - Logic
+
+    private func addItem() {
+        let text = currentInput.trimmingCharacters(in: .whitespaces)
+        guard !text.isEmpty else { return }
+        SP.Haptic.soft()
+        withAnimation(SP.Anim.springSnappy) {
+            inputs[currentStep].append(text)
+        }
+        currentInput = ""
+    }
+}
+
+// MARK: - Muscle Relaxation View — Premium
+
+struct MuscleRelaxView: View {
+    @Environment(\.dismiss) private var dismiss
+    @State private var currentStep = 0
+    @State private var isTensing = false
+    @State private var timer: Timer?
+    @State private var pulseScale: CGFloat = 1.0
+    @State private var relaxTimer: Timer?
+
+    private let muscleGroups = [
+        ("Кисти рук", "Сожми кулаки как можно сильнее", "figure.hand.draw"),
+        ("Предплечья", "Согни руки в локтях, напряги предплечья", "figure.arms.open"),
+        ("Плечи", "Подними плечи к ушам", "figure.stand"),
+        ("Лицо", "Зажмурься, сожми зубы, наморщи лоб", "face.smiling.inverse"),
+        ("Шея", "Прижми подбородок к груди", "figure.mind.and.body"),
+        ("Спина", "Выгни спину, сведи лопатки", "figure.strengthtraining.traditional"),
+        ("Живот", "Напряги пресс максимально", "figure.core.training"),
+        ("Ноги", "Вытяни ноги, напряги бёдра и икры", "figure.walk"),
+    ]
+
+    var body: some View {
+        ZStack {
+            AmbientBackground(
+                primaryColor: isTensing ? SP.Colors.warmth : SP.Colors.calm,
+                secondaryColor: SP.Colors.accent
+            )
+
+            VStack(spacing: 24) {
+                HStack {
+                    Button {
+                        dismiss()
+                    } label: {
+                        Image(systemName: "xmark")
+                            .font(.system(size: 14, weight: .bold))
+                            .foregroundColor(SP.Colors.textSecondary)
+                            .frame(width: 36, height: 36)
+                            .background(Circle().fill(.ultraThinMaterial))
+                            .overlay(Circle().stroke(Color.white.opacity(0.1), lineWidth: 0.5))
+                    }
+                    Spacer()
+                    Text("\(currentStep + 1) / \(muscleGroups.count)")
+                        .font(SP.Typography.caption)
+                        .foregroundColor(SP.Colors.textTertiary)
+                }
+                .padding(.top, 12)
+
+                // Progress
+                HStack(spacing: 4) {
+                    ForEach(0..<muscleGroups.count, id: \.self) { i in
+                        Capsule()
+                            .fill(i <= currentStep ? SP.Colors.calm : Color.white.opacity(0.1))
+                            .frame(height: 3)
+                    }
+                }
+
+                if currentStep < muscleGroups.count {
+                    let group = muscleGroups[currentStep]
+
+                    Spacer()
+
+                    Image(systemName: group.2)
+                        .font(.system(size: 64))
+                        .foregroundColor(isTensing ? SP.Colors.warmth : SP.Colors.calm)
+                        .scaleEffect(pulseScale)
+                        .shadow(
+                            color: (isTensing ? SP.Colors.warmth : SP.Colors.calm).opacity(0.3),
+                            radius: 12)
+
+                    Text(group.0)
+                        .font(SP.Typography.heroTitle)
+                        .foregroundColor(SP.Colors.textPrimary)
+
+                    Text(isTensing ? "НАПРЯГИ на 5 секунд! 💪" : "Расслабь... отпусти... 😌")
+                        .font(SP.Typography.title3)
+                        .foregroundColor(isTensing ? SP.Colors.warmth : SP.Colors.calm)
+                        .contentTransition(.opacity)
+
+                    Text(group.1)
+                        .font(SP.Typography.callout)
+                        .foregroundColor(SP.Colors.textSecondary)
+                        .multilineTextAlignment(.center)
+                        .padding(.horizontal, 20)
+
+                    Spacer()
+
+                    Button {
+                        startTenseRelax()
+                    } label: {
+                        Text(isTensing ? "Расслабляюсь..." : "Напрячь →")
+                            .spPrimaryButton()
+                    }
+                    .buttonStyle(PremiumButtonStyle())
+                    .disabled(isTensing)
+                } else {
+                    Spacer()
+
+                    ZStack {
+                        Circle()
+                            .fill(SP.Colors.success.opacity(0.12))
+                            .frame(width: 130, height: 130)
+                        Image(systemName: "checkmark.circle.fill")
+                            .font(.system(size: 64))
+                            .foregroundColor(SP.Colors.success)
+                    }
+
+                    Text("Тело расслаблено 🧘")
+                        .font(SP.Typography.heroTitle)
+                        .foregroundColor(SP.Colors.textPrimary)
+
+                    Spacer()
+
+                    Button {
+                        dismiss()
+                    } label: {
+                        Text("Готово")
+                            .spPrimaryButton()
+                    }
+                    .buttonStyle(PremiumButtonStyle())
+                }
+            }
+            .padding(.horizontal, SP.Layout.padding)
+            .padding(.bottom, 40)
+        }
+        .navigationBarHidden(true)
+        .onDisappear {
+            timer?.invalidate()
+            timer = nil
+            relaxTimer?.invalidate()
+            relaxTimer = nil
+        }
+    }
+
+    private func startTenseRelax() {
+        guard !isTensing else { return }
+        SP.Haptic.medium()
+        isTensing = true
+
+        // Pulsing animation during tension
+        withAnimation(.easeInOut(duration: 0.5).repeatForever(autoreverses: true)) {
+            pulseScale = 1.15
+        }
+
+        timer = Timer.scheduledTimer(withTimeInterval: 5, repeats: false) { [self] _ in
+            SP.Haptic.success()
+            withAnimation(SP.Anim.spring) {
+                isTensing = false
+                pulseScale = 1.0
+            }
+            // Auto-advance after 3 sec relaxation
+            self.relaxTimer = Timer.scheduledTimer(withTimeInterval: 3, repeats: false) {
+                [self] _ in
+                withAnimation(SP.Anim.spring) {
+                    currentStep += 1
+                }
+            }
+        }
+    }
+}
+
+// MARK: - Cognitive Reframing View — Premium
+
+struct CognitiveReframingView: View {
+    @Environment(\.dismiss) private var dismiss
+    @Environment(AppCoordinator.self) var coordinator
+    @State private var anxiousThought = ""
+    @State private var evidence = ""
+    @State private var alternative = ""
+    @State private var appear = false
+
+    var body: some View {
+        ZStack {
+            AmbientBackground(primaryColor: SP.Colors.accent, secondaryColor: SP.Colors.warmth)
+
+            ScrollView {
+                VStack(spacing: 24) {
+                    HStack {
+                        Button {
+                            dismiss()
+                        } label: {
+                            Image(systemName: "xmark")
+                                .font(.system(size: 14, weight: .bold))
+                                .foregroundColor(SP.Colors.textSecondary)
+                                .frame(width: 36, height: 36)
+                                .background(Circle().fill(.ultraThinMaterial))
+                                .overlay(Circle().stroke(Color.white.opacity(0.1), lineWidth: 0.5))
+                        }
+                        Spacer()
+                    }
+                    .padding(.top, 12)
+
+                    Text("🧠 Когнитивный рефрейминг")
+                        .font(SP.Typography.title1)
+                        .foregroundColor(SP.Colors.textPrimary)
+                        .opacity(appear ? 1 : 0)
+                        .offset(y: appear ? 0 : -10)
+
+                    Text("Разберём тревожную мысль по модели CBT")
+                        .font(SP.Typography.callout)
+                        .foregroundColor(SP.Colors.textSecondary)
+                        .opacity(appear ? 1 : 0)
+
+                    // Step 1
+                    VStack(alignment: .leading, spacing: 10) {
+                        Label("Тревожная мысль", systemImage: "exclamationmark.bubble.fill")
+                            .font(SP.Typography.headline)
+                            .foregroundColor(SP.Colors.danger)
+
+                        Text("Запиши мысль, которая вызывает тревогу")
+                            .font(SP.Typography.caption)
+                            .foregroundColor(SP.Colors.textTertiary)
+
+                        TextField(
+                            "Например: «Я сейчас умру от сердечного приступа»",
+                            text: $anxiousThought, axis: .vertical
+                        )
+                        .textFieldStyle(.plain)
+                        .padding(14)
+                        .background(
+                            RoundedRectangle(cornerRadius: 14, style: .continuous)
+                                .fill(.ultraThinMaterial)
+                        )
+                        .foregroundColor(.white)
+                        .frame(minHeight: 60)
+                    }
+                    .spGlassCard(cornerRadius: SP.Layout.cornerMedium)
+
+                    if !anxiousThought.isEmpty {
+                        // Step 2
+                        VStack(alignment: .leading, spacing: 10) {
+                            Label("Факты против", systemImage: "magnifyingglass")
+                                .font(SP.Typography.headline)
+                                .foregroundColor(SP.Colors.warning)
+
+                            Text("Какие факты ПРОТИВ этой мысли?")
+                                .font(SP.Typography.caption)
+                                .foregroundColor(SP.Colors.textTertiary)
+
+                            TextField(
+                                "Например: «Врач сказал, что сердце здоровое»", text: $evidence,
+                                axis: .vertical
+                            )
+                            .textFieldStyle(.plain)
+                            .padding(14)
+                            .background(
+                                RoundedRectangle(cornerRadius: 14, style: .continuous)
+                                    .fill(.ultraThinMaterial)
+                            )
+                            .foregroundColor(.white)
+                            .frame(minHeight: 60)
+
+                            VStack(alignment: .leading, spacing: 8) {
+                                Text("Возможные когнитивные искажения:")
+                                    .font(SP.Typography.caption)
+                                    .foregroundColor(SP.Colors.textTertiary)
+
+                                distortionChip("Катастрофизация", "Худший сценарий = единственный")
+                                distortionChip("Чёрно-белое мышление", "Всё или ничего")
+                                distortionChip("Чтение мыслей", "Знаю, что думают другие")
+                                distortionChip("Эмоциональное рассуждение", "Чувствую = правда")
+                            }
+                        }
+                        .spGlassCard(cornerRadius: SP.Layout.cornerMedium)
+                        .transition(.move(edge: .bottom).combined(with: .opacity))
+                    }
+
+                    if !evidence.isEmpty {
+                        // Step 3
+                        VStack(alignment: .leading, spacing: 10) {
+                            Label("Альтернативная мысль", systemImage: "lightbulb.fill")
+                                .font(SP.Typography.headline)
+                                .foregroundColor(SP.Colors.success)
+
+                            Text("Как можно переформулировать?")
+                                .font(SP.Typography.caption)
+                                .foregroundColor(SP.Colors.textTertiary)
+
+                            TextField(
+                                "Например: «Это паника, не инфаркт. Она пройдёт»",
+                                text: $alternative, axis: .vertical
+                            )
+                            .textFieldStyle(.plain)
+                            .padding(14)
+                            .background(
+                                RoundedRectangle(cornerRadius: 14, style: .continuous)
+                                    .fill(.ultraThinMaterial)
+                            )
+                            .foregroundColor(.white)
+                            .frame(minHeight: 60)
+                        }
+                        .spGlassCard(cornerRadius: SP.Layout.cornerMedium)
+                        .transition(.move(edge: .bottom).combined(with: .opacity))
+                    }
+
+                    if !alternative.isEmpty {
+                        // Result — celebration
+                        VStack(spacing: 12) {
+                            Image(systemName: "brain.head.profile")
+                                .font(.system(size: 40))
+                                .foregroundColor(SP.Colors.success)
+                            Text("Отлично!")
+                                .font(SP.Typography.title2)
+                                .foregroundColor(SP.Colors.textPrimary)
+                            Text(
+                                "Ты только что применил CBT-технику. Каждый раз, когда мысль вернётся, вспоминай альтернативу."
+                            )
+                            .font(SP.Typography.callout)
+                            .foregroundColor(SP.Colors.textSecondary)
+                            .multilineTextAlignment(.center)
+
+                            Button {
+                                coordinator.completedSession()
+                                coordinator.achievementService.updateProgress(
+                                    id: "technique_explorer")
+                                dismiss()
+                            } label: {
+                                Text("Готово ✓")
+                                    .spSecondaryButton()
+                            }
+                            .buttonStyle(PremiumButtonStyle())
+                        }
+                        .spGlassCard(cornerRadius: SP.Layout.cornerMedium)
+                        .glowPulse(color: SP.Colors.success)
+                        .transition(.move(edge: .bottom).combined(with: .opacity))
+                    }
+
+                    Spacer(minLength: 40)
+                }
+                .padding(.horizontal, SP.Layout.padding)
+                .animation(SP.Anim.spring, value: anxiousThought.isEmpty)
+                .animation(SP.Anim.spring, value: evidence.isEmpty)
+                .animation(SP.Anim.spring, value: alternative.isEmpty)
+            }
+        }
+        .navigationBarHidden(true)
+        .onAppear {
+            withAnimation(.easeOut(duration: 0.5)) {
+                appear = true
+            }
+        }
+    }
+
+    private func distortionChip(_ title: String, _ desc: String) -> some View {
+        HStack(spacing: 8) {
+            Text("•")
+                .foregroundColor(SP.Colors.warning)
+            VStack(alignment: .leading, spacing: 2) {
+                Text(title)
+                    .font(SP.Typography.caption)
+                    .foregroundColor(SP.Colors.warning)
+                Text(desc)
+                    .font(SP.Typography.caption2)
+                    .foregroundColor(SP.Colors.textTertiary)
+            }
+        }
+    }
+}

@@ -1,0 +1,92 @@
+"app.name" = "StopPanic";
+"general.done" = "Готово";
+"general.cancel" = "Отмена";
+"general.save" = "Сохранить";
+"general.next" = "Далее →";
+"general.skip" = "Пропустить";
+"general.start" = "Начать";
+"general.stop" = "Остановить";
+"general.close" = "Закрыть";
+"general.important" = "Важно";
+
+"tabs.home" = "Главная";
+"tabs.tools" = "Инструменты";
+"tabs.heart" = "Сердце";
+"tabs.journal" = "Дневник";
+"tabs.profile" = "Профиль";
+
+"home.sos.button" = "SOS";
+"home.sos.subtitle" = "Нажми, если паника";
+"home.quickActions" = "Быстрые действия";
+"home.breathe" = "Дыхание";
+"home.grounding" = "Заземление";
+"home.aiTherapist" = "AI Терапевт";
+"home.heartCheck" = "Пульс";
+
+"sos.title" = "SOS — Я в панике";
+"sos.stepByStep" = "Пошаговая помощь прямо сейчас";
+"sos.breatheIn" = "Вдох";
+"sos.hold" = "Задержка";
+"sos.breatheOut" = "Выдох";
+"sos.youAreSafe" = "Ты в безопасности";
+"sos.panicWillPass" = "Паника пройдёт. Это временно.";
+
+"breathing.ready" = "Готов?";
+"breathing.inhale" = "Вдох";
+"breathing.hold" = "Задержка";
+"breathing.exhale" = "Выдох";
+"breathing.pause" = "Пауза";
+"breathing.complete" = "Готово!";
+"breathing.excellent" = "Отлично! 🎉";
+"breathing.cycles" = "циклов";
+"breathing.time" = "время";
+"breathing.throughNose" = "через нос 🫁";
+"breathing.calmly" = "спокойно 🧘";
+"breathing.throughMouth" = "через рот 💨";
+"breathing.relax" = "расслабься";
+
+"journal.title" = "Дневник";
+"journal.entries" = "записей";
+"journal.episodes" = "Эпизоды";
+"journal.mood" = "Настроение";
+"journal.insights" = "Инсайты";
+"journal.empty.title" = "Дневник пока пуст";
+"journal.empty.subtitle" = "Записывай эпизоды, чтобы увидеть паттерны";
+"journal.perWeek" = "за неделю";
+"journal.avgIntensity" = "средняя сила";
+"journal.trend" = "тренд";
+
+"profile.member" = "Участник StopPanic";
+"profile.setName" = "Укажи имя";
+"profile.entries" = "Записей";
+"profile.sessions" = "Сессий";
+"profile.breathingMin" = "мин";
+"profile.awards" = "Наград";
+"profile.sosContacts" = "SOS Контакты";
+"profile.settings" = "Настройки";
+"profile.notifications" = "Уведомления";
+"profile.crisisLine" = "Телефон доверия";
+
+"onboarding.tagline" = "Твой карманный щит\nпротив панических атак";
+"onboarding.name" = "Как тебя зовут?";
+"onboarding.howOften" = "Как часто ты испытываешь\nпанические атаки?";
+"onboarding.whatGoals" = "Чего ты хочешь достичь?";
+"onboarding.allReady" = "Всё готово";
+"onboarding.startUsing" = "Начать использовать";
+"onboarding.notAlone" = "Ты больше не один.";
+"onboarding.disclaimer" = "StopPanic — помощник, НЕ замена врачу. При подозрении на сердечную проблему всегда вызывайте скорую.";
+
+"premium.title" = "StopPanic Pro";
+"premium.subtitle" = "Получи максимум от борьбы с тревогой";
+"premium.startTrial" = "Начать бесплатную неделю";
+"premium.restore" = "Восстановить покупки";
+"premium.month" = "Месяц";
+"premium.year" = "Год";
+"premium.lifetime" = "Навсегда";
+"premium.best" = "ЛУЧШЕЕ";
+"premium.welcome" = "Добро пожаловать\nв Pro! 🎉";
+
+"greeting.morning" = "Доброе утро";
+"greeting.afternoon" = "Добрый день";
+"greeting.evening" = "Добрый вечер";
+"greeting.night" = "Спокойной ночи";
