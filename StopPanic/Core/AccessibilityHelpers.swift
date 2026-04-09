@@ -1,48 +1,52 @@
 import SwiftUI
 
 // MARK: - Accessibility Helpers
+
 // Полноценная поддержка VoiceOver, Dynamic Type, Reduce Motion.
 // Каждый элемент UI должен быть доступен.
 
 extension View {
     /// Adds accessibility label and hint for panic-related actions
     func spAccessible(label: String, hint: String = "", isButton: Bool = false) -> some View {
-        self
-            .accessibilityLabel(Text(label))
+        accessibilityLabel(Text(label))
             .accessibilityHint(hint.isEmpty ? Text("") : Text(hint))
             .accessibilityAddTraits(isButton ? .isButton : [])
     }
-    
+
     /// Respects Reduce Motion preference
-    func spReduceMotion<V: Equatable>(animation: Animation?, value: V) -> some View {
-        self.modifier(ReduceMotionModifier(animation: animation, value: value))
+    func spReduceMotion(animation: Animation?, value: some Equatable) -> some View {
+        modifier(ReduceMotionModifier(animation: animation, value: value))
     }
-    
+
     /// High contrast border for accessibility
     func spHighContrastBorder(color: Color = .white.opacity(0.3)) -> some View {
-        self.modifier(HighContrastBorder(borderColor: color))
+        modifier(HighContrastBorder(borderColor: color))
     }
 }
 
-// MARK: - Reduce Motion Modifier
+// MARK: - ReduceMotionModifier
 
 struct ReduceMotionModifier<V: Equatable>: ViewModifier {
-    @Environment(\.accessibilityReduceMotion) var reduceMotion
+    @Environment(\.accessibilityReduceMotion)
+    var reduceMotion
+
     let animation: Animation?
     let value: V
-    
+
     func body(content: Content) -> some View {
         content
             .animation(reduceMotion ? nil : animation, value: value)
     }
 }
 
-// MARK: - High Contrast Border
+// MARK: - HighContrastBorder
 
 struct HighContrastBorder: ViewModifier {
-    @Environment(\.accessibilityDifferentiateWithoutColor) var diffWithoutColor
+    @Environment(\.accessibilityDifferentiateWithoutColor)
+    var diffWithoutColor
+
     let borderColor: Color
-    
+
     func body(content: Content) -> some View {
         if diffWithoutColor {
             content
@@ -56,12 +60,12 @@ struct HighContrastBorder: ViewModifier {
     }
 }
 
-// MARK: - Accessible Breathing View Modifier
+// MARK: - AccessibleBreathingModifier
 
 struct AccessibleBreathingModifier: ViewModifier {
     let phase: String
     let isActive: Bool
-    
+
     func body(content: Content) -> some View {
         content
             .accessibilityElement(children: .combine)
@@ -79,21 +83,21 @@ extension SP.Typography {
     }
 }
 
-// MARK: - SOS Accessibility Announcement
+// MARK: - SOSAccessibilityAnnouncement
 
-struct SOSAccessibilityAnnouncement {
+enum SOSAccessibilityAnnouncement {
     static func announce(_ message: String) {
         UIAccessibility.post(notification: .announcement, argument: message)
     }
-    
+
     static func announceSOSStarted() {
         announce("Экстренная помощь активирована. Следуйте инструкциям на экране.")
     }
-    
+
     static func announcePhaseChange(_ phase: String) {
         announce(phase)
     }
-    
+
     static func announceSessionComplete() {
         announce("Сессия завершена. Молодец!")
     }

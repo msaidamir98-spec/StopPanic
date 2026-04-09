@@ -1,15 +1,8 @@
-//
-//  StopPanicApp.swift
-//  StopPanic
-//
-//  Created by Саид Магдиев on 24.12.2025.
-//
-
 import SwiftUI
 
 @main
 struct StopPanicApp: App {
-    @State private var coordinator = AppCoordinator()
+    // MARK: Internal
 
     var body: some Scene {
         WindowGroup {
@@ -23,4 +16,9 @@ struct StopPanicApp: App {
                 }
         }
     }
+
+    // MARK: Private
+
+    @State
+    private var coordinator = AppCoordinator()
 }

@@ -1,15 +1,10 @@
-//
-//  ContentView.swift
-//  StopPanic
-//
-//  Created by Саид Магдиев on 24.12.2025.
-//
-
 import SwiftUI
 
 struct ContentView: View {
-    @Environment(AppCoordinator.self) var coordinator
-    @State private var showSplash = true
+    // MARK: Internal
+
+    @Environment(AppCoordinator.self)
+    var coordinator
 
     var body: some View {
         ZStack {
@@ -31,6 +26,11 @@ struct ContentView: View {
         .animation(SP.Anim.spring, value: showSplash)
         .animation(SP.Anim.spring, value: coordinator.hasSeenOnboarding)
     }
+
+    // MARK: Private
+
+    @State
+    private var showSplash = true
 }
 
 #Preview {

@@ -1,9 +1,10 @@
 import Combine
 import Foundation
-import WatchConnectivity
 import os.log
+import WatchConnectivity
 
-// MARK: - WatchConnectivity Service (iOS Side)
+// MARK: - WatchConnectivityService
+
 // Обмен данными iPhone ↔ Apple Watch:
 //  • SOS триггер с часов → iPhone
 //  • Пульс с часов → iPhone
@@ -12,22 +13,13 @@ import os.log
 
 @MainActor
 final class WatchConnectivityService: NSObject, ObservableObject {
-
-    static let shared = WatchConnectivityService()
-    
-    nonisolated private static let log = Logger(
-        subsystem: "MSK-PRODUKT.StopPanic", category: "WatchConnectivity")
-
-    @Published var isWatchReachable = false
-    @Published var lastWatchHeartRate: Double = 0
-    @Published var watchSOSTriggered = false
-
-    private var session: WCSession?
+    // MARK: Lifecycle
 
     override init() {
         super.init()
         Self.log.info(
-            "📱 WatchConnectivityService init — WCSession.isSupported: \(WCSession.isSupported())")
+            "📱 WatchConnectivityService init — WCSession.isSupported: \(WCSession.isSupported())"
+        )
         if WCSession.isSupported() {
             session = WCSession.default
             session?.delegate = self
@@ -35,6 +27,17 @@ final class WatchConnectivityService: NSObject, ObservableObject {
             Self.log.info("📱 WCSession activating...")
         }
     }
+
+    // MARK: Internal
+
+    static let shared = WatchConnectivityService()
+
+    @Published
+    var isWatchReachable = false
+    @Published
+    var lastWatchHeartRate: Double = 0
+    @Published
+    var watchSOSTriggered = false
 
     // MARK: - Send to Watch
 
@@ -61,14 +64,22 @@ final class WatchConnectivityService: NSObject, ObservableObject {
         guard let session, session.isReachable else { return }
         session.sendMessage(message, replyHandler: nil)
     }
+
+    // MARK: Private
+
+    nonisolated private static let log = Logger(
+        subsystem: "MSK-PRODUKT.StopPanic", category: "WatchConnectivity"
+    )
+
+    private var session: WCSession?
 }
 
-// MARK: - WCSessionDelegate
+// MARK: WCSessionDelegate
 
 extension WatchConnectivityService: WCSessionDelegate {
-
     nonisolated func session(
-        _ session: WCSession, activationDidCompleteWith activationState: WCSessionActivationState,
+        _ session: WCSession,
+        activationDidCompleteWith activationState: WCSessionActivationState,
         error: Error?
     ) {
         Self.log.info(
@@ -82,6 +93,7 @@ extension WatchConnectivityService: WCSessionDelegate {
     nonisolated func sessionDidBecomeInactive(_ session: WCSession) {
         Self.log.info("📱 WCSession became inactive")
     }
+
     nonisolated func sessionDidDeactivate(_ session: WCSession) {
         Self.log.info("📱 WCSession deactivated — reactivating")
         session.activate()
@@ -89,7 +101,8 @@ extension WatchConnectivityService: WCSessionDelegate {
 
     nonisolated func sessionReachabilityDidChange(_ session: WCSession) {
         Self.log.info(
-            "📱 Watch reachability: \(session.isReachable ? "⌚ CONNECTED" : "❌ DISCONNECTED")")
+            "📱 Watch reachability: \(session.isReachable ? "⌚ CONNECTED" : "❌ DISCONNECTED")"
+        )
         Task { @MainActor in
             self.isWatchReachable = session.isReachable
         }
@@ -103,7 +116,8 @@ extension WatchConnectivityService: WCSessionDelegate {
     }
 
     nonisolated func session(
-        _ session: WCSession, didReceiveMessage message: [String: Any],
+        _ session: WCSession,
+        didReceiveMessage message: [String: Any],
         replyHandler: @escaping ([String: Any]) -> Void
     ) {
         Task { @MainActor in
@@ -133,7 +147,8 @@ extension WatchConnectivityService: WCSessionDelegate {
         case "sessionCompleted":
             Self.log.info("✅📱 Watch breathing session completed!")
             NotificationCenter.default.post(
-                name: NSNotification.Name("watchSessionCompleted"), object: nil)
+                name: NSNotification.Name("watchSessionCompleted"), object: nil
+            )
 
         default:
             Self.log.warning("⚠️📱 Unknown message type: \(type)")

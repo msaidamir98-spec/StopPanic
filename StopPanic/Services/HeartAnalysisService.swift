@@ -1,8 +1,9 @@
+import Combine
 import Foundation
 import HealthKit
-import Combine
 
 // MARK: - Медицинский анализатор: Паническая Атака vs Инфаркт
+
 //
 // Научная база:
 //  1. При ПА — синусовая тахикардия: ритм РЕГУЛЯРНЫЙ, HRV снижен равномерно
@@ -16,21 +17,18 @@ import Combine
 
 @MainActor
 final class HeartAnalysisService: ObservableObject {
+    // MARK: Internal
 
     // MARK: - Published state
 
-    @Published var currentAnalysis: HeartAnalysis?
-    @Published var recentSamples: [HeartRateSample] = []
-    @Published var isMonitoring: Bool = false
-    @Published var breathingResponseDetected: Bool = false
-
-    // MARK: - Private
-
-    private let healthStore = HKHealthStore()
-    private var anchoredQuery: HKAnchoredObjectQuery?
-    private var sampleBuffer: [HeartRateSample] = []   // окно 5 мин
-    private var preBreathingHR: Double?
-    private var cancellables = Set<AnyCancellable>()
+    @Published
+    var currentAnalysis: HeartAnalysis?
+    @Published
+    var recentSamples: [HeartRateSample] = []
+    @Published
+    var isMonitoring: Bool = false
+    @Published
+    var breathingResponseDetected: Bool = false
 
     // MARK: - Public API
 
@@ -66,15 +64,24 @@ final class HeartAnalysisService: ObservableObject {
     func checkBreathingResponse() {
         guard let pre = preBreathingHR,
               let current = sampleBuffer.last?.bpm,
-              pre > 0 else { return }
+              pre > 0
+        else { return }
         let drop = (pre - current) / pre
         breathingResponseDetected = drop >= CardiacThresholds.breathingResponseThreshold
     }
 
     /// Одноразовый анализ по массиву данных (ручной или из дневника)
     func analyze(samples: [HeartRateSample]) -> HeartAnalysis {
-        return performAnalysis(samples)
+        performAnalysis(samples)
     }
+
+    // MARK: Private
+
+    private let healthStore = HKHealthStore()
+    private var anchoredQuery: HKAnchoredObjectQuery?
+    private var sampleBuffer: [HeartRateSample] = [] // окно 5 мин
+    private var preBreathingHR: Double?
+    private var cancellables = Set<AnyCancellable>()
 
     // MARK: - Live query
 
@@ -197,8 +204,8 @@ final class HeartAnalysisService: ObservableObject {
     private func calculateIrregularity(_ bpms: [Double]) -> Double {
         guard bpms.count >= 3 else { return 0 }
         var diffs: [Double] = []
-        for i in 1..<bpms.count {
-            diffs.append(abs(bpms[i] - bpms[i-1]))
+        for i in 1 ..< bpms.count {
+            diffs.append(abs(bpms[i] - bpms[i - 1]))
         }
         let avgDiff = diffs.reduce(0, +) / Double(diffs.count)
         let avgBPM = bpms.reduce(0, +) / Double(bpms.count)
@@ -210,14 +217,13 @@ final class HeartAnalysisService: ObservableObject {
     private func calculateHRVEstimate(_ bpms: [Double]) -> Double {
         guard bpms.count >= 3 else { return 0 }
         // Переводим BPM → RR интервалы (мс)
-        let rrIntervals = bpms.map { 60000.0 / max($0, 1) }
+        let rrIntervals = bpms.map { 60_000.0 / max($0, 1) }
         var squaredDiffs: [Double] = []
-        for i in 1..<rrIntervals.count {
-            let diff = rrIntervals[i] - rrIntervals[i-1]
+        for i in 1 ..< rrIntervals.count {
+            let diff = rrIntervals[i] - rrIntervals[i - 1]
             squaredDiffs.append(diff * diff)
         }
-        let rmssd = sqrt(squaredDiffs.reduce(0, +) / Double(squaredDiffs.count))
-        return rmssd
+        return sqrt(squaredDiffs.reduce(0, +) / Double(squaredDiffs.count))
     }
 
     /// Определение паттерна нарастания ЧСС
@@ -234,10 +240,10 @@ final class HeartAnalysisService: ObservableObject {
 
         if abs(change) < 5 {
             return .noChange
-        } else if change > 15 && irregularity < 0.2 {
-            return .suddenRegular        // Типично для ПА
-        } else if change > 15 && irregularity >= 0.2 {
-            return .suddenIrregular      // Подозрение на кардио
+        } else if change > 15, irregularity < 0.2 {
+            return .suddenRegular // Типично для ПА
+        } else if change > 15, irregularity >= 0.2 {
+            return .suddenIrregular // Подозрение на кардио
         } else {
             return .gradual
         }
@@ -245,38 +251,46 @@ final class HeartAnalysisService: ObservableObject {
 
     // MARK: - Классификация
 
-    private func classify(avgBPM: Double, maxBPM: Double, lastBPM: Double,
-                          irregularity: Double, hrv: Double,
-                          risePattern: HeartAnalysis.RisePattern)
-    -> (HeartAnalysis.Diagnosis, Double, Bool) {
-
+    private func classify(
+        avgBPM: Double,
+        maxBPM: Double,
+        lastBPM: Double,
+        irregularity: Double,
+        hrv: Double,
+        risePattern: HeartAnalysis.RisePattern
+    )
+        -> (HeartAnalysis.Diagnosis, Double, Bool)
+    {
         // 🔴 КРИТЕРИИ КАРДИО-ТРЕВОГИ (звонить 103/112)
-        if irregularity > CardiacThresholds.irregularityThreshold &&
-           (maxBPM > CardiacThresholds.dangerousHR || lastBPM < 50) {
+        if irregularity > CardiacThresholds.irregularityThreshold,
+           maxBPM > CardiacThresholds.dangerousHR || lastBPM < 50
+        {
             return (.likelyCardiac, 0.75, true)
         }
 
         // 🟠 Аритмия
-        if irregularity > CardiacThresholds.irregularityThreshold &&
-           hrv > CardiacThresholds.chaoticHRV {
+        if irregularity > CardiacThresholds.irregularityThreshold,
+           hrv > CardiacThresholds.chaoticHRV
+        {
             return (.arrhythmia, 0.65, true)
         }
 
         // 🟡 Паническая атака
-        if risePattern == .suddenRegular &&
-           avgBPM >= 90 && avgBPM <= 160 &&
-           irregularity < CardiacThresholds.irregularityThreshold &&
-           hrv < CardiacThresholds.lowHRV {
+        if risePattern == .suddenRegular,
+           avgBPM >= 90, avgBPM <= 160,
+           irregularity < CardiacThresholds.irregularityThreshold,
+           hrv < CardiacThresholds.lowHRV
+        {
             return (.panicAttack, 0.80, false)
         }
 
         // Тахикардия но нечёткий паттерн
-        if avgBPM > 100 && irregularity < 0.25 {
+        if avgBPM > 100, irregularity < 0.25 {
             return (.panicAttack, 0.55, false)
         }
 
         // Нормальный ритм
-        if avgBPM >= 55 && avgBPM <= 100 && irregularity < 0.15 {
+        if avgBPM >= 55, avgBPM <= 100, irregularity < 0.15 {
             return (.normal, 0.85, false)
         }
 
@@ -285,9 +299,12 @@ final class HeartAnalysisService: ObservableObject {
 
     // MARK: - Рекомендации
 
-    private func generateRecommendation(diagnosis: HeartAnalysis.Diagnosis,
-                                         avgBPM: Double, irregularity: Double,
-                                         breathingHelped: Bool) -> String {
+    private func generateRecommendation(
+        diagnosis: HeartAnalysis.Diagnosis,
+        avgBPM: Double,
+        irregularity: Double,
+        breathingHelped: Bool
+    ) -> String {
         switch diagnosis {
         case .panicAttack:
             if breathingHelped {

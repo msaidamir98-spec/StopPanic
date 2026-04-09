@@ -2,10 +2,10 @@ import SwiftUI
 
 /// Экран достижений
 struct AchievementsView: View {
-    @ObservedObject var service: AchievementService
+    // MARK: Internal
 
-    private let columns = [GridItem(.flexible(), spacing: 16),
-                           GridItem(.flexible(), spacing: 16)]
+    @ObservedObject
+    var service: AchievementService
 
     var body: some View {
         ZStack {
@@ -33,6 +33,13 @@ struct AchievementsView: View {
         }
         .navigationTitle("Достижения")
     }
+
+    // MARK: Private
+
+    private let columns = [
+        GridItem(.flexible(), spacing: 16),
+        GridItem(.flexible(), spacing: 16),
+    ]
 
     private func achievementCard(_ a: Achievement) -> some View {
         VStack(spacing: 10) {

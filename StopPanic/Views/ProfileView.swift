@@ -1,14 +1,15 @@
-import SwiftUI
 import Combine
+import SwiftUI
 
 // MARK: - Profile View
 
 struct ProfileView: View {
-    @ObservedObject var service: UserProfileService
-    @Environment(AppCoordinator.self) var coordinator
-    @State private var editingName = ""
-    @State private var isEditing = false
-    @State private var appear = false
+    // MARK: Internal
+
+    @ObservedObject
+    var service: UserProfileService
+    @Environment(AppCoordinator.self)
+    var coordinator
 
     var body: some View {
         ZStack {
@@ -85,6 +86,25 @@ struct ProfileView: View {
         }
     }
 
+    // MARK: Private
+
+    @State
+    private var editingName = ""
+    @State
+    private var isEditing = false
+    @State
+    private var appear = false
+
+    // MARK: - Helpers
+
+    private var avatarEmoji: String {
+        let name = service.displayName.lowercased()
+        if name.isEmpty { return "🧘" }
+        let emojis = ["😊", "💪", "🌟", "🧠", "❤️", "🦋", "🌈", "🎯"]
+        let index = abs(name.hashValue) % emojis.count
+        return emojis[index]
+    }
+
     // MARK: - Stats
 
     private var statsSection: some View {
@@ -107,20 +127,6 @@ struct ProfileView: View {
         }
     }
 
-    private func statCard(title: String, value: String, color: Color) -> some View {
-        VStack(spacing: 4) {
-            Text(value)
-                .font(SP.Typography.title2)
-                .foregroundColor(color)
-                .contentTransition(.numericText())
-            Text(title)
-                .font(SP.Typography.caption2)
-                .foregroundColor(SP.Colors.textTertiary)
-        }
-        .frame(maxWidth: .infinity)
-        .spGlassCard(cornerRadius: SP.Layout.cornerSmall)
-    }
-
     // MARK: - Info
 
     private var infoSection: some View {
@@ -141,14 +147,18 @@ struct ProfileView: View {
         .spGlassCard()
     }
 
-    // MARK: - Helpers
-
-    private var avatarEmoji: String {
-        let name = service.displayName.lowercased()
-        if name.isEmpty { return "🧘" }
-        let emojis = ["😊", "💪", "🌟", "🧠", "❤️", "🦋", "🌈", "🎯"]
-        let index = abs(name.hashValue) % emojis.count
-        return emojis[index]
+    private func statCard(title: String, value: String, color: Color) -> some View {
+        VStack(spacing: 4) {
+            Text(value)
+                .font(SP.Typography.title2)
+                .foregroundColor(color)
+                .contentTransition(.numericText())
+            Text(title)
+                .font(SP.Typography.caption2)
+                .foregroundColor(SP.Colors.textTertiary)
+        }
+        .frame(maxWidth: .infinity)
+        .spGlassCard(cornerRadius: SP.Layout.cornerSmall)
     }
 
     private func saveName() {

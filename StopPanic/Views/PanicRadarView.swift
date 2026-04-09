@@ -2,7 +2,10 @@ import SwiftUI
 
 /// Экран «Радар паники» — предсказание + аналитика
 struct PanicRadarView: View {
-    @ObservedObject var predictionService: PanicPredictionService
+    // MARK: Internal
+
+    @ObservedObject
+    var predictionService: PanicPredictionService
 
     var body: some View {
         ZStack {
@@ -24,6 +27,20 @@ struct PanicRadarView: View {
             }
         }
         .navigationTitle("Радар паники")
+    }
+
+    // MARK: Private
+
+    // MARK: - Helpers
+
+    private var riskColor: Color {
+        switch predictionService.currentRisk?.riskLevel {
+        case .low: .green
+        case .moderate: .yellow
+        case .high: .orange
+        case .critical: .red
+        case .none: .gray
+        }
     }
 
     // MARK: - Risk circle
@@ -104,15 +121,6 @@ struct PanicRadarView: View {
         .padding(16)
         .background(AppTheme.primary.opacity(0.1))
         .clipShape(RoundedRectangle(cornerRadius: 16))
-    }
-
-    // MARK: - Helpers
-
-    private var riskColor: Color {
-        switch predictionService.currentRisk?.riskLevel {
-        case .low: return .green; case .moderate: return .yellow
-        case .high: return .orange; case .critical: return .red; case .none: return .gray
-        }
     }
 
     private func barColor(_ score: Double) -> Color {

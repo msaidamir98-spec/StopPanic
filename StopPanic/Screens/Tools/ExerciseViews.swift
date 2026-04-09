@@ -1,27 +1,24 @@
 import SwiftUI
 
-// MARK: - Grounding Exercise 5-4-3-2-1 — Premium
+// MARK: - GroundingStep
+
+private struct GroundingStep {
+    let emoji: String
+    let count: Int
+    let sense: String
+    let verb: String
+    let color: Color
+}
+
+// MARK: - GroundingExerciseView
+
 // ✨ Glass cards, staggered items, particle background, celebration
 
 struct GroundingExerciseView: View {
-    @Environment(\.dismiss) private var dismiss
-    @Environment(AppCoordinator.self) var coordinator
+    // MARK: Internal
 
-    @State private var currentStep = 0
-    @State private var inputs: [[String]] = [[], [], [], [], []]
-    @State private var currentInput = ""
-    @State private var isComplete = false
-    @State private var appear = false
-    @State private var completionScale: CGFloat = 0.3
-    @FocusState private var isFocused: Bool
-
-    private let steps: [(emoji: String, count: Int, sense: String, verb: String, color: Color)] = [
-        ("👁️", 5, "ВИДИШЬ", "вижу", SP.Colors.accent),
-        ("✋", 4, "ТРОГАЕШЬ", "касаюсь", SP.Colors.calm),
-        ("👂", 3, "СЛЫШИШЬ", "слышу", SP.Colors.warmth),
-        ("👃", 2, "ЧУВСТВУЕШЬ", "чувствую запах", SP.Colors.success),
-        ("👅", 1, "ОЩУЩАЕШЬ", "ощущаю вкус", SP.Colors.accent),
-    ]
+    @Environment(AppCoordinator.self)
+    var coordinator
 
     var body: some View {
         ZStack {
@@ -43,6 +40,34 @@ struct GroundingExerciseView: View {
             }
         }
     }
+
+    // MARK: Private
+
+    @Environment(\.dismiss)
+    private var dismiss
+
+    @State
+    private var currentStep = 0
+    @State
+    private var inputs: [[String]] = [[], [], [], [], []]
+    @State
+    private var currentInput = ""
+    @State
+    private var isComplete = false
+    @State
+    private var appear = false
+    @State
+    private var completionScale: CGFloat = 0.3
+    @FocusState
+    private var isFocused: Bool
+
+    private let steps: [GroundingStep] = [
+        GroundingStep(emoji: "👁️", count: 5, sense: "ВИДИШЬ", verb: "вижу", color: SP.Colors.accent),
+        GroundingStep(emoji: "✋", count: 4, sense: "ТРОГАЕШЬ", verb: "касаюсь", color: SP.Colors.calm),
+        GroundingStep(emoji: "👂", count: 3, sense: "СЛЫШИШЬ", verb: "слышу", color: SP.Colors.warmth),
+        GroundingStep(emoji: "👃", count: 2, sense: "ЧУВСТВУЕШЬ", verb: "чувствую запах", color: SP.Colors.success),
+        GroundingStep(emoji: "👅", count: 1, sense: "ОЩУЩАЕШЬ", verb: "ощущаю вкус", color: SP.Colors.accent),
+    ]
 
     // MARK: - Exercise View
 
@@ -72,7 +97,7 @@ struct GroundingExerciseView: View {
 
             // Progress with glow
             HStack(spacing: 6) {
-                ForEach(0..<5, id: \.self) { i in
+                ForEach(0 ..< 5, id: \.self) { i in
                     Capsule()
                         .fill(i <= currentStep ? step.color : Color.white.opacity(0.1))
                         .frame(height: 4)
@@ -102,7 +127,7 @@ struct GroundingExerciseView: View {
 
             // Entered items with staggered animation
             VStack(spacing: 8) {
-                ForEach(Array(inputs[currentStep].enumerated()), id: \.offset) { index, item in
+                ForEach(Array(inputs[currentStep].enumerated()), id: \.offset) { _, item in
                     HStack {
                         Image(systemName: "checkmark.circle.fill")
                             .foregroundColor(step.color)
@@ -126,7 +151,8 @@ struct GroundingExerciseView: View {
                         .asymmetric(
                             insertion: .scale(scale: 0.8).combined(with: .opacity),
                             removal: .opacity
-                        ))
+                        )
+                    )
                 }
             }
             .padding(.horizontal, SP.Layout.padding)
@@ -189,7 +215,7 @@ struct GroundingExerciseView: View {
 
             ZStack {
                 // Celebration rings
-                ForEach(0..<3, id: \.self) { i in
+                ForEach(0 ..< 3, id: \.self) { i in
                     Circle()
                         .stroke(SP.Colors.success.opacity(0.1 - Double(i) * 0.03), lineWidth: 1)
                         .frame(width: CGFloat(130 + i * 25), height: CGFloat(130 + i * 25))
@@ -250,26 +276,10 @@ struct GroundingExerciseView: View {
     }
 }
 
-// MARK: - Muscle Relaxation View — Premium
+// MARK: - MuscleRelaxView
 
 struct MuscleRelaxView: View {
-    @Environment(\.dismiss) private var dismiss
-    @State private var currentStep = 0
-    @State private var isTensing = false
-    @State private var timer: Timer?
-    @State private var pulseScale: CGFloat = 1.0
-    @State private var relaxTimer: Timer?
-
-    private let muscleGroups = [
-        ("Кисти рук", "Сожми кулаки как можно сильнее", "figure.hand.draw"),
-        ("Предплечья", "Согни руки в локтях, напряги предплечья", "figure.arms.open"),
-        ("Плечи", "Подними плечи к ушам", "figure.stand"),
-        ("Лицо", "Зажмурься, сожми зубы, наморщи лоб", "face.smiling.inverse"),
-        ("Шея", "Прижми подбородок к груди", "figure.mind.and.body"),
-        ("Спина", "Выгни спину, сведи лопатки", "figure.strengthtraining.traditional"),
-        ("Живот", "Напряги пресс максимально", "figure.core.training"),
-        ("Ноги", "Вытяни ноги, напряги бёдра и икры", "figure.walk"),
-    ]
+    // MARK: Internal
 
     var body: some View {
         ZStack {
@@ -299,7 +309,7 @@ struct MuscleRelaxView: View {
 
                 // Progress
                 HStack(spacing: 4) {
-                    ForEach(0..<muscleGroups.count, id: \.self) { i in
+                    ForEach(0 ..< muscleGroups.count, id: \.self) { i in
                         Capsule()
                             .fill(i <= currentStep ? SP.Colors.calm : Color.white.opacity(0.1))
                             .frame(height: 3)
@@ -317,7 +327,8 @@ struct MuscleRelaxView: View {
                         .scaleEffect(pulseScale)
                         .shadow(
                             color: (isTensing ? SP.Colors.warmth : SP.Colors.calm).opacity(0.3),
-                            radius: 12)
+                            radius: 12
+                        )
 
                     Text(group.0)
                         .font(SP.Typography.heroTitle)
@@ -383,6 +394,32 @@ struct MuscleRelaxView: View {
         }
     }
 
+    // MARK: Private
+
+    @Environment(\.dismiss)
+    private var dismiss
+    @State
+    private var currentStep = 0
+    @State
+    private var isTensing = false
+    @State
+    private var timer: Timer?
+    @State
+    private var pulseScale: CGFloat = 1.0
+    @State
+    private var relaxTimer: Timer?
+
+    private let muscleGroups = [
+        ("Кисти рук", "Сожми кулаки как можно сильнее", "figure.hand.draw"),
+        ("Предплечья", "Согни руки в локтях, напряги предплечья", "figure.arms.open"),
+        ("Плечи", "Подними плечи к ушам", "figure.stand"),
+        ("Лицо", "Зажмурься, сожми зубы, наморщи лоб", "face.smiling.inverse"),
+        ("Шея", "Прижми подбородок к груди", "figure.mind.and.body"),
+        ("Спина", "Выгни спину, сведи лопатки", "figure.strengthtraining.traditional"),
+        ("Живот", "Напряги пресс максимально", "figure.core.training"),
+        ("Ноги", "Вытяни ноги, напряги бёдра и икры", "figure.walk"),
+    ]
+
     private func startTenseRelax() {
         guard !isTensing else { return }
         SP.Haptic.medium()
@@ -400,7 +437,7 @@ struct MuscleRelaxView: View {
                 pulseScale = 1.0
             }
             // Auto-advance after 3 sec relaxation
-            self.relaxTimer = Timer.scheduledTimer(withTimeInterval: 3, repeats: false) {
+            relaxTimer = Timer.scheduledTimer(withTimeInterval: 3, repeats: false) {
                 [self] _ in
                 withAnimation(SP.Anim.spring) {
                     currentStep += 1
@@ -410,15 +447,13 @@ struct MuscleRelaxView: View {
     }
 }
 
-// MARK: - Cognitive Reframing View — Premium
+// MARK: - CognitiveReframingView
 
 struct CognitiveReframingView: View {
-    @Environment(\.dismiss) private var dismiss
-    @Environment(AppCoordinator.self) var coordinator
-    @State private var anxiousThought = ""
-    @State private var evidence = ""
-    @State private var alternative = ""
-    @State private var appear = false
+    // MARK: Internal
+
+    @Environment(AppCoordinator.self)
+    var coordinator
 
     var body: some View {
         ZStack {
@@ -563,7 +598,8 @@ struct CognitiveReframingView: View {
                             Button {
                                 coordinator.completedSession()
                                 coordinator.achievementService.updateProgress(
-                                    id: "technique_explorer")
+                                    id: "technique_explorer"
+                                )
                                 dismiss()
                             } label: {
                                 Text("Готово ✓")
@@ -591,6 +627,19 @@ struct CognitiveReframingView: View {
             }
         }
     }
+
+    // MARK: Private
+
+    @Environment(\.dismiss)
+    private var dismiss
+    @State
+    private var anxiousThought = ""
+    @State
+    private var evidence = ""
+    @State
+    private var alternative = ""
+    @State
+    private var appear = false
 
     private func distortionChip(_ title: String, _ desc: String) -> some View {
         HStack(spacing: 8) {

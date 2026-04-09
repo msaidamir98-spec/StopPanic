@@ -1,11 +1,12 @@
+import Combine
 import Foundation
 import UserNotifications
-import Combine
 
 /// Сервис локальных уведомлений
 @MainActor
 final class NotificationService: ObservableObject {
-    @Published var isAuthorized: Bool = false
+    @Published
+    var isAuthorized: Bool = false
 
     func requestPermissions() {
         UNUserNotificationCenter.current().requestAuthorization(options: [.alert, .sound, .badge]) { [weak self] granted, _ in

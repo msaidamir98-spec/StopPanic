@@ -1,10 +1,9 @@
 import AppIntents
 
-// MARK: - Siri Shortcuts via AppIntents
+// MARK: - SOSIntent
+
 // Позволяет пользователю запускать SOS, дыхание и другое через Siri.
 // "Привет Siri, я паникую" → запускает SOS Flow.
-
-// MARK: - SOS Intent
 
 struct SOSIntent: AppIntent {
     static var title: LocalizedStringResource = "Я паникую — SOS"
@@ -19,7 +18,7 @@ struct SOSIntent: AppIntent {
     }
 }
 
-// MARK: - Start Breathing Intent
+// MARK: - StartBreathingIntent
 
 struct StartBreathingIntent: AppIntent {
     static var title: LocalizedStringResource = "Начать дыхание 4-7-8"
@@ -34,7 +33,7 @@ struct StartBreathingIntent: AppIntent {
     }
 }
 
-// MARK: - Check Status Intent
+// MARK: - CheckAnxietyStatusIntent
 
 struct CheckAnxietyStatusIntent: AppIntent {
     static var title: LocalizedStringResource = "Проверить уровень тревоги"
@@ -42,16 +41,17 @@ struct CheckAnxietyStatusIntent: AppIntent {
     static var openAppWhenRun: Bool = true
 
     func perform() async throws -> some IntentResult & ReturnsValue<String> {
-        return .result(value: "Откройте приложение для просмотра прогноза")
+        .result(value: "Откройте приложение для просмотра прогноза")
     }
 }
 
-// MARK: - Quick Log Intent
+// MARK: - QuickLogPanicIntent
 
 struct QuickLogPanicIntent: AppIntent {
     static var title: LocalizedStringResource = "Записать паническую атаку"
     static var description = IntentDescription(
-        "Быстро записывает эпизод панической атаки в дневник")
+        "Быстро записывает эпизод панической атаки в дневник"
+    )
     static var openAppWhenRun: Bool = true
 
     @Parameter(title: "Сила (1-10)")
@@ -70,7 +70,7 @@ struct QuickLogPanicIntent: AppIntent {
     }
 }
 
-// MARK: - App Shortcuts Provider
+// MARK: - StopPanicShortcuts
 
 struct StopPanicShortcuts: AppShortcutsProvider {
     static var appShortcuts: [AppShortcut] {

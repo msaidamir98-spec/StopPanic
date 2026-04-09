@@ -4,15 +4,17 @@ import Foundation
 /// Предсказание панических атак по паттернам дневника
 @MainActor
 final class PanicPredictionService: ObservableObject {
-    @Published var currentRisk: PanicPrediction?
-    @Published var weeklyPattern: [DayRisk] = []
-
     struct DayRisk: Identifiable {
         let id = UUID()
         let dayOfWeek: String
         let riskScore: Double
         let episodeCount: Int
     }
+
+    @Published
+    var currentRisk: PanicPrediction?
+    @Published
+    var weeklyPattern: [DayRisk] = []
 
     func analyzePatterns(episodes: [DiaryEpisode]) {
         guard !episodes.isEmpty else {
@@ -36,12 +38,13 @@ final class PanicPredictionService: ObservableObject {
         let dayNames = ["", "Вс", "Пн", "Вт", "Ср", "Чт", "Пт", "Сб"]
         let maxCount = dayCounts.values.map(\.count).max() ?? 1
 
-        weeklyPattern = (1...7).map { day in
+        weeklyPattern = (1 ... 7).map { day in
             let count = dayCounts[day]?.count ?? 0
             return DayRisk(
                 dayOfWeek: dayNames[day],
                 riskScore: Double(count) / Double(max(maxCount, 1)),
-                episodeCount: count)
+                episodeCount: count
+            )
         }
 
         // Уровень риска

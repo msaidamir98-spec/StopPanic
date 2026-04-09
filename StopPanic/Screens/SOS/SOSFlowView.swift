@@ -2,24 +2,12 @@ import CoreHaptics
 import SwiftUI
 
 // MARK: - SOS Flow View — Premium Edition
+
 // Полноэкранный режим помощи при панической атаке.
 // Particles, glassmorphism, spring animations.
 
 struct SOSFlowView: View {
-    @Environment(AppCoordinator.self) var coordinator
-    @State private var currentStep: SOSStep = .breathing
-    @State private var breathScale: CGFloat = 0.6
-    @State private var breathPhase: String = "Вдох"
-    @State private var breathTimer: Timer?
-    @State private var secondsElapsed: Int = 0
-    @State private var breathingCycles: Int = 0
-    @State private var countdownTimer: Timer?
-    @State private var groundingStep = 0
-    @State private var appeared = false
-    @State private var completionScale: CGFloat = 0.3
-
-    // Pre-computed random sizes to avoid recalculation during render
-    private let particleSizes: [CGFloat] = (0..<8).map { _ in CGFloat.random(in: 4...10) }
+    // MARK: Internal
 
     enum SOSStep: Int, CaseIterable {
         case breathing
@@ -27,12 +15,15 @@ struct SOSFlowView: View {
         case affirmation
     }
 
+    @Environment(AppCoordinator.self)
+    var coordinator
+
     var body: some View {
         ZStack {
             SP.Colors.bg.ignoresSafeArea()
 
             // Particles
-            ForEach(0..<8, id: \.self) { i in
+            ForEach(0 ..< 8, id: \.self) { i in
                 FloatingParticle(
                     color: stepColor,
                     size: particleSizes[i]
@@ -56,7 +47,8 @@ struct SOSFlowView: View {
                     .asymmetric(
                         insertion: .move(edge: .trailing).combined(with: .opacity),
                         removal: .move(edge: .leading).combined(with: .opacity)
-                    ))
+                    )
+                )
 
                 Spacer()
 
@@ -69,6 +61,57 @@ struct SOSFlowView: View {
             withAnimation(.easeOut(duration: 0.6)) { appeared = true }
         }
         .onDisappear { stopTimers() }
+    }
+
+    // MARK: Private
+
+    @State
+    private var currentStep: SOSStep = .breathing
+    @State
+    private var breathScale: CGFloat = 0.6
+    @State
+    private var breathPhase: String = "Вдох"
+    @State
+    private var breathTimer: Timer?
+    @State
+    private var secondsElapsed: Int = 0
+    @State
+    private var breathingCycles: Int = 0
+    @State
+    private var countdownTimer: Timer?
+    @State
+    private var groundingStep = 0
+    @State
+    private var appeared = false
+    @State
+    private var completionScale: CGFloat = 0.3
+
+    /// Pre-computed random sizes to avoid recalculation during render
+    private let particleSizes: [CGFloat] = (0 ..< 8).map { _ in CGFloat.random(in: 4 ... 10) }
+
+    private var timeString: String {
+        let m = secondsElapsed / 60
+        let s = secondsElapsed % 60
+        return String(format: "%d:%02d", m, s)
+    }
+
+    private var breathHint: String {
+        switch breathPhase {
+        case "Вдох": "через нос, медленно"
+        case "Задержка": "не напрягайся"
+        case "Выдох": "через рот, долго"
+        default: ""
+        }
+    }
+
+    // MARK: - Logic
+
+    private var stepColor: Color {
+        switch currentStep {
+        case .breathing: SP.Colors.calm
+        case .grounding: SP.Colors.accent
+        case .affirmation: SP.Colors.success
+        }
     }
 
     // MARK: - Top Bar
@@ -106,12 +149,6 @@ struct SOSFlowView: View {
         .padding(.top, 12)
     }
 
-    private var timeString: String {
-        let m = secondsElapsed / 60
-        let s = secondsElapsed % 60
-        return String(format: "%d:%02d", m, s)
-    }
-
     // MARK: - Progress Dots
 
     private var progressDots: some View {
@@ -142,7 +179,7 @@ struct SOSFlowView: View {
             // Breathing circle with particles
             ZStack {
                 // Outer particles ring
-                ForEach(0..<12, id: \.self) { i in
+                ForEach(0 ..< 12, id: \.self) { i in
                     Circle()
                         .fill(SP.Colors.calm.opacity(0.3))
                         .frame(width: 4, height: 4)
@@ -219,15 +256,6 @@ struct SOSFlowView: View {
         }
     }
 
-    private var breathHint: String {
-        switch breathPhase {
-        case "Вдох": return "через нос, медленно"
-        case "Задержка": return "не напрягайся"
-        case "Выдох": return "через рот, долго"
-        default: return ""
-        }
-    }
-
     // MARK: - Step 2: Grounding 5-4-3-2-1
 
     private var groundingStepView: some View {
@@ -268,7 +296,7 @@ struct SOSFlowView: View {
                 .foregroundColor(SP.Colors.textSecondary)
 
             HStack(spacing: 8) {
-                ForEach(0..<5, id: \.self) { i in
+                ForEach(0 ..< 5, id: \.self) { i in
                     Circle()
                         .fill(i <= groundingStep ? SP.Colors.accent : SP.Colors.bgCardHover)
                         .frame(width: 12, height: 12)
@@ -376,16 +404,6 @@ struct SOSFlowView: View {
                     .spPrimaryButton()
                 }
             }
-        }
-    }
-
-    // MARK: - Logic
-
-    private var stepColor: Color {
-        switch currentStep {
-        case .breathing: return SP.Colors.calm
-        case .grounding: return SP.Colors.accent
-        case .affirmation: return SP.Colors.success
         }
     }
 

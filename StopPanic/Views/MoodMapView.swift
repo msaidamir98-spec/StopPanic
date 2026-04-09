@@ -1,14 +1,13 @@
-import SwiftUI
 import Combine
+import SwiftUI
 
 // MARK: - Mood Map View
 
 struct MoodMapView: View {
-    @ObservedObject var service: MoodMapService
-    @State private var newMood: Double = 5
-    @State private var newNote = ""
-    @State private var showAddSheet = false
-    @State private var appear = false
+    // MARK: Internal
+
+    @ObservedObject
+    var service: MoodMapService
 
     var body: some View {
         ZStack {
@@ -79,6 +78,23 @@ struct MoodMapView: View {
         .sheet(isPresented: $showAddSheet) {
             addMoodSheet
         }
+    }
+
+    // MARK: Private
+
+    @State
+    private var newMood: Double = 5
+    @State
+    private var newNote = ""
+    @State
+    private var showAddSheet = false
+    @State
+    private var appear = false
+
+    private var averageMood: Double? {
+        guard !service.points.isEmpty else { return nil }
+        let sum = service.points.reduce(0) { $0 + $1.mood }
+        return Double(sum) / Double(service.points.count)
     }
 
     // MARK: - Chart
@@ -179,7 +195,7 @@ struct MoodMapView: View {
                         .foregroundColor(SP.Colors.textPrimary)
 
                     VStack(spacing: 8) {
-                        Slider(value: $newMood, in: 1...10, step: 1)
+                        Slider(value: $newMood, in: 1 ... 10, step: 1)
                             .tint(moodColor(Int(newMood)))
                         HStack {
                             Text("Ужасно")
@@ -238,28 +254,22 @@ struct MoodMapView: View {
 
     private func moodEmoji(_ mood: Int) -> String {
         switch mood {
-        case 1...2: return "😰"
-        case 3...4: return "😟"
-        case 5...6: return "😐"
-        case 7...8: return "🙂"
-        case 9...10: return "😊"
-        default: return "😐"
+        case 1 ... 2: "😰"
+        case 3 ... 4: "😟"
+        case 5 ... 6: "😐"
+        case 7 ... 8: "🙂"
+        case 9 ... 10: "😊"
+        default: "😐"
         }
     }
 
     private func moodColor(_ mood: Int) -> Color {
         switch mood {
-        case 1...3: return SP.Colors.danger
-        case 4...5: return SP.Colors.warning
-        case 6...7: return SP.Colors.accent
-        case 8...10: return SP.Colors.success
-        default: return SP.Colors.accent
+        case 1 ... 3: SP.Colors.danger
+        case 4 ... 5: SP.Colors.warning
+        case 6 ... 7: SP.Colors.accent
+        case 8 ... 10: SP.Colors.success
+        default: SP.Colors.accent
         }
-    }
-
-    private var averageMood: Double? {
-        guard !service.points.isEmpty else { return nil }
-        let sum = service.points.reduce(0) { $0 + $1.mood }
-        return Double(sum) / Double(service.points.count)
     }
 }

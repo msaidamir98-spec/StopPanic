@@ -1,14 +1,14 @@
 import SwiftUI
 
-// MARK: - Home Screen — Bestseller Level
+// MARK: - HomeScreenView
+
 // Premium UI: живые частицы, glassmorphism, spring анимации, micro-interactions.
 
 struct HomeScreenView: View {
-    @Environment(AppCoordinator.self) var coordinator
-    @State private var pulseOuter = false
-    @State private var pulseInner = false
-    @State private var pulseGlow = false
-    @State private var appeared = false
+    // MARK: Internal
+
+    @Environment(AppCoordinator.self)
+    var coordinator
 
     var body: some View {
         NavigationStack {
@@ -58,6 +58,102 @@ struct HomeScreenView: View {
             withAnimation(SP.Anim.sosPulse) { pulseOuter = true }
             withAnimation(SP.Anim.pulse) { pulseInner = true }
             withAnimation(SP.Anim.glow) { pulseGlow = true }
+        }
+    }
+
+    // MARK: Private
+
+    @State
+    private var pulseOuter = false
+    @State
+    private var pulseInner = false
+    @State
+    private var pulseGlow = false
+    @State
+    private var appeared = false
+
+    private var dailyInsight: String {
+        let insights = [
+            "Паническая атака длится в среднем 10-20 минут. Ни одна паническая атака в истории не длилась вечно.",
+            "При панической атаке пульс учащается, но ритм остаётся РЕГУЛЯРНЫМ. При инфаркте ритм нарушается.",
+            "Техника 4-7-8 активирует блуждающий нерв и снижает ЧСС за 2-3 минуты. Научно доказано.",
+            "40% людей хотя бы раз в жизни испытывают паническую атаку. Ты не один.",
+            "Дыхание — единственная автономная функция, которой ты можешь управлять сознательно.",
+            "Заземление 5-4-3-2-1 переключает мозг с миндалины на префронтальную кору.",
+            "Паническая атака — ложная тревога. Тело реагирует на несуществующую опасность.",
+        ]
+        let dayOfYear = Calendar.current.ordinality(of: .day, in: .year, for: Date()) ?? 0
+        return insights[dayOfYear % insights.count]
+    }
+
+    // MARK: - Computed helpers
+
+    private var todayEpisodes: Int {
+        coordinator.diaryService.diaryEpisodes.filter { Calendar.current.isDateInToday($0.date) }
+            .count
+    }
+
+    private var weekEpisodes: Int {
+        let weekAgo = Calendar.current.date(byAdding: .day, value: -7, to: Date()) ?? Date()
+        return coordinator.diaryService.diaryEpisodes.filter { $0.date >= weekAgo }.count
+    }
+
+    private var streakDays: Int {
+        let calendar = Calendar.current
+        let episodes = coordinator.diaryService.diaryEpisodes
+        guard !episodes.isEmpty else { return 0 }
+
+        // Get unique dates with sessions
+        let sessionDates = Set(episodes.map { calendar.startOfDay(for: $0.date) })
+
+        var streak = 0
+        var checkDate = calendar.startOfDay(for: Date())
+
+        // Check today and count backwards
+        while sessionDates.contains(checkDate) {
+            streak += 1
+            guard let prev = calendar.date(byAdding: .day, value: -1, to: checkDate) else { break }
+            checkDate = prev
+        }
+
+        // If no entry today, check if yesterday started the streak
+        if streak == 0 {
+            checkDate =
+                calendar.date(byAdding: .day, value: -1, to: calendar.startOfDay(for: Date()))
+                    ?? Date()
+            while sessionDates.contains(checkDate) {
+                streak += 1
+                guard let prev = calendar.date(byAdding: .day, value: -1, to: checkDate) else {
+                    break
+                }
+                checkDate = prev
+            }
+        }
+
+        return streak
+    }
+
+    private var riskIcon: String {
+        switch coordinator.predictionService.currentRisk?.riskLevel {
+        case .low: "checkmark.shield.fill"
+        case .moderate: "exclamationmark.shield.fill"
+        case .high: "exclamationmark.triangle.fill"
+        case .critical: "xmark.shield.fill"
+        case .none: "shield.fill"
+        }
+    }
+
+    private var riskText: String {
+        coordinator.predictionService.currentRisk?.riskLevel.emoji ?? "🟢"
+    }
+
+    private var riskColor: Color {
+        switch coordinator.predictionService.currentRisk?.riskLevel {
+        case .low: SP.Colors.success
+        case .moderate: SP.Colors.warning
+        case .high: .orange
+        case .critical: SP.Colors.danger
+        case .none: SP.Colors.success
         }
     }
 
@@ -161,36 +257,22 @@ struct HomeScreenView: View {
         HStack(spacing: 0) {
             statusItem(
                 icon: "heart.fill", value: "\(Int(coordinator.healthManager.heartRate))",
-                label: "BPM", color: SP.Colors.danger)
+                label: "BPM", color: SP.Colors.danger
+            )
             Divider().frame(height: 30).overlay(Color.white.opacity(0.1))
             statusItem(
                 icon: "flame.fill", value: "\(coordinator.sessionsCompleted)", label: "сессий",
-                color: SP.Colors.warmth)
+                color: SP.Colors.warmth
+            )
             Divider().frame(height: 30).overlay(Color.white.opacity(0.1))
             statusItem(
                 icon: "wind", value: "\(coordinator.totalBreathingMinutes)", label: "мин",
-                color: SP.Colors.calm)
+                color: SP.Colors.calm
+            )
             Divider().frame(height: 30).overlay(Color.white.opacity(0.1))
             statusItem(icon: riskIcon, value: riskText, label: "риск", color: riskColor)
         }
         .spGlassCard(cornerRadius: SP.Layout.cornerMedium)
-    }
-
-    private func statusItem(icon: String, value: String, label: String, color: Color) -> some View {
-        VStack(spacing: 4) {
-            Image(systemName: icon)
-                .font(.system(size: 14))
-                .foregroundColor(color)
-            Text(value)
-                .font(SP.Typography.headline)
-                .foregroundColor(SP.Colors.textPrimary)
-                .monospacedDigit()
-                .contentTransition(.numericText())
-            Text(label)
-                .font(SP.Typography.caption2)
-                .foregroundColor(SP.Colors.textTertiary)
-        }
-        .frame(maxWidth: .infinity)
     }
 
     // MARK: - Quick Actions
@@ -248,20 +330,6 @@ struct HomeScreenView: View {
         .spGlassCard()
     }
 
-    private var dailyInsight: String {
-        let insights = [
-            "Паническая атака длится в среднем 10-20 минут. Ни одна паническая атака в истории не длилась вечно.",
-            "При панической атаке пульс учащается, но ритм остаётся РЕГУЛЯРНЫМ. При инфаркте ритм нарушается.",
-            "Техника 4-7-8 активирует блуждающий нерв и снижает ЧСС за 2-3 минуты. Научно доказано.",
-            "40% людей хотя бы раз в жизни испытывают паническую атаку. Ты не один.",
-            "Дыхание — единственная автономная функция, которой ты можешь управлять сознательно.",
-            "Заземление 5-4-3-2-1 переключает мозг с миндалины на префронтальную кору.",
-            "Паническая атака — ложная тревога. Тело реагирует на несуществующую опасность.",
-        ]
-        let dayOfYear = Calendar.current.ordinality(of: .day, in: .year, for: Date()) ?? 0
-        return insights[dayOfYear % insights.count]
-    }
-
     // MARK: - Progress
 
     private var progressSection: some View {
@@ -273,85 +341,39 @@ struct HomeScreenView: View {
             HStack(spacing: 12) {
                 ProgressMiniCard(
                     title: "Сегодня", value: "\(todayEpisodes)", subtitle: "эпизодов",
-                    color: todayEpisodes == 0 ? SP.Colors.success : SP.Colors.warning)
+                    color: todayEpisodes == 0 ? SP.Colors.success : SP.Colors.warning
+                )
                 ProgressMiniCard(
                     title: "Неделя", value: "\(weekEpisodes)", subtitle: "эпизодов",
-                    color: SP.Colors.accent)
+                    color: SP.Colors.accent
+                )
                 ProgressMiniCard(
                     title: "Серия", value: "\(streakDays)д", subtitle: "подряд",
-                    color: SP.Colors.calm)
+                    color: SP.Colors.calm
+                )
             }
         }
     }
 
-    // MARK: - Computed helpers
-
-    private var todayEpisodes: Int {
-        coordinator.diaryService.diaryEpisodes.filter { Calendar.current.isDateInToday($0.date) }
-            .count
-    }
-    private var weekEpisodes: Int {
-        let weekAgo = Calendar.current.date(byAdding: .day, value: -7, to: Date()) ?? Date()
-        return coordinator.diaryService.diaryEpisodes.filter { $0.date >= weekAgo }.count
-    }
-    private var streakDays: Int {
-        let calendar = Calendar.current
-        let episodes = coordinator.diaryService.diaryEpisodes
-        guard !episodes.isEmpty else { return 0 }
-
-        // Get unique dates with sessions
-        let sessionDates = Set(episodes.map { calendar.startOfDay(for: $0.date) })
-
-        var streak = 0
-        var checkDate = calendar.startOfDay(for: Date())
-
-        // Check today and count backwards
-        while sessionDates.contains(checkDate) {
-            streak += 1
-            guard let prev = calendar.date(byAdding: .day, value: -1, to: checkDate) else { break }
-            checkDate = prev
+    private func statusItem(icon: String, value: String, label: String, color: Color) -> some View {
+        VStack(spacing: 4) {
+            Image(systemName: icon)
+                .font(.system(size: 14))
+                .foregroundColor(color)
+            Text(value)
+                .font(SP.Typography.headline)
+                .foregroundColor(SP.Colors.textPrimary)
+                .monospacedDigit()
+                .contentTransition(.numericText())
+            Text(label)
+                .font(SP.Typography.caption2)
+                .foregroundColor(SP.Colors.textTertiary)
         }
-
-        // If no entry today, check if yesterday started the streak
-        if streak == 0 {
-            checkDate =
-                calendar.date(byAdding: .day, value: -1, to: calendar.startOfDay(for: Date()))
-                ?? Date()
-            while sessionDates.contains(checkDate) {
-                streak += 1
-                guard let prev = calendar.date(byAdding: .day, value: -1, to: checkDate) else {
-                    break
-                }
-                checkDate = prev
-            }
-        }
-
-        return streak
-    }
-    private var riskIcon: String {
-        switch coordinator.predictionService.currentRisk?.riskLevel {
-        case .low: return "checkmark.shield.fill"
-        case .moderate: return "exclamationmark.shield.fill"
-        case .high: return "exclamationmark.triangle.fill"
-        case .critical: return "xmark.shield.fill"
-        case .none: return "shield.fill"
-        }
-    }
-    private var riskText: String {
-        coordinator.predictionService.currentRisk?.riskLevel.emoji ?? "🟢"
-    }
-    private var riskColor: Color {
-        switch coordinator.predictionService.currentRisk?.riskLevel {
-        case .low: return SP.Colors.success
-        case .moderate: return SP.Colors.warning
-        case .high: return .orange
-        case .critical: return SP.Colors.danger
-        case .none: return SP.Colors.success
-        }
+        .frame(maxWidth: .infinity)
     }
 }
 
-// MARK: - Sub-components
+// MARK: - QuickActionCard
 
 struct QuickActionCard: View {
     let icon: String
@@ -381,6 +403,8 @@ struct QuickActionCard: View {
     }
 }
 
+// MARK: - ProgressMiniCard
+
 struct ProgressMiniCard: View {
     let title: String
     let value: String
@@ -391,7 +415,8 @@ struct ProgressMiniCard: View {
         VStack(spacing: 4) {
             Text(title).font(SP.Typography.caption).foregroundColor(SP.Colors.textTertiary)
             Text(value).font(SP.Typography.title2).foregroundColor(color).contentTransition(
-                .numericText())
+                .numericText()
+            )
             Text(subtitle).font(SP.Typography.caption2).foregroundColor(SP.Colors.textTertiary)
         }
         .frame(maxWidth: .infinity)
@@ -399,7 +424,7 @@ struct ProgressMiniCard: View {
     }
 }
 
-// MARK: - Button Styles
+// MARK: - SOSButtonStyle
 
 struct SOSButtonStyle: ButtonStyle {
     func makeBody(configuration: Configuration) -> some View {
@@ -408,6 +433,8 @@ struct SOSButtonStyle: ButtonStyle {
             .animation(.spring(response: 0.2, dampingFraction: 0.6), value: configuration.isPressed)
     }
 }
+
+// MARK: - ScaleButtonStyle
 
 struct ScaleButtonStyle: ButtonStyle {
     func makeBody(configuration: Configuration) -> some View {

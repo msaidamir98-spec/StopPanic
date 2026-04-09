@@ -1,23 +1,23 @@
 import SwiftUI
 
-// MARK: - Empty State Views
+// MARK: - EmptyStateView
+
 // Красивые пустые состояния для всех экранов.
 // Мотивирующий текст + мягкая анимация + CTA.
 
 struct EmptyStateView: View {
+    // MARK: Internal
+
     let icon: String
     let title: String
     let message: String
-    var actionTitle: String? = nil
-    var action: (() -> Void)? = nil
-    
-    @State private var appear = false
-    @State private var floatOffset: CGFloat = 0
-    
+    var actionTitle: String?
+    var action: (() -> Void)?
+
     var body: some View {
         VStack(spacing: 24) {
             Spacer()
-            
+
             ZStack {
                 // Soft glow behind icon
                 Circle()
@@ -25,12 +25,12 @@ struct EmptyStateView: View {
                     .frame(width: 120, height: 120)
                     .scaleEffect(appear ? 1.1 : 0.8)
                     .animation(SP.Anim.float, value: appear)
-                
+
                 Circle()
                     .fill(SP.Colors.accent.opacity(0.04))
                     .frame(width: 160, height: 160)
                     .scaleEffect(appear ? 1.05 : 0.9)
-                
+
                 Image(systemName: icon)
                     .font(.system(size: 48, weight: .light))
                     .foregroundStyle(
@@ -44,13 +44,13 @@ struct EmptyStateView: View {
             }
             .opacity(appear ? 1 : 0)
             .scaleEffect(appear ? 1 : 0.6)
-            
+
             VStack(spacing: 10) {
                 Text(title)
                     .font(SP.Typography.title2)
                     .foregroundColor(SP.Colors.textPrimary)
                     .multilineTextAlignment(.center)
-                
+
                 Text(message)
                     .font(SP.Typography.callout)
                     .foregroundColor(SP.Colors.textSecondary)
@@ -60,7 +60,7 @@ struct EmptyStateView: View {
             }
             .opacity(appear ? 1 : 0)
             .offset(y: appear ? 0 : 20)
-            
+
             if let actionTitle, let action {
                 Button(action: {
                     SP.Haptic.light()
@@ -79,22 +79,29 @@ struct EmptyStateView: View {
                 .opacity(appear ? 1 : 0)
                 .offset(y: appear ? 0 : 30)
             }
-            
+
             Spacer()
         }
         .onAppear {
             withAnimation(.easeOut(duration: 0.8)) { appear = true }
             withAnimation(
                 .easeInOut(duration: 3.0)
-                .repeatForever(autoreverses: true)
+                    .repeatForever(autoreverses: true)
             ) {
                 floatOffset = -8
             }
         }
     }
+
+    // MARK: Private
+
+    @State
+    private var appear = false
+    @State
+    private var floatOffset: CGFloat = 0
 }
 
-// MARK: - Journal Empty State
+// MARK: - JournalEmptyState
 
 struct JournalEmptyState: View {
     var body: some View {
@@ -107,7 +114,7 @@ struct JournalEmptyState: View {
     }
 }
 
-// MARK: - Tools Empty / All Done State
+// MARK: - ToolsCompletedState
 
 struct ToolsCompletedState: View {
     var body: some View {
@@ -119,7 +126,7 @@ struct ToolsCompletedState: View {
     }
 }
 
-// MARK: - No Heart Data State
+// MARK: - HeartDataEmptyState
 
 struct HeartDataEmptyState: View {
     var body: some View {
@@ -132,7 +139,7 @@ struct HeartDataEmptyState: View {
     }
 }
 
-// MARK: - Achievement Empty State
+// MARK: - AchievementsEmptyState
 
 struct AchievementsEmptyState: View {
     var body: some View {
@@ -145,11 +152,11 @@ struct AchievementsEmptyState: View {
     }
 }
 
-// MARK: - Search Empty State
+// MARK: - SearchEmptyState
 
 struct SearchEmptyState: View {
     let query: String
-    
+
     var body: some View {
         EmptyStateView(
             icon: "magnifyingglass",

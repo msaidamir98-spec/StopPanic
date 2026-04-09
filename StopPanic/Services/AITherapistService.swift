@@ -5,17 +5,24 @@ import Foundation
 /// Использует научно обоснованные техники CBT, ACT, DBT
 @MainActor
 final class AITherapistService: ObservableObject {
-    @Published var messages: [AIMessage] = []
-    @Published var isTyping: Bool = false
+    // MARK: Lifecycle
 
     init() {
         let welcome = AIMessage(
             content:
-                "Привет! Я твой AI-помощник в борьбе с паникой. 💙\n\nИспользую техники CBT, ACT и DBT. Как ты себя чувствуешь?",
+            "Привет! Я твой AI-помощник в борьбе с паникой. 💙" +
+                "\n\nИспользую техники CBT, ACT и DBT. Как ты себя чувствуешь?",
             role: .assistant
         )
         messages.append(welcome)
     }
+
+    // MARK: Internal
+
+    @Published
+    var messages: [AIMessage] = []
+    @Published
+    var isTyping: Bool = false
 
     func sendMessage(_ text: String) async {
         messages.append(AIMessage(content: text, role: .user))
@@ -35,24 +42,24 @@ final class AITherapistService: ObservableObject {
         try? await Task.sleep(nanoseconds: 500_000_000)
 
         let response = """
-            🔴 **Я здесь. Ты в безопасности.**
+        🔴 **Я здесь. Ты в безопасности.**
 
-            Паническая атака — это НЕ опасно. Она пройдёт.
+        Паническая атака — это НЕ опасно. Она пройдёт.
 
-            **Техника 5-4-3-2-1:**
-            👁️ **5** вещей, которые ты ВИДИШЬ
-            ✋ **4** вещи, которые можешь ПОТРОГАТЬ
-            👂 **3** звука, которые СЛЫШИШЬ
-            👃 **2** запаха
-            👅 **1** вкус
+        **Техника 5-4-3-2-1:**
+        👁️ **5** вещей, которые ты ВИДИШЬ
+        ✋ **4** вещи, которые можешь ПОТРОГАТЬ
+        👂 **3** звука, которые СЛЫШИШЬ
+        👃 **2** запаха
+        👅 **1** вкус
 
-            Начни — назови 5 вещей, которые видишь.
-            """
+        Начни — назови 5 вещей, которые видишь.
+        """
         messages.append(AIMessage(content: response, role: .assistant, technique: .grounding))
         isTyping = false
     }
 
-    // MARK: - Private
+    // MARK: Private
 
     /// Keep message history manageable — retain first (welcome) + last 50 messages
     private func trimMessagesIfNeeded() {
@@ -76,24 +83,35 @@ final class AITherapistService: ObservableObject {
     private func generateResponse(for text: String, technique: AIMessage.TherapyTechnique?) async
         -> String
     {
-        try? await Task.sleep(nanoseconds: UInt64.random(in: 800_000_000...1_500_000_000))
+        try? await Task.sleep(nanoseconds: UInt64.random(in: 800_000_000 ... 1_500_000_000))
 
         switch technique {
         case .grounding:
             return
-                "Я понимаю, что страшно. Но ты в безопасности. 💙\n\nДавай заземлимся: назови **5 вещей**, которые видишь прямо сейчас."
+                "Я понимаю, что страшно. Но ты в безопасности. 💙" +
+                "\n\nДавай заземлимся: назови **5 вещей**, которые видишь прямо сейчас."
         case .cbt:
             return
-                "Давай разберём эту мысль 🧠\n\nКогнитивные искажения:\n• **Катастрофизация** — «Случится худшее!»\n• **Чёрно-белое мышление** — «Если не идеально — ужасно»\n\nКакое ближе к твоей ситуации?"
+                "Давай разберём эту мысль 🧠\n\nКогнитивные искажения:" +
+                "\n• **Катастрофизация** — «Случится худшее!»" +
+                "\n• **Чёрно-белое мышление** — «Если не идеально — ужасно»" +
+                "\n\nКакое ближе к твоей ситуации?"
         case .act:
             return
-                "Страх — нормальная эмоция. 🌊\n\nПредставь тревогу как волну: она приходит, поднимается и обязательно уходит.\n\n**Ты не волна. Ты — океан.**"
+                "Страх — нормальная эмоция. 🌊" +
+                "\n\nПредставь тревогу как волну:" +
+                " она приходит, поднимается и обязательно уходит." +
+                "\n\n**Ты не волна. Ты — океан.**"
         case .breathwork:
             return
-                "Техника 4-7-8 🌬️\n\n1. 📥 Вдох — 4 сек\n2. ⏸️ Задержка — 7 сек\n3. 📤 Выдох — 8 сек\n\nПовтори 4 раза."
+                "Страх — нормальная эмоция. 🌊" +
+                "\n\nПредставь тревогу как волну:" +
+                " она приходит, поднимается и обязательно уходит." +
+                "\n\n**Ты не волна. Ты — океан.**"
         default:
             return
-                "Спасибо, что делишься. 💙 Расскажи подробнее — чем больше я знаю, тем точнее помогу."
+                "Спасибо, что делишься. 💙" +
+                " Расскажи подробнее — чем больше я знаю, тем точнее помогу."
         }
     }
 }

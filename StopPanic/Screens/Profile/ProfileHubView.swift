@@ -1,16 +1,15 @@
 import SwiftUI
 
-// MARK: - Profile Hub — Premium
+// MARK: - ProfileHubView
+
 // Профиль + настройки + SOS контакты + экспорт.
 // ✨ Glass cards, animated stats, premium treatment
 
 struct ProfileHubView: View {
-    @Environment(AppCoordinator.self) var coordinator
-    @State private var showEditName = false
-    @State private var editName = ""
-    @State private var showAddContact = false
-    @State private var appear = false
-    @State private var avatarScale: CGFloat = 0.5
+    // MARK: Internal
+
+    @Environment(AppCoordinator.self)
+    var coordinator
 
     var body: some View {
         NavigationStack {
@@ -44,13 +43,36 @@ struct ProfileHubView: View {
         }
     }
 
+    // MARK: Private
+
+    @State
+    private var showEditName = false
+    @State
+    private var editName = ""
+    @State
+    private var showAddContact = false
+    @State
+    private var appear = false
+    @State
+    private var avatarScale: CGFloat = 0.5
+
+    private var initials: String {
+        let name = coordinator.userName
+        if name.isEmpty { return "👤" }
+        let parts = name.split(separator: " ")
+        if parts.count >= 2 {
+            return "\(parts[0].prefix(1))\(parts[1].prefix(1))".uppercased()
+        }
+        return String(name.prefix(2)).uppercased()
+    }
+
     // MARK: - Profile Header
 
     private var profileHeader: some View {
         VStack(spacing: 14) {
             ZStack {
                 // Glow rings
-                ForEach(0..<2, id: \.self) { i in
+                ForEach(0 ..< 2, id: \.self) { i in
                     Circle()
                         .stroke(SP.Colors.accent.opacity(0.08 - Double(i) * 0.03), lineWidth: 1)
                         .frame(width: CGFloat(80 + i * 20), height: CGFloat(80 + i * 20))
@@ -106,16 +128,6 @@ struct ProfileHubView: View {
         }
     }
 
-    private var initials: String {
-        let name = coordinator.userName
-        if name.isEmpty { return "👤" }
-        let parts = name.split(separator: " ")
-        if parts.count >= 2 {
-            return "\(parts[0].prefix(1))\(parts[1].prefix(1))".uppercased()
-        }
-        return String(name.prefix(2)).uppercased()
-    }
-
     // MARK: - Stats
 
     private var statsOverview: some View {
@@ -125,27 +137,12 @@ struct ProfileHubView: View {
             statTile("🌬️", coordinator.totalBreathingMinutes, "мин")
             statTile(
                 "🏆", coordinator.achievementService.achievements.filter(\.isUnlocked).count,
-                "Наград")
+                "Наград"
+            )
         }
         .opacity(appear ? 1 : 0)
         .offset(y: appear ? 0 : 15)
         .animation(SP.Anim.spring.delay(0.15), value: appear)
-    }
-
-    private func statTile(_ emoji: String, _ value: Int, _ label: String) -> some View {
-        VStack(spacing: 6) {
-            Text(emoji).font(.title3)
-            AnimatedNumber(
-                value: value,
-                font: SP.Typography.headline,
-                color: SP.Colors.textPrimary
-            )
-            Text(label)
-                .font(SP.Typography.caption2)
-                .foregroundColor(SP.Colors.textTertiary)
-        }
-        .frame(maxWidth: .infinity)
-        .spGlassCard(cornerRadius: SP.Layout.cornerSmall)
     }
 
     // MARK: - SOS Contacts
@@ -250,7 +247,8 @@ struct ProfileHubView: View {
                 ProfileView(service: coordinator.profileService)
             } label: {
                 settingsRowLabel(
-                    icon: "person.fill", title: "Подробный профиль", color: SP.Colors.warmth)
+                    icon: "person.fill", title: "Подробный профиль", color: SP.Colors.warmth
+                )
             }
 
             NavigationLink {
@@ -262,6 +260,46 @@ struct ProfileHubView: View {
         .opacity(appear ? 1 : 0)
         .offset(y: appear ? 0 : 15)
         .animation(SP.Anim.spring.delay(0.35), value: appear)
+    }
+
+    // MARK: - About
+
+    private var aboutSection: some View {
+        VStack(spacing: 8) {
+            Text("StopPanic")
+                .font(SP.Typography.headline)
+                .foregroundColor(SP.Colors.textPrimary)
+            Text("v2.0 · Made with ❤️")
+                .font(SP.Typography.caption)
+                .foregroundColor(SP.Colors.textTertiary)
+            Text(
+                "⚠️ Это приложение НЕ заменяет профессиональную помощь.\nПри серьёзных проблемах обратитесь к врачу."
+            )
+            .font(SP.Typography.caption2)
+            .foregroundColor(SP.Colors.textTertiary)
+            .multilineTextAlignment(.center)
+            .padding(.top, 4)
+        }
+        .frame(maxWidth: .infinity)
+        .padding(.top, 12)
+        .opacity(appear ? 1 : 0)
+        .animation(SP.Anim.spring.delay(0.45), value: appear)
+    }
+
+    private func statTile(_ emoji: String, _ value: Int, _ label: String) -> some View {
+        VStack(spacing: 6) {
+            Text(emoji).font(.title3)
+            AnimatedNumber(
+                value: value,
+                font: SP.Typography.headline,
+                color: SP.Colors.textPrimary
+            )
+            Text(label)
+                .font(SP.Typography.caption2)
+                .foregroundColor(SP.Colors.textTertiary)
+        }
+        .frame(maxWidth: .infinity)
+        .spGlassCard(cornerRadius: SP.Layout.cornerSmall)
     }
 
     private func settingsRow(
@@ -310,42 +348,15 @@ struct ProfileHubView: View {
         }
         .spGlassCard(cornerRadius: SP.Layout.cornerSmall)
     }
-
-    // MARK: - About
-
-    private var aboutSection: some View {
-        VStack(spacing: 8) {
-            Text("StopPanic")
-                .font(SP.Typography.headline)
-                .foregroundColor(SP.Colors.textPrimary)
-            Text("v2.0 · Made with ❤️")
-                .font(SP.Typography.caption)
-                .foregroundColor(SP.Colors.textTertiary)
-            Text(
-                "⚠️ Это приложение НЕ заменяет профессиональную помощь.\nПри серьёзных проблемах обратитесь к врачу."
-            )
-            .font(SP.Typography.caption2)
-            .foregroundColor(SP.Colors.textTertiary)
-            .multilineTextAlignment(.center)
-            .padding(.top, 4)
-        }
-        .frame(maxWidth: .infinity)
-        .padding(.top, 12)
-        .opacity(appear ? 1 : 0)
-        .animation(SP.Anim.spring.delay(0.45), value: appear)
-    }
 }
 
-// MARK: - Add Contact Sheet
+// MARK: - AddContactSheet
 
 struct AddContactSheet: View {
-    @Environment(AppCoordinator.self) var coordinator
-    @Environment(\.dismiss) private var dismiss
+    // MARK: Internal
 
-    @State private var name = ""
-    @State private var phone = ""
-    @State private var relationship = ""
-    @State private var notifyOnPanic = true
+    @Environment(AppCoordinator.self)
+    var coordinator
 
     var body: some View {
         NavigationStack {
@@ -436,4 +447,18 @@ struct AddContactSheet: View {
             }
         }
     }
+
+    // MARK: Private
+
+    @Environment(\.dismiss)
+    private var dismiss
+
+    @State
+    private var name = ""
+    @State
+    private var phone = ""
+    @State
+    private var relationship = ""
+    @State
+    private var notifyOnPanic = true
 }

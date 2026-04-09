@@ -1,0 +1,179 @@
+# SwiftLint Configuration — StopPanic
+# Professional App Store-grade rules
+
+# ─── Paths ───
+included:
+  - StopPanic
+
+excluded:
+  - build
+  - DerivedData
+  - Pods
+  - .build
+  - StopPanic Watch
+
+# ─── Enabled Rules ───
+opt_in_rules:
+  - array_init
+  - closure_body_length
+  - closure_end_indentation
+  - closure_spacing
+  - collection_alignment
+  - comma_inheritance
+  - contains_over_filter_count
+  - contains_over_first_not_nil
+  - contains_over_range_nil_comparison
+  - convenience_type
+  - discarded_notification_center_observer
+  - empty_collection_literal
+  - empty_count
+  - empty_string
+  - enum_case_associated_values_count
+  - explicit_init
+  - fallthrough
+  - fatal_error_message
+  - file_name_no_space
+  - first_where
+  - flatmap_over_map_reduce
+  - identical_operands
+  - implicit_return
+  - joined_default_parameter
+  - last_where
+  - legacy_multiple
+  - literal_expression_end_indentation
+  - lower_acl_than_parent
+  - modifier_order
+  - multiline_function_chains
+  - multiline_literal_brackets
+  - multiline_parameters
+  - operator_usage_whitespace
+  - overridden_super_call
+  - pattern_matching_keywords
+  - prefer_self_in_static_references
+  - prefer_self_type_over_type_of_self
+  - prefer_zero_over_explicit_init
+  - private_action
+  - private_outlet
+  - prohibited_super_call
+  - redundant_nil_coalescing
+  - redundant_type_annotation
+  - return_value_from_void_function
+  - shorthand_optional_binding
+  - sorted_first_last
+  - toggle_bool
+  - trailing_comma
+  - unavailable_function
+  - unneeded_parentheses_in_closure_argument
+  - unowned_variable_capture
+  - vertical_parameter_alignment_on_call
+  - vertical_whitespace_closing_braces
+  - vertical_whitespace_opening_braces
+  - yoda_condition
+
+# ─── Disabled Rules ───
+disabled_rules:
+  - todo  # We have TODOs that are tracked
+  - opening_brace  # SwiftFormat handles this
+  - trailing_whitespace  # SwiftFormat handles this
+  - multiline_arguments  # SwiftUI closures make this impractical
+  - multiline_function_chains  # SwiftUI modifier chains need flexibility
+  - switch_case_alignment  # Compact enums are more readable
+  - multiple_closures_with_trailing_closure  # Common SwiftUI pattern
+  - closure_parameter_position  # ViewDimensions alignment guides
+
+# ─── Rule Configuration ───
+line_length:
+  warning: 150
+  error: 200
+  ignores_comments: true
+  ignores_urls: true
+  ignores_interpolated_strings: true
+
+file_length:
+  warning: 600
+  error: 1000
+  ignore_comment_only_lines: true
+
+type_body_length:
+  warning: 500
+  error: 800
+
+function_body_length:
+  warning: 60
+  error: 100
+
+function_parameter_count:
+  warning: 6
+  error: 8
+
+type_name:
+  min_length: 2
+  max_length:
+    warning: 50
+    error: 60
+
+identifier_name:
+  min_length:
+    warning: 2
+    error: 1
+  max_length:
+    warning: 50
+    error: 60
+  excluded:
+    - id
+    - x
+    - y
+    - i
+    - j
+    - ok
+    - to
+    - vc
+    - vm
+    - dx
+    - dy
+    - a
+    - r
+    - g
+    - b
+    - on
+    - bpm
+    - hr
+    - d
+    - s
+    - m
+    - p
+    - q
+    - t
+    - w
+    - h
+
+nesting:
+  type_level: 3
+  function_level: 3
+
+closure_body_length:
+  warning: 150
+  error: 250
+
+enum_case_associated_values_count:
+  warning: 5
+  error: 7
+
+cyclomatic_complexity:
+  warning: 15
+  error: 25
+  ignores_case_statements: true
+
+large_tuple:
+  warning: 3
+  error: 4
+
+trailing_comma:
+  mandatory_comma: true
+
+
+vertical_whitespace:
+  max_empty_lines: 2
+
+# ─── Reporter ───
+reporter: "xcode"

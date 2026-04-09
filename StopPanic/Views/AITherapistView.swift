@@ -2,9 +2,7 @@ import SwiftUI
 
 /// Экран AI-терапевта
 struct AITherapistView: View {
-    @StateObject private var therapist = AITherapistService()
-    @State private var inputText = ""
-    @FocusState private var isInputFocused: Bool
+    // MARK: Internal
 
     var body: some View {
         ZStack {
@@ -17,6 +15,15 @@ struct AITherapistView: View {
             }
         }
     }
+
+    // MARK: Private
+
+    @StateObject
+    private var therapist = AITherapistService()
+    @State
+    private var inputText = ""
+    @FocusState
+    private var isInputFocused: Bool
 
     // MARK: - Header
 
@@ -70,39 +77,10 @@ struct AITherapistView: View {
         }
     }
 
-    private func messageBubble(_ msg: AIMessage) -> some View {
-        HStack {
-            if msg.role == .user { Spacer() }
-            VStack(alignment: msg.role == .user ? .trailing : .leading, spacing: 4) {
-                if let t = msg.technique {
-                    Text(t.rawValue)
-                        .font(.caption2)
-                        .padding(.horizontal, 8).padding(.vertical, 2)
-                        .background(AppTheme.primary.opacity(0.3))
-                        .clipShape(Capsule())
-                        .foregroundColor(AppTheme.primary)
-                }
-                Text(LocalizedStringKey(msg.content))
-                    .padding(12)
-                    .background(msg.role == .user
-                                ? AppTheme.primary.opacity(0.25)
-                                : AppTheme.card)
-                    .clipShape(RoundedRectangle(cornerRadius: 16))
-                    .foregroundColor(.white)
-                Text(msg.timestamp, style: .time)
-                    .font(.caption2)
-                    .foregroundColor(.white.opacity(0.4))
-            }
-            .frame(maxWidth: 300,
-                   alignment: msg.role == .user ? .trailing : .leading)
-            if msg.role == .assistant { Spacer() }
-        }
-    }
-
     private var typingDots: some View {
         HStack {
             HStack(spacing: 4) {
-                ForEach(0..<3, id: \.self) { i in
+                ForEach(0 ..< 3, id: \.self) { _ in
                     Circle()
                         .fill(AppTheme.primary)
                         .frame(width: 8, height: 8)
@@ -129,7 +107,8 @@ struct AITherapistView: View {
                 .focused($isInputFocused)
             Button {
                 guard !inputText.trimmingCharacters(in: .whitespaces).isEmpty else { return }
-                let text = inputText; inputText = ""
+                let text = inputText
+                inputText = ""
                 Task { await therapist.sendMessage(text) }
             } label: {
                 Image(systemName: "arrow.up.circle.fill")
@@ -140,6 +119,37 @@ struct AITherapistView: View {
         }
         .padding(.horizontal, 16).padding(.vertical, 8)
         .background(AppTheme.card.opacity(0.95))
+    }
+
+    private func messageBubble(_ msg: AIMessage) -> some View {
+        HStack {
+            if msg.role == .user { Spacer() }
+            VStack(alignment: msg.role == .user ? .trailing : .leading, spacing: 4) {
+                if let t = msg.technique {
+                    Text(t.rawValue)
+                        .font(.caption2)
+                        .padding(.horizontal, 8).padding(.vertical, 2)
+                        .background(AppTheme.primary.opacity(0.3))
+                        .clipShape(Capsule())
+                        .foregroundColor(AppTheme.primary)
+                }
+                Text(LocalizedStringKey(msg.content))
+                    .padding(12)
+                    .background(msg.role == .user
+                        ? AppTheme.primary.opacity(0.25)
+                        : AppTheme.card)
+                    .clipShape(RoundedRectangle(cornerRadius: 16))
+                    .foregroundColor(.white)
+                Text(msg.timestamp, style: .time)
+                    .font(.caption2)
+                    .foregroundColor(.white.opacity(0.4))
+            }
+            .frame(
+                maxWidth: 300,
+                alignment: msg.role == .user ? .trailing : .leading
+            )
+            if msg.role == .assistant { Spacer() }
+        }
     }
 }
 

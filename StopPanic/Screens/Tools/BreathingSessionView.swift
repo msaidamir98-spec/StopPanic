@@ -1,33 +1,13 @@
 import SwiftUI
 
 // MARK: - Beautiful Breathing Session
+
 // Визуально потрясающая сессия дыхания с анимацией и хаптиками.
 // Поддерживает 4 техники: 4-7-8, Квадратное, 2x, Резонансное.
 // ✨ Premium treatment: частицы, glow ring, стекло, shimmer
 
 struct BreathingSessionView: View {
-    let technique: BreathingTechnique
-    @Environment(\.dismiss) private var dismiss
-    @Environment(AppCoordinator.self) var coordinator
-
-    @State private var isActive = false
-    @State private var breathScale: CGFloat = 0.5
-    @State private var breathOpacity: Double = 0.3
-    @State private var phase: BreathPhase = .ready
-    @State private var phaseText: String = "Готов?"
-    @State private var cycleCount = 0
-    @State private var totalSeconds = 0
-    @State private var breathTimer: Timer?
-    @State private var sessionTimer: Timer?
-    @State private var ringProgress: CGFloat = 0
-    @State private var appear = false
-    @State private var particleRotation: Double = 0
-
-    // Pre-computed random particle sizes to avoid recalculation during render
-    private let particleSizes: [(w: CGFloat, h: CGFloat)] = (0..<16).map { _ in
-        let s = CGFloat(Int.random(in: 3...6))
-        return (w: s, h: s)
-    }
+    // MARK: Internal
 
     enum BreathPhase: String {
         case ready = "Готов?"
@@ -37,6 +17,11 @@ struct BreathingSessionView: View {
         case holdAfter = "Пауза"
         case complete = "Готово!"
     }
+
+    let technique: BreathingTechnique
+
+    @Environment(AppCoordinator.self)
+    var coordinator
 
     var body: some View {
         ZStack {
@@ -82,6 +67,58 @@ struct BreathingSessionView: View {
         .navigationBarHidden(true)
     }
 
+    // MARK: Private
+
+    @Environment(\.dismiss)
+    private var dismiss
+
+    @State
+    private var isActive = false
+    @State
+    private var breathScale: CGFloat = 0.5
+    @State
+    private var breathOpacity: Double = 0.3
+    @State
+    private var phase: BreathPhase = .ready
+    @State
+    private var phaseText: String = "Готов?"
+    @State
+    private var cycleCount = 0
+    @State
+    private var totalSeconds = 0
+    @State
+    private var breathTimer: Timer?
+    @State
+    private var sessionTimer: Timer?
+    @State
+    private var ringProgress: CGFloat = 0
+    @State
+    private var appear = false
+    @State
+    private var particleRotation: Double = 0
+
+    /// Pre-computed random particle sizes to avoid recalculation during render
+    private let particleSizes: [(w: CGFloat, h: CGFloat)] = (0 ..< 16).map { _ in
+        let s = CGFloat(Int.random(in: 3 ... 6))
+        return (w: s, h: s)
+    }
+
+    private var formattedTime: String {
+        let m = totalSeconds / 60
+        let s = totalSeconds % 60
+        return String(format: "%d:%02d", m, s)
+    }
+
+    private var phaseHint: String {
+        switch phase {
+        case .inhale: "через нос 🫁"
+        case .hold: "спокойно 🧘"
+        case .exhale: "через рот 💨"
+        case .holdAfter: "расслабься"
+        default: ""
+        }
+    }
+
     // MARK: - Top Bar
 
     private var topBar: some View {
@@ -120,18 +157,12 @@ struct BreathingSessionView: View {
         .padding(.top, 8)
     }
 
-    private var formattedTime: String {
-        let m = totalSeconds / 60
-        let s = totalSeconds % 60
-        return String(format: "%d:%02d", m, s)
-    }
-
     // MARK: - Breathing Visualization
 
     private var breathingVisualization: some View {
         ZStack {
             // Orbiting particles (16 dots)
-            ForEach(0..<16, id: \.self) { i in
+            ForEach(0 ..< 16, id: \.self) { i in
                 Circle()
                     .fill(technique.color.opacity(0.4))
                     .frame(width: particleSizes[i].w, height: particleSizes[i].h)
@@ -202,23 +233,13 @@ struct BreathingSessionView: View {
                     .foregroundColor(.white)
                     .contentTransition(.opacity)
 
-                if isActive && phase != .ready {
+                if isActive, phase != .ready {
                     Text(phaseHint)
                         .font(SP.Typography.caption)
                         .foregroundColor(SP.Colors.textSecondary)
                         .transition(.opacity.combined(with: .scale(scale: 0.8)))
                 }
             }
-        }
-    }
-
-    private var phaseHint: String {
-        switch phase {
-        case .inhale: return "через нос 🫁"
-        case .hold: return "спокойно 🧘"
-        case .exhale: return "через рот 💨"
-        case .holdAfter: return "расслабься"
-        default: return ""
         }
     }
 
@@ -230,26 +251,10 @@ struct BreathingSessionView: View {
             statItem(icon: "clock", value: formattedTime, label: "время")
             statItem(
                 icon: "bolt.heart", value: "\(Int(coordinator.healthManager.heartRate))",
-                label: "BPM")
+                label: "BPM"
+            )
         }
         .spGlassCard(cornerRadius: SP.Layout.cornerSmall)
-    }
-
-    private func statItem(icon: String, value: String, label: String) -> some View {
-        VStack(spacing: 4) {
-            Image(systemName: icon)
-                .font(.system(size: 14))
-                .foregroundColor(technique.color)
-            Text(value)
-                .font(SP.Typography.headline)
-                .foregroundColor(SP.Colors.textPrimary)
-                .monospacedDigit()
-                .contentTransition(.numericText())
-            Text(label)
-                .font(SP.Typography.caption2)
-                .foregroundColor(SP.Colors.textTertiary)
-        }
-        .frame(maxWidth: .infinity)
     }
 
     // MARK: - Control
@@ -293,6 +298,23 @@ struct BreathingSessionView: View {
         .buttonStyle(PremiumButtonStyle())
     }
 
+    private func statItem(icon: String, value: String, label: String) -> some View {
+        VStack(spacing: 4) {
+            Image(systemName: icon)
+                .font(.system(size: 14))
+                .foregroundColor(technique.color)
+            Text(value)
+                .font(SP.Typography.headline)
+                .foregroundColor(SP.Colors.textPrimary)
+                .monospacedDigit()
+                .contentTransition(.numericText())
+            Text(label)
+                .font(SP.Typography.caption2)
+                .foregroundColor(SP.Colors.textTertiary)
+        }
+        .frame(maxWidth: .infinity)
+    }
+
     // MARK: - Session Logic
 
     private func startSession() {
@@ -326,17 +348,17 @@ struct BreathingSessionView: View {
         setPhase(phases[0].0, duration: phases[0].1)
 
         breathTimer = Timer.scheduledTimer(withTimeInterval: 0.1, repeats: true) { [self] _ in
-            guard self.isActive else { return }
+            guard isActive else { return }
             elapsed += 0.1
 
             ringProgress = CGFloat(elapsed / totalDuration)
 
             var phaseEnd: TimeInterval = 0
-            for i in 0...currentPhase {
+            for i in 0 ... currentPhase {
                 phaseEnd += phases[i].1
             }
 
-            if elapsed >= phaseEnd && currentPhase + 1 < phases.count {
+            if elapsed >= phaseEnd, currentPhase + 1 < phases.count {
                 currentPhase += 1
                 setPhase(phases[currentPhase].0, duration: phases[currentPhase].1)
             }

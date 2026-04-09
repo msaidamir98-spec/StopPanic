@@ -1,18 +1,21 @@
-import Foundation
 import Combine
+import Foundation
 
 /// Хранилище дневника панических атак
 @MainActor
 final class DiaryService: ObservableObject {
-    @Published var diaryEpisodes: [DiaryEpisode] = []
-
-    private let storageURL: URL
+    // MARK: Lifecycle
 
     init() {
         let dir = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask).first!
         storageURL = dir.appendingPathComponent("diary_episodes.json")
         loadEpisodes()
     }
+
+    // MARK: Internal
+
+    @Published
+    var diaryEpisodes: [DiaryEpisode] = []
 
     func addDiaryEpisode(intensity: Int, notes: String) {
         let episode = DiaryEpisode(intensity: intensity, notes: notes)
@@ -26,6 +29,10 @@ final class DiaryService: ObservableObject {
         saveEpisodes()
     }
 
+    // MARK: Private
+
+    private let storageURL: URL
+
     private func saveEpisodes() {
         if let data = try? JSONEncoder().encode(diaryEpisodes) {
             try? data.write(to: storageURL)
@@ -34,7 +41,8 @@ final class DiaryService: ObservableObject {
 
     private func loadEpisodes() {
         if let data = try? Data(contentsOf: storageURL),
-           let loaded = try? JSONDecoder().decode([DiaryEpisode].self, from: data) {
+           let loaded = try? JSONDecoder().decode([DiaryEpisode].self, from: data)
+        {
             diaryEpisodes = loaded
         }
     }

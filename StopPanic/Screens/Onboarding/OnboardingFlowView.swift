@@ -1,18 +1,12 @@
 import SwiftUI
 
 // MARK: - Onboarding Flow — Premium WOW
+
 // Персонализированный онбординг с particle effects, staggered animations,
 // glassmorphism cards, haptic feedback на каждом шаге.
 
 struct OnboardingFlowView: View {
-    @Environment(AppCoordinator.self) var coordinator
-    @State private var currentPage = 0
-    @State private var userName = ""
-    @State private var selectedExperience: PanicExperience?
-    @State private var selectedGoals: Set<String> = []
-    @State private var showContent = false
-    @State private var logoScale: CGFloat = 0.3
-    @State private var logoRotation: Double = -30
+    // MARK: Internal
 
     enum PanicExperience: String, CaseIterable {
         case first = "Впервые"
@@ -21,25 +15,21 @@ struct OnboardingFlowView: View {
         case often = "Часто"
         case daily = "Почти каждый день"
 
+        // MARK: Internal
+
         var emoji: String {
             switch self {
-            case .first: return "🌱"
-            case .rare: return "🌤️"
-            case .sometimes: return "⛅"
-            case .often: return "🌧️"
-            case .daily: return "⛈️"
+            case .first: "🌱"
+            case .rare: "🌤️"
+            case .sometimes: "⛅"
+            case .often: "🌧️"
+            case .daily: "⛈️"
             }
         }
     }
 
-    private let goals = [
-        ("🫁", "Научиться дышать при панике"),
-        ("💓", "Понять: это ПА или сердце?"),
-        ("📝", "Вести дневник тревоги"),
-        ("🧠", "Разобрать тревожные мысли"),
-        ("😌", "Снизить общую тревожность"),
-        ("🆘", "Иметь план на случай паники"),
-    ]
+    @Environment(AppCoordinator.self)
+    var coordinator
 
     var body: some View {
         ZStack {
@@ -72,11 +62,37 @@ struct OnboardingFlowView: View {
         }
     }
 
+    // MARK: Private
+
+    @State
+    private var currentPage = 0
+    @State
+    private var userName = ""
+    @State
+    private var selectedExperience: PanicExperience?
+    @State
+    private var selectedGoals: Set<String> = []
+    @State
+    private var showContent = false
+    @State
+    private var logoScale: CGFloat = 0.3
+    @State
+    private var logoRotation: Double = -30
+
+    private let goals = [
+        ("🫁", "Научиться дышать при панике"),
+        ("💓", "Понять: это ПА или сердце?"),
+        ("📝", "Вести дневник тревоги"),
+        ("🧠", "Разобрать тревожные мысли"),
+        ("😌", "Снизить общую тревожность"),
+        ("🆘", "Иметь план на случай паники"),
+    ]
+
     // MARK: - Progress Bar
 
     private var progressBar: some View {
         HStack(spacing: 6) {
-            ForEach(0..<5, id: \.self) { i in
+            ForEach(0 ..< 5, id: \.self) { i in
                 Capsule()
                     .fill(i <= currentPage ? SP.Colors.accent : Color.white.opacity(0.1))
                     .frame(height: 4)
@@ -85,7 +101,8 @@ struct OnboardingFlowView: View {
                             .fill(i <= currentPage ? SP.Colors.accent : Color.clear)
                             .shadow(
                                 color: SP.Colors.accent.opacity(i <= currentPage ? 0.5 : 0),
-                                radius: 4)
+                                radius: 4
+                            )
                     )
                     .animation(SP.Anim.springSnappy.delay(Double(i) * 0.05), value: currentPage)
             }
@@ -102,7 +119,7 @@ struct OnboardingFlowView: View {
             // Animated Logo
             ZStack {
                 // Outer glow rings
-                ForEach(0..<3, id: \.self) { i in
+                ForEach(0 ..< 3, id: \.self) { i in
                     Circle()
                         .stroke(SP.Colors.accent.opacity(0.08 - Double(i) * 0.02), lineWidth: 1)
                         .frame(width: CGFloat(120 + i * 30), height: CGFloat(120 + i * 30))
@@ -148,7 +165,8 @@ struct OnboardingFlowView: View {
             // Feature lines with staggered animation
             VStack(alignment: .leading, spacing: 14) {
                 featureLine(
-                    "🆘", "Помощь за 3 секунды", "Одна кнопка — моментальная помощь", delay: 0.5)
+                    "🆘", "Помощь за 3 секунды", "Одна кнопка — моментальная помощь", delay: 0.5
+                )
                 featureLine("💓", "ПА ≠ Инфаркт", "Научный анализ сердечного ритма", delay: 0.6)
                 featureLine("📝", "Дневник тревоги", "Отслеживай паттерны и прогресс", delay: 0.7)
                 featureLine("⌚", "Apple Watch", "Мониторинг пульса на запястье", delay: 0.8)
@@ -164,28 +182,6 @@ struct OnboardingFlowView: View {
         }
         .padding(.horizontal, SP.Layout.padding)
         .padding(.bottom, 40)
-    }
-
-    private func featureLine(
-        _ emoji: String, _ title: String, _ subtitle: String, delay: Double = 0
-    ) -> some View {
-        HStack(spacing: 14) {
-            Text(emoji)
-                .font(.title2)
-                .frame(width: 36)
-
-            VStack(alignment: .leading, spacing: 2) {
-                Text(title)
-                    .font(SP.Typography.headline)
-                    .foregroundColor(SP.Colors.textPrimary)
-                Text(subtitle)
-                    .font(SP.Typography.caption)
-                    .foregroundColor(SP.Colors.textTertiary)
-            }
-        }
-        .opacity(showContent ? 1 : 0)
-        .offset(x: showContent ? 0 : -30)
-        .animation(SP.Anim.spring.delay(delay), value: showContent)
     }
 
     // MARK: - Page 1: Name
@@ -363,14 +359,16 @@ struct OnboardingFlowView: View {
 
             ZStack {
                 // Celebration rings
-                ForEach(0..<3, id: \.self) { i in
+                ForEach(0 ..< 3, id: \.self) { i in
                     Circle()
                         .stroke(SP.Colors.success.opacity(0.1 - Double(i) * 0.03), lineWidth: 1)
                         .frame(width: CGFloat(130 + i * 25), height: CGFloat(130 + i * 25))
                         .scaleEffect(currentPage == 4 ? 1 : 0.5)
                         .animation(
                             .spring(response: 0.8, dampingFraction: 0.5).delay(
-                                0.2 + Double(i) * 0.1), value: currentPage)
+                                0.2 + Double(i) * 0.1
+                            ), value: currentPage
+                        )
                 }
 
                 Circle()
@@ -382,7 +380,8 @@ struct OnboardingFlowView: View {
                     .foregroundColor(SP.Colors.success)
                     .scaleEffect(currentPage == 4 ? 1 : 0.3)
                     .animation(
-                        .spring(response: 0.6, dampingFraction: 0.5).delay(0.1), value: currentPage)
+                        .spring(response: 0.6, dampingFraction: 0.5).delay(0.1), value: currentPage
+                    )
             }
 
             Text("Всё готово\(userName.isEmpty ? "" : ", \(userName)")!")
@@ -433,6 +432,28 @@ struct OnboardingFlowView: View {
         }
         .padding(.horizontal, SP.Layout.padding)
         .padding(.bottom, 40)
+    }
+
+    private func featureLine(
+        _ emoji: String, _ title: String, _ subtitle: String, delay: Double = 0
+    ) -> some View {
+        HStack(spacing: 14) {
+            Text(emoji)
+                .font(.title2)
+                .frame(width: 36)
+
+            VStack(alignment: .leading, spacing: 2) {
+                Text(title)
+                    .font(SP.Typography.headline)
+                    .foregroundColor(SP.Colors.textPrimary)
+                Text(subtitle)
+                    .font(SP.Typography.caption)
+                    .foregroundColor(SP.Colors.textTertiary)
+            }
+        }
+        .opacity(showContent ? 1 : 0)
+        .offset(x: showContent ? 0 : -30)
+        .animation(SP.Anim.spring.delay(delay), value: showContent)
     }
 
     // MARK: - Reusable Next Button

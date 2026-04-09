@@ -1,14 +1,16 @@
+import Combine
 import Foundation
 import HealthKit
-import Combine
 
 /// Менеджер HealthKit — чтение пульса с Apple Watch
 @MainActor
 final class HealthKitManager: ObservableObject {
-    @Published var heartRate: Double = 0
-    @Published var isAuthorized: Bool = false
+    // MARK: Internal
 
-    private let healthStore = HKHealthStore()
+    @Published
+    var heartRate: Double = 0
+    @Published
+    var isAuthorized: Bool = false
 
     func requestPermissions() {
         guard HKHealthStore.isHealthDataAvailable() else { return }
@@ -32,6 +34,10 @@ final class HealthKitManager: ObservableObject {
             }
         }
     }
+
+    // MARK: Private
+
+    private let healthStore = HKHealthStore()
 
     private func startObservingHeartRate() {
         let hrType = HKQuantityType.quantityType(forIdentifier: .heartRate)!

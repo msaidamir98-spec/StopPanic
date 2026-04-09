@@ -2,8 +2,7 @@ import SwiftUI
 
 /// Экран «Радар паники» — анализ сердечного ритма ПА vs Инфаркт
 struct HeartAnalysisView: View {
-    @StateObject private var service = HeartAnalysisService()
-    @State private var showDisclaimer = true
+    // MARK: Internal
 
     var body: some View {
         ZStack {
@@ -27,6 +26,25 @@ struct HeartAnalysisView: View {
         .navigationTitle("Анализ ❤️")
     }
 
+    // MARK: Private
+
+    @StateObject
+    private var service = HeartAnalysisService()
+    @State
+    private var showDisclaimer = true
+
+    // MARK: - Helpers
+
+    private var diagnosisColor: Color {
+        switch service.currentAnalysis?.diagnosis {
+        case .panicAttack: AppTheme.primary
+        case .likelyCardiac: .red
+        case .arrhythmia: .orange
+        case .normal: AppTheme.secondary
+        default: .gray
+        }
+    }
+
     // MARK: - Disclaimer
 
     private var disclaimerCard: some View {
@@ -44,9 +62,11 @@ struct HeartAnalysisView: View {
                                 .foregroundColor(.white.opacity(0.5))
                         }
                     }
-                    Text("Этот анализ НЕ заменяет медицинскую диагностику. При подозрении на сердечную проблему НЕМЕДЛЕННО вызовите скорую (103/112).")
-                        .font(.caption)
-                        .foregroundColor(.white.opacity(0.8))
+                    Text(
+                        "Этот анализ НЕ заменяет медицинскую диагностику. При подозрении на сердечную проблему НЕМЕДЛЕННО вызовите скорую (103/112)."
+                    )
+                    .font(.caption)
+                    .foregroundColor(.white.opacity(0.8))
                 }
                 .padding(16)
                 .background(Color.orange.opacity(0.15))
@@ -87,6 +107,63 @@ struct HeartAnalysisView: View {
         .padding(.top, 12)
     }
 
+    // MARK: - Emergency
+
+    private var emergencyBanner: some View {
+        VStack(spacing: 8) {
+            Text("🚨 ВЫЗОВИТЕ СКОРУЮ").font(.title3.bold()).foregroundColor(.white)
+            Text("103 (Россия) · 112 (Европа) · 911 (США)")
+                .font(.headline).foregroundColor(.white)
+        }
+        .frame(maxWidth: .infinity)
+        .padding(20)
+        .background(Color.red)
+        .clipShape(RoundedRectangle(cornerRadius: 16))
+    }
+
+    // MARK: - Controls
+
+    private var monitoringButton: some View {
+        VStack(spacing: 12) {
+            Button {
+                if service.isMonitoring {
+                    service.stopMonitoring()
+                } else {
+                    service.startMonitoring()
+                }
+            } label: {
+                HStack {
+                    Image(systemName: service.isMonitoring ? "stop.fill" : "heart.fill")
+                    Text(service.isMonitoring ? "Остановить мониторинг" : "Начать мониторинг")
+                }
+                .font(.headline)
+                .frame(maxWidth: .infinity)
+                .padding()
+                .background(service.isMonitoring ? AppTheme.danger : AppTheme.primary)
+                .foregroundColor(.white)
+                .clipShape(RoundedRectangle(cornerRadius: 16))
+            }
+
+            if service.isMonitoring {
+                Button {
+                    service.markPreBreathingHR()
+                } label: {
+                    Text("🫁 Начать дыхание (для теста)")
+                        .font(.subheadline)
+                        .foregroundColor(AppTheme.secondary)
+                }
+
+                Button {
+                    service.checkBreathingResponse()
+                } label: {
+                    Text("✅ Проверить реакцию на дыхание")
+                        .font(.subheadline)
+                        .foregroundColor(AppTheme.primary)
+                }
+            }
+        }
+    }
+
     // MARK: - Diagnosis
 
     private func diagnosisCard(_ a: HeartAnalysis) -> some View {
@@ -113,7 +190,7 @@ struct HeartAnalysisView: View {
                         "✅ Паттерн: \(a.risePattern.rawValue)",
                         service.breathingResponseDetected
                             ? "✅ Пульс реагирует на дыхание"
-                            : "⏳ Попробуйте дыхание для подтверждения"
+                            : "⏳ Попробуйте дыхание для подтверждения",
                     ]
                 )
             } else if a.diagnosis == .likelyCardiac || a.diagnosis == .arrhythmia {
@@ -123,7 +200,7 @@ struct HeartAnalysisView: View {
                         "⚠️ Ритм нерегулярный (\(String(format: "%.0f%%", a.irregularity * 100)))",
                         "⚠️ HRV хаотичен: \(String(format: "%.0f", a.hrvMs)) мс",
                         "⚠️ Не реагирует на дыхательные техники",
-                        "🚨 Рекомендуется вызвать скорую"
+                        "🚨 Рекомендуется вызвать скорую",
                     ]
                 )
             }
@@ -188,75 +265,6 @@ struct HeartAnalysisView: View {
         .padding(16)
         .background(AppTheme.primary.opacity(0.1))
         .clipShape(RoundedRectangle(cornerRadius: 16))
-    }
-
-    // MARK: - Emergency
-
-    private var emergencyBanner: some View {
-        VStack(spacing: 8) {
-            Text("🚨 ВЫЗОВИТЕ СКОРУЮ").font(.title3.bold()).foregroundColor(.white)
-            Text("103 (Россия) · 112 (Европа) · 911 (США)")
-                .font(.headline).foregroundColor(.white)
-        }
-        .frame(maxWidth: .infinity)
-        .padding(20)
-        .background(Color.red)
-        .clipShape(RoundedRectangle(cornerRadius: 16))
-    }
-
-    // MARK: - Controls
-
-    private var monitoringButton: some View {
-        VStack(spacing: 12) {
-            Button {
-                if service.isMonitoring {
-                    service.stopMonitoring()
-                } else {
-                    service.startMonitoring()
-                }
-            } label: {
-                HStack {
-                    Image(systemName: service.isMonitoring ? "stop.fill" : "heart.fill")
-                    Text(service.isMonitoring ? "Остановить мониторинг" : "Начать мониторинг")
-                }
-                .font(.headline)
-                .frame(maxWidth: .infinity)
-                .padding()
-                .background(service.isMonitoring ? AppTheme.danger : AppTheme.primary)
-                .foregroundColor(.white)
-                .clipShape(RoundedRectangle(cornerRadius: 16))
-            }
-
-            if service.isMonitoring {
-                Button {
-                    service.markPreBreathingHR()
-                } label: {
-                    Text("🫁 Начать дыхание (для теста)")
-                        .font(.subheadline)
-                        .foregroundColor(AppTheme.secondary)
-                }
-
-                Button {
-                    service.checkBreathingResponse()
-                } label: {
-                    Text("✅ Проверить реакцию на дыхание")
-                        .font(.subheadline)
-                        .foregroundColor(AppTheme.primary)
-                }
-            }
-        }
-    }
-
-    // MARK: - Helpers
-
-    private var diagnosisColor: Color {
-        switch service.currentAnalysis?.diagnosis {
-        case .panicAttack:   return AppTheme.primary
-        case .likelyCardiac: return .red
-        case .arrhythmia:    return .orange
-        case .normal:        return AppTheme.secondary
-        default:             return .gray
-        }
     }
 }
 

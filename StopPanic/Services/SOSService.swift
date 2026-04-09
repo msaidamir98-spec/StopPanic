@@ -5,9 +5,15 @@ import UserNotifications
 /// SOS-сервис: экстренные контакты + телефоны доверия
 @MainActor
 final class SOSService: ObservableObject {
-    @Published var contacts: [SOSContact] = []
-    @Published var panicModeActive: Bool = false
-    private var lastSOSDate: Date?
+    // MARK: Lifecycle
+
+    init() {
+        let dir = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask).first!
+        storageURL = dir.appendingPathComponent("sos_contacts.json")
+        loadContacts()
+    }
+
+    // MARK: Internal
 
     static let crisisLines: [String: String] = [
         "RU": "8-800-2000-122", "US": "988", "UK": "116 123",
@@ -15,12 +21,14 @@ final class SOSService: ObservableObject {
         "IT": "800 274 274", "JP": "0570-064-556",
     ]
 
-    private let storageURL: URL
+    @Published
+    var contacts: [SOSContact] = []
+    @Published
+    var panicModeActive: Bool = false
 
-    init() {
-        let dir = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask).first!
-        storageURL = dir.appendingPathComponent("sos_contacts.json")
-        loadContacts()
+    static func getCrisisLine() -> String {
+        let region = Locale.current.language.region?.identifier ?? "US"
+        return crisisLines[region] ?? "988"
     }
 
     func activateSOS() {
@@ -44,7 +52,7 @@ final class SOSService: ObservableObject {
             let request = UNNotificationRequest(
                 identifier: "sos_\(contact.id.uuidString)",
                 content: content,
-                trigger: nil  // immediate
+                trigger: nil // immediate
             )
             UNUserNotificationCenter.current().add(request)
         }
@@ -53,7 +61,7 @@ final class SOSService: ObservableObject {
         if contacts.filter(\.notifyOnPanic).isEmpty {
             let content = UNMutableNotificationContent()
             content.title = "🆘 Паническая атака"
-            content.body = "Телефон доверия: \(SOSService.getCrisisLine())"
+            content.body = "Телефон доверия: \(Self.getCrisisLine())"
             content.sound = .defaultCritical
             let request = UNNotificationRequest(
                 identifier: "sos_crisis",
@@ -64,7 +72,9 @@ final class SOSService: ObservableObject {
         }
     }
 
-    func deactivateSOS() { panicModeActive = false }
+    func deactivateSOS() {
+        panicModeActive = false
+    }
 
     func addContact(_ contact: SOSContact) {
         contacts.append(contact)
@@ -77,10 +87,11 @@ final class SOSService: ObservableObject {
         saveContacts()
     }
 
-    static func getCrisisLine() -> String {
-        let region = Locale.current.language.region?.identifier ?? "US"
-        return crisisLines[region] ?? "988"
-    }
+    // MARK: Private
+
+    private var lastSOSDate: Date?
+
+    private let storageURL: URL
 
     private func saveContacts() {
         if let data = try? JSONEncoder().encode(contacts) {
@@ -90,7 +101,7 @@ final class SOSService: ObservableObject {
 
     private func loadContacts() {
         if let data = try? Data(contentsOf: storageURL),
-            let loaded = try? JSONDecoder().decode([SOSContact].self, from: data)
+           let loaded = try? JSONDecoder().decode([SOSContact].self, from: data)
         {
             contacts = loaded
         }
