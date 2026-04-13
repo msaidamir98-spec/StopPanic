@@ -712,3 +712,29 @@
 "profile.name_alert" = "Enter your name";
 
 "profile.made_with_love" = "Made with ❤️";
+
+// MARK: - Medical Disclaimer
+"disclaimer.title" = "Important Notice";
+"disclaimer.not_medical_title" = "Not a Medical Device";
+"disclaimer.not_medical_body" = "Stillō is a wellness companion app designed to help you practice relaxation techniques. It is NOT a medical device, does NOT provide medical advice, and does NOT diagnose, treat, cure, or prevent any disease or condition.";
+"disclaimer.emergency_title" = "In Case of Emergency";
+"disclaimer.emergency_body" = "If you experience chest pain, difficulty breathing, numbness, or suspect a heart problem — stop using this app immediately and call emergency services (911/112). Stillō is NOT a substitute for professional medical care.";
+"disclaimer.healthkit_title" = "Heart Rate Data";
+"disclaimer.healthkit_body" = "Stillō may read heart rate from Apple Watch for informational purposes only. This data is NOT used for medical diagnosis. Heart rate readings are approximate and should NOT be relied upon for medical decisions.";
+"disclaimer.intended_use_title" = "Intended Use";
+"disclaimer.intended_use_body" = "This app provides breathing exercises, grounding techniques, and mood tracking for general wellness purposes. It is designed as a self-help tool and does NOT replace consultation with a licensed healthcare professional.";
+"disclaimer.accept" = "I Understand and Accept";
+"disclaimer.scroll_hint" = "Please read all sections before accepting";
+
+// MARK: - Voice Guide (AVSpeechSynthesizer)
+"voice.inhale" = "Breathe in";
+"voice.hold" = "Hold";
+"voice.exhale" = "Breathe out, slowly";
+"voice.ground_see" = "Name 5 things you can see";
+"voice.ground_touch" = "Touch 4 things around you";
+"voice.ground_hear" = "Listen for 3 sounds";
+"voice.ground_smell" = "Notice 2 things you can smell";
+"voice.ground_taste" = "Focus on 1 taste";
+"voice.you_did_it" = "You did it. You are safe.";
+"voice.you_are_safe" = "You are safe. I am here with you.";
+"voice.toggle_label" = "Voice Guide";

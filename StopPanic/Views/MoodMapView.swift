@@ -254,19 +254,19 @@ struct MoodMapView: View {
 
     private func moodEmoji(_ mood: Int) -> String {
         switch mood {
-        case 1 ... 2: "😰"
-        case 3 ... 4: "😟"
-        case 5 ... 6: "😐"
-        case 7 ... 8: "🙂"
-        case 9 ... 10: "😊"
-        default: "😐"
+        case 1 ... 2: "☁️"
+        case 3 ... 4: "🌤️"
+        case 5 ... 6: "☀️"
+        case 7 ... 8: "😊"
+        case 9 ... 10: "🌟"
+        default: "☀️"
         }
     }
 
     private func moodColor(_ mood: Int) -> Color {
         switch mood {
-        case 1 ... 3: SP.Colors.danger
-        case 4 ... 5: SP.Colors.warning
+        case 1 ... 3: SP.Colors.calm
+        case 4 ... 5: SP.Colors.accent
         case 6 ... 7: SP.Colors.accent
         case 8 ... 10: SP.Colors.success
         default: SP.Colors.accent

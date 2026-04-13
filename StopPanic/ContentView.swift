@@ -15,6 +15,9 @@ struct ContentView: View {
                     }
                 }
                 .transition(.opacity)
+            } else if !coordinator.hasAcceptedDisclaimer {
+                MedicalDisclaimerView()
+                    .transition(.opacity)
             } else if !coordinator.hasSeenOnboarding {
                 OnboardingFlowView()
                     .transition(.move(edge: .trailing).combined(with: .opacity))
@@ -24,6 +27,7 @@ struct ContentView: View {
             }
         }
         .animation(SP.Anim.spring, value: showSplash)
+        .animation(SP.Anim.spring, value: coordinator.hasAcceptedDisclaimer)
         .animation(SP.Anim.spring, value: coordinator.hasSeenOnboarding)
     }
 

@@ -2,7 +2,7 @@ import SwiftUI
 
 // MARK: - ToolsHubView
 
-// Единый центр всех терапевтических инструментов.
+// Единый центр всех инструментов самопомощи.
 // ✨ Glassmorphism cards, premium gates, staggered animations
 
 struct ToolsHubView: View {

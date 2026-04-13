@@ -25,6 +25,16 @@ struct StilloApp: App {
                     coordinator.diaryService.addDiaryEpisode(intensity: intensity, notes: String(localized: "siri_quick_log_note"))
                     coordinator.selectedTab = .journal
                 }
+                .onOpenURL { url in
+                    guard url.scheme == "stillo" else { return }
+                    switch url.host {
+                    case "sos":
+                        coordinator.triggerSOS()
+                    case "breathing":
+                        coordinator.showBreathingSheet = true
+                    default: break
+                    }
+                }
                 .task {
                     // Start listening for StoreKit transactions
                     coordinator.premiumManager.listenForTransactions()

@@ -78,9 +78,13 @@ struct SOSFlowView: View {
         }
         .onAppear {
             startBreathing()
+            coordinator.audioGuide.speakSafe()
             withAnimation(.easeOut(duration: 0.6)) { appeared = true }
         }
-        .onDisappear { stopTimers() }
+        .onDisappear {
+            stopTimers()
+            coordinator.audioGuide.stop()
+        }
     }
 
     // MARK: Private
@@ -324,6 +328,7 @@ struct SOSFlowView: View {
             if groundingStep < 4 {
                 Button {
                     SP.Haptic.light()
+                    coordinator.audioGuide.speakGroundingStep(groundingStep + 1)
                     withAnimation(SP.Anim.spring) { groundingStep += 1 }
                 } label: {
                     Text(String(localized: "sos.ground_next"))
@@ -353,6 +358,7 @@ struct SOSFlowView: View {
             .onAppear {
                 withAnimation(SP.Anim.springBouncy) { completionScale = 1.0 }
                 SP.Haptic.success()
+                coordinator.audioGuide.speakCompletion()
             }
 
             Text(String(localized: "sos.you_did_it"))
@@ -424,6 +430,7 @@ struct SOSFlowView: View {
         guard let nextRaw = SOSStep(rawValue: currentStep.rawValue + 1) else { return }
         currentStep = nextRaw
         if nextRaw == .breathing { startBreathing() }
+        if nextRaw == .grounding { coordinator.audioGuide.speakGroundingStep(0) }
     }
 
     private func startBreathing() {
@@ -432,6 +439,7 @@ struct SOSFlowView: View {
         var elapsed: TimeInterval = 0
 
         breathPhase = .inhale
+        coordinator.audioGuide.speakBreathPhase(.inhale)
         withAnimation(.easeInOut(duration: 4)) { breathScale = 1.0 }
 
         breathTimer = Timer.scheduledTimer(withTimeInterval: 0.1, repeats: true) { [self] _ in
@@ -444,13 +452,16 @@ struct SOSFlowView: View {
                     breathPhase = .inhale
                     breathingCycles += 1
                     SP.Haptic.soft()
+                    coordinator.audioGuide.speakBreathPhase(.inhale)
                     withAnimation(.easeInOut(duration: 4)) { breathScale = 1.0 }
                 case 1:
                     breathPhase = .hold
+                    coordinator.audioGuide.speakBreathPhase(.hold)
                     withAnimation(.easeInOut(duration: 0.3)) { breathScale = 0.95 }
                 case 2:
                     breathPhase = .exhale
                     SP.Haptic.soft()
+                    coordinator.audioGuide.speakBreathPhase(.exhale)
                     withAnimation(.easeInOut(duration: 8)) { breathScale = 0.6 }
                 default: break
                 }

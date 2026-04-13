@@ -712,3 +712,29 @@
 "profile.name_alert" = "Gib deinen Namen ein";
 
 "profile.made_with_love" = "Mit ❤️ gemacht";
+
+// MARK: - Medical Disclaimer
+"disclaimer.title" = "Wichtiger Hinweis";
+"disclaimer.not_medical_title" = "Kein Medizinprodukt";
+"disclaimer.not_medical_body" = "Stillō ist eine Wellness-App mit Entspannungstechniken. Es ist KEIN Medizinprodukt, gibt KEINE medizinischen Ratschläge und diagnostiziert, behandelt oder verhindert KEINE Krankheiten.";
+"disclaimer.emergency_title" = "Im Notfall";
+"disclaimer.emergency_body" = "Bei Brustschmerzen, Atemnot, Taubheitsgefühlen oder Verdacht auf ein Herzproblem — beenden Sie die App sofort und rufen Sie den Notruf (112). Stillō ersetzt KEINE professionelle medizinische Versorgung.";
+"disclaimer.healthkit_title" = "Herzfrequenzdaten";
+"disclaimer.healthkit_body" = "Stillō kann die Herzfrequenz von der Apple Watch nur zu Informationszwecken lesen. Diese Daten werden NICHT zur medizinischen Diagnose verwendet. Herzfrequenzwerte sind ungefähr und sollten NICHT für medizinische Entscheidungen herangezogen werden.";
+"disclaimer.intended_use_title" = "Bestimmungsgemäßer Gebrauch";
+"disclaimer.intended_use_body" = "Diese App bietet Atemübungen, Erdungstechniken und Stimmungsverfolgung für das allgemeine Wohlbefinden. Sie ist ein Selbsthilfe-Tool und ersetzt KEINE Beratung durch medizinisches Fachpersonal.";
+"disclaimer.accept" = "Ich verstehe und akzeptiere";
+"disclaimer.scroll_hint" = "Bitte lesen Sie alle Abschnitte vor der Annahme";
+
+// MARK: - Voice Guide (AVSpeechSynthesizer)
+"voice.inhale" = "Einatmen";
+"voice.hold" = "Halten";
+"voice.exhale" = "Langsam ausatmen";
+"voice.ground_see" = "Nenne 5 Dinge die du siehst";
+"voice.ground_touch" = "Berühre 4 Dinge um dich herum";
+"voice.ground_hear" = "Höre auf 3 Geräusche";
+"voice.ground_smell" = "Bemerke 2 Gerüche";
+"voice.ground_taste" = "Konzentriere dich auf 1 Geschmack";
+"voice.you_did_it" = "Du hast es geschafft. Du bist sicher.";
+"voice.you_are_safe" = "Du bist sicher. Ich bin bei dir.";
+"voice.toggle_label" = "Sprachführung";

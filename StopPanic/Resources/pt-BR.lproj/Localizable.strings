@@ -712,3 +712,29 @@
 "profile.name_alert" = "Digite seu nome";
 
 "profile.made_with_love" = "Feito com ❤️";
+
+// MARK: - Medical Disclaimer
+"disclaimer.title" = "Aviso importante";
+"disclaimer.not_medical_title" = "Não é um dispositivo médico";
+"disclaimer.not_medical_body" = "O Stillō é um aplicativo de bem-estar com técnicas de relaxamento. NÃO é um dispositivo médico, NÃO fornece aconselhamento médico e NÃO diagnostica, trata, cura ou previne qualquer doença.";
+"disclaimer.emergency_title" = "Em caso de emergência";
+"disclaimer.emergency_body" = "Se sentir dor no peito, dificuldade para respirar, dormência ou suspeitar de um problema cardíaco — pare de usar o aplicativo imediatamente e ligue para o SAMU (192). O Stillō NÃO substitui atendimento médico profissional.";
+"disclaimer.healthkit_title" = "Dados de frequência cardíaca";
+"disclaimer.healthkit_body" = "O Stillō pode ler a frequência cardíaca do Apple Watch apenas para fins informativos. Esses dados NÃO são usados para diagnóstico médico. As leituras são aproximadas e NÃO devem ser usadas para decisões médicas.";
+"disclaimer.intended_use_title" = "Uso pretendido";
+"disclaimer.intended_use_body" = "Este aplicativo oferece exercícios respiratórios, técnicas de aterramento e rastreamento de humor para bem-estar geral. É uma ferramenta de autoajuda que NÃO substitui a consulta com um profissional de saúde.";
+"disclaimer.accept" = "Eu entendo e aceito";
+"disclaimer.scroll_hint" = "Leia todas as seções antes de aceitar";
+
+// MARK: - Voice Guide (AVSpeechSynthesizer)
+"voice.inhale" = "Inspire";
+"voice.hold" = "Segure";
+"voice.exhale" = "Expire, devagar";
+"voice.ground_see" = "Nomeie 5 coisas que você vê";
+"voice.ground_touch" = "Toque em 4 coisas ao seu redor";
+"voice.ground_hear" = "Ouça 3 sons";
+"voice.ground_smell" = "Note 2 cheiros";
+"voice.ground_taste" = "Foque em 1 sabor";
+"voice.you_did_it" = "Você conseguiu. Está seguro.";
+"voice.you_are_safe" = "Você está seguro. Estou aqui.";
+"voice.toggle_label" = "Guia de voz";

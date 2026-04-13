@@ -3,6 +3,7 @@ import SwiftUI
 // MARK: - Main Tab View — Premium
 
 // 5 tabs, Apple HIG. SOS overlay accessible from any tab.
+// Shake gesture → triggers SOS immediately.
 
 struct MainTabView: View {
     // MARK: Internal
@@ -67,6 +68,14 @@ struct MainTabView: View {
             configureAppearance()
             coordinator.refreshPredictions()
         }
+        .onOpenURL { url in
+            handleDeepLink(url)
+        }
+        .onShake {
+            if !coordinator.showSOSOverlay {
+                coordinator.triggerSOS()
+            }
+        }
     }
 
     // MARK: Private
@@ -107,5 +116,50 @@ struct MainTabView: View {
         UINavigationBar.appearance().scrollEdgeAppearance = navAppearance
         UINavigationBar.appearance().compactAppearance = navAppearance
         UINavigationBar.appearance().tintColor = UIColor(theme.accent)
+    }
+
+    /// Handle deep links: stillo://sos, stillo://breathing
+    private func handleDeepLink(_ url: URL) {
+        guard url.scheme == "stillo" else { return }
+        switch url.host {
+        case "sos":
+            coordinator.triggerSOS()
+        case "breathing":
+            coordinator.showBreathingSheet = true
+        default: break
+        }
+    }
+}
+
+// MARK: - Shake Gesture Support
+
+/// Detects shake gesture and triggers SOS — hands-free crisis activation
+extension UIWindow {
+    override open func motionEnded(_ motion: UIEvent.EventSubtype, with event: UIEvent?) {
+        super.motionEnded(motion, with: event)
+        if motion == .motionShake {
+            NotificationCenter.default.post(name: .deviceShaken, object: nil)
+        }
+    }
+}
+
+extension Notification.Name {
+    static let deviceShaken = Notification.Name("deviceShaken")
+}
+
+struct ShakeDetector: ViewModifier {
+    let action: () -> Void
+
+    func body(content: Content) -> some View {
+        content
+            .onReceive(NotificationCenter.default.publisher(for: .deviceShaken)) { _ in
+                action()
+            }
+    }
+}
+
+extension View {
+    func onShake(perform action: @escaping () -> Void) -> some View {
+        modifier(ShakeDetector(action: action))
     }
 }

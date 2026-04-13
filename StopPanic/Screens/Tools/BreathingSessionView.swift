@@ -4,7 +4,7 @@ import SwiftUI
 
 // Визуально потрясающая сессия дыхания с анимацией и хаптиками.
 // Поддерживает 4 техники: 4-7-8, Квадратное, 2x, Резонансное.
-// ✨ Premium treatment: частицы, glow ring, стекло, shimmer
+// ✨ Premium UI: частицы, glow ring, стекло, shimmer
 
 struct BreathingSessionView: View {
     // MARK: Internal

@@ -24,6 +24,7 @@ final class AppCoordinator {
     let premiumManager = PremiumManager.shared
     let streakService = StreakService()
     let reviewService = ReviewService.shared
+    let audioGuide = AudioGuideService()
 
     // MARK: - Navigation State
 
@@ -33,6 +34,10 @@ final class AppCoordinator {
     var showPaywall: Bool = false
 
     // MARK: - User State (persisted via UserDefaults)
+
+    var hasAcceptedDisclaimer: Bool = UserDefaults.standard.bool(forKey: "hasAcceptedDisclaimer") {
+        didSet { UserDefaults.standard.set(hasAcceptedDisclaimer, forKey: "hasAcceptedDisclaimer") }
+    }
 
     var hasSeenOnboarding: Bool = UserDefaults.standard.bool(forKey: "hasSeenOnboarding") {
         didSet { UserDefaults.standard.set(hasSeenOnboarding, forKey: "hasSeenOnboarding") }

@@ -712,3 +712,29 @@
 "profile.name_alert" = "Entre ton prénom";
 
 "profile.made_with_love" = "Fait avec ❤️";
+
+// MARK: - Medical Disclaimer
+"disclaimer.title" = "Avis important";
+"disclaimer.not_medical_title" = "Pas un dispositif médical";
+"disclaimer.not_medical_body" = "Stillō est une application de bien-être avec des techniques de relaxation. Ce n'est PAS un dispositif médical, elle ne fournit PAS de conseils médicaux et ne diagnostique, traite, guérit ou prévient AUCUNE maladie.";
+"disclaimer.emergency_title" = "En cas d'urgence";
+"disclaimer.emergency_body" = "En cas de douleur thoracique, difficulté respiratoire, engourdissement ou suspicion de problème cardiaque — arrêtez d'utiliser l'application et appelez les urgences (112/15). Stillō ne remplace PAS les soins médicaux professionnels.";
+"disclaimer.healthkit_title" = "Données de fréquence cardiaque";
+"disclaimer.healthkit_body" = "Stillō peut lire la fréquence cardiaque de l'Apple Watch à titre informatif uniquement. Ces données ne sont PAS utilisées pour un diagnostic médical. Les mesures sont approximatives et ne doivent PAS servir pour des décisions médicales.";
+"disclaimer.intended_use_title" = "Utilisation prévue";
+"disclaimer.intended_use_body" = "Cette application propose des exercices de respiration, des techniques d'ancrage et un suivi de l'humeur pour le bien-être général. C'est un outil d'auto-assistance qui ne remplace PAS une consultation avec un professionnel de santé.";
+"disclaimer.accept" = "Je comprends et j'accepte";
+"disclaimer.scroll_hint" = "Veuillez lire toutes les sections avant d'accepter";
+
+// MARK: - Voice Guide (AVSpeechSynthesizer)
+"voice.inhale" = "Inspirez";
+"voice.hold" = "Retenez";
+"voice.exhale" = "Expirez, doucement";
+"voice.ground_see" = "Nommez 5 choses que vous voyez";
+"voice.ground_touch" = "Touchez 4 objets autour de vous";
+"voice.ground_hear" = "Écoutez 3 sons";
+"voice.ground_smell" = "Remarquez 2 odeurs";
+"voice.ground_taste" = "Concentrez-vous sur 1 goût";
+"voice.you_did_it" = "Vous y êtes arrivé. Vous êtes en sécurité.";
+"voice.you_are_safe" = "Vous êtes en sécurité. Je suis là.";
+"voice.toggle_label" = "Guide vocal";

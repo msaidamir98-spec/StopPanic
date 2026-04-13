@@ -712,3 +712,29 @@
 "profile.name_alert" = "名前を入力してください";
 
 "profile.made_with_love" = "❤️を込めて";
+
+// MARK: - Medical Disclaimer
+"disclaimer.title" = "重要なお知らせ";
+"disclaimer.not_medical_title" = "医療機器ではありません";
+"disclaimer.not_medical_body" = "Stillōはリラクゼーション技法を提供するウェルネスアプリです。医療機器ではなく、医療アドバイスを提供せず、疾患の診断・治療・予防は行いません。";
+"disclaimer.emergency_title" = "緊急時";
+"disclaimer.emergency_body" = "胸の痛み、呼吸困難、しびれ、または心臓の問題が疑われる場合は、直ちにアプリの使用を中止し、救急サービス(119)に電話してください。Stillōは専門的な医療の代わりにはなりません。";
+"disclaimer.healthkit_title" = "心拍数データ";
+"disclaimer.healthkit_body" = "StillōはApple Watchから心拍数を情報提供のみの目的で読み取る場合があります。このデータは医療診断には使用されません。心拍数の測定値は概算であり、医療上の判断に使用しないでください。";
+"disclaimer.intended_use_title" = "使用目的";
+"disclaimer.intended_use_body" = "このアプリは一般的なウェルネス目的で呼吸法、グラウンディング技法、気分追跡を提供します。セルフヘルプツールであり、医療専門家への相談に代わるものではありません。";
+"disclaimer.accept" = "理解し同意します";
+"disclaimer.scroll_hint" = "同意する前にすべてのセクションをお読みください";
+
+// MARK: - Voice Guide (AVSpeechSynthesizer)
+"voice.inhale" = "吸って";
+"voice.hold" = "止めて";
+"voice.exhale" = "ゆっくり吐いて";
+"voice.ground_see" = "見えるもの5つを言って";
+"voice.ground_touch" = "周りの4つに触って";
+"voice.ground_hear" = "3つの音を聞いて";
+"voice.ground_smell" = "2つの匂いに気づいて";
+"voice.ground_taste" = "1つの味に集中して";
+"voice.you_did_it" = "やりました。安全です。";
+"voice.you_are_safe" = "安全です。一緒にいますよ。";
+"voice.toggle_label" = "音声ガイド";

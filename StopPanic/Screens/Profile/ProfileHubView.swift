@@ -3,7 +3,7 @@ import SwiftUI
 // MARK: - ProfileHubView
 
 // Профиль + настройки + SOS контакты + экспорт.
-// ✨ Glass cards, animated stats, premium treatment
+// ✨ Glass cards, animated stats, premium UI
 
 struct ProfileHubView: View {
     // MARK: Internal
