@@ -410,8 +410,8 @@
 "heart.disclaimer_body" = "Этот инструмент — информационный помощник, НЕ медицинское устройство. Он НЕ ставит диагнозы. При боли в груди, одышке или плохом самочувствии НЕМЕДЛЕННО вызовите скорую помощь (103 / 112).";
 "heart.waiting" = "Ожидание...";
 "heart.pulse_monitoring" = "Мониторинг пульса";
-"heart.call_emergency" = "🚨 ВЫЗОВИТЕ СКОРУЮ";
-"heart.emergency_numbers" = "103 (Россия) · 112 (Европа) · 911 (США)";
+"heart.call_emergency" = "⚠️ Рекомендуем обратиться к врачу";
+"heart.emergency_numbers" = "Приложение НЕ является медицинским прибором. При беспокойстве обратитесь к врачу.";
 "heart.breathing_test" = "Дыхательный тест";
 "heart.breathing_test_body" = "Если пульс снижается после дыхания 4-7-8 — это косвенно указывает на тревогу, а не на сердечную проблему.";
 "heart.fix_pulse" = "📌 Зафиксировать пульс";
@@ -432,11 +432,11 @@
 "heart.pattern %@" = "Паттерн: %@";
 "heart.pulse_responds" = "Пульс реагирует на дыхание ✓";
 "heart.try_breathing" = "Попробуйте дыхание для проверки";
-"heart.doctor_signs" = "Признаки, требующие внимания врача:";
+"heart.doctor_signs" = "Необычный паттерн — проконсультируйтесь со специалистом:";
 "heart.irregular_rhythm %@" = "Нерегулярный ритм (%@)";
 "heart.hrv_value %@" = "HRV: %@ мс";
 "heart.no_breathing_response" = "Не реагирует на дыхательные техники";
-"heart.recommend_emergency" = "Рекомендуем вызвать скорую";
+"heart.recommend_emergency" = "При боли или давлении в груди обратитесь к врачу";
 "heart.metric_hr" = "❤️ ЧСС";
 "heart.metric_hrv" = "📈 HRV";
 "heart.metric_regularity" = "🔀 Регулярность";
@@ -446,7 +446,7 @@
 
 /* Diagnosis */
 "diagnosis.anxiety" = "Тревожное состояние";
-"diagnosis.cardiac" = "Требует внимания врача";
+"diagnosis.cardiac" = "Необычный паттерн ритма";
 "diagnosis.arrhythmia" = "Нерегулярный ритм";
 "diagnosis.normal" = "Нормальный ритм";
 "diagnosis.collecting" = "Сбор данных...";
@@ -690,3 +690,8 @@
 
 /* Intent Results */
 "intent.open_forecast" = "Откройте приложение для просмотра прогноза тревожности.";
+
+"country.br" = "Бразилия";
+"country.cn" = "Китай";
+"country.pt" = "Португалия";
+"country.kr" = "Южная Корея";

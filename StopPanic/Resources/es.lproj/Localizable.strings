@@ -410,8 +410,8 @@
 "heart.disclaimer_body" = "Esta herramienta es un asistente informativo, NO un dispositivo médico. NO diagnostica. Si tienes dolor en el pecho, falta de aire o te sientes mal, llama INMEDIATAMENTE a emergencias (112).";
 "heart.waiting" = "Esperando...";
 "heart.pulse_monitoring" = "Monitoreo de Frecuencia Cardíaca";
-"heart.call_emergency" = "🚨 LLAMAR A EMERGENCIAS";
-"heart.emergency_numbers" = "112 (Europa) · 911 (EE.UU.) · 999 (UK)";
+"heart.call_emergency" = "⚠️ Considere consultar a un médico";
+"heart.emergency_numbers" = "Esta app NO es un dispositivo médico. Si le preocupa, llame a su médico.";
 "heart.breathing_test" = "Prueba de Respiración";
 "heart.breathing_test_body" = "Si tu pulso baja después de la respiración 4-7-8, esto sugiere indirectamente ansiedad, no un problema cardíaco.";
 "heart.fix_pulse" = "📌 Registrar pulso";
@@ -432,11 +432,11 @@
 "heart.pattern %@" = "Patrón: %@";
 "heart.pulse_responds" = "El pulso responde a la respiración ✓";
 "heart.try_breathing" = "Prueba respirar para verificar";
-"heart.doctor_signs" = "Señales que requieren atención médica:";
+"heart.doctor_signs" = "Patrón inusual — consulte a un profesional:";
 "heart.irregular_rhythm %@" = "Ritmo irregular (%@)";
 "heart.hrv_value %@" = "VFC: %@ ms";
 "heart.no_breathing_response" = "No responde a técnicas de respiración";
-"heart.recommend_emergency" = "Recomendamos llamar a emergencias";
+"heart.recommend_emergency" = "Si siente dolor o presión en el pecho, consulte a un médico";
 "heart.metric_hr" = "❤️ FC";
 "heart.metric_hrv" = "📈 VFC";
 "heart.metric_regularity" = "🔀 Regularidad";
@@ -446,7 +446,7 @@
 
 /* Diagnosis */
 "diagnosis.anxiety" = "Estado de ansiedad";
-"diagnosis.cardiac" = "Requiere atención médica";
+"diagnosis.cardiac" = "Patrón inusual detectado";
 "diagnosis.arrhythmia" = "Ritmo irregular";
 "diagnosis.normal" = "Ritmo normal";
 "diagnosis.collecting" = "Recopilando datos...";
@@ -690,3 +690,8 @@
 
 /* Intent Results */
 "intent.open_forecast" = "Abre la app para ver tu pronóstico de ansiedad.";
+
+"country.br" = "Brasil";
+"country.cn" = "China";
+"country.pt" = "Portugal";
+"country.kr" = "Corea del Sur";

@@ -19,7 +19,7 @@ struct HeartAnalysisView: View {
                         diagnosisCard(analysis)
                         metricsGrid(analysis)
                         recommendationCard(analysis.recommendation)
-                        if analysis.shouldCallEmergency { emergencyBanner }
+                        if analysis.suggestMedicalConsult { emergencyBanner }
                     }
                     breathingTestSection
                     monitoringButton

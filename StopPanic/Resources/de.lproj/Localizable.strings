@@ -410,8 +410,8 @@
 "heart.disclaimer_body" = "Dieses Tool ist ein Informationshelfer, KEIN medizinisches Gerät. Es stellt KEINE Diagnose. Bei Brustschmerzen, Atemnot oder Unwohlsein SOFORT den Notruf wählen (112).";
 "heart.waiting" = "Warte...";
 "heart.pulse_monitoring" = "Herzfrequenz-Überwachung";
-"heart.call_emergency" = "🚨 NOTRUF WÄHLEN";
-"heart.emergency_numbers" = "112 (Europa) · 911 (USA) · 999 (UK)";
+"heart.call_emergency" = "⚠️ Erwägen Sie einen Arztbesuch";
+"heart.emergency_numbers" = "Diese App ist KEIN medizinisches Gerät. Bei Bedenken kontaktieren Sie Ihren Arzt.";
 "heart.breathing_test" = "Atemtest";
 "heart.breathing_test_body" = "Wenn dein Puls nach der 4-7-8-Atmung sinkt, deutet das indirekt auf Angst und nicht auf ein Herzproblem hin.";
 "heart.fix_pulse" = "📌 Puls aufzeichnen";
@@ -432,11 +432,11 @@
 "heart.pattern %@" = "Muster: %@";
 "heart.pulse_responds" = "Puls reagiert auf Atmung ✓";
 "heart.try_breathing" = "Probiere Atemübungen zur Prüfung";
-"heart.doctor_signs" = "Anzeichen, die ärztliche Aufmerksamkeit erfordern:";
+"heart.doctor_signs" = "Ungewöhnliches Muster — konsultieren Sie einen Fachmann:";
 "heart.irregular_rhythm %@" = "Unregelmäßiger Rhythmus (%@)";
 "heart.hrv_value %@" = "HRV: %@ ms";
 "heart.no_breathing_response" = "Reagiert nicht auf Atemtechniken";
-"heart.recommend_emergency" = "Wir empfehlen, den Notruf zu wählen";
+"heart.recommend_emergency" = "Bei Brustschmerzen oder Druck wenden Sie sich an einen Arzt";
 "heart.metric_hr" = "❤️ HF";
 "heart.metric_hrv" = "📈 HRV";
 "heart.metric_regularity" = "🔀 Regelmäßigkeit";
@@ -446,7 +446,7 @@
 
 /* Diagnosis */
 "diagnosis.anxiety" = "Angstzustand";
-"diagnosis.cardiac" = "Ärztliche Aufmerksamkeit erforderlich";
+"diagnosis.cardiac" = "Ungewöhnliches Muster erkannt";
 "diagnosis.arrhythmia" = "Unregelmäßiger Rhythmus";
 "diagnosis.normal" = "Normaler Rhythmus";
 "diagnosis.collecting" = "Daten werden erfasst...";
@@ -690,3 +690,8 @@
 
 /* Intent Results */
 "intent.open_forecast" = "Öffne die App, um deine Angstprognose zu sehen.";
+
+"country.br" = "Brasilien";
+"country.cn" = "China";
+"country.pt" = "Portugal";
+"country.kr" = "Südkorea";

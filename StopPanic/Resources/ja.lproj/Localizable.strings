@@ -410,8 +410,8 @@
 "heart.disclaimer_body" = "このツールは情報提供のためのものであり、医療機器ではありません。診断は行いません。胸の痛み、息切れ、体調不良がある場合は、直ちに救急に電話してください（いのちの電話）。";
 "heart.waiting" = "待機中...";
 "heart.pulse_monitoring" = "心拍数モニタリング";
-"heart.call_emergency" = "🚨 救急に電話する";
-"heart.emergency_numbers" = "119 (日本) · 911 (米国) · 112 (欧州)";
+"heart.call_emergency" = "⚠️ 医師への相談をご検討ください";
+"heart.emergency_numbers" = "このアプリは医療機器ではありません。心配な場合は医師にご連絡ください。";
 "heart.breathing_test" = "呼吸テスト";
 "heart.breathing_test_body" = "4-7-8呼吸後に心拍数が下がれば、心臓の問題ではなく不安を間接的に示唆しています。";
 "heart.fix_pulse" = "📌 脈拍を記録";
@@ -432,11 +432,11 @@
 "heart.pattern %@" = "パターン: %@";
 "heart.pulse_responds" = "脈拍が呼吸に反応しています ✓";
 "heart.try_breathing" = "確認のために呼吸を試してください";
-"heart.doctor_signs" = "医療的注意が必要な兆候：";
+"heart.doctor_signs" = "異常なパターン — 専門家にご相談ください：";
 "heart.irregular_rhythm %@" = "不規則なリズム（%@）";
 "heart.hrv_value %@" = "HRV: %@ ms";
 "heart.no_breathing_response" = "呼吸法に反応しません";
-"heart.recommend_emergency" = "救急への電話をお勧めします";
+"heart.recommend_emergency" = "胸の痛みや圧迫感がある場合は、医師にご相談ください";
 "heart.metric_hr" = "❤️ 心拍数";
 "heart.metric_hrv" = "📈 HRV";
 "heart.metric_regularity" = "🔀 規則性";
@@ -446,7 +446,7 @@
 
 /* Diagnosis */
 "diagnosis.anxiety" = "不安状態";
-"diagnosis.cardiac" = "医療的注意が必要です";
+"diagnosis.cardiac" = "異常なパターンを検出";
 "diagnosis.arrhythmia" = "不規則なリズム";
 "diagnosis.normal" = "正常なリズム";
 "diagnosis.collecting" = "データ収集中...";
@@ -690,3 +690,8 @@
 
 /* Intent Results */
 "intent.open_forecast" = "アプリを開いて不安予測をご覧ください。";
+
+"country.br" = "ブラジル";
+"country.cn" = "中国";
+"country.pt" = "ポルトガル";
+"country.kr" = "韓国";

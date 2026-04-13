@@ -410,8 +410,8 @@
 "heart.disclaimer_body" = "Esta ferramenta é um assistente informativo, NÃO um dispositivo médico. NÃO diagnostica. Se você tem dor no peito, falta de ar ou se sente mal, ligue IMEDIATAMENTE para emergências (188).";
 "heart.waiting" = "Aguardando...";
 "heart.pulse_monitoring" = "Monitoramento de Frequência Cardíaca";
-"heart.call_emergency" = "🚨 LIGAR PARA EMERGÊNCIAS";
-"heart.emergency_numbers" = "192 (SAMU) · 188 (CVV) · 911 (EUA)";
+"heart.call_emergency" = "⚠️ Considere consultar um médico";
+"heart.emergency_numbers" = "Este app NÃO é um dispositivo médico. Se preocupado, ligue para seu médico.";
 "heart.breathing_test" = "Teste de Respiração";
 "heart.breathing_test_body" = "Se sua pulsação cair após a respiração 4-7-8, isso sugere indiretamente ansiedade, não um problema cardíaco.";
 "heart.fix_pulse" = "📌 Registrar pulso";
@@ -432,11 +432,11 @@
 "heart.pattern %@" = "Padrão: %@";
 "heart.pulse_responds" = "Pulso responde à respiração ✓";
 "heart.try_breathing" = "Tente respirar para verificar";
-"heart.doctor_signs" = "Sinais que requerem atenção médica:";
+"heart.doctor_signs" = "Padrão incomum — consulte um profissional:";
 "heart.irregular_rhythm %@" = "Ritmo irregular (%@)";
 "heart.hrv_value %@" = "VFC: %@ ms";
 "heart.no_breathing_response" = "Não responde às técnicas de respiração";
-"heart.recommend_emergency" = "Recomendamos ligar para emergências";
+"heart.recommend_emergency" = "Se sentir dor ou pressão no peito, consulte um médico";
 "heart.metric_hr" = "❤️ FC";
 "heart.metric_hrv" = "📈 VFC";
 "heart.metric_regularity" = "🔀 Regularidade";
@@ -446,7 +446,7 @@
 
 /* Diagnosis */
 "diagnosis.anxiety" = "Estado de ansiedade";
-"diagnosis.cardiac" = "Requer atenção médica";
+"diagnosis.cardiac" = "Padrão incomum detectado";
 "diagnosis.arrhythmia" = "Ritmo irregular";
 "diagnosis.normal" = "Ritmo normal";
 "diagnosis.collecting" = "Coletando dados...";
@@ -690,3 +690,8 @@
 
 /* Intent Results */
 "intent.open_forecast" = "Abra o app para ver sua previsão de ansiedade.";
+
+"country.br" = "Brasil";
+"country.cn" = "China";
+"country.pt" = "Portugal";
+"country.kr" = "Coreia do Sul";

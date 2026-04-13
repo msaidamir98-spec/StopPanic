@@ -410,8 +410,8 @@
 "heart.disclaimer_body" = "此工具是信息辅助工具，不是医疗设备。不进行诊断。如果你有胸痛、呼吸困难或感觉不适，请立即拨打急救电话（12320-5）。";
 "heart.waiting" = "等待中...";
 "heart.pulse_monitoring" = "心率监测";
-"heart.call_emergency" = "🚨 拨打急救电话";
-"heart.emergency_numbers" = "120 (中国) · 911 (美国) · 112 (欧洲)";
+"heart.call_emergency" = "⚠️ 建议咨询医生";
+"heart.emergency_numbers" = "此应用不是医疗设备。如有疑虑，请联系医生。";
 "heart.breathing_test" = "呼吸测试";
 "heart.breathing_test_body" = "如果4-7-8呼吸后心率下降，这间接提示是焦虑而非心脏问题。";
 "heart.fix_pulse" = "📌 记录脉搏";
@@ -432,11 +432,11 @@
 "heart.pattern %@" = "模式：%@";
 "heart.pulse_responds" = "脉搏对呼吸有反应 ✓";
 "heart.try_breathing" = "尝试呼吸来检验";
-"heart.doctor_signs" = "需要就医的迹象：";
+"heart.doctor_signs" = "异常模式 — 请咨询专业人士：";
 "heart.irregular_rhythm %@" = "不规律节律（%@）";
 "heart.hrv_value %@" = "HRV：%@ ms";
 "heart.no_breathing_response" = "对呼吸技术无反应";
-"heart.recommend_emergency" = "建议拨打急救电话";
+"heart.recommend_emergency" = "如感到胸痛或胸闷，请联系医生";
 "heart.metric_hr" = "❤️ 心率";
 "heart.metric_hrv" = "📈 HRV";
 "heart.metric_regularity" = "🔀 规律性";
@@ -446,7 +446,7 @@
 
 /* Diagnosis */
 "diagnosis.anxiety" = "焦虑状态";
-"diagnosis.cardiac" = "需要就医";
+"diagnosis.cardiac" = "检测到异常模式";
 "diagnosis.arrhythmia" = "心律不齐";
 "diagnosis.normal" = "正常节律";
 "diagnosis.collecting" = "正在收集数据...";
@@ -690,3 +690,8 @@
 
 /* Intent Results */
 "intent.open_forecast" = "打开应用查看您的焦虑预测。";
+
+"country.br" = "巴西";
+"country.cn" = "中国";
+"country.pt" = "葡萄牙";
+"country.kr" = "韩国";

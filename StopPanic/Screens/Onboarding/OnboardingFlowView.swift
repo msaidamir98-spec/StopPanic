@@ -43,6 +43,11 @@ struct OnboardingFlowView: View {
                 logoScale = 1.0
             }
         }
+        .onChange(of: currentPage) { _, newPage in
+            if newPage != 1 {
+                stopMiniBreathing()
+            }
+        }
     }
 
     // MARK: Private
@@ -491,6 +496,11 @@ struct OnboardingFlowView: View {
         runBreathCycle()
     }
 
+    private func stopMiniBreathing() {
+        isBreathing = false
+        breathCycles = 0
+    }
+
     private func runBreathCycle() {
         guard breathCycles < 3 else {
             // Complete!
@@ -508,18 +518,21 @@ struct OnboardingFlowView: View {
         SP.Haptic.soft()
         withAnimation(.easeInOut(duration: 4)) { breathScale = 1.0 }
 
-        DispatchQueue.main.asyncAfter(deadline: .now() + 4) {
+        DispatchQueue.main.asyncAfter(deadline: .now() + 4) { [self] in
+            guard isBreathing else { return }
             // Hold (4s instead of 7 for mini)
             breathPhase = String(localized: "breath_hold")
             SP.Haptic.light()
 
-            DispatchQueue.main.asyncAfter(deadline: .now() + 4) {
+            DispatchQueue.main.asyncAfter(deadline: .now() + 4) { [self] in
+                guard isBreathing else { return }
                 // Exhale (4s instead of 8 for mini)
                 breathPhase = String(localized: "breath_exhale")
                 SP.Haptic.soft()
                 withAnimation(.easeInOut(duration: 4)) { breathScale = 0.4 }
 
-                DispatchQueue.main.asyncAfter(deadline: .now() + 4) {
+                DispatchQueue.main.asyncAfter(deadline: .now() + 4) { [self] in
+                    guard isBreathing else { return }
                     breathCycles += 1
                     runBreathCycle()
                 }

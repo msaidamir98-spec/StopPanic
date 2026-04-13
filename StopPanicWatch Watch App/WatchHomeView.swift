@@ -277,7 +277,7 @@ struct WatchAnalysisResultView: View {
                 .padding(.vertical, 8)
                 .background(.ultraThinMaterial, in: RoundedRectangle(cornerRadius: 10))
                 
-                if heartService.shouldCallEmergency {
+                if heartService.suggestMedicalConsult {
                     Button(role: .destructive) {
                         // Emergency
                     } label: {

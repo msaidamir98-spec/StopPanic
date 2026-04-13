@@ -410,8 +410,8 @@
 "heart.disclaimer_body" = "This tool is an informational helper, NOT a medical device. It does NOT diagnose. If you have chest pain, shortness of breath, or feel unwell, IMMEDIATELY call emergency services (911 / 112).";
 "heart.waiting" = "Waiting...";
 "heart.pulse_monitoring" = "Heart Rate Monitoring";
-"heart.call_emergency" = "🚨 CALL EMERGENCY";
-"heart.emergency_numbers" = "911 (USA) · 112 (Europe) · 999 (UK)";
+"heart.call_emergency" = "⚠️ Consider consulting a doctor";
+"heart.emergency_numbers" = "This app is NOT a medical device. If concerned, call your doctor.";
 "heart.breathing_test" = "Breathing Test";
 "heart.breathing_test_body" = "If your heart rate drops after 4-7-8 breathing — this indirectly suggests anxiety, not a heart problem.";
 "heart.fix_pulse" = "📌 Record pulse";
@@ -432,11 +432,11 @@
 "heart.pattern %@" = "Pattern: %@";
 "heart.pulse_responds" = "Pulse responds to breathing ✓";
 "heart.try_breathing" = "Try breathing to check";
-"heart.doctor_signs" = "Signs requiring medical attention:";
+"heart.doctor_signs" = "Unusual pattern — consult a professional:";
 "heart.irregular_rhythm %@" = "Irregular rhythm (%@)";
 "heart.hrv_value %@" = "HRV: %@ ms";
 "heart.no_breathing_response" = "Does not respond to breathing techniques";
-"heart.recommend_emergency" = "We recommend calling emergency services";
+"heart.recommend_emergency" = "If you feel chest pain or pressure, contact a doctor";
 "heart.metric_hr" = "❤️ HR";
 "heart.metric_hrv" = "📈 HRV";
 "heart.metric_regularity" = "🔀 Regularity";
@@ -446,7 +446,7 @@
 
 /* Diagnosis */
 "diagnosis.anxiety" = "Anxiety state";
-"diagnosis.cardiac" = "Requires medical attention";
+"diagnosis.cardiac" = "Unusual pattern detected";
 "diagnosis.arrhythmia" = "Irregular rhythm";
 "diagnosis.normal" = "Normal rhythm";
 "diagnosis.collecting" = "Collecting data...";
@@ -690,3 +690,8 @@
 
 /* Intent Results */
 "intent.open_forecast" = "Open the app to view your anxiety forecast.";
+
+"country.br" = "Brazil";
+"country.cn" = "China";
+"country.pt" = "Portugal";
+"country.kr" = "South Korea";

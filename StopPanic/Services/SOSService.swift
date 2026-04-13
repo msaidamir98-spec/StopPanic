@@ -41,7 +41,7 @@ final class SOSService: ObservableObject {
         panicModeActive = true
 
         // Ensure notification permissions
-        // NOTE: .criticalAlert requires a special Apple entitlement — use .sound + .badge instead
+        // NOTE: Using .default sound — .criticalAlert requires a special Apple entitlement
         UNUserNotificationCenter.current().requestAuthorization(options: [
             .alert, .sound, .badge,
         ]) { _, _ in }
@@ -51,7 +51,7 @@ final class SOSService: ObservableObject {
             let content = UNMutableNotificationContent()
             content.title = String(localized: "sos.notif_title \(contact.name)")
             content.body = String(localized: "sos.notif_body \(contact.phone)")
-            content.sound = .defaultCritical
+            content.sound = .default
             content.interruptionLevel = .timeSensitive
             let request = UNNotificationRequest(
                 identifier: "sos_\(contact.id.uuidString)",
@@ -66,7 +66,7 @@ final class SOSService: ObservableObject {
             let content = UNMutableNotificationContent()
             content.title = String(localized: "sos.crisis_notif_title")
             content.body = String(localized: "sos.crisis_notif_body \(Self.getCrisisLine())")
-            content.sound = .defaultCritical
+            content.sound = .default
             let request = UNNotificationRequest(
                 identifier: "sos_crisis",
                 content: content,

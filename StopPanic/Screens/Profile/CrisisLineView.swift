@@ -214,6 +214,8 @@ struct CrisisLineView: View {
             "RU": String(localized: "country.ru"), "US": String(localized: "country.us"), "UK": String(localized: "country.uk"),
             "DE": String(localized: "country.de"), "FR": String(localized: "country.fr"), "ES": String(localized: "country.es"),
             "IT": String(localized: "country.it"), "JP": String(localized: "country.jp"),
+            "BR": String(localized: "country.br"), "CN": String(localized: "country.cn"),
+            "PT": String(localized: "country.pt"), "KR": String(localized: "country.kr"),
         ]
         return names[code] ?? code
     }

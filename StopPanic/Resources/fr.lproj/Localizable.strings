@@ -410,8 +410,8 @@
 "heart.disclaimer_body" = "Cet outil est un assistant informatif, PAS un dispositif médical. Il ne pose PAS de diagnostic. En cas de douleur thoracique, essoufflement ou malaise, appelez IMMÉDIATEMENT les urgences (3114).";
 "heart.waiting" = "En attente...";
 "heart.pulse_monitoring" = "Surveillance de la Fréquence Cardiaque";
-"heart.call_emergency" = "🚨 APPELER LES URGENCES";
-"heart.emergency_numbers" = "15 / 3114 (France) · 112 (Europe) · 911 (USA)";
+"heart.call_emergency" = "⚠️ Envisagez de consulter un médecin";
+"heart.emergency_numbers" = "Cette app N'est PAS un dispositif médical. En cas de doute, appelez votre médecin.";
 "heart.breathing_test" = "Test de Respiration";
 "heart.breathing_test_body" = "Si ton pouls baisse après la respiration 4-7-8, cela suggère indirectement de l'anxiété, pas un problème cardiaque.";
 "heart.fix_pulse" = "📌 Enregistrer le pouls";
@@ -432,11 +432,11 @@
 "heart.pattern %@" = "Profil : %@";
 "heart.pulse_responds" = "Le pouls répond à la respiration ✓";
 "heart.try_breathing" = "Essaie de respirer pour vérifier";
-"heart.doctor_signs" = "Signes nécessitant une attention médicale :";
+"heart.doctor_signs" = "Schéma inhabituel — consultez un professionnel :";
 "heart.irregular_rhythm %@" = "Rythme irrégulier (%@)";
 "heart.hrv_value %@" = "VFC : %@ ms";
 "heart.no_breathing_response" = "Ne répond pas aux techniques de respiration";
-"heart.recommend_emergency" = "Nous recommandons d'appeler les urgences";
+"heart.recommend_emergency" = "En cas de douleur ou pression thoracique, consultez un médecin";
 "heart.metric_hr" = "❤️ FC";
 "heart.metric_hrv" = "📈 VFC";
 "heart.metric_regularity" = "🔀 Régularité";
@@ -446,7 +446,7 @@
 
 /* Diagnosis */
 "diagnosis.anxiety" = "État anxieux";
-"diagnosis.cardiac" = "Nécessite une attention médicale";
+"diagnosis.cardiac" = "Schéma inhabituel détecté";
 "diagnosis.arrhythmia" = "Rythme irrégulier";
 "diagnosis.normal" = "Rythme normal";
 "diagnosis.collecting" = "Collecte des données...";
@@ -690,3 +690,8 @@
 
 /* Intent Results */
 "intent.open_forecast" = "Ouvrez l'app pour voir votre prévision d'anxiété.";
+
+"country.br" = "Brésil";
+"country.cn" = "Chine";
+"country.pt" = "Portugal";
+"country.kr" = "Corée du Sud";

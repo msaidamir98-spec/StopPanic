@@ -63,7 +63,7 @@ struct HeartAnalysis: Codable, Identifiable {
     let irregularity: Double // 0…1 — нерегулярность ритма
     let risePattern: RisePattern
     let recommendation: String
-    let shouldCallEmergency: Bool
+    let suggestMedicalConsult: Bool
 }
 
 // MARK: - HeartRateSample

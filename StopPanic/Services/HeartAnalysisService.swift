@@ -156,7 +156,7 @@ final class HeartAnalysisService: ObservableObject {
                 heartRate: samples.last?.bpm ?? 0, hrvMs: 0,
                 irregularity: 0, risePattern: .noChange,
                 recommendation: String(localized: "heart.rec_collecting"),
-                shouldCallEmergency: false
+                suggestMedicalConsult: false
             )
         }
 
@@ -193,7 +193,7 @@ final class HeartAnalysisService: ObservableObject {
             heartRate: lastBPM, hrvMs: hrvEstimate,
             irregularity: irregularity, risePattern: risePattern,
             recommendation: recommendation,
-            shouldCallEmergency: shouldCall
+            suggestMedicalConsult: shouldCall
         )
     }
 

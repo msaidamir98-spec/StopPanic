@@ -13,7 +13,7 @@ class WatchHeartService: ObservableObject {
     @Published var hrvValue: Double = 0
     @Published var irregularity: Double = 0
     @Published var isMonitoring = false
-    @Published var shouldCallEmergency = false
+    @Published var suggestMedicalConsult = false
     
     // MARK: - Diagnosis
     enum DiagnosisResult {
@@ -205,22 +205,22 @@ class WatchHeartService: ObservableObject {
         if avgHR < panicMinHR && irregularity < irregularityThreshold {
             // Нормальный пульс, ровный ритм
             diagnosis = .normal
-            shouldCallEmergency = false
+            suggestMedicalConsult = false
         } else if irregularity >= irregularityThreshold && avgHR >= dangerousHR {
             // Нерегулярный + высокий → возможно сердце
             diagnosis = .possibleCardiac
-            shouldCallEmergency = true
+            suggestMedicalConsult = true
         } else if irregularity >= irregularityThreshold {
             // Нерегулярный но не критичный
             diagnosis = .possibleCardiac
-            shouldCallEmergency = false
+            suggestMedicalConsult = false
         } else if avgHR >= panicMinHR && irregularity < irregularityThreshold {
             // Повышенный но ровный → ПА
             diagnosis = .panicAttack
-            shouldCallEmergency = false
+            suggestMedicalConsult = false
         } else {
             diagnosis = .inconclusive
-            shouldCallEmergency = false
+            suggestMedicalConsult = false
         }
     }
 }

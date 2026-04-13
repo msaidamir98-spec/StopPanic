@@ -82,6 +82,9 @@ struct StilloShortcuts: AppShortcutsProvider {
                 "Help me \(.applicationName)",
                 "Panic attack \(.applicationName)",
                 "I feel bad \(.applicationName)",
+                "Я паникую в \(.applicationName)",
+                "Помоги мне \(.applicationName)",
+                "Мне плохо \(.applicationName)",
             ],
             shortTitle: "SOS Panic",
             systemImageName: "hand.raised.fill"
@@ -93,6 +96,8 @@ struct StilloShortcuts: AppShortcutsProvider {
                 "Breathe with me in \(.applicationName)",
                 "Start breathing in \(.applicationName)",
                 "4-7-8 breathing in \(.applicationName)",
+                "Дыши со мной в \(.applicationName)",
+                "Дыхание в \(.applicationName)",
             ],
             shortTitle: "4-7-8 Breathing",
             systemImageName: "wind"
@@ -103,6 +108,8 @@ struct StilloShortcuts: AppShortcutsProvider {
             phrases: [
                 "Log a panic attack in \(.applicationName)",
                 "Diary entry in \(.applicationName)",
+                "Записать приступ в \(.applicationName)",
+                "Запись в дневник \(.applicationName)",
             ],
             shortTitle: "Log Episode",
             systemImageName: "pencil.circle.fill"
