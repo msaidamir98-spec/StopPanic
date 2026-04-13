@@ -729,3 +729,33 @@
 "trigger_opt_sleep" = "睡眠不好";
 "trigger_opt_social" = "社交媒体";
 "trigger_opt_transport" = "交通";
+
+// MARK: - SOS + Profile (PM#7 fix)
+"sos.breath_cycles" = "呼吸循环";
+"sos.duration" = "持续时间";
+"sos.feeling_better" = "感觉好些了吗？";
+"sos.ground_hear_sub" = "专注于你周围的声音";
+"sos.ground_hear_title" = "你能听到的2样东西";
+"sos.ground_next" = "下一步";
+"sos.ground_see_sub" = "环顾四周，说出你看到的东西";
+"sos.ground_see_title" = "你能看到的5样东西";
+"sos.ground_smell_sub" = "注意你周围的气味";
+"sos.ground_smell_title" = "你能闻到的1样东西";
+"sos.ground_taste_sub" = "注意你嘴里的味道";
+"sos.ground_taste_title" = "你能尝到的1样东西";
+"sos.ground_touch_sub" = "感受你周围的质地";
+"sos.ground_touch_title" = "你能触摸到的4样东西";
+"sos.grounding" = "接地练习";
+"sos.grounding_sub" = "与你的感官连接";
+"sos.hint_exhale" = "慢慢呼气";
+"sos.hint_hold" = "屏住呼吸";
+"sos.hint_inhale" = "深吸一口气";
+"sos.save_and_close" = "保存并关闭";
+"sos.you_are_safe_detail" = "你挺过来了。你现在安全了。";
+"sos.you_did_it" = "你做到了！";
+"profile.contact_name_placeholder" = "联系人姓名";
+"profile.detailed" = "详细";
+"profile.moodMap" = "心情地图";
+"profile.name_alert" = "输入你的名字";
+
+"profile.made_with_love" = "用❤️制作";

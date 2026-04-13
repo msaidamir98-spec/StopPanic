@@ -288,7 +288,7 @@ struct ProfileHubView: View {
             Text("Stillō")
                 .font(SP.Typography.headline)
                 .foregroundColor(SP.Colors.textPrimary)
-            Text("v\(appVersion) · Made with ❤️")
+            Text("v\(appVersion) · \(String(localized: "profile.made_with_love"))")
                 .font(SP.Typography.caption)
                 .foregroundColor(SP.Colors.textTertiary)
             Text(String(localized: "profile.disclaimer"))

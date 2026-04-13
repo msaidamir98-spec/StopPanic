@@ -391,8 +391,8 @@
 						INFOPLIST_KEY_UIBackgroundModes = "fetch processing";
 						INFOPLIST_KEY_BGTaskSchedulerPermittedIdentifiers = "(com.stillo.breathingReminder)";
 				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.healthcare-fitness";
-                        INFOPLIST_KEY_NSHealthShareUsageDescription = "Reading heart rate for panic attack analysis on your wrist.";
-                        INFOPLIST_KEY_NSHealthUpdateUsageDescription = "Recording panic attack data.";
+                        INFOPLIST_KEY_NSHealthShareUsageDescription = "Reading heart rate to help you understand your body's response during anxiety moments.";
+                        INFOPLIST_KEY_NSHealthUpdateUsageDescription = "Recording wellness data to track your progress.";
                         INFOPLIST_KEY_UISupportedInterfaceOrientations = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown";
                         INFOPLIST_KEY_WKCompanionAppBundleIdentifier = "MSK-PRODUKT.StopPanic";
                         LD_RUNPATH_SEARCH_PATHS = (
@@ -430,8 +430,8 @@
 						INFOPLIST_KEY_UIBackgroundModes = "fetch processing";
 						INFOPLIST_KEY_BGTaskSchedulerPermittedIdentifiers = "(com.stillo.breathingReminder)";
 				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.healthcare-fitness";
-                        INFOPLIST_KEY_NSHealthShareUsageDescription = "Reading heart rate for panic attack analysis on your wrist.";
-                        INFOPLIST_KEY_NSHealthUpdateUsageDescription = "Recording panic attack data.";
+                        INFOPLIST_KEY_NSHealthShareUsageDescription = "Reading heart rate to help you understand your body's response during anxiety moments.";
+                        INFOPLIST_KEY_NSHealthUpdateUsageDescription = "Recording wellness data to track your progress.";
                         INFOPLIST_KEY_UISupportedInterfaceOrientations = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown";
                         INFOPLIST_KEY_WKCompanionAppBundleIdentifier = "MSK-PRODUKT.StopPanic";
                         LD_RUNPATH_SEARCH_PATHS = (

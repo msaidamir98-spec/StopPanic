@@ -729,3 +729,33 @@
 "trigger_opt_sleep" = "Плохой сон";
 "trigger_opt_social" = "Соцсети";
 "trigger_opt_transport" = "Транспорт";
+
+// MARK: - SOS + Profile (PM#7 fix)
+"sos.breath_cycles" = "Циклы дыхания";
+"sos.duration" = "Длительность";
+"sos.feeling_better" = "Стало лучше?";
+"sos.ground_hear_sub" = "Сосредоточься на звуках вокруг";
+"sos.ground_hear_title" = "2 вещи, которые ты слышишь";
+"sos.ground_next" = "Далее";
+"sos.ground_see_sub" = "Оглянись и назови, что видишь";
+"sos.ground_see_title" = "5 вещей, которые ты видишь";
+"sos.ground_smell_sub" = "Обрати внимание на запахи вокруг";
+"sos.ground_smell_title" = "1 вещь, которую ты ощущаешь на запах";
+"sos.ground_taste_sub" = "Обрати внимание на вкус во рту";
+"sos.ground_taste_title" = "1 вещь, которую ты ощущаешь на вкус";
+"sos.ground_touch_sub" = "Почувствуй текстуры вокруг себя";
+"sos.ground_touch_title" = "4 вещи, которые ты можешь потрогать";
+"sos.grounding" = "Упражнение заземления";
+"sos.grounding_sub" = "Соединись со своими чувствами";
+"sos.hint_exhale" = "Медленно выдохни";
+"sos.hint_hold" = "Задержи дыхание";
+"sos.hint_inhale" = "Глубоко вдохни";
+"sos.save_and_close" = "Сохранить и закрыть";
+"sos.you_are_safe_detail" = "Ты справился. Ты в безопасности.";
+"sos.you_did_it" = "Ты справился!";
+"profile.contact_name_placeholder" = "Имя контакта";
+"profile.detailed" = "Подробно";
+"profile.moodMap" = "Карта настроения";
+"profile.name_alert" = "Введи своё имя";
+
+"profile.made_with_love" = "Сделано с ❤️";

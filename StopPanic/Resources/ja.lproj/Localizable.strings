@@ -729,3 +729,33 @@
 "trigger_opt_sleep" = "睡眠不足";
 "trigger_opt_social" = "SNS";
 "trigger_opt_transport" = "交通機関";
+
+// MARK: - SOS + Profile (PM#7 fix)
+"sos.breath_cycles" = "呼吸サイクル";
+"sos.duration" = "所要時間";
+"sos.feeling_better" = "気分は良くなりましたか？";
+"sos.ground_hear_sub" = "周りの音に集中してください";
+"sos.ground_hear_title" = "聞こえる2つのもの";
+"sos.ground_next" = "次へ";
+"sos.ground_see_sub" = "周りを見て、見えるものを挙げてください";
+"sos.ground_see_title" = "見える5つのもの";
+"sos.ground_smell_sub" = "周りの匂いに気づいてください";
+"sos.ground_smell_title" = "嗅げる1つのもの";
+"sos.ground_taste_sub" = "口の中の味に気づいてください";
+"sos.ground_taste_title" = "味わえる1つのもの";
+"sos.ground_touch_sub" = "周りの感触に触れてください";
+"sos.ground_touch_title" = "触れる4つのもの";
+"sos.grounding" = "グラウンディング";
+"sos.grounding_sub" = "五感とつながりましょう";
+"sos.hint_exhale" = "ゆっくり息を吐いて";
+"sos.hint_hold" = "息を止めて";
+"sos.hint_inhale" = "深く息を吸って";
+"sos.save_and_close" = "保存して閉じる";
+"sos.you_are_safe_detail" = "乗り越えました。もう安全です。";
+"sos.you_did_it" = "やり遂げました！";
+"profile.contact_name_placeholder" = "連絡先の名前";
+"profile.detailed" = "詳細";
+"profile.moodMap" = "気分マップ";
+"profile.name_alert" = "名前を入力してください";
+
+"profile.made_with_love" = "❤️を込めて";

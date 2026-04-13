@@ -729,3 +729,33 @@
 "trigger_opt_sleep" = "Poor sleep";
 "trigger_opt_social" = "Social media";
 "trigger_opt_transport" = "Transport";
+
+// MARK: - SOS + Profile (PM#7 fix)
+"sos.breath_cycles" = "Breathing cycles";
+"sos.duration" = "Duration";
+"sos.feeling_better" = "Feeling better?";
+"sos.ground_hear_sub" = "Focus on any sounds around you";
+"sos.ground_hear_title" = "2 things you can hear";
+"sos.ground_next" = "Next";
+"sos.ground_see_sub" = "Look around and name what you see";
+"sos.ground_see_title" = "5 things you can see";
+"sos.ground_smell_sub" = "Notice any scents around you";
+"sos.ground_smell_title" = "1 thing you can smell";
+"sos.ground_taste_sub" = "Notice any taste in your mouth";
+"sos.ground_taste_title" = "1 thing you can taste";
+"sos.ground_touch_sub" = "Feel the textures around you";
+"sos.ground_touch_title" = "4 things you can touch";
+"sos.grounding" = "Grounding exercise";
+"sos.grounding_sub" = "Connect with your senses";
+"sos.hint_exhale" = "Exhale slowly";
+"sos.hint_hold" = "Hold your breath";
+"sos.hint_inhale" = "Breathe in deeply";
+"sos.save_and_close" = "Save & Close";
+"sos.you_are_safe_detail" = "You got through it. You are safe now.";
+"sos.you_did_it" = "You did it!";
+"profile.contact_name_placeholder" = "Contact name";
+"profile.detailed" = "Detailed";
+"profile.moodMap" = "Mood Map";
+"profile.name_alert" = "Enter your name";
+
+"profile.made_with_love" = "Made with ❤️";

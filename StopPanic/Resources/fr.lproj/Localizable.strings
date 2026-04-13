@@ -729,3 +729,33 @@
 "trigger_opt_sleep" = "Mauvais sommeil";
 "trigger_opt_social" = "Réseaux sociaux";
 "trigger_opt_transport" = "Transports";
+
+// MARK: - SOS + Profile (PM#7 fix)
+"sos.breath_cycles" = "Cycles de respiration";
+"sos.duration" = "Durée";
+"sos.feeling_better" = "Tu te sens mieux ?";
+"sos.ground_hear_sub" = "Concentre-toi sur les sons autour de toi";
+"sos.ground_hear_title" = "2 choses que tu entends";
+"sos.ground_next" = "Suivant";
+"sos.ground_see_sub" = "Regarde autour de toi et nomme ce que tu vois";
+"sos.ground_see_title" = "5 choses que tu vois";
+"sos.ground_smell_sub" = "Remarque les odeurs autour de toi";
+"sos.ground_smell_title" = "1 chose que tu sens";
+"sos.ground_taste_sub" = "Remarque un goût dans ta bouche";
+"sos.ground_taste_title" = "1 chose que tu goûtes";
+"sos.ground_touch_sub" = "Ressens les textures autour de toi";
+"sos.ground_touch_title" = "4 choses que tu peux toucher";
+"sos.grounding" = "Exercice d'ancrage";
+"sos.grounding_sub" = "Connecte-toi à tes sens";
+"sos.hint_exhale" = "Expire lentement";
+"sos.hint_hold" = "Retiens ton souffle";
+"sos.hint_inhale" = "Inspire profondément";
+"sos.save_and_close" = "Enregistrer et fermer";
+"sos.you_are_safe_detail" = "Tu as réussi. Tu es en sécurité maintenant.";
+"sos.you_did_it" = "Tu as réussi !";
+"profile.contact_name_placeholder" = "Nom du contact";
+"profile.detailed" = "Détaillé";
+"profile.moodMap" = "Carte d'humeur";
+"profile.name_alert" = "Entre ton prénom";
+
+"profile.made_with_love" = "Fait avec ❤️";
