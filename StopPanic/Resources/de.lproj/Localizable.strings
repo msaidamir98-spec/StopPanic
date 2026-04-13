@@ -221,13 +221,13 @@
 /* Journal */
 "journal.title" = "Tagebuch";
 "journal.entries" = "Einträge";
-"journal.episodes" = "Episoden";
+"journal.episodes" = "Einträge";
 "journal.mood" = "Stimmung";
-"journal.insights" = "Erkenntnisse";
+"journal.insights" = "Analyse";
 "journal.empty.title" = "Tagebuch ist leer";
-"journal.empty.subtitle" = "Erfasse Episoden, um Muster zu erkennen";
+"journal.empty.subtitle" = "Erstelle Einträge, um deine Muster zu erkennen";
 "journal.perWeek" = "pro Woche";
-"journal.avgIntensity" = "Ø Intensität";
+"journal.avgIntensity" = "Ø Niveau";
 "journal.trend" = "Trend";
 
 /* Profile */
@@ -700,12 +700,12 @@
 
 // MARK: - Journal (PM#6 fix)
 "journal.achievements" = "Erfolge";
-"journal.add_intensity" = "Intensität";
-"journal.add_notes" = "Notizen";
+"journal.add_intensity" = "Angstniveau";
+"journal.add_notes" = "Deine Notizen";
 "journal.add_notes_placeholder" = "Was hast du gefühlt?";
 "journal.add_save" = "Speichern";
-"journal.add_title" = "Neue Episode";
-"journal.add_triggers" = "Auslöser";
+"journal.add_title" = "Neuer Eintrag";
+"journal.add_triggers" = "Was war der Auslöser?";
 "journal.add_triggers_prefix" = "Auslöser:";
 "journal.common_triggers" = "Häufige Auslöser";
 "journal.intensity_1" = "Kaum spürbar";
@@ -717,15 +717,15 @@
 "journal.mood_empty_subtitle" = "Verfolge deine Stimmung, um Muster zu erkennen";
 "journal.trigger_food" = "Essen";
 "journal.trigger_sport" = "Sport";
-"journal.triggers_empty" = "Noch nicht genug Daten";
+"journal.triggers_empty" = "Erstelle weitere Einträge, um Muster zu sehen";
 "journal.unlocked" = "freigeschaltet";
 "trigger_opt_caffeine" = "Koffein";
-"trigger_opt_crowds" = "Menschenmenge";
+"trigger_opt_crowds" = "Menschenmengen";
 "trigger_opt_family" = "Familie";
 "trigger_opt_meds" = "Medikamente";
 "trigger_opt_money" = "Finanzen";
 "trigger_opt_night" = "Nacht";
-"trigger_opt_none" = "Unbekannt";
+"trigger_opt_none" = "Weiß nicht";
 "trigger_opt_sleep" = "Schlafmangel";
 "trigger_opt_social" = "Soziale Medien";
 "trigger_opt_transport" = "Transport";

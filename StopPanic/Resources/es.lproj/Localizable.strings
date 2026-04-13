@@ -220,14 +220,14 @@
 
 /* Journal */
 "journal.title" = "Diario";
-"journal.entries" = "entradas";
-"journal.episodes" = "Episodios";
+"journal.entries" = "registros";
+"journal.episodes" = "Registros";
 "journal.mood" = "Ánimo";
-"journal.insights" = "Perspectivas";
+"journal.insights" = "Análisis";
 "journal.empty.title" = "El diario está vacío";
-"journal.empty.subtitle" = "Registra episodios para ver patrones";
+"journal.empty.subtitle" = "Registra entradas para descubrir tus patrones";
 "journal.perWeek" = "por semana";
-"journal.avgIntensity" = "intensidad media";
+"journal.avgIntensity" = "nivel medio";
 "journal.trend" = "tendencia";
 
 /* Profile */
@@ -700,14 +700,14 @@
 
 // MARK: - Journal (PM#6 fix)
 "journal.achievements" = "Logros";
-"journal.add_intensity" = "Intensidad";
-"journal.add_notes" = "Notas";
+"journal.add_intensity" = "Nivel de ansiedad";
+"journal.add_notes" = "Tus notas";
 "journal.add_notes_placeholder" = "¿Qué sentías?";
 "journal.add_save" = "Guardar";
-"journal.add_title" = "Nuevo episodio";
-"journal.add_triggers" = "Desencadenantes";
-"journal.add_triggers_prefix" = "Desencadenantes:";
-"journal.common_triggers" = "Desencadenantes comunes";
+"journal.add_title" = "Nuevo registro";
+"journal.add_triggers" = "¿Qué lo causó?";
+"journal.add_triggers_prefix" = "Causas:";
+"journal.common_triggers" = "Causas frecuentes";
 "journal.intensity_1" = "Apenas perceptible";
 "journal.intensity_2" = "Malestar leve";
 "journal.intensity_3" = "Ansiedad moderada";
@@ -717,10 +717,10 @@
 "journal.mood_empty_subtitle" = "Registra tu ánimo para descubrir patrones";
 "journal.trigger_food" = "Comida";
 "journal.trigger_sport" = "Ejercicio";
-"journal.triggers_empty" = "Datos insuficientes aún";
+"journal.triggers_empty" = "Sigue registrando para ver patrones";
 "journal.unlocked" = "desbloqueados";
 "trigger_opt_caffeine" = "Cafeína";
-"trigger_opt_crowds" = "Multitud";
+"trigger_opt_crowds" = "Lugares concurridos";
 "trigger_opt_family" = "Familia";
 "trigger_opt_meds" = "Medicación";
 "trigger_opt_money" = "Finanzas";

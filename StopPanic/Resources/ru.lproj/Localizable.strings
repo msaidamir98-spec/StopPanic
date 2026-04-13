@@ -221,13 +221,13 @@
 /* Journal */
 "journal.title" = "Дневник";
 "journal.entries" = "записей";
-"journal.episodes" = "Эпизоды";
+"journal.episodes" = "Записи";
 "journal.mood" = "Настроение";
-"journal.insights" = "Инсайты";
+"journal.insights" = "Аналитика";
 "journal.empty.title" = "Дневник пока пуст";
-"journal.empty.subtitle" = "Записывай эпизоды, чтобы увидеть паттерны";
+"journal.empty.subtitle" = "Веди записи, чтобы увидеть свои паттерны";
 "journal.perWeek" = "за неделю";
-"journal.avgIntensity" = "средняя сила";
+"journal.avgIntensity" = "средний уровень";
 "journal.trend" = "тренд";
 
 /* Profile */
@@ -700,14 +700,14 @@
 
 // MARK: - Journal (PM#6 fix)
 "journal.achievements" = "Достижения";
-"journal.add_intensity" = "Интенсивность";
-"journal.add_notes" = "Заметки";
+"journal.add_intensity" = "Сила тревоги";
+"journal.add_notes" = "Твои заметки";
 "journal.add_notes_placeholder" = "Что ты чувствовал?";
 "journal.add_save" = "Сохранить";
-"journal.add_title" = "Новый эпизод";
-"journal.add_triggers" = "Триггеры";
-"journal.add_triggers_prefix" = "Триггеры:";
-"journal.common_triggers" = "Частые триггеры";
+"journal.add_title" = "Новая запись";
+"journal.add_triggers" = "Что вызвало?";
+"journal.add_triggers_prefix" = "Причины:";
+"journal.common_triggers" = "Частые причины";
 "journal.intensity_1" = "Едва заметно";
 "journal.intensity_2" = "Лёгкий дискомфорт";
 "journal.intensity_3" = "Умеренная тревога";
@@ -717,10 +717,10 @@
 "journal.mood_empty_subtitle" = "Отслеживай настроение, чтобы увидеть паттерны";
 "journal.trigger_food" = "Еда";
 "journal.trigger_sport" = "Спорт";
-"journal.triggers_empty" = "Данных пока недостаточно";
+"journal.triggers_empty" = "Продолжай записывать, чтобы увидеть паттерны";
 "journal.unlocked" = "открыто";
 "trigger_opt_caffeine" = "Кофеин";
-"trigger_opt_crowds" = "Толпа";
+"trigger_opt_crowds" = "Людные места";
 "trigger_opt_family" = "Семья";
 "trigger_opt_meds" = "Лекарства";
 "trigger_opt_money" = "Финансы";

@@ -221,13 +221,13 @@
 /* Journal */
 "journal.title" = "Journal";
 "journal.entries" = "entrées";
-"journal.episodes" = "Épisodes";
+"journal.episodes" = "Entrées";
 "journal.mood" = "Humeur";
-"journal.insights" = "Aperçus";
+"journal.insights" = "Analyse";
 "journal.empty.title" = "Le journal est vide";
-"journal.empty.subtitle" = "Enregistre des épisodes pour voir les tendances";
+"journal.empty.subtitle" = "Note tes entrées pour découvrir tes tendances";
 "journal.perWeek" = "par semaine";
-"journal.avgIntensity" = "intensité moy.";
+"journal.avgIntensity" = "niveau moyen";
 "journal.trend" = "tendance";
 
 /* Profile */
@@ -700,14 +700,14 @@
 
 // MARK: - Journal (PM#6 fix)
 "journal.achievements" = "Réussites";
-"journal.add_intensity" = "Intensité";
-"journal.add_notes" = "Notes";
+"journal.add_intensity" = "Niveau d'anxiété";
+"journal.add_notes" = "Tes notes";
 "journal.add_notes_placeholder" = "Que ressentais-tu ?";
 "journal.add_save" = "Enregistrer";
-"journal.add_title" = "Nouvel épisode";
-"journal.add_triggers" = "Déclencheurs";
-"journal.add_triggers_prefix" = "Déclencheurs :";
-"journal.common_triggers" = "Déclencheurs fréquents";
+"journal.add_title" = "Nouvelle entrée";
+"journal.add_triggers" = "Qu'est-ce qui l'a déclenché ?";
+"journal.add_triggers_prefix" = "Causes :";
+"journal.common_triggers" = "Causes fréquentes";
 "journal.intensity_1" = "À peine perceptible";
 "journal.intensity_2" = "Léger inconfort";
 "journal.intensity_3" = "Anxiété modérée";
@@ -717,15 +717,15 @@
 "journal.mood_empty_subtitle" = "Suis ton humeur pour découvrir des tendances";
 "journal.trigger_food" = "Nourriture";
 "journal.trigger_sport" = "Sport";
-"journal.triggers_empty" = "Pas encore assez de données";
+"journal.triggers_empty" = "Continue à noter pour voir les tendances";
 "journal.unlocked" = "débloqués";
 "trigger_opt_caffeine" = "Caféine";
-"trigger_opt_crowds" = "Foule";
+"trigger_opt_crowds" = "Lieux bondés";
 "trigger_opt_family" = "Famille";
 "trigger_opt_meds" = "Médicaments";
 "trigger_opt_money" = "Finances";
 "trigger_opt_night" = "Nuit";
-"trigger_opt_none" = "Inconnu";
+"trigger_opt_none" = "Je ne sais pas";
 "trigger_opt_sleep" = "Mauvais sommeil";
 "trigger_opt_social" = "Réseaux sociaux";
 "trigger_opt_transport" = "Transports";

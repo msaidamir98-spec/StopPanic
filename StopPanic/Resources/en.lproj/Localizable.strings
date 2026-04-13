@@ -221,13 +221,13 @@
 /* Journal */
 "journal.title" = "Journal";
 "journal.entries" = "entries";
-"journal.episodes" = "Episodes";
+"journal.episodes" = "Entries";
 "journal.mood" = "Mood";
-"journal.insights" = "Insights";
+"journal.insights" = "Analytics";
 "journal.empty.title" = "Journal is empty";
-"journal.empty.subtitle" = "Record episodes to see patterns";
+"journal.empty.subtitle" = "Log entries to discover your patterns";
 "journal.perWeek" = "per week";
-"journal.avgIntensity" = "avg intensity";
+"journal.avgIntensity" = "avg level";
 "journal.trend" = "trend";
 
 /* Profile */
@@ -700,12 +700,12 @@
 
 // MARK: - Journal (PM#6 fix)
 "journal.achievements" = "Achievements";
-"journal.add_intensity" = "Intensity";
-"journal.add_notes" = "Notes";
+"journal.add_intensity" = "Anxiety level";
+"journal.add_notes" = "Your notes";
 "journal.add_notes_placeholder" = "What were you feeling?";
 "journal.add_save" = "Save";
-"journal.add_title" = "New Episode";
-"journal.add_triggers" = "Triggers";
+"journal.add_title" = "New Entry";
+"journal.add_triggers" = "What triggered it?";
 "journal.add_triggers_prefix" = "Triggers:";
 "journal.common_triggers" = "Common triggers";
 "journal.intensity_1" = "Barely noticeable";
@@ -717,15 +717,15 @@
 "journal.mood_empty_subtitle" = "Track your mood to discover patterns";
 "journal.trigger_food" = "Food";
 "journal.trigger_sport" = "Exercise";
-"journal.triggers_empty" = "Not enough data yet";
+"journal.triggers_empty" = "Keep logging to see patterns";
 "journal.unlocked" = "unlocked";
 "trigger_opt_caffeine" = "Caffeine";
-"trigger_opt_crowds" = "Crowds";
+"trigger_opt_crowds" = "Crowded places";
 "trigger_opt_family" = "Family";
 "trigger_opt_meds" = "Medication";
 "trigger_opt_money" = "Finances";
 "trigger_opt_night" = "Night";
-"trigger_opt_none" = "Unknown";
+"trigger_opt_none" = "Not sure";
 "trigger_opt_sleep" = "Poor sleep";
 "trigger_opt_social" = "Social media";
 "trigger_opt_transport" = "Transport";

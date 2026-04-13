@@ -221,13 +221,13 @@
 /* Journal */
 "journal.title" = "Diário";
 "journal.entries" = "registros";
-"journal.episodes" = "Episódios";
+"journal.episodes" = "Registros";
 "journal.mood" = "Humor";
-"journal.insights" = "Insights";
+"journal.insights" = "Análise";
 "journal.empty.title" = "O diário está vazio";
-"journal.empty.subtitle" = "Registre episódios para ver padrões";
+"journal.empty.subtitle" = "Registre entradas para descobrir seus padrões";
 "journal.perWeek" = "por semana";
-"journal.avgIntensity" = "intensidade média";
+"journal.avgIntensity" = "nível médio";
 "journal.trend" = "tendência";
 
 /* Profile */
@@ -700,14 +700,14 @@
 
 // MARK: - Journal (PM#6 fix)
 "journal.achievements" = "Conquistas";
-"journal.add_intensity" = "Intensidade";
-"journal.add_notes" = "Notas";
+"journal.add_intensity" = "Nível de ansiedade";
+"journal.add_notes" = "Suas notas";
 "journal.add_notes_placeholder" = "O que você sentiu?";
 "journal.add_save" = "Salvar";
-"journal.add_title" = "Novo episódio";
-"journal.add_triggers" = "Gatilhos";
-"journal.add_triggers_prefix" = "Gatilhos:";
-"journal.common_triggers" = "Gatilhos comuns";
+"journal.add_title" = "Novo registro";
+"journal.add_triggers" = "O que causou?";
+"journal.add_triggers_prefix" = "Causas:";
+"journal.common_triggers" = "Causas comuns";
 "journal.intensity_1" = "Quase imperceptível";
 "journal.intensity_2" = "Leve desconforto";
 "journal.intensity_3" = "Ansiedade moderada";
@@ -717,10 +717,10 @@
 "journal.mood_empty_subtitle" = "Acompanhe seu humor para descobrir padrões";
 "journal.trigger_food" = "Comida";
 "journal.trigger_sport" = "Exercício";
-"journal.triggers_empty" = "Dados insuficientes ainda";
+"journal.triggers_empty" = "Continue registrando para ver padrões";
 "journal.unlocked" = "desbloqueadas";
 "trigger_opt_caffeine" = "Cafeína";
-"trigger_opt_crowds" = "Multidão";
+"trigger_opt_crowds" = "Lugares lotados";
 "trigger_opt_family" = "Família";
 "trigger_opt_meds" = "Medicação";
 "trigger_opt_money" = "Finanças";

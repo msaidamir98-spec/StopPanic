@@ -221,13 +221,13 @@
 /* Journal */
 "journal.title" = "日记";
 "journal.entries" = "条记录";
-"journal.episodes" = "发作";
+"journal.episodes" = "记录";
 "journal.mood" = "心情";
-"journal.insights" = "洞察";
+"journal.insights" = "分析";
 "journal.empty.title" = "日记为空";
-"journal.empty.subtitle" = "记录发作以查看规律";
+"journal.empty.subtitle" = "记录条目以发现你的模式";
 "journal.perWeek" = "每周";
-"journal.avgIntensity" = "平均强度";
+"journal.avgIntensity" = "平均水平";
 "journal.trend" = "趋势";
 
 /* Profile */
@@ -700,14 +700,14 @@
 
 // MARK: - Journal (PM#6 fix)
 "journal.achievements" = "成就";
-"journal.add_intensity" = "强度";
-"journal.add_notes" = "备注";
+"journal.add_intensity" = "焦虑程度";
+"journal.add_notes" = "你的备注";
 "journal.add_notes_placeholder" = "你当时的感受是什么？";
 "journal.add_save" = "保存";
 "journal.add_title" = "新记录";
-"journal.add_triggers" = "触发因素";
-"journal.add_triggers_prefix" = "触发因素：";
-"journal.common_triggers" = "常见触发因素";
+"journal.add_triggers" = "是什么引起的？";
+"journal.add_triggers_prefix" = "原因：";
+"journal.common_triggers" = "常见原因";
 "journal.intensity_1" = "几乎察觉不到";
 "journal.intensity_2" = "轻微不适";
 "journal.intensity_3" = "中度焦虑";
@@ -717,15 +717,15 @@
 "journal.mood_empty_subtitle" = "追踪你的心情以发现模式";
 "journal.trigger_food" = "饮食";
 "journal.trigger_sport" = "运动";
-"journal.triggers_empty" = "数据还不够";
+"journal.triggers_empty" = "继续记录以查看模式";
 "journal.unlocked" = "已解锁";
 "trigger_opt_caffeine" = "咖啡因";
-"trigger_opt_crowds" = "人群";
+"trigger_opt_crowds" = "拥挤场所";
 "trigger_opt_family" = "家庭";
 "trigger_opt_meds" = "药物";
 "trigger_opt_money" = "财务";
 "trigger_opt_night" = "夜晚";
-"trigger_opt_none" = "不清楚";
+"trigger_opt_none" = "不确定";
 "trigger_opt_sleep" = "睡眠不好";
 "trigger_opt_social" = "社交媒体";
 "trigger_opt_transport" = "交通";
