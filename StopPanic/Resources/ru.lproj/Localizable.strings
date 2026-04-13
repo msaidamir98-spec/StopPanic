@@ -53,7 +53,6 @@
 "home_streak" = "Серия";
 "home_episodes" = "эпизодов";
 "home_in_row" = "подряд";
-"home_bpm" = "BPM";
 "home_sessions" = "сессий";
 "home_min" = "мин";
 "home_risk" = "риск";
@@ -241,8 +240,6 @@
 "profile.settings" = "Настройки";
 "profile.notifications" = "Уведомления";
 "profile.crisisLine" = "Телефон доверия";
-"profile.premium" = "Premium";
-"profile.getPremium" = "Получить Premium ✨";
 
 /* Legacy compatibility keys */
 "home.sos.button" = "SOS";
@@ -278,22 +275,7 @@
 
 /* SOS Flow (new) */
 "sos.breathe_with_me" = "Дыши со мной";
-"sos.ground_step1" = "5 вещей, которые ВИДИШЬ";
-"sos.ground_step2" = "4 вещи, которые СЛЫШИШЬ";
-"sos.ground_step3" = "3 вещи, которых КАСАЕШЬСЯ";
-"sos.ground_step4" = "2 запаха, которые ЧУВСТВУЕШЬ";
-"sos.ground_step5" = "1 вкус, который ОЩУЩАЕШЬ";
-"sos.ground_title" = "Заземление";
-"sos.ground_subtitle" = "Сконцентрируйся на ощущениях";
-"sos.ground_done" = "Готово, дальше →";
-"sos.affirmation_title" = "Ты справился 💪";
 "sos.affirmation_body" = "Тревога — ложная тревога.\nТвоё тело реагировало на несуществующую опасность.\nТы в безопасности.";
-"sos.duration_label" = "Длительность";
-"sos.cycles_label" = "Циклов дыхания";
-"sos.note_text" = "SOS session completed";
-"sos.save_entry" = "Записать в дневник";
-"sos.calm_session" = "Сессия спокойствия";
-"sos.breathing_exercise" = "Дыхательное упражнение";
 "sos.notif_title %@" = "🆘 SOS — %@";
 "sos.notif_body %@" = "Паническая атака. Позвони: %@";
 "sos.crisis_notif_title" = "🆘 Паническая атака";
@@ -301,9 +283,6 @@
 "sos.diary_note %@ %lld" = "SOS-сессия, длительность: %1$@, циклов: %2$lld";
 
 /* Breathing Session (new) */
-"breathing.stats_label" = "циклов";
-"breathing.time_label" = "время";
-"breathing.start_button" = "Начать дыхание";
 
 /* Grounding Exercise */
 "grounding.sense_see" = "ВИДИШЬ";
@@ -533,36 +512,13 @@
 "profile.breath_min" = "Мин дыхания";
 
 /* Journal (new) */
-"journal.week_summary" = "за неделю";
-"journal.avg_intensity" = "средняя сила";
-"journal.trend_label" = "тренд";
 "journal.mood_empty" = "Записывай настроение, чтобы увидеть паттерны";
-"journal.radar_title" = "Радар паники";
-"journal.achievements_title" = "Достижения";
-"journal.frequent_triggers" = "Частые триггеры";
-"journal.no_triggers" = "Данных пока нет";
 "journal.no_notes" = "Без заметок";
 "journal.intensity" = "Интенсивность";
-"journal.triggers_label" = "Триггеры";
-"journal.notes_label" = "Заметки";
-"journal.notes_placeholder" = "Что ты чувствовал?";
-"journal.trigger_separator" = ", ";
-"journal.save" = "Сохранить";
-"journal.add_episode" = "Новый эпизод";
-"journal.cancel" = "Отмена";
-"journal.intensity_minimal" = "Минимальная";
-"journal.intensity_mild" = "Лёгкая";
-"journal.intensity_moderate" = "Умеренная";
-"journal.intensity_severe" = "Сильная";
-"journal.intensity_extreme" = "Невыносимая";
 
 /* Trigger Options */
 "trigger_opt_work" = "Работа";
 "trigger_opt_health" = "Здоровье";
-"trigger_opt_conflict" = "Конфликт";
-"trigger_opt_loneliness" = "Одиночество";
-"trigger_opt_news" = "Новости";
-"trigger_opt_unknown" = "Не знаю";
 
 /* Theme */
 "theme.title" = "Оформление";
@@ -626,12 +582,9 @@
 "notif.how_body" = "Stillō отправит мягкое напоминание в выбранное время. Дыхательная практика занимает всего 2 минуты и доказанно снижает уровень кортизола.";
 
 /* ProfileHub (new) */
-"profile.name_alert_title" = "Укажи имя";
 "profile.name_placeholder" = "Имя";
 "profile.sos_empty" = "Добавь контакт, который получит уведомление при SOS";
 "profile.theme" = "Оформление";
-"profile.health" = "Apple Health";
-"profile.about_app" = "О приложении";
 "profile.disclaimer" = "Stillō — помощник, НЕ медицинское устройство. Не заменяет врача.";
 "profile.contact_name" = "Имя";
 "profile.contact_phone" = "Телефон";

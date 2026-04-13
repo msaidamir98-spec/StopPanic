@@ -53,7 +53,6 @@
 "home_streak" = "連続";
 "home_episodes" = "エピソード";
 "home_in_row" = "連続";
-"home_bpm" = "BPM";
 "home_sessions" = "セッション";
 "home_min" = "分";
 "home_risk" = "リスク";
@@ -241,8 +240,6 @@
 "profile.settings" = "設定";
 "profile.notifications" = "通知";
 "profile.crisisLine" = "危機相談窓口";
-"profile.premium" = "プレミアム";
-"profile.getPremium" = "プレミアムを取得 ✨";
 
 /* Legacy */
 "home.sos.button" = "SOS";
@@ -278,22 +275,7 @@
 
 /* SOS Flow (new) */
 "sos.breathe_with_me" = "一緒に呼吸しましょう";
-"sos.ground_step1" = "見えるもの5つ";
-"sos.ground_step2" = "聞こえるもの4つ";
-"sos.ground_step3" = "触れるもの3つ";
-"sos.ground_step4" = "匂うもの2つ";
-"sos.ground_step5" = "味わえるもの1つ";
-"sos.ground_title" = "グラウンディング";
-"sos.ground_subtitle" = "五感に集中しましょう";
-"sos.ground_done" = "完了、次へ →";
-"sos.affirmation_title" = "やり遂げました 💪";
 "sos.affirmation_body" = "不安は誤報です。\nあなたの体は存在しない危険に反応しました。\nあなたは安全です。";
-"sos.duration_label" = "所要時間";
-"sos.cycles_label" = "呼吸サイクル";
-"sos.note_text" = "SOSセッション完了";
-"sos.save_entry" = "日記に保存";
-"sos.calm_session" = "カームセッション";
-"sos.breathing_exercise" = "呼吸エクササイズ";
 "sos.notif_title %@" = "🆘 SOS — %@";
 "sos.notif_body %@" = "パニック発作。電話: %@";
 "sos.crisis_notif_title" = "🆘 パニック発作";
@@ -301,9 +283,6 @@
 "sos.diary_note %@ %lld" = "SOSセッション、所要時間: %1$@、サイクル: %2$lld";
 
 /* Breathing Session (new) */
-"breathing.stats_label" = "サイクル";
-"breathing.time_label" = "時間";
-"breathing.start_button" = "呼吸を始める";
 
 /* Grounding Exercise */
 "grounding.sense_see" = "見る";
@@ -533,36 +512,13 @@
 "profile.breath_min" = "呼吸（分）";
 
 /* Journal (new) */
-"journal.week_summary" = "週あたり";
-"journal.avg_intensity" = "平均強度";
-"journal.trend_label" = "傾向";
 "journal.mood_empty" = "気分を記録してパターンを見つけましょう";
-"journal.radar_title" = "パニックレーダー";
-"journal.achievements_title" = "実績";
-"journal.frequent_triggers" = "よくあるトリガー";
-"journal.no_triggers" = "データがまだありません";
 "journal.no_notes" = "メモなし";
 "journal.intensity" = "強度";
-"journal.triggers_label" = "トリガー";
-"journal.notes_label" = "メモ";
-"journal.notes_placeholder" = "どんな気持ちでしたか？";
-"journal.trigger_separator" = "、";
-"journal.save" = "保存";
-"journal.add_episode" = "新しいエピソード";
-"journal.cancel" = "キャンセル";
-"journal.intensity_minimal" = "わずか";
-"journal.intensity_mild" = "軽い";
-"journal.intensity_moderate" = "中程度";
-"journal.intensity_severe" = "ひどい";
-"journal.intensity_extreme" = "耐えられない";
 
 /* Trigger Options */
 "trigger_opt_work" = "仕事";
 "trigger_opt_health" = "健康";
-"trigger_opt_conflict" = "対人関係";
-"trigger_opt_loneliness" = "孤独";
-"trigger_opt_news" = "ニュース";
-"trigger_opt_unknown" = "わからない";
 
 /* Theme */
 "theme.title" = "外観";
@@ -626,12 +582,9 @@
 "notif.how_body" = "Stillōは選んだ時間にやさしいリマインダーを送ります。呼吸練習はたった2分で、コルチゾールレベルを下げることが証明されています。";
 
 /* ProfileHub (new) */
-"profile.name_alert_title" = "名前を設定";
 "profile.name_placeholder" = "名前";
 "profile.sos_empty" = "SOS発動時に通知される連絡先を追加してください";
 "profile.theme" = "外観";
-"profile.health" = "Apple Health";
-"profile.about_app" = "アプリについて";
 "profile.disclaimer" = "Stillōはヘルパーであり、医療機器ではありません。医師の代わりにはなりません。";
 "profile.contact_name" = "名前";
 "profile.contact_phone" = "電話番号";

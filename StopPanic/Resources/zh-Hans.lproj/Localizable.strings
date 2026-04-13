@@ -53,7 +53,6 @@
 "home_streak" = "连续";
 "home_episodes" = "次发作";
 "home_in_row" = "连续";
-"home_bpm" = "BPM";
 "home_sessions" = "次练习";
 "home_min" = "分钟";
 "home_risk" = "风险";
@@ -241,8 +240,6 @@
 "profile.settings" = "设置";
 "profile.notifications" = "通知";
 "profile.crisisLine" = "危机热线";
-"profile.premium" = "高级版";
-"profile.getPremium" = "获取高级版 ✨";
 
 /* Legacy */
 "home.sos.button" = "SOS";
@@ -278,22 +275,7 @@
 
 /* SOS Flow (new) */
 "sos.breathe_with_me" = "跟我一起呼吸";
-"sos.ground_step1" = "你看到的5样东西";
-"sos.ground_step2" = "你听到的4种声音";
-"sos.ground_step3" = "你能触摸的3样东西";
-"sos.ground_step4" = "你闻到的2种气味";
-"sos.ground_step5" = "你尝到的1种味道";
-"sos.ground_title" = "接地练习";
-"sos.ground_subtitle" = "专注于你的感官";
-"sos.ground_done" = "完成，下一步 →";
-"sos.affirmation_title" = "你做到了 💪";
 "sos.affirmation_body" = "焦虑是一次误报。\n你的身体对不存在的危险做出了反应。\n你是安全的。";
-"sos.duration_label" = "持续时间";
-"sos.cycles_label" = "呼吸循环";
-"sos.note_text" = "SOS会话已完成";
-"sos.save_entry" = "保存到日记";
-"sos.calm_session" = "平静会话";
-"sos.breathing_exercise" = "呼吸练习";
 "sos.notif_title %@" = "🆘 SOS — %@";
 "sos.notif_body %@" = "恐慌发作。拨打：%@";
 "sos.crisis_notif_title" = "🆘 恐慌发作";
@@ -301,9 +283,6 @@
 "sos.diary_note %@ %lld" = "SOS会话，时长：%1$@，循环：%2$lld";
 
 /* Breathing Session (new) */
-"breathing.stats_label" = "循环";
-"breathing.time_label" = "时间";
-"breathing.start_button" = "开始呼吸";
 
 /* Grounding Exercise */
 "grounding.sense_see" = "看";
@@ -533,36 +512,13 @@
 "profile.breath_min" = "呼吸分钟数";
 
 /* Journal (new) */
-"journal.week_summary" = "每周";
-"journal.avg_intensity" = "平均强度";
-"journal.trend_label" = "趋势";
 "journal.mood_empty" = "记录你的心情来发现规律";
-"journal.radar_title" = "恐慌雷达";
-"journal.achievements_title" = "成就";
-"journal.frequent_triggers" = "常见触发因素";
-"journal.no_triggers" = "暂无数据";
 "journal.no_notes" = "暂无备注";
 "journal.intensity" = "强度";
-"journal.triggers_label" = "触发因素";
-"journal.notes_label" = "备注";
-"journal.notes_placeholder" = "你当时有什么感受？";
-"journal.trigger_separator" = "、";
-"journal.save" = "保存";
-"journal.add_episode" = "新记录";
-"journal.cancel" = "取消";
-"journal.intensity_minimal" = "极轻";
-"journal.intensity_mild" = "轻度";
-"journal.intensity_moderate" = "中度";
-"journal.intensity_severe" = "重度";
-"journal.intensity_extreme" = "无法忍受";
 
 /* Trigger Options */
 "trigger_opt_work" = "工作";
 "trigger_opt_health" = "健康";
-"trigger_opt_conflict" = "冲突";
-"trigger_opt_loneliness" = "孤独";
-"trigger_opt_news" = "新闻";
-"trigger_opt_unknown" = "不知道";
 
 /* Theme */
 "theme.title" = "外观";
@@ -626,12 +582,9 @@
 "notif.how_body" = "Stillō会在你选择的时间发送温柔的提醒。呼吸练习只需2分钟，已被证实能降低皮质醇水平。";
 
 /* ProfileHub (new) */
-"profile.name_alert_title" = "设置你的名字";
 "profile.name_placeholder" = "姓名";
 "profile.sos_empty" = "添加一个在触发SOS时会被通知的联系人";
 "profile.theme" = "外观";
-"profile.health" = "Apple Health";
-"profile.about_app" = "关于应用";
 "profile.disclaimer" = "Stillō是辅助工具，不是医疗设备。不能替代医生。";
 "profile.contact_name" = "姓名";
 "profile.contact_phone" = "电话";

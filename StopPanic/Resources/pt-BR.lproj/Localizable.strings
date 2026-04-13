@@ -53,7 +53,6 @@
 "home_streak" = "Sequência";
 "home_episodes" = "episódios";
 "home_in_row" = "seguidos";
-"home_bpm" = "BPM";
 "home_sessions" = "sessões";
 "home_min" = "min";
 "home_risk" = "risco";
@@ -241,8 +240,6 @@
 "profile.settings" = "Configurações";
 "profile.notifications" = "Notificações";
 "profile.crisisLine" = "Linha de crise";
-"profile.premium" = "Premium";
-"profile.getPremium" = "Obter Premium ✨";
 
 /* Legacy */
 "home.sos.button" = "SOS";
@@ -278,22 +275,7 @@
 
 /* SOS Flow (new) */
 "sos.breathe_with_me" = "Respire comigo";
-"sos.ground_step1" = "5 coisas que você VÊ";
-"sos.ground_step2" = "4 coisas que você OUVE";
-"sos.ground_step3" = "3 coisas que você TOCA";
-"sos.ground_step4" = "2 coisas que você CHEIRA";
-"sos.ground_step5" = "1 coisa que você SABOREIA";
-"sos.ground_title" = "Ancoragem";
-"sos.ground_subtitle" = "Concentre-se nos seus sentidos";
-"sos.ground_done" = "Pronto, próximo →";
-"sos.affirmation_title" = "Você conseguiu 💪";
 "sos.affirmation_body" = "A ansiedade é um alarme falso.\nSeu corpo reagiu a um perigo inexistente.\nVocê está seguro.";
-"sos.duration_label" = "Duração";
-"sos.cycles_label" = "Ciclos de respiração";
-"sos.note_text" = "Sessão SOS concluída";
-"sos.save_entry" = "Salvar no diário";
-"sos.calm_session" = "Sessão de Calma";
-"sos.breathing_exercise" = "Exercício de Respiração";
 "sos.notif_title %@" = "🆘 SOS — %@";
 "sos.notif_body %@" = "Crise de pânico. Ligar: %@";
 "sos.crisis_notif_title" = "🆘 Crise de Pânico";
@@ -301,9 +283,6 @@
 "sos.diary_note %@ %lld" = "Sessão SOS, duração: %1$@, ciclos: %2$lld";
 
 /* Breathing Session (new) */
-"breathing.stats_label" = "ciclos";
-"breathing.time_label" = "tempo";
-"breathing.start_button" = "Começar Respiração";
 
 /* Grounding Exercise */
 "grounding.sense_see" = "VER";
@@ -533,36 +512,13 @@
 "profile.breath_min" = "Min de respiração";
 
 /* Journal (new) */
-"journal.week_summary" = "por semana";
-"journal.avg_intensity" = "intensidade méd.";
-"journal.trend_label" = "tendência";
 "journal.mood_empty" = "Registre seu humor para ver padrões";
-"journal.radar_title" = "Radar de Pânico";
-"journal.achievements_title" = "Conquistas";
-"journal.frequent_triggers" = "Gatilhos frequentes";
-"journal.no_triggers" = "Sem dados ainda";
 "journal.no_notes" = "Sem notas";
 "journal.intensity" = "Intensidade";
-"journal.triggers_label" = "Gatilhos";
-"journal.notes_label" = "Notas";
-"journal.notes_placeholder" = "O que você estava sentindo?";
-"journal.trigger_separator" = ", ";
-"journal.save" = "Salvar";
-"journal.add_episode" = "Novo Episódio";
-"journal.cancel" = "Cancelar";
-"journal.intensity_minimal" = "Mínima";
-"journal.intensity_mild" = "Leve";
-"journal.intensity_moderate" = "Moderada";
-"journal.intensity_severe" = "Severa";
-"journal.intensity_extreme" = "Insuportável";
 
 /* Trigger Options */
 "trigger_opt_work" = "Trabalho";
 "trigger_opt_health" = "Saúde";
-"trigger_opt_conflict" = "Conflito";
-"trigger_opt_loneliness" = "Solidão";
-"trigger_opt_news" = "Notícias";
-"trigger_opt_unknown" = "Não sei";
 
 /* Theme */
 "theme.title" = "Aparência";
@@ -626,12 +582,9 @@
 "notif.how_body" = "Stillō enviará um lembrete suave no horário escolhido. Uma prática de respiração leva apenas 2 minutos e comprovadamente reduz os níveis de cortisol.";
 
 /* ProfileHub (new) */
-"profile.name_alert_title" = "Defina seu nome";
 "profile.name_placeholder" = "Nome";
 "profile.sos_empty" = "Adicione um contato que será notificado quando o SOS for acionado";
 "profile.theme" = "Aparência";
-"profile.health" = "Apple Health";
-"profile.about_app" = "Sobre o app";
 "profile.disclaimer" = "Stillō é um assistente, NÃO um dispositivo médico. Não substitui um médico.";
 "profile.contact_name" = "Nome";
 "profile.contact_phone" = "Telefone";
