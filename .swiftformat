@@ -79,4 +79,4 @@
 --ranges spaced
 --nospaceoperators
 --operatorfunc spaced
---modifierorder acl,override,mutating,static,class,final,required,convenience,lazy,weak,dynamic,optional,nonisolated
+--modifierorder nonisolated,acl,override,mutating,static,class,final,required,convenience,lazy,weak,dynamic,optional

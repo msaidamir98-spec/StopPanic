@@ -1,5 +1,6 @@
 import Combine
 import Foundation
+import os.log
 
 // MARK: - MoodPoint
 
@@ -48,19 +49,26 @@ final class MoodMapService: ObservableObject {
 
     // MARK: Private
 
+    private static let log = Logger(subsystem: "MSK-PRODUKT.StopPanic", category: "MoodMapService")
+
     private let storageURL: URL
 
     private func savePoints() {
-        if let data = try? JSONEncoder().encode(points) {
-            try? data.write(to: storageURL)
+        do {
+            let data = try JSONEncoder().encode(points)
+            try data.write(to: storageURL, options: .atomic)
+        } catch {
+            Self.log.error("Failed to save mood points: \(error.localizedDescription)")
         }
     }
 
     private func loadPoints() {
-        if let data = try? Data(contentsOf: storageURL),
-           let loaded = try? JSONDecoder().decode([MoodPoint].self, from: data)
-        {
-            points = loaded
+        guard FileManager.default.fileExists(atPath: storageURL.path) else { return }
+        do {
+            let data = try Data(contentsOf: storageURL)
+            points = try JSONDecoder().decode([MoodPoint].self, from: data)
+        } catch {
+            Self.log.error("Failed to load mood points: \(error.localizedDescription)")
         }
     }
 }

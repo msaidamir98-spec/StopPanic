@@ -1,5 +1,6 @@
 import Combine
 import Foundation
+import os.log
 
 /// Хранилище дневника панических атак
 @MainActor
@@ -31,19 +32,26 @@ final class DiaryService: ObservableObject {
 
     // MARK: Private
 
+    private static let log = Logger(subsystem: "MSK-PRODUKT.StopPanic", category: "DiaryService")
+
     private let storageURL: URL
 
     private func saveEpisodes() {
-        if let data = try? JSONEncoder().encode(diaryEpisodes) {
-            try? data.write(to: storageURL)
+        do {
+            let data = try JSONEncoder().encode(diaryEpisodes)
+            try data.write(to: storageURL, options: .atomic)
+        } catch {
+            Self.log.error("Failed to save diary: \(error.localizedDescription)")
         }
     }
 
     private func loadEpisodes() {
-        if let data = try? Data(contentsOf: storageURL),
-           let loaded = try? JSONDecoder().decode([DiaryEpisode].self, from: data)
-        {
-            diaryEpisodes = loaded
+        guard FileManager.default.fileExists(atPath: storageURL.path) else { return }
+        do {
+            let data = try Data(contentsOf: storageURL)
+            diaryEpisodes = try JSONDecoder().decode([DiaryEpisode].self, from: data)
+        } catch {
+            Self.log.error("Failed to load diary: \(error.localizedDescription)")
         }
     }
 }

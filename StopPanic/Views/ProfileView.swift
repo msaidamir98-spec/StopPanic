@@ -95,6 +95,10 @@ struct ProfileView: View {
     @State
     private var appear = false
 
+    private var appVersion: String {
+        Bundle.main.infoDictionary?["CFBundleShortVersionString"] as? String ?? "1.0"
+    }
+
     // MARK: - Helpers
 
     private var avatarEmoji: String {
@@ -140,7 +144,7 @@ struct ProfileView: View {
                 .foregroundColor(SP.Colors.textSecondary)
                 .lineSpacing(4)
 
-            Text("Версия 1.0.0")
+            Text("Версия \(appVersion)")
                 .font(SP.Typography.caption)
                 .foregroundColor(SP.Colors.textTertiary)
         }

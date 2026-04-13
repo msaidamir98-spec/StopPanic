@@ -563,7 +563,7 @@ struct CognitiveReframingView: View {
                                 .foregroundColor(SP.Colors.textTertiary)
 
                             TextField(
-                                "Например: «Это паника, не инфаркт. Она пройдёт»",
+                                "Например: «Это тревога, она временна. Я в безопасности»",
                                 text: $alternative, axis: .vertical
                             )
                             .textFieldStyle(.plain)

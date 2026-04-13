@@ -104,7 +104,7 @@ struct StopPanicShortcuts: AppShortcutsProvider {
                 "Запиши паническую атаку в \(.applicationName)",
                 "Запись в дневник \(.applicationName)",
             ],
-            shortTitle: "Записать ПА",
+            shortTitle: "Записать эпизод",
             systemImageName: "pencil.circle.fill"
         )
     }

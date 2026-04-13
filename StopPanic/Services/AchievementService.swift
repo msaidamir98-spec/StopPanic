@@ -1,5 +1,6 @@
 import Combine
 import Foundation
+import os.log
 import SwiftUI
 
 /// Система достижений и геймификации
@@ -39,20 +40,28 @@ final class AchievementService: ObservableObject {
 
     // MARK: Private
 
+    private static let log = Logger(subsystem: "MSK-PRODUKT.StopPanic", category: "AchievementService")
+
     private let storageURL: URL
 
     private func saveAchievements() {
-        if let data = try? JSONEncoder().encode(achievements) {
-            try? data.write(to: storageURL)
+        do {
+            let data = try JSONEncoder().encode(achievements)
+            try data.write(to: storageURL, options: .atomic)
+        } catch {
+            Self.log.error("Failed to save achievements: \(error.localizedDescription)")
         }
     }
 
     private func loadAchievements() {
-        if let data = try? Data(contentsOf: storageURL),
-           let loaded = try? JSONDecoder().decode([Achievement].self, from: data)
-        {
+        guard FileManager.default.fileExists(atPath: storageURL.path) else { return }
+        do {
+            let data = try Data(contentsOf: storageURL)
+            let loaded = try JSONDecoder().decode([Achievement].self, from: data)
             achievements = loaded
             totalPoints = loaded.filter(\.isUnlocked).count * 100
+        } catch {
+            Self.log.error("Failed to load achievements: \(error.localizedDescription)")
         }
     }
 }

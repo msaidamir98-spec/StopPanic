@@ -196,8 +196,8 @@ struct ToolsHubView: View {
             } label: {
                 ToolCardLabel(
                     icon: "heart.text.square.fill",
-                    title: "Пульс: ПА или инфаркт?",
-                    subtitle: "Анализ сердечного ритма в реальном времени",
+                    title: "Анализ пульса",
+                    subtitle: "Ритм, тревога и спокойствие",
                     color: SP.Colors.danger
                 )
             }

@@ -56,6 +56,10 @@ struct ProfileHubView: View {
     @State
     private var avatarScale: CGFloat = 0.5
 
+    private var appVersion: String {
+        Bundle.main.infoDictionary?["CFBundleShortVersionString"] as? String ?? "1.0"
+    }
+
     private var initials: String {
         let name = coordinator.userName
         if name.isEmpty { return "👤" }
@@ -269,7 +273,7 @@ struct ProfileHubView: View {
             Text("StopPanic")
                 .font(SP.Typography.headline)
                 .foregroundColor(SP.Colors.textPrimary)
-            Text("v2.0 · Made with ❤️")
+            Text("v\(appVersion) · Made with ❤️")
                 .font(SP.Typography.caption)
                 .foregroundColor(SP.Colors.textTertiary)
             Text(

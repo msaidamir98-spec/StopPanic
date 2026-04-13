@@ -4,7 +4,7 @@ import Foundation
 
 /// Результат анализа сердечного ритма
 struct HeartAnalysis: Codable, Identifiable {
-    /// Ключевое различие ПА vs Инфаркт
+    /// Классификация состояния по паттерну ритма
     ///
     /// ПАНИЧЕСКАЯ АТАКА:
     ///  • ЧСС ↑ резко, но ритм РЕГУЛЯРНЫЙ (синусовая тахикардия)
@@ -20,11 +20,11 @@ struct HeartAnalysis: Codable, Identifiable {
     ///  • НЕ реагирует на дыхание
     ///  • Может сопровождаться резким падением SpO2
     enum Diagnosis: String, Codable {
-        case panicAttack = "Паническая атака"
-        case likelyCardiac = "Возможная сердечная проблема"
-        case arrhythmia = "Аритмия"
+        case panicAttack = "Тревожное состояние"
+        case likelyCardiac = "Требует внимания врача"
+        case arrhythmia = "Нерегулярный ритм"
         case normal = "Нормальный ритм"
-        case inconclusive = "Недостаточно данных"
+        case inconclusive = "Сбор данных..."
     }
 
     /// Паттерн нарастания ЧСС

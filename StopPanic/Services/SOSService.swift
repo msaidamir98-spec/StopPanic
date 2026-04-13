@@ -1,5 +1,6 @@
 import Combine
 import Foundation
+import os.log
 import UserNotifications
 
 /// SOS-сервис: экстренные контакты + телефоны доверия
@@ -89,21 +90,27 @@ final class SOSService: ObservableObject {
 
     // MARK: Private
 
-    private var lastSOSDate: Date?
+    private static let log = Logger(subsystem: "MSK-PRODUKT.StopPanic", category: "SOSService")
 
+    private var lastSOSDate: Date?
     private let storageURL: URL
 
     private func saveContacts() {
-        if let data = try? JSONEncoder().encode(contacts) {
-            try? data.write(to: storageURL)
+        do {
+            let data = try JSONEncoder().encode(contacts)
+            try data.write(to: storageURL, options: .atomic)
+        } catch {
+            Self.log.error("Failed to save SOS contacts: \(error.localizedDescription)")
         }
     }
 
     private func loadContacts() {
-        if let data = try? Data(contentsOf: storageURL),
-           let loaded = try? JSONDecoder().decode([SOSContact].self, from: data)
-        {
-            contacts = loaded
+        guard FileManager.default.fileExists(atPath: storageURL.path) else { return }
+        do {
+            let data = try Data(contentsOf: storageURL)
+            contacts = try JSONDecoder().decode([SOSContact].self, from: data)
+        } catch {
+            Self.log.error("Failed to load SOS contacts: \(error.localizedDescription)")
         }
     }
 }
