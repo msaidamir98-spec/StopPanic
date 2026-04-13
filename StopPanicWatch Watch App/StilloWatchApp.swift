@@ -1,7 +1,7 @@
 import SwiftUI
 
 @main
-struct StopPanicWatchApp: App {
+struct StilloWatchApp: App {
     @StateObject private var heartService = WatchHeartService()
     @StateObject private var connectivity = WatchConnectionManager.shared
     

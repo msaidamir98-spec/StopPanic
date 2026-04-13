@@ -1,7 +1,7 @@
 import SwiftUI
 
 @main
-struct StopPanicApp: App {
+struct StilloApp: App {
     // MARK: Internal
 
     var body: some Scene {
