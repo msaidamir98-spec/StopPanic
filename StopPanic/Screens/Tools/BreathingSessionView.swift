@@ -423,7 +423,6 @@ struct BreathingSessionView: View {
         if cycleCount > 0 {
             coordinator.totalBreathingMinutes += max(totalSeconds / 60, 1)
             coordinator.completedSession()
-            ReviewService.shared.trackSessionCompleted()
         }
 
         withAnimation(SP.Anim.spring) {

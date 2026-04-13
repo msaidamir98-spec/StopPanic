@@ -15,6 +15,26 @@ struct SOSFlowView: View {
         case affirmation
     }
 
+    enum SOSBreathPhase {
+        case inhale, hold, exhale
+
+        var text: String {
+            switch self {
+            case .inhale: String(localized: "breath_inhale")
+            case .hold: String(localized: "breath_hold")
+            case .exhale: String(localized: "breath_exhale")
+            }
+        }
+
+        var hint: String {
+            switch self {
+            case .inhale: String(localized: "sos.hint_inhale")
+            case .hold: String(localized: "sos.hint_hold")
+            case .exhale: String(localized: "sos.hint_exhale")
+            }
+        }
+    }
+
     @Environment(AppCoordinator.self)
     var coordinator
 
@@ -70,7 +90,7 @@ struct SOSFlowView: View {
     @State
     private var breathScale: CGFloat = 0.6
     @State
-    private var breathPhase: String = String(localized: "breath_inhale")
+    private var breathPhase: SOSBreathPhase = .inhale
     @State
     private var breathTimer: Timer?
     @State
@@ -96,12 +116,7 @@ struct SOSFlowView: View {
     }
 
     private var breathHint: String {
-        switch breathPhase {
-        case String(localized: "breath_inhale"): String(localized: "sos.hint_inhale")
-        case String(localized: "breath_hold"): String(localized: "sos.hint_hold")
-        case String(localized: "breath_exhale"): String(localized: "sos.hint_exhale")
-        default: ""
-        }
+        breathPhase.hint
     }
 
     // MARK: - Logic
@@ -227,7 +242,7 @@ struct SOSFlowView: View {
                     )
 
                 VStack(spacing: 8) {
-                    Text(breathPhase)
+                    Text(breathPhase.text)
                         .font(SP.Typography.breathPhase)
                         .foregroundColor(.white)
                         .contentTransition(.opacity)
@@ -374,10 +389,9 @@ struct SOSFlowView: View {
                 let estimatedIntensity = min(max(10 - (secondsElapsed / 60), 3), 9)
                 coordinator.diaryService.addDiaryEpisode(
                     intensity: estimatedIntensity,
-                    notes: "SOS session, duration: \(timeString), cycles: \(breathingCycles)"
+                    notes: String(localized: "sos.diary_note \(timeString) \(breathingCycles)")
                 )
                 coordinator.completedSession()
-                ReviewService.shared.trackSessionCompleted()
                 coordinator.showSOSOverlay = false
             } label: {
                 Text(String(localized: "sos.save_and_close"))
@@ -417,7 +431,7 @@ struct SOSFlowView: View {
         let durations: [TimeInterval] = [4, 7, 8]
         var elapsed: TimeInterval = 0
 
-        breathPhase = String(localized: "breath_inhale")
+        breathPhase = .inhale
         withAnimation(.easeInOut(duration: 4)) { breathScale = 1.0 }
 
         breathTimer = Timer.scheduledTimer(withTimeInterval: 0.1, repeats: true) { [self] _ in
@@ -427,15 +441,15 @@ struct SOSFlowView: View {
                 phase = (phase + 1) % 3
                 switch phase {
                 case 0:
-                    breathPhase = String(localized: "breath_inhale")
+                    breathPhase = .inhale
                     breathingCycles += 1
                     SP.Haptic.soft()
                     withAnimation(.easeInOut(duration: 4)) { breathScale = 1.0 }
                 case 1:
-                    breathPhase = String(localized: "breath_hold")
+                    breathPhase = .hold
                     withAnimation(.easeInOut(duration: 0.3)) { breathScale = 0.95 }
                 case 2:
-                    breathPhase = String(localized: "breath_exhale")
+                    breathPhase = .exhale
                     SP.Haptic.soft()
                     withAnimation(.easeInOut(duration: 8)) { breathScale = 0.6 }
                 default: break

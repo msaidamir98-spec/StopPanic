@@ -298,6 +298,7 @@
 "sos.notif_body %@" = "パニック発作。電話: %@";
 "sos.crisis_notif_title" = "🆘 パニック発作";
 "sos.crisis_notif_body %@" = "相談窓口: %@";
+"sos.diary_note %@ %lld" = "SOSセッション、所要時間: %1$@、サイクル: %2$lld";
 
 /* Breathing Session (new) */
 "breathing.stats_label" = "サイクル";

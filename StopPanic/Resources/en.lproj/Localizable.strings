@@ -298,6 +298,7 @@
 "sos.notif_body %@" = "Panic attack. Call: %@";
 "sos.crisis_notif_title" = "🆘 Panic Attack";
 "sos.crisis_notif_body %@" = "Crisis hotline: %@";
+"sos.diary_note %@ %lld" = "SOS session, duration: %1$@, cycles: %2$lld";
 
 /* Breathing Session (new) */
 "breathing.stats_label" = "cycles";

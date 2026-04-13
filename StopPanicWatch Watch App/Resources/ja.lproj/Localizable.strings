@@ -1,0 +1,74 @@
+/* WatchHomeView */
+"watch.bpm" = "BPM";
+"watch.monitoring" = "モニタリング";
+"watch.stop" = "停止";
+"watch.diagnosis" = "診断";
+"watch.iphone_connected" = "iPhone接続済み";
+"watch.irreg" = "不整";
+"watch.hr_label" = "心拍";
+"watch.hrv_ms" = "HRV ms";
+"watch.call_112" = "119に電話";
+"watch.close" = "閉じる";
+
+/* WatchBreathingView */
+"watch.breath_title" = "呼吸法";
+"watch.breath_ready" = "呼吸の準備";
+"watch.breath_inhale" = "吸う";
+"watch.breath_hold" = "止める";
+"watch.breath_exhale" = "吐く";
+"watch.breath_done" = "お疲れ様！";
+"watch.breath_again" = "もう一度";
+"watch.breath_start" = "4-7-8を開始";
+"watch.breath_stop" = "停止";
+
+/* WatchSOSView */
+"watch.sos_sent" = "SOS送信済み";
+"watch.sos_iphone_notify" = "iPhoneに通知";
+"watch.sos_delivered" = "配信済み";
+"watch.sos_cancel" = "キャンセル";
+"watch.sos_countdown" = "SOS まで";
+"watch.sos_cancel_short" = "中止";
+"watch.sos_emergency" = "緊急シグナル";
+"watch.sos_send" = "iPhoneにSOSを送信";
+
+/* WatchDifferentialView */
+"watch.diff_title" = "参考";
+"watch.diff_panic" = "パニック発作";
+"watch.diff_cardiac" = "心筋梗塞";
+"watch.diff_call_112" = "疑わしい場合は119に電話！";
+"watch.diff_pa_tab" = "PA";
+"watch.diff_cardiac_tab" = "心臓";
+
+/* Differential - Panic symptoms */
+"watch.diff_pa_hr" = "心拍数 100〜150 BPM";
+"watch.diff_pa_rhythm" = "安定したリズム、規則的";
+"watch.diff_pa_peak" = "ピーク 10〜20分";
+"watch.diff_pa_breathing" = "呼吸法が効果的";
+"watch.diff_pa_tingling" = "手のしびれ";
+"watch.diff_pa_unreality" = "非現実感";
+
+/* Differential - Cardiac symptoms */
+"watch.diff_card_pulse" = "不規則な脈拍";
+"watch.diff_card_arrhythmia" = "不整脈、不規則な心拍";
+"watch.diff_card_duration" = "20分以上持続";
+"watch.diff_card_jaw_arm" = "顎・腕の痛み";
+"watch.diff_card_sweat" = "冷や汗";
+"watch.diff_card_chest" = "胸の圧迫感";
+
+/* WatchHeartService - Status */
+"watch.status_normal" = "正常";
+"watch.status_panic" = "PA疑い";
+"watch.status_cardiac" = "⚠️ 心臓の可能性";
+"watch.status_analyzing" = "分析中…";
+
+/* WatchHeartService - Diagnosis titles */
+"watch.diag_normal_title" = "問題なし";
+"watch.diag_panic_title" = "パニック発作";
+"watch.diag_cardiac_title" = "心臓の問題の可能性";
+"watch.diag_inconclusive_title" = "データ不足";
+
+/* WatchHeartService - Diagnosis details */
+"watch.diag_normal_detail" = "心拍数は正常です。引き続きモニタリングしてください。";
+"watch.diag_panic_detail" = "安定したリズムで心拍数上昇 — パニック発作の典型です。4-7-8呼吸法をお試しください。";
+"watch.diag_cardiac_detail" = "リズムの不規則性が検出されました。医師に相談するか救急に連絡してください。";
+"watch.diag_inconclusive_detail" = "より正確な分析のためにモニタリングを続けてください。";

@@ -20,6 +20,8 @@ final class SOSService: ObservableObject {
         "RU": "8-800-2000-122", "US": "988", "UK": "116 123",
         "DE": "0800 111 0 111", "FR": "3114", "ES": "024",
         "IT": "800 274 274", "JP": "0570-064-556",
+        "BR": "188", "CN": "400-161-9995",
+        "PT": "808 200 204", "KR": "1393",
     ]
 
     @Published
@@ -39,8 +41,9 @@ final class SOSService: ObservableObject {
         panicModeActive = true
 
         // Ensure notification permissions
+        // NOTE: .criticalAlert requires a special Apple entitlement — use .sound + .badge instead
         UNUserNotificationCenter.current().requestAuthorization(options: [
-            .alert, .sound, .criticalAlert,
+            .alert, .sound, .badge,
         ]) { _, _ in }
 
         // Send local notification for each SOS contact
@@ -49,7 +52,7 @@ final class SOSService: ObservableObject {
             content.title = String(localized: "sos.notif_title \(contact.name)")
             content.body = String(localized: "sos.notif_body \(contact.phone)")
             content.sound = .defaultCritical
-            content.interruptionLevel = .critical
+            content.interruptionLevel = .timeSensitive
             let request = UNNotificationRequest(
                 identifier: "sos_\(contact.id.uuidString)",
                 content: content,

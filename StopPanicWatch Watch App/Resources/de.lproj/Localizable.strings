@@ -1,0 +1,74 @@
+/* WatchHomeView */
+"watch.bpm" = "BPM";
+"watch.monitoring" = "Monitor";
+"watch.stop" = "Stopp";
+"watch.diagnosis" = "Diagnose";
+"watch.iphone_connected" = "iPhone verbunden";
+"watch.irreg" = "Unreg.";
+"watch.hr_label" = "HF";
+"watch.hrv_ms" = "HRV ms";
+"watch.call_112" = "112 anrufen";
+"watch.close" = "Schließen";
+
+/* WatchBreathingView */
+"watch.breath_title" = "Atmen";
+"watch.breath_ready" = "Bereit zum Atmen";
+"watch.breath_inhale" = "Einatmen";
+"watch.breath_hold" = "Halten";
+"watch.breath_exhale" = "Ausatmen";
+"watch.breath_done" = "Großartig!";
+"watch.breath_again" = "Nochmal";
+"watch.breath_start" = "4-7-8 starten";
+"watch.breath_stop" = "Stoppen";
+
+/* WatchSOSView */
+"watch.sos_sent" = "SOS gesendet";
+"watch.sos_iphone_notify" = "Benachrichtigung an iPhone";
+"watch.sos_delivered" = "Zugestellt";
+"watch.sos_cancel" = "Abbrechen";
+"watch.sos_countdown" = "SOS in";
+"watch.sos_cancel_short" = "Abbruch";
+"watch.sos_emergency" = "Notsignal";
+"watch.sos_send" = "SOS an iPhone senden";
+
+/* WatchDifferentialView */
+"watch.diff_title" = "Nachschlagewerk";
+"watch.diff_panic" = "Panikattacke";
+"watch.diff_cardiac" = "Herzinfarkt";
+"watch.diff_call_112" = "Im Zweifel — 112 anrufen!";
+"watch.diff_pa_tab" = "PA";
+"watch.diff_cardiac_tab" = "Herz";
+
+/* Differential - Panic symptoms */
+"watch.diff_pa_hr" = "HF 100–150 BPM";
+"watch.diff_pa_rhythm" = "Rhythmus gleichmäßig, regelmäßig";
+"watch.diff_pa_peak" = "Höhepunkt 10–20 Minuten";
+"watch.diff_pa_breathing" = "Atmung hilft";
+"watch.diff_pa_tingling" = "Kribbeln in den Händen";
+"watch.diff_pa_unreality" = "Gefühl der Unwirklichkeit";
+
+/* Differential - Cardiac symptoms */
+"watch.diff_card_pulse" = "Unregelmäßiger Puls";
+"watch.diff_card_arrhythmia" = "Arrhythmie, Aussetzer";
+"watch.diff_card_duration" = "Dauert 20+ Minuten";
+"watch.diff_card_jaw_arm" = "Kiefer-/Armschmerzen";
+"watch.diff_card_sweat" = "Kalter Schweiß";
+"watch.diff_card_chest" = "Drückender Brustschmerz";
+
+/* WatchHeartService - Status */
+"watch.status_normal" = "Normal";
+"watch.status_panic" = "Sieht nach PA aus";
+"watch.status_cardiac" = "⚠️ Mögliches Herzproblem";
+"watch.status_analyzing" = "Analyse…";
+
+/* WatchHeartService - Diagnosis titles */
+"watch.diag_normal_title" = "Alles in Ordnung";
+"watch.diag_panic_title" = "Panikattacke";
+"watch.diag_cardiac_title" = "Mögliches Herzproblem";
+"watch.diag_inconclusive_title" = "Unzureichende Daten";
+
+/* WatchHeartService - Diagnosis details */
+"watch.diag_normal_detail" = "Ihre Herzfrequenz ist normal. Überwachung fortsetzen.";
+"watch.diag_panic_detail" = "Gleichmäßiger Rhythmus, erhöhte HF — typisch für eine Panikattacke. Versuchen Sie 4-7-8-Atmung.";
+"watch.diag_cardiac_detail" = "Rhythmus-Unregelmäßigkeit erkannt. Arzt aufsuchen oder Notdienst rufen.";
+"watch.diag_inconclusive_detail" = "Überwachung fortsetzen für genauere Analyse.";

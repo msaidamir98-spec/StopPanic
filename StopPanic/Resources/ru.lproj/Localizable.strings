@@ -298,6 +298,7 @@
 "sos.notif_body %@" = "Паническая атака. Позвони: %@";
 "sos.crisis_notif_title" = "🆘 Паническая атака";
 "sos.crisis_notif_body %@" = "Телефон доверия: %@";
+"sos.diary_note %@ %lld" = "SOS-сессия, длительность: %1$@, циклов: %2$lld";
 
 /* Breathing Session (new) */
 "breathing.stats_label" = "циклов";

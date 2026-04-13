@@ -253,13 +253,20 @@ struct JournalView: View {
     private var triggersCard: some View {
         let allNotes = coordinator.diaryService.diaryEpisodes.suffix(30)
             .map(\.notes).joined(separator: " ").lowercased()
-        let triggerMap = [
-            "работа": ("💼", String(localized: "trigger_stress")), "сон": ("😴", String(localized: "trigger_sleep")),
-            "кофе": ("☕", String(localized: "trigger_caffeine")), "метро": ("🚇", String(localized: "trigger_transport")),
-            "толпа": ("👥", String(localized: "trigger_crowds")), "ночь": ("🌙", String(localized: "trigger_night")),
-            "еда": ("🍔", String(localized: "journal.trigger_food")), "спорт": ("🏃", String(localized: "journal.trigger_sport")),
+        // Multi-language trigger keywords — search in user's diary notes
+        let triggerMap: [Set<String>: (String, String)] = [
+            ["работа", "work", "arbeit", "trabajo", "travail", "仕事", "工作", "trabalho"]: ("💼", String(localized: "trigger_stress")),
+            ["сон", "sleep", "schlaf", "sueño", "sommeil", "睡眠", "sono"]: ("😴", String(localized: "trigger_sleep")),
+            ["кофе", "coffee", "kaffee", "café", "コーヒー", "咖啡"]: ("☕", String(localized: "trigger_caffeine")),
+            ["метро", "metro", "subway", "u-bahn", "地下鉄", "地铁", "metrô"]: ("🚇", String(localized: "trigger_transport")),
+            ["толпа", "crowd", "menge", "multitud", "foule", "群衆", "人群", "multidão"]: ("👥", String(localized: "trigger_crowds")),
+            ["ночь", "night", "nacht", "noche", "nuit", "夜", "noite"]: ("🌙", String(localized: "trigger_night")),
+            ["еда", "food", "essen", "comida", "nourriture", "食事", "食物"]: ("🍔", String(localized: "journal.trigger_food")),
+            ["спорт", "sport", "exercise", "deporte", "exercice", "運動", "运动", "esporte"]: ("🏃", String(localized: "journal.trigger_sport")),
         ]
-        let found = triggerMap.compactMap { allNotes.contains($0.key) ? $0.value : nil }
+        let found = triggerMap.compactMap { keys, value in
+            keys.contains(where: { allNotes.contains($0) }) ? value : nil
+        }
 
         return VStack(alignment: .leading, spacing: 12) {
             HStack {

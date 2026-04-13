@@ -298,6 +298,7 @@
 "sos.notif_body %@" = "恐慌发作。拨打：%@";
 "sos.crisis_notif_title" = "🆘 恐慌发作";
 "sos.crisis_notif_body %@" = "危机热线：%@";
+"sos.diary_note %@ %lld" = "SOS会话，时长：%1$@，循环：%2$lld";
 
 /* Breathing Session (new) */
 "breathing.stats_label" = "循环";

@@ -99,38 +99,7 @@ struct HomeScreenView: View {
     }
 
     private var streakDays: Int {
-        let calendar = Calendar.current
-        let episodes = coordinator.diaryService.diaryEpisodes
-        guard !episodes.isEmpty else { return 0 }
-
-        // Get unique dates with sessions
-        let sessionDates = Set(episodes.map { calendar.startOfDay(for: $0.date) })
-
-        var streak = 0
-        var checkDate = calendar.startOfDay(for: Date())
-
-        // Check today and count backwards
-        while sessionDates.contains(checkDate) {
-            streak += 1
-            guard let prev = calendar.date(byAdding: .day, value: -1, to: checkDate) else { break }
-            checkDate = prev
-        }
-
-        // If no entry today, check if yesterday started the streak
-        if streak == 0 {
-            checkDate =
-                calendar.date(byAdding: .day, value: -1, to: calendar.startOfDay(for: Date()))
-                    ?? Date()
-            while sessionDates.contains(checkDate) {
-                streak += 1
-                guard let prev = calendar.date(byAdding: .day, value: -1, to: checkDate) else {
-                    break
-                }
-                checkDate = prev
-            }
-        }
-
-        return streak
+        coordinator.streakService.currentStreak
     }
 
     private var riskIcon: String {

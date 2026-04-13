@@ -1,0 +1,74 @@
+/* WatchHomeView */
+"watch.bpm" = "BPM";
+"watch.monitoring" = "Surveillance";
+"watch.stop" = "Arrêter";
+"watch.diagnosis" = "Diagnostic";
+"watch.iphone_connected" = "iPhone connecté";
+"watch.irreg" = "Irrég.";
+"watch.hr_label" = "FC";
+"watch.hrv_ms" = "VFC ms";
+"watch.call_112" = "Appeler 112";
+"watch.close" = "Fermer";
+
+/* WatchBreathingView */
+"watch.breath_title" = "Respiration";
+"watch.breath_ready" = "Prêt à respirer";
+"watch.breath_inhale" = "Inspirez";
+"watch.breath_hold" = "Retenez";
+"watch.breath_exhale" = "Expirez";
+"watch.breath_done" = "Bravo !";
+"watch.breath_again" = "Encore";
+"watch.breath_start" = "Lancer 4-7-8";
+"watch.breath_stop" = "Arrêter";
+
+/* WatchSOSView */
+"watch.sos_sent" = "SOS envoyé";
+"watch.sos_iphone_notify" = "Notification à l'iPhone";
+"watch.sos_delivered" = "Livré";
+"watch.sos_cancel" = "Annuler";
+"watch.sos_countdown" = "SOS dans";
+"watch.sos_cancel_short" = "Annuler";
+"watch.sos_emergency" = "Signal d'urgence";
+"watch.sos_send" = "Envoyer SOS à l'iPhone";
+
+/* WatchDifferentialView */
+"watch.diff_title" = "Référence";
+"watch.diff_panic" = "Crise de panique";
+"watch.diff_cardiac" = "Infarctus";
+"watch.diff_call_112" = "En cas de doute — appelez le 112 !";
+"watch.diff_pa_tab" = "AP";
+"watch.diff_cardiac_tab" = "Cœur";
+
+/* Differential - Panic symptoms */
+"watch.diff_pa_hr" = "FC 100–150 BPM";
+"watch.diff_pa_rhythm" = "Rythme stable, régulier";
+"watch.diff_pa_peak" = "Pic 10–20 minutes";
+"watch.diff_pa_breathing" = "La respiration aide";
+"watch.diff_pa_tingling" = "Picotements dans les mains";
+"watch.diff_pa_unreality" = "Sensation d'irréalité";
+
+/* Differential - Cardiac symptoms */
+"watch.diff_card_pulse" = "Pouls irrégulier";
+"watch.diff_card_arrhythmia" = "Arythmie, battements irréguliers";
+"watch.diff_card_duration" = "Dure 20+ minutes";
+"watch.diff_card_jaw_arm" = "Douleur mâchoire / bras";
+"watch.diff_card_sweat" = "Sueurs froides";
+"watch.diff_card_chest" = "Douleur thoracique oppressive";
+
+/* WatchHeartService - Status */
+"watch.status_normal" = "Normal";
+"watch.status_panic" = "Ressemble à AP";
+"watch.status_cardiac" = "⚠️ Possible cardiaque";
+"watch.status_analyzing" = "Analyse…";
+
+/* WatchHeartService - Diagnosis titles */
+"watch.diag_normal_title" = "Tout va bien";
+"watch.diag_panic_title" = "Crise de panique";
+"watch.diag_cardiac_title" = "Possible problème cardiaque";
+"watch.diag_inconclusive_title" = "Données insuffisantes";
+
+/* WatchHeartService - Diagnosis details */
+"watch.diag_normal_detail" = "Votre fréquence cardiaque est normale. Continuez la surveillance.";
+"watch.diag_panic_detail" = "Rythme stable, FC élevée — typique d'une crise de panique. Essayez la respiration 4-7-8.";
+"watch.diag_cardiac_detail" = "Irrégularité du rythme détectée. Consultez un médecin ou appelez les urgences.";
+"watch.diag_inconclusive_detail" = "Continuez la surveillance pour une analyse plus précise.";
