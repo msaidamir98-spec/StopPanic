@@ -1,6 +1,8 @@
 import SwiftUI
 
-/// Экран «Радар паники» — предсказание + аналитика
+// MARK: - PanicRadarView
+
+/// Экран «Радар паники» — предсказание + аналитика на основе дневника.
 struct PanicRadarView: View {
     // MARK: Internal
 
@@ -9,121 +11,163 @@ struct PanicRadarView: View {
 
     var body: some View {
         ZStack {
-            AppTheme.background.ignoresSafeArea()
+            AmbientBackground(primaryColor: SP.Colors.accent, secondaryColor: SP.Colors.calm)
 
-            ScrollView {
-                VStack(spacing: 24) {
+            ScrollView(.vertical, showsIndicators: false) {
+                VStack(spacing: 20) {
                     riskCircle
+                        .opacity(appear ? 1 : 0)
+                        .scaleEffect(appear ? 1 : 0.8)
+
                     weeklyChart
+                        .opacity(appear ? 1 : 0)
+                        .offset(y: appear ? 0 : 20)
 
                     if let p = predictionService.currentRisk, !p.triggers.isEmpty {
                         triggersSection(p.triggers)
+                            .opacity(appear ? 1 : 0)
+                            .offset(y: appear ? 0 : 30)
                     }
+
                     if let p = predictionService.currentRisk {
                         recCard(p.recommendation)
+                            .opacity(appear ? 1 : 0)
+                            .offset(y: appear ? 0 : 40)
                     }
+
+                    Spacer(minLength: 30)
                 }
-                .padding(16)
+                .padding(.horizontal, SP.Layout.padding)
+                .padding(.top, 16)
             }
         }
         .navigationTitle("Радар паники")
+        .navigationBarTitleDisplayMode(.inline)
+        .onAppear {
+            withAnimation(.easeOut(duration: 0.7)) { appear = true }
+        }
     }
 
     // MARK: Private
 
-    // MARK: - Helpers
+    @State
+    private var appear = false
 
     private var riskColor: Color {
         switch predictionService.currentRisk?.riskLevel {
-        case .low: .green
-        case .moderate: .yellow
+        case .low: SP.Colors.success
+        case .moderate: SP.Colors.warning
         case .high: .orange
-        case .critical: .red
-        case .none: .gray
+        case .critical: SP.Colors.danger
+        case .none: SP.Colors.textTertiary
         }
     }
 
-    // MARK: - Risk circle
+    // MARK: - Risk Circle
 
     private var riskCircle: some View {
-        VStack(spacing: 12) {
+        VStack(spacing: 14) {
             ZStack {
                 Circle()
-                    .stroke(Color.white.opacity(0.1), lineWidth: 12)
+                    .stroke(SP.Colors.bgCardHover, lineWidth: 10)
                     .frame(width: 170, height: 170)
                 Circle()
                     .trim(from: 0, to: predictionService.currentRisk?.confidence ?? 0)
-                    .stroke(riskColor, style: StrokeStyle(lineWidth: 12, lineCap: .round))
+                    .stroke(riskColor, style: StrokeStyle(lineWidth: 10, lineCap: .round))
                     .frame(width: 170, height: 170)
                     .rotationEffect(.degrees(-90))
-                VStack(spacing: 4) {
+                    .animation(SP.Anim.spring, value: predictionService.currentRisk?.confidence)
+                VStack(spacing: 6) {
                     Text(predictionService.currentRisk?.riskLevel.emoji ?? "🟢")
                         .font(.system(size: 36))
                     Text(predictionService.currentRisk?.riskLevel.title ?? "…")
-                        .font(.headline).foregroundColor(.white)
+                        .font(SP.Typography.headline)
+                        .foregroundColor(SP.Colors.textPrimary)
                 }
             }
-            Text("Уровень риска").font(.title3.bold()).foregroundColor(.white)
-        }.padding(.top, 16)
+            Text("Уровень риска")
+                .font(SP.Typography.title3)
+                .foregroundColor(SP.Colors.textPrimary)
+        }
+        .padding(.top, 8)
     }
 
-    // MARK: - Weekly
+    // MARK: - Weekly Chart
 
     private var weeklyChart: some View {
-        VStack(alignment: .leading, spacing: 10) {
-            Text("📅 По дням недели").font(.headline).foregroundColor(.white)
+        VStack(alignment: .leading, spacing: 12) {
+            HStack {
+                Image(systemName: "calendar")
+                    .foregroundColor(SP.Colors.accent)
+                Text("По дням недели")
+                    .font(SP.Typography.headline)
+                    .foregroundColor(SP.Colors.textPrimary)
+            }
             HStack(alignment: .bottom, spacing: 8) {
                 ForEach(predictionService.weeklyPattern) { day in
                     VStack(spacing: 4) {
                         RoundedRectangle(cornerRadius: 4)
                             .fill(barColor(day.riskScore))
-                            .frame(width: 34, height: max(CGFloat(day.riskScore) * 100, 4))
-                        Text(day.dayOfWeek).font(.caption2).foregroundColor(.white.opacity(0.7))
+                            .frame(width: 34, height: max(CGFloat(day.riskScore) * 100, 6))
+                        Text(day.dayOfWeek)
+                            .font(SP.Typography.caption2)
+                            .foregroundColor(SP.Colors.textTertiary)
                     }
                 }
             }
             .frame(maxWidth: .infinity)
-            .padding(14)
-            .background(AppTheme.card)
-            .clipShape(RoundedRectangle(cornerRadius: 16))
         }
+        .spGlassCard(cornerRadius: SP.Layout.cornerMedium)
     }
 
     // MARK: - Triggers
 
     private func triggersSection(_ triggers: [String]) -> some View {
-        VStack(alignment: .leading, spacing: 10) {
-            Text("⚡ Триггеры").font(.headline).foregroundColor(.white)
+        VStack(alignment: .leading, spacing: 12) {
             HStack {
+                Image(systemName: "bolt.fill")
+                    .foregroundColor(SP.Colors.warning)
+                Text("Триггеры")
+                    .font(SP.Typography.headline)
+                    .foregroundColor(SP.Colors.textPrimary)
+            }
+            HStack(spacing: 8) {
                 ForEach(triggers, id: \.self) { t in
                     Text(t)
-                        .font(.subheadline)
-                        .padding(.horizontal, 12).padding(.vertical, 6)
-                        .background(Color.orange.opacity(0.2))
-                        .clipShape(Capsule())
+                        .font(SP.Typography.subheadline)
                         .foregroundColor(.orange)
+                        .padding(.horizontal, 12)
+                        .padding(.vertical, 6)
+                        .background(Capsule().fill(Color.orange.opacity(0.15)))
                 }
             }
         }
         .frame(maxWidth: .infinity, alignment: .leading)
-        .padding(14).background(AppTheme.card)
-        .clipShape(RoundedRectangle(cornerRadius: 16))
+        .spGlassCard(cornerRadius: SP.Layout.cornerMedium)
     }
 
     // MARK: - Recommendation
 
     private func recCard(_ text: String) -> some View {
         VStack(alignment: .leading, spacing: 8) {
-            Text("💡 Рекомендация").font(.headline).foregroundColor(.white)
-            Text(text).font(.body).foregroundColor(.white.opacity(0.85))
+            HStack {
+                Image(systemName: "lightbulb.fill")
+                    .foregroundColor(SP.Colors.warning)
+                Text("Рекомендация")
+                    .font(SP.Typography.headline)
+                    .foregroundColor(SP.Colors.textPrimary)
+            }
+            Text(text)
+                .font(SP.Typography.body)
+                .foregroundColor(SP.Colors.textSecondary)
+                .fixedSize(horizontal: false, vertical: true)
+                .lineSpacing(3)
         }
         .frame(maxWidth: .infinity, alignment: .leading)
-        .padding(16)
-        .background(AppTheme.primary.opacity(0.1))
-        .clipShape(RoundedRectangle(cornerRadius: 16))
+        .spGlassCard(cornerRadius: SP.Layout.cornerMedium)
     }
 
     private func barColor(_ score: Double) -> Color {
-        score > 0.7 ? .red : score > 0.4 ? .orange : AppTheme.primary
+        score > 0.7 ? SP.Colors.danger : score > 0.4 ? .orange : SP.Colors.accent
     }
 }

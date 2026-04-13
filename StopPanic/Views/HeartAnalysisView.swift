@@ -1,15 +1,18 @@
 import SwiftUI
 
-/// Экран «Радар паники» — анализ сердечного ритма ПА vs Инфаркт
+// MARK: - HeartAnalysisView
+
+/// Экран мониторинга пульса — ПА vs сердечная проблема.
+/// ⚠️ Информационный инструмент, НЕ медицинское устройство.
 struct HeartAnalysisView: View {
     // MARK: Internal
 
     var body: some View {
         ZStack {
-            AppTheme.background.ignoresSafeArea()
+            AmbientBackground(primaryColor: SP.Colors.danger, secondaryColor: SP.Colors.warmth)
 
-            ScrollView {
-                VStack(spacing: 24) {
+            ScrollView(.vertical, showsIndicators: false) {
+                VStack(spacing: 20) {
                     disclaimerCard
                     statusCircle
                     if let analysis = service.currentAnalysis {
@@ -18,12 +21,16 @@ struct HeartAnalysisView: View {
                         recommendationCard(analysis.recommendation)
                         if analysis.shouldCallEmergency { emergencyBanner }
                     }
+                    breathingTestSection
                     monitoringButton
+                    educationCard
                 }
-                .padding(16)
+                .padding(.horizontal, SP.Layout.padding)
+                .padding(.vertical, 16)
             }
         }
-        .navigationTitle("Анализ ❤️")
+        .navigationTitle("Мониторинг ❤️")
+        .navigationBarTitleDisplayMode(.inline)
     }
 
     // MARK: Private
@@ -33,15 +40,13 @@ struct HeartAnalysisView: View {
     @State
     private var showDisclaimer = true
 
-    // MARK: - Helpers
-
     private var diagnosisColor: Color {
         switch service.currentAnalysis?.diagnosis {
-        case .panicAttack: AppTheme.primary
-        case .likelyCardiac: .red
+        case .panicAttack: SP.Colors.warning
+        case .likelyCardiac: SP.Colors.danger
         case .arrhythmia: .orange
-        case .normal: AppTheme.secondary
-        default: .gray
+        case .normal: SP.Colors.success
+        default: SP.Colors.textTertiary
         }
     }
 
@@ -50,222 +55,359 @@ struct HeartAnalysisView: View {
     private var disclaimerCard: some View {
         Group {
             if showDisclaimer {
-                VStack(alignment: .leading, spacing: 8) {
+                VStack(alignment: .leading, spacing: 10) {
                     HStack {
                         Image(systemName: "exclamationmark.triangle.fill")
                             .foregroundColor(.orange)
-                        Text("Важно")
-                            .font(.headline).foregroundColor(.white)
+                            .font(.system(size: 18))
+                        Text("Важная информация")
+                            .font(SP.Typography.headline)
+                            .foregroundColor(SP.Colors.textPrimary)
                         Spacer()
-                        Button { withAnimation { showDisclaimer = false } } label: {
+                        Button {
+                            withAnimation(SP.Anim.springFast) { showDisclaimer = false }
+                        } label: {
                             Image(systemName: "xmark.circle.fill")
-                                .foregroundColor(.white.opacity(0.5))
+                                .foregroundColor(SP.Colors.textTertiary)
                         }
                     }
                     Text(
-                        "Этот анализ НЕ заменяет медицинскую диагностику. При подозрении на сердечную проблему НЕМЕДЛЕННО вызовите скорую (103/112)."
+                        "Этот инструмент — информационный помощник, НЕ медицинское устройство. " +
+                            "Он НЕ ставит диагнозы. При боли в груди, одышке или плохом самочувствии " +
+                            "НЕМЕДЛЕННО вызовите скорую помощь (103 / 112)."
                     )
-                    .font(.caption)
-                    .foregroundColor(.white.opacity(0.8))
+                    .font(SP.Typography.caption)
+                    .foregroundColor(SP.Colors.textSecondary)
+                    .lineSpacing(3)
                 }
-                .padding(16)
-                .background(Color.orange.opacity(0.15))
-                .clipShape(RoundedRectangle(cornerRadius: 16))
+                .spGlassCard(cornerRadius: SP.Layout.cornerMedium)
+                .overlay(
+                    RoundedRectangle(cornerRadius: SP.Layout.cornerMedium)
+                        .stroke(Color.orange.opacity(0.3), lineWidth: 1)
+                )
             }
         }
     }
 
-    // MARK: - Status
+    // MARK: - Status Circle
 
     private var statusCircle: some View {
-        VStack(spacing: 12) {
+        VStack(spacing: 14) {
             ZStack {
+                // Background ring
                 Circle()
-                    .stroke(Color.white.opacity(0.1), lineWidth: 14)
+                    .stroke(SP.Colors.bgCardHover, lineWidth: 12)
                     .frame(width: 180, height: 180)
+                // Progress ring
                 Circle()
                     .trim(from: 0, to: service.currentAnalysis?.confidence ?? 0)
-                    .stroke(diagnosisColor, style: StrokeStyle(lineWidth: 14, lineCap: .round))
+                    .stroke(
+                        diagnosisColor,
+                        style: StrokeStyle(lineWidth: 12, lineCap: .round)
+                    )
                     .frame(width: 180, height: 180)
                     .rotationEffect(.degrees(-90))
-                VStack(spacing: 4) {
+                    .animation(SP.Anim.spring, value: service.currentAnalysis?.confidence)
+
+                VStack(spacing: 6) {
                     Image(systemName: service.isMonitoring ? "heart.fill" : "heart")
-                        .font(.system(size: 40))
+                        .font(.system(size: 36))
                         .foregroundColor(diagnosisColor)
                         .symbolEffect(.pulse, isActive: service.isMonitoring)
                     Text(service.currentAnalysis?.diagnosis.rawValue ?? "Ожидание...")
-                        .font(.headline).foregroundColor(.white)
+                        .font(SP.Typography.subheadline)
+                        .foregroundColor(SP.Colors.textPrimary)
                     if let hr = service.currentAnalysis?.heartRate {
                         Text("\(Int(hr)) BPM")
-                            .font(.caption).foregroundColor(.white.opacity(0.7))
+                            .font(SP.Typography.caption)
+                            .foregroundColor(SP.Colors.textSecondary)
+                            .monospacedDigit()
                     }
                 }
             }
-            Text("Анализ сердечного ритма")
-                .font(.title3.bold()).foregroundColor(.white)
+            Text("Мониторинг пульса")
+                .font(SP.Typography.title3)
+                .foregroundColor(SP.Colors.textPrimary)
         }
-        .padding(.top, 12)
+        .padding(.top, 8)
     }
 
     // MARK: - Emergency
 
     private var emergencyBanner: some View {
-        VStack(spacing: 8) {
-            Text("🚨 ВЫЗОВИТЕ СКОРУЮ").font(.title3.bold()).foregroundColor(.white)
+        VStack(spacing: 10) {
+            Text("🚨 ВЫЗОВИТЕ СКОРУЮ")
+                .font(SP.Typography.title3)
+                .foregroundColor(.white)
             Text("103 (Россия) · 112 (Европа) · 911 (США)")
-                .font(.headline).foregroundColor(.white)
+                .font(SP.Typography.headline)
+                .foregroundColor(.white.opacity(0.9))
         }
         .frame(maxWidth: .infinity)
         .padding(20)
-        .background(Color.red)
-        .clipShape(RoundedRectangle(cornerRadius: 16))
+        .background(
+            RoundedRectangle(cornerRadius: SP.Layout.cornerMedium, style: .continuous)
+                .fill(SP.Colors.danger)
+        )
+    }
+
+    // MARK: - Breathing Test
+
+    private var breathingTestSection: some View {
+        Group {
+            if service.isMonitoring {
+                VStack(alignment: .leading, spacing: 10) {
+                    HStack {
+                        Image(systemName: "lungs.fill")
+                            .foregroundColor(SP.Colors.calm)
+                        Text("Дыхательный тест")
+                            .font(SP.Typography.headline)
+                            .foregroundColor(SP.Colors.textPrimary)
+                    }
+
+                    Text(
+                        "Если пульс снижается после дыхания 4-7-8 — это косвенно указывает на тревогу, а не на сердечную проблему."
+                    )
+                    .font(SP.Typography.caption)
+                    .foregroundColor(SP.Colors.textSecondary)
+                    .lineSpacing(3)
+
+                    HStack(spacing: 12) {
+                        Button {
+                            SP.Haptic.light()
+                            service.markPreBreathingHR()
+                        } label: {
+                            Text("📌 Зафиксировать пульс")
+                                .font(SP.Typography.caption)
+                                .foregroundColor(SP.Colors.calm)
+                                .padding(.horizontal, 14)
+                                .padding(.vertical, 8)
+                                .background(Capsule().fill(SP.Colors.calm.opacity(0.15)))
+                        }
+                        Button {
+                            SP.Haptic.light()
+                            service.checkBreathingResponse()
+                        } label: {
+                            Text("✅ Проверить")
+                                .font(SP.Typography.caption)
+                                .foregroundColor(SP.Colors.success)
+                                .padding(.horizontal, 14)
+                                .padding(.vertical, 8)
+                                .background(Capsule().fill(SP.Colors.success.opacity(0.15)))
+                        }
+                    }
+
+                    if service.breathingResponseDetected {
+                        HStack(spacing: 6) {
+                            Image(systemName: "checkmark.circle.fill")
+                                .foregroundColor(SP.Colors.success)
+                            Text("Пульс снизился после дыхания")
+                                .font(SP.Typography.caption)
+                                .foregroundColor(SP.Colors.success)
+                        }
+                    }
+                }
+                .spGlassCard(cornerRadius: SP.Layout.cornerMedium)
+            }
+        }
     }
 
     // MARK: - Controls
 
     private var monitoringButton: some View {
-        VStack(spacing: 12) {
-            Button {
-                if service.isMonitoring {
-                    service.stopMonitoring()
-                } else {
-                    service.startMonitoring()
-                }
-            } label: {
-                HStack {
-                    Image(systemName: service.isMonitoring ? "stop.fill" : "heart.fill")
-                    Text(service.isMonitoring ? "Остановить мониторинг" : "Начать мониторинг")
-                }
-                .font(.headline)
-                .frame(maxWidth: .infinity)
-                .padding()
-                .background(service.isMonitoring ? AppTheme.danger : AppTheme.primary)
-                .foregroundColor(.white)
-                .clipShape(RoundedRectangle(cornerRadius: 16))
-            }
-
+        Button {
+            SP.Haptic.medium()
             if service.isMonitoring {
-                Button {
-                    service.markPreBreathingHR()
-                } label: {
-                    Text("🫁 Начать дыхание (для теста)")
-                        .font(.subheadline)
-                        .foregroundColor(AppTheme.secondary)
-                }
-
-                Button {
-                    service.checkBreathingResponse()
-                } label: {
-                    Text("✅ Проверить реакцию на дыхание")
-                        .font(.subheadline)
-                        .foregroundColor(AppTheme.primary)
-                }
+                service.stopMonitoring()
+            } else {
+                service.startMonitoring()
             }
+        } label: {
+            HStack(spacing: 10) {
+                Image(systemName: service.isMonitoring ? "stop.fill" : "heart.fill")
+                    .contentTransition(.symbolEffect(.replace))
+                Text(service.isMonitoring ? "Остановить" : "Начать мониторинг")
+            }
+            .font(SP.Typography.headline)
+            .foregroundColor(.white)
+            .frame(maxWidth: .infinity)
+            .padding(.vertical, 16)
+            .background(
+                RoundedRectangle(cornerRadius: SP.Layout.cornerSmall)
+                    .fill(service.isMonitoring ? AnyShapeStyle(SP.Colors.danger.opacity(0.8)) : AnyShapeStyle(SP.Colors.heroGradient))
+            )
+            .shadow(
+                color: service.isMonitoring ? SP.Colors.danger.opacity(0.3) : SP.Shadows.glow,
+                radius: 12, y: 6
+            )
         }
+        .buttonStyle(PremiumButtonStyle())
     }
 
-    // MARK: - Diagnosis
+    // MARK: - Education
+
+    private var educationCard: some View {
+        VStack(alignment: .leading, spacing: 12) {
+            HStack {
+                Image(systemName: "info.circle.fill")
+                    .foregroundColor(SP.Colors.accent)
+                Text("Как это работает")
+                    .font(SP.Typography.headline)
+                    .foregroundColor(SP.Colors.textPrimary)
+            }
+            VStack(alignment: .leading, spacing: 8) {
+                infoLine("heart.fill", "Считывает пульс через Apple Health / Watch")
+                infoLine("waveform.path", "Анализирует регулярность ритма")
+                infoLine("brain.head.profile", "Сравнивает паттерны тревоги и сердечных проблем")
+                infoLine("lungs.fill", "Проверяет реакцию на дыхание")
+            }
+
+            Text(
+                "Алгоритм основан на том, что при тревоге ритм ровный (синусовая тахикардия), " +
+                    "а при сердечных проблемах — нерегулярный. Это НЕ замена ЭКГ или врача."
+            )
+            .font(SP.Typography.caption2)
+            .foregroundColor(SP.Colors.textTertiary)
+            .lineSpacing(3)
+        }
+        .spGlassCard(cornerRadius: SP.Layout.cornerMedium)
+    }
+
+    // MARK: - Helpers
+
+    private func infoLine(_ icon: String, _ text: String) -> some View {
+        HStack(spacing: 8) {
+            Image(systemName: icon)
+                .font(.system(size: 12))
+                .foregroundColor(SP.Colors.accent)
+                .frame(width: 16)
+            Text(text)
+                .font(SP.Typography.caption)
+                .foregroundColor(SP.Colors.textSecondary)
+        }
+    }
 
     private func diagnosisCard(_ a: HeartAnalysis) -> some View {
         VStack(alignment: .leading, spacing: 12) {
             HStack {
-                Text(a.diagnosis == .panicAttack ? "😮‍💨" : a.diagnosis == .likelyCardiac ? "🚨" : "📊")
+                Text(diagnosisEmoji(a.diagnosis))
                     .font(.title)
                 VStack(alignment: .leading, spacing: 2) {
                     Text(a.diagnosis.rawValue)
-                        .font(.headline).foregroundColor(.white)
+                        .font(SP.Typography.headline)
+                        .foregroundColor(SP.Colors.textPrimary)
                     Text("Уверенность: \(Int(a.confidence * 100))%")
-                        .font(.caption).foregroundColor(.white.opacity(0.7))
+                        .font(SP.Typography.caption)
+                        .foregroundColor(SP.Colors.textTertiary)
                 }
                 Spacer()
             }
 
-            // Пояснение различий
             if a.diagnosis == .panicAttack {
                 differenceExplanation(
-                    title: "Почему это ПА, а не инфаркт:",
+                    title: "Признаки тревоги (не сердечной проблемы):",
                     points: [
-                        "✅ Ритм регулярный (синусовая тахикардия)",
-                        "✅ ЧСС \(Int(a.heartRate)) BPM — типично для ПА",
-                        "✅ Паттерн: \(a.risePattern.rawValue)",
+                        "Ритм регулярный (синусовая тахикардия)",
+                        "ЧСС \(Int(a.heartRate)) BPM — характерно для тревоги",
+                        "Паттерн: \(a.risePattern.rawValue)",
                         service.breathingResponseDetected
-                            ? "✅ Пульс реагирует на дыхание"
-                            : "⏳ Попробуйте дыхание для подтверждения",
-                    ]
+                            ? "Пульс реагирует на дыхание ✓"
+                            : "Попробуйте дыхание для проверки",
+                    ],
+                    color: SP.Colors.warning
                 )
             } else if a.diagnosis == .likelyCardiac || a.diagnosis == .arrhythmia {
                 differenceExplanation(
-                    title: "Признаки сердечной проблемы:",
+                    title: "Признаки, требующие внимания врача:",
                     points: [
-                        "⚠️ Ритм нерегулярный (\(String(format: "%.0f%%", a.irregularity * 100)))",
-                        "⚠️ HRV хаотичен: \(String(format: "%.0f", a.hrvMs)) мс",
-                        "⚠️ Не реагирует на дыхательные техники",
-                        "🚨 Рекомендуется вызвать скорую",
-                    ]
+                        "Нерегулярный ритм (\(String(format: "%.0f%%", a.irregularity * 100)))",
+                        "HRV: \(String(format: "%.0f", a.hrvMs)) мс",
+                        "Не реагирует на дыхательные техники",
+                        "Рекомендуем вызвать скорую",
+                    ],
+                    color: SP.Colors.danger
                 )
             }
         }
-        .padding(16)
-        .background(diagnosisColor.opacity(0.1))
-        .clipShape(RoundedRectangle(cornerRadius: 16))
+        .spGlassCard(cornerRadius: SP.Layout.cornerMedium)
         .overlay(
-            RoundedRectangle(cornerRadius: 16)
+            RoundedRectangle(cornerRadius: SP.Layout.cornerMedium, style: .continuous)
                 .stroke(diagnosisColor.opacity(0.3), lineWidth: 1)
         )
     }
 
-    private func differenceExplanation(title: String, points: [String]) -> some View {
+    private func differenceExplanation(title: String, points: [String], color: Color) -> some View {
         VStack(alignment: .leading, spacing: 6) {
             Text(title)
-                .font(.subheadline.bold())
-                .foregroundColor(.white.opacity(0.9))
+                .font(SP.Typography.subheadline)
+                .foregroundColor(SP.Colors.textPrimary)
             ForEach(points, id: \.self) { point in
-                Text(point)
-                    .font(.caption)
-                    .foregroundColor(.white.opacity(0.8))
+                HStack(alignment: .top, spacing: 6) {
+                    Text("•")
+                        .foregroundColor(color)
+                    Text(point)
+                        .font(SP.Typography.caption)
+                        .foregroundColor(SP.Colors.textSecondary)
+                }
             }
         }
         .padding(.top, 4)
     }
 
-    // MARK: - Metrics
-
     private func metricsGrid(_ a: HeartAnalysis) -> some View {
-        LazyVGrid(columns: [.init(.flexible()), .init(.flexible())], spacing: 12) {
+        LazyVGrid(columns: [.init(.flexible(), spacing: 12), .init(.flexible(), spacing: 12)], spacing: 12) {
             metricTile("❤️ ЧСС", value: "\(Int(a.heartRate))", unit: "BPM")
             metricTile("📈 HRV", value: String(format: "%.0f", a.hrvMs), unit: "мс")
-            metricTile("🔀 Нерегулярность", value: String(format: "%.0f%%", a.irregularity * 100), unit: "")
+            metricTile("🔀 Регулярность", value: String(format: "%.0f%%", (1 - a.irregularity) * 100), unit: "")
             metricTile("📊 Паттерн", value: a.risePattern.rawValue, unit: "")
         }
     }
 
     private func metricTile(_ title: String, value: String, unit: String) -> some View {
         VStack(spacing: 4) {
-            Text(title).font(.caption2).foregroundColor(.white.opacity(0.6))
-            Text(value).font(.headline.bold()).foregroundColor(.white)
+            Text(title)
+                .font(SP.Typography.caption2)
+                .foregroundColor(SP.Colors.textTertiary)
+            Text(value)
+                .font(SP.Typography.headline)
+                .foregroundColor(SP.Colors.textPrimary)
+                .monospacedDigit()
             if !unit.isEmpty {
-                Text(unit).font(.caption2).foregroundColor(.white.opacity(0.5))
+                Text(unit)
+                    .font(SP.Typography.caption2)
+                    .foregroundColor(SP.Colors.textTertiary)
             }
         }
         .frame(maxWidth: .infinity)
-        .padding(12)
-        .background(AppTheme.card)
-        .clipShape(RoundedRectangle(cornerRadius: 12))
+        .spGlassCard(cornerRadius: SP.Layout.cornerSmall)
     }
-
-    // MARK: - Recommendation
 
     private func recommendationCard(_ text: String) -> some View {
         VStack(alignment: .leading, spacing: 8) {
-            Text("💡 Рекомендация").font(.headline).foregroundColor(.white)
-            Text(text).font(.body).foregroundColor(.white.opacity(0.85))
+            HStack {
+                Image(systemName: "lightbulb.fill")
+                    .foregroundColor(SP.Colors.warning)
+                Text("Рекомендация")
+                    .font(SP.Typography.headline)
+                    .foregroundColor(SP.Colors.textPrimary)
+            }
+            Text(text)
+                .font(SP.Typography.body)
+                .foregroundColor(SP.Colors.textSecondary)
                 .fixedSize(horizontal: false, vertical: true)
+                .lineSpacing(3)
         }
         .frame(maxWidth: .infinity, alignment: .leading)
-        .padding(16)
-        .background(AppTheme.primary.opacity(0.1))
-        .clipShape(RoundedRectangle(cornerRadius: 16))
+        .spGlassCard(cornerRadius: SP.Layout.cornerMedium)
+    }
+
+    private func diagnosisEmoji(_ d: HeartAnalysis.Diagnosis) -> String {
+        switch d {
+        case .panicAttack: "😮‍💨"
+        case .likelyCardiac: "🚨"
+        case .arrhythmia: "⚠️"
+        case .normal: "💚"
+        case .inconclusive: "📊"
+        }
     }
 }
-
-#Preview { NavigationStack { HeartAnalysisView() } }

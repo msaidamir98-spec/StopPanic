@@ -1,6 +1,8 @@
 import SwiftUI
 
-/// Экран достижений
+// MARK: - AchievementsView
+
+/// Экран достижений — геймификация прогресса.
 struct AchievementsView: View {
     // MARK: Internal
 
@@ -9,72 +11,106 @@ struct AchievementsView: View {
 
     var body: some View {
         ZStack {
-            AppTheme.background.ignoresSafeArea()
+            AmbientBackground(primaryColor: SP.Colors.warning, secondaryColor: SP.Colors.accent)
 
-            ScrollView {
+            ScrollView(.vertical, showsIndicators: false) {
                 VStack(spacing: 24) {
-                    VStack(spacing: 8) {
-                        Text("🏆").font(.system(size: 50))
-                        Text("\(service.totalPoints) очков")
-                            .font(.title.bold()).foregroundColor(.white)
-                        Text("\(service.achievements.filter(\.isUnlocked).count) / \(service.achievements.count)")
-                            .font(.subheadline).foregroundColor(.white.opacity(0.7))
+                    // Header
+                    VStack(spacing: 10) {
+                        Text("🏆")
+                            .font(.system(size: 50))
+                            .scaleEffect(appear ? 1 : 0.5)
+                            .animation(.spring(response: 0.6, dampingFraction: 0.5), value: appear)
+                        AnimatedNumber(
+                            value: service.totalPoints,
+                            font: SP.Typography.heroTitle,
+                            color: SP.Colors.warning
+                        )
+                        Text("\(service.achievements.filter(\.isUnlocked).count) / \(service.achievements.count) разблокировано")
+                            .font(SP.Typography.subheadline)
+                            .foregroundColor(SP.Colors.textSecondary)
                     }
-                    .padding(.top, 20)
+                    .padding(.top, 12)
+                    .opacity(appear ? 1 : 0)
 
-                    LazyVGrid(columns: columns, spacing: 16) {
-                        ForEach(service.achievements) { a in
+                    // Grid
+                    LazyVGrid(columns: columns, spacing: 14) {
+                        ForEach(Array(service.achievements.enumerated()), id: \.element.id) { index, a in
                             achievementCard(a)
+                                .opacity(appear ? 1 : 0)
+                                .offset(y: appear ? 0 : 20)
+                                .animation(SP.Anim.spring.delay(Double(index) * 0.05), value: appear)
                         }
                     }
-                    .padding(.horizontal, 16)
+
+                    Spacer(minLength: 40)
                 }
+                .padding(.horizontal, SP.Layout.padding)
             }
         }
         .navigationTitle("Достижения")
+        .navigationBarTitleDisplayMode(.inline)
+        .onAppear {
+            withAnimation(.easeOut(duration: 0.6)) { appear = true }
+        }
     }
 
     // MARK: Private
 
+    @State
+    private var appear = false
+
     private let columns = [
-        GridItem(.flexible(), spacing: 16),
-        GridItem(.flexible(), spacing: 16),
+        GridItem(.flexible(), spacing: 14),
+        GridItem(.flexible(), spacing: 14),
     ]
 
     private func achievementCard(_ a: Achievement) -> some View {
         VStack(spacing: 10) {
             ZStack {
                 Circle()
-                    .fill(a.isUnlocked ? AppTheme.primary.opacity(0.2) : Color.white.opacity(0.05))
-                    .frame(width: 56, height: 56)
+                    .fill(a.isUnlocked ? SP.Colors.accent.opacity(0.2) : SP.Colors.bgCardHover)
+                    .frame(width: 52, height: 52)
+                    .shadow(color: a.isUnlocked ? SP.Colors.accent.opacity(0.3) : .clear, radius: 8)
                 Image(systemName: a.icon)
-                    .font(.title3)
-                    .foregroundColor(a.isUnlocked ? AppTheme.primary : .gray)
+                    .font(.system(size: 20))
+                    .foregroundColor(a.isUnlocked ? SP.Colors.accent : SP.Colors.textTertiary)
             }
+
             Text(a.title)
-                .font(.subheadline.bold())
-                .foregroundColor(a.isUnlocked ? .white : .gray)
+                .font(SP.Typography.subheadline)
+                .foregroundColor(a.isUnlocked ? SP.Colors.textPrimary : SP.Colors.textTertiary)
                 .multilineTextAlignment(.center)
+                .lineLimit(2)
+
             Text(a.description)
-                .font(.caption2)
-                .foregroundColor(.white.opacity(0.5))
-                .multilineTextAlignment(.center).lineLimit(2)
+                .font(SP.Typography.caption2)
+                .foregroundColor(SP.Colors.textTertiary)
+                .multilineTextAlignment(.center)
+                .lineLimit(2)
 
             if !a.isUnlocked {
-                ProgressView(value: a.progress).tint(AppTheme.primary)
+                ProgressView(value: a.progress)
+                    .tint(SP.Colors.accent)
                 Text("\(a.currentProgress)/\(a.requirement)")
-                    .font(.caption2).foregroundColor(.white.opacity(0.5))
+                    .font(SP.Typography.caption2)
+                    .foregroundColor(SP.Colors.textTertiary)
+                    .monospacedDigit()
             } else {
-                Text("✅ Разблокировано")
-                    .font(.caption2).foregroundColor(AppTheme.secondary)
+                HStack(spacing: 4) {
+                    Image(systemName: "checkmark.circle.fill")
+                        .font(.system(size: 10))
+                    Text("Разблокировано")
+                        .font(SP.Typography.caption2)
+                }
+                .foregroundColor(SP.Colors.success)
             }
         }
         .padding(14)
-        .background(Color.white.opacity(a.isUnlocked ? 0.08 : 0.03))
-        .clipShape(RoundedRectangle(cornerRadius: 16))
-        .overlay(RoundedRectangle(cornerRadius: 16)
-            .stroke(a.isUnlocked ? AppTheme.primary.opacity(0.3) : .clear, lineWidth: 1))
+        .spGlassCard(cornerRadius: SP.Layout.cornerMedium)
+        .overlay(
+            RoundedRectangle(cornerRadius: SP.Layout.cornerMedium, style: .continuous)
+                .stroke(a.isUnlocked ? SP.Colors.accent.opacity(0.3) : Color.clear, lineWidth: 1)
+        )
     }
 }
-
-#Preview { AchievementsView(service: AchievementService()) }

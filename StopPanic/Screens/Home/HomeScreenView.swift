@@ -75,7 +75,7 @@ struct HomeScreenView: View {
     private var dailyInsight: String {
         let insights = [
             "Паническая атака длится в среднем 10-20 минут. Ни одна паническая атака в истории не длилась вечно.",
-            "При панической атаке пульс учащается, но ритм остаётся РЕГУЛЯРНЫМ. При инфаркте ритм нарушается.",
+            "При тревоге пульс учащается, но ритм остаётся регулярным. Дыхание 4-7-8 помогает быстро его снизить.",
             "Техника 4-7-8 активирует блуждающий нерв и снижает ЧСС за 2-3 минуты. Научно доказано.",
             "40% людей хотя бы раз в жизни испытывают паническую атаку. Ты не один.",
             "Дыхание — единственная автономная функция, которой ты можешь управлять сознательно.",
@@ -296,8 +296,8 @@ struct HomeScreenView: View {
                     color: SP.Colors.accent, gradient: SP.Colors.heroGradient
                 ) { coordinator.selectedTab = .tools }
                 QuickActionCard(
-                    icon: "heart.text.square.fill", title: "Пульс ≠ Сердце",
-                    subtitle: "ПА или инфаркт?", color: SP.Colors.danger,
+                    icon: "heart.text.square.fill", title: "Анализ пульса",
+                    subtitle: "Пульс и тревога", color: SP.Colors.danger,
                     gradient: SP.Colors.sosGradient
                 ) { coordinator.selectedTab = .heart }
                 QuickActionCard(
