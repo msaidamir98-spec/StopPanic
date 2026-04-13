@@ -12,6 +12,7 @@ struct StilloApp: App {
         WindowGroup {
             ContentView()
                 .environment(coordinator)
+                .preferredColorScheme(coordinator.themeManager.preferredColorScheme)
                 .onReceive(NotificationCenter.default.publisher(for: .triggerSOSFromIntent)) { _ in
                     coordinator.triggerSOS()
                 }

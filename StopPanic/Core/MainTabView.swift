@@ -67,18 +67,19 @@ struct MainTabView: View {
     // MARK: Private
 
     private func configureTabBarAppearance() {
+        let theme = coordinator.themeManager
         let appearance = UITabBarAppearance()
         appearance.configureWithOpaqueBackground()
-        appearance.backgroundColor = UIColor(SP.Colors.bgElevated)
+        appearance.backgroundColor = UIColor(theme.bgElevated)
 
         // Add top border line
         appearance.shadowColor = UIColor(white: 1, alpha: 0.06)
 
         let itemAppearance = UITabBarItemAppearance()
-        itemAppearance.normal.iconColor = UIColor(SP.Colors.textTertiary)
-        itemAppearance.normal.titleTextAttributes = [.foregroundColor: UIColor(SP.Colors.textTertiary)]
-        itemAppearance.selected.iconColor = UIColor(SP.Colors.accent)
-        itemAppearance.selected.titleTextAttributes = [.foregroundColor: UIColor(SP.Colors.accent)]
+        itemAppearance.normal.iconColor = UIColor(theme.textTertiary)
+        itemAppearance.normal.titleTextAttributes = [.foregroundColor: UIColor(theme.textTertiary)]
+        itemAppearance.selected.iconColor = UIColor(theme.accent)
+        itemAppearance.selected.titleTextAttributes = [.foregroundColor: UIColor(theme.accent)]
 
         appearance.stackedLayoutAppearance = itemAppearance
         appearance.inlineLayoutAppearance = itemAppearance

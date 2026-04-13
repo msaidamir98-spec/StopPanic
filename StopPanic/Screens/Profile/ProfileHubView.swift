@@ -268,6 +268,13 @@ struct ProfileHubView: View {
                 settingsRowLabel(icon: "map.fill", title: "Карта настроений", color: SP.Colors.calm)
             }
             .buttonStyle(.plain)
+
+            NavigationLink {
+                ThemePickerView()
+            } label: {
+                settingsRowLabel(icon: "paintbrush.fill", title: "Оформление", color: SP.Colors.accentSoft)
+            }
+            .buttonStyle(.plain)
         }
         .opacity(appear ? 1 : 0)
         .offset(y: appear ? 0 : 15)

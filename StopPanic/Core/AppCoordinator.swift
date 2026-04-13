@@ -20,6 +20,7 @@ final class AppCoordinator {
     let sosService = SOSService()
     let notificationService = NotificationService()
     let watchConnectivity = WatchConnectivityService.shared
+    let themeManager = ThemeManager()
 
     // MARK: - Navigation State
 

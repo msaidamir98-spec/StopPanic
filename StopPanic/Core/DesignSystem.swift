@@ -204,16 +204,20 @@ extension Color {
 // MARK: - SPCard
 
 struct SPCard: ViewModifier {
+    @Environment(AppCoordinator.self)
+    var coordinator
+
     var cornerRadius: CGFloat = SP.Layout.cornerMedium
     var padding: CGFloat = SP.Layout.cardPadding
 
     func body(content: Content) -> some View {
+        let theme = coordinator.themeManager
         content
             .padding(padding)
             .background(
                 RoundedRectangle(cornerRadius: cornerRadius, style: .continuous)
-                    .fill(SP.Colors.bgCard)
-                    .shadow(color: SP.Shadows.soft, radius: 16, y: 8)
+                    .fill(theme.bgCard)
+                    .shadow(color: theme.shadowSoft, radius: 16, y: 8)
             )
     }
 }
@@ -221,19 +225,23 @@ struct SPCard: ViewModifier {
 // MARK: - SPGlassCard
 
 struct SPGlassCard: ViewModifier {
+    @Environment(AppCoordinator.self)
+    var coordinator
+
     var cornerRadius: CGFloat = SP.Layout.cornerMedium
 
     func body(content: Content) -> some View {
+        let theme = coordinator.themeManager
         content
             .padding(SP.Layout.cardPadding)
             .background(
                 RoundedRectangle(cornerRadius: cornerRadius, style: .continuous)
-                    .fill(.ultraThinMaterial)
+                    .fill(theme.glassMaterial)
                     .overlay(
                         RoundedRectangle(cornerRadius: cornerRadius, style: .continuous)
-                            .stroke(Color.white.opacity(0.12), lineWidth: 0.5)
+                            .stroke(theme.glassBorder, lineWidth: 0.5)
                     )
-                    .shadow(color: .black.opacity(0.15), radius: 20, y: 10)
+                    .shadow(color: theme.shadowSoft, radius: 20, y: 10)
             )
     }
 }
@@ -343,12 +351,15 @@ struct FloatingParticle: View {
 struct AmbientBackground: View {
     // MARK: Internal
 
+    @Environment(AppCoordinator.self)
+    var coordinator
+
     let primaryColor: Color
     var secondaryColor: Color = SP.Colors.accent
 
     var body: some View {
         ZStack {
-            SP.Colors.bg.ignoresSafeArea()
+            coordinator.themeManager.bg.ignoresSafeArea()
 
             // Large primary orb
             Circle()
