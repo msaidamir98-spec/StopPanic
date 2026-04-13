@@ -51,7 +51,7 @@ enum L10n {
         static let hold = String(localized: "sos.hold", defaultValue: "Задержка")
         static let breatheOut = String(localized: "sos.breatheOut", defaultValue: "Выдох")
         static let youAreSafe = String(localized: "sos.youAreSafe", defaultValue: "Ты в безопасности")
-        static let panicWillPass = String(localized: "sos.panicWillPass", defaultValue: "Паника пройдёт. Это временно.")
+        static let panicWillPass = String(localized: "sos.panicWillPass", defaultValue: "Тревога пройдёт. Это временно.")
     }
 
     // MARK: - Breathing

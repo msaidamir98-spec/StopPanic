@@ -581,7 +581,7 @@
 "crisis.info_free" = "電話は無料で匿名です";
 "crisis.info_24h" = "専門家が24時間対応しています";
 "crisis.info_any_issue" = "どんなことでも相談できます";
-"crisis.info_panic_safe" = "パニック発作は危険ではありません — 必ず治まります";
+"crisis.info_panic_safe" = "不安は危険ではありません — 必ず治まります";
 "crisis.emergency_112" = "⚠️ 命の危険がある場合は119に電話してください";
 
 /* Country Names */

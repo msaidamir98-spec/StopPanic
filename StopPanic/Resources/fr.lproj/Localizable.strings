@@ -581,7 +581,7 @@
 "crisis.info_free" = "Les appels sont gratuits et anonymes";
 "crisis.info_24h" = "Des spécialistes sont disponibles 24h/24";
 "crisis.info_any_issue" = "Tu peux appeler pour n'importe quelle raison";
-"crisis.info_panic_safe" = "Une crise de panique n'est pas dangereuse — elle passera";
+"crisis.info_panic_safe" = "L'anxiété n'est pas dangereuse — elle passera";
 "crisis.emergency_112" = "⚠️ Si la vie est en danger, appelle le 3114";
 
 /* Country Names */

@@ -3,11 +3,11 @@ import AppIntents
 // MARK: - SOSIntent
 
 // Allows users to trigger SOS, breathing, and more via Siri.
-// "Hey Siri, I'm panicking" → triggers SOS Flow.
+// "Hey Siri, I need help" → triggers SOS Flow.
 
 struct SOSIntent: AppIntent {
-    static var title: LocalizedStringResource = "I'm panicking — SOS"
-    static var description = IntentDescription("Activates emergency help during a panic attack")
+    static var title: LocalizedStringResource = "I need help — SOS"
+    static var description = IntentDescription("Activates calming exercises when you feel anxious")
     static var openAppWhenRun: Bool = true
 
     func perform() async throws -> some IntentResult {
@@ -48,9 +48,9 @@ struct CheckAnxietyStatusIntent: AppIntent {
 // MARK: - QuickLogPanicIntent
 
 struct QuickLogPanicIntent: AppIntent {
-    static var title: LocalizedStringResource = "Log a panic attack"
+    static var title: LocalizedStringResource = "Log an anxiety episode"
     static var description = IntentDescription(
-        "Quickly logs a panic episode in the diary"
+        "Quickly logs an anxiety episode in the diary"
     )
     static var openAppWhenRun: Bool = true
 
@@ -77,16 +77,16 @@ struct StilloShortcuts: AppShortcutsProvider {
         AppShortcut(
             intent: SOSIntent(),
             phrases: [
-                "I'm panicking in \(.applicationName)",
+                "I need help in \(.applicationName)",
                 "SOS in \(.applicationName)",
                 "Help me \(.applicationName)",
-                "Panic attack \(.applicationName)",
+                "I feel anxious \(.applicationName)",
                 "I feel bad \(.applicationName)",
-                "Я паникую в \(.applicationName)",
+                "Мне тревожно в \(.applicationName)",
                 "Помоги мне \(.applicationName)",
                 "Мне плохо \(.applicationName)",
             ],
-            shortTitle: "SOS Panic",
+            shortTitle: "SOS Help",
             systemImageName: "hand.raised.fill"
         )
 
@@ -106,9 +106,9 @@ struct StilloShortcuts: AppShortcutsProvider {
         AppShortcut(
             intent: QuickLogPanicIntent(),
             phrases: [
-                "Log a panic attack in \(.applicationName)",
+                "Log an episode in \(.applicationName)",
                 "Diary entry in \(.applicationName)",
-                "Записать приступ в \(.applicationName)",
+                "Записать эпизод в \(.applicationName)",
                 "Запись в дневник \(.applicationName)",
             ],
             shortTitle: "Log Episode",
