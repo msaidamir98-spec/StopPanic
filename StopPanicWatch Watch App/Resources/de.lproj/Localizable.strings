@@ -7,7 +7,7 @@
 "watch.irreg" = "Unreg.";
 "watch.hr_label" = "HF";
 "watch.hrv_ms" = "HRV ms";
-"watch.call_112" = "112 anrufen";
+"watch.call_112" = "Arzt konsultieren";
 "watch.close" = "Schließen";
 
 /* WatchBreathingView */
@@ -33,8 +33,8 @@
 
 /* WatchDifferentialView */
 "watch.diff_title" = "Nachschlagewerk";
-"watch.diff_panic" = "Panikattacke";
-"watch.diff_cardiac" = "Herzinfarkt";
+"watch.diff_panic" = "Angstreaktion";
+"watch.diff_cardiac" = "Ungewöhnliches Rhythmusmuster";
 "watch.diff_call_112" = "Im Zweifel — 112 anrufen!";
 "watch.diff_pa_tab" = "PA";
 "watch.diff_cardiac_tab" = "Herz";
@@ -58,17 +58,17 @@
 /* WatchHeartService - Status */
 "watch.status_normal" = "Normal";
 "watch.status_panic" = "Sieht nach PA aus";
-"watch.status_cardiac" = "⚠️ Mögliches Herzproblem";
+"watch.status_cardiac" = "⚠️ Ungewöhnliches Muster";
 "watch.status_analyzing" = "Analyse…";
 
 /* WatchHeartService - Diagnosis titles */
 "watch.diag_normal_title" = "Alles in Ordnung";
-"watch.diag_panic_title" = "Panikattacke";
-"watch.diag_cardiac_title" = "Mögliches Herzproblem";
+"watch.diag_panic_title" = "Angstreaktion";
+"watch.diag_cardiac_title" = "Ungewöhnlicher Rhythmus erkannt";
 "watch.diag_inconclusive_title" = "Unzureichende Daten";
 
 /* WatchHeartService - Diagnosis details */
 "watch.diag_normal_detail" = "Ihre Herzfrequenz ist normal. Überwachung fortsetzen.";
-"watch.diag_panic_detail" = "Gleichmäßiger Rhythmus, erhöhte HF — typisch für eine Panikattacke. Versuchen Sie 4-7-8-Atmung.";
-"watch.diag_cardiac_detail" = "Rhythmus-Unregelmäßigkeit erkannt. Arzt aufsuchen oder Notdienst rufen.";
+"watch.diag_panic_detail" = "Gleichmäßiger Rhythmus, erhöhte HF — typische Angstreaktion. Versuchen Sie 4-7-8-Atmung.";
+"watch.diag_cardiac_detail" = "Rhythmus-Unregelmäßigkeit erkannt. Wir empfehlen, einen Arzt zu konsultieren.";
 "watch.diag_inconclusive_detail" = "Überwachung fortsetzen für genauere Analyse.";

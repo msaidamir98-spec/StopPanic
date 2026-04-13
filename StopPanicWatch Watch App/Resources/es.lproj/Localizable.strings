@@ -7,7 +7,7 @@
 "watch.irreg" = "Irreg.";
 "watch.hr_label" = "FC";
 "watch.hrv_ms" = "VFC ms";
-"watch.call_112" = "Llamar 112";
+"watch.call_112" = "Consultar médico";
 "watch.close" = "Cerrar";
 
 /* WatchBreathingView */
@@ -33,8 +33,8 @@
 
 /* WatchDifferentialView */
 "watch.diff_title" = "Referencia";
-"watch.diff_panic" = "Ataque de pánico";
-"watch.diff_cardiac" = "Infarto";
+"watch.diff_panic" = "Respuesta de ansiedad";
+"watch.diff_cardiac" = "Patrón de ritmo inusual";
 "watch.diff_call_112" = "En caso de duda — ¡llama al 112!";
 "watch.diff_pa_tab" = "AP";
 "watch.diff_cardiac_tab" = "Corazón";
@@ -58,17 +58,17 @@
 /* WatchHeartService - Status */
 "watch.status_normal" = "Normal";
 "watch.status_panic" = "Parece AP";
-"watch.status_cardiac" = "⚠️ Posible cardíaco";
+"watch.status_cardiac" = "⚠️ Patrón inusual";
 "watch.status_analyzing" = "Analizando…";
 
 /* WatchHeartService - Diagnosis titles */
 "watch.diag_normal_title" = "Todo bien";
-"watch.diag_panic_title" = "Ataque de pánico";
-"watch.diag_cardiac_title" = "Posible problema cardíaco";
+"watch.diag_panic_title" = "Respuesta de ansiedad";
+"watch.diag_cardiac_title" = "Ritmo inusual detectado";
 "watch.diag_inconclusive_title" = "Datos insuficientes";
 
 /* WatchHeartService - Diagnosis details */
 "watch.diag_normal_detail" = "Tu frecuencia cardíaca es normal. Continúa monitoreando.";
-"watch.diag_panic_detail" = "Ritmo estable, FC elevada — típico de un ataque de pánico. Prueba la respiración 4-7-8.";
-"watch.diag_cardiac_detail" = "Irregularidad del ritmo detectada. Consulta a un médico o llama a emergencias.";
+"watch.diag_panic_detail" = "Ritmo estable, FC elevada — respuesta típica de ansiedad. Prueba la respiración 4-7-8.";
+"watch.diag_cardiac_detail" = "Irregularidad del ritmo detectada. Recomendamos consultar a un profesional de salud.";
 "watch.diag_inconclusive_detail" = "Continúa monitoreando para un análisis más preciso.";

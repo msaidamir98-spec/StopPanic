@@ -354,7 +354,7 @@
 "cognitive.subtitle" = "Lass uns den ängstlichen Gedanken mit KVT analysieren";
 "cognitive.anxious_thought" = "Ängstlicher Gedanke";
 "cognitive.write_thought" = "Schreibe den Gedanken auf, der Angst auslöst";
-"cognitive.thought_example" = "z.B. \"Ich werde an einem Herzinfarkt sterben\"";
+"cognitive.thought_example" = "z.B. \"Gleich passiert etwas Schreckliches\"";
 "cognitive.facts_against" = "Fakten dagegen";
 "cognitive.what_facts" = "Welche Fakten sprechen GEGEN diesen Gedanken?";
 "cognitive.facts_example" = "z.B. \"Der Arzt hat gesagt, mein Herz ist gesund\"";
@@ -528,7 +528,7 @@
 "profile.set_name" = "Namen festlegen";
 "profile.edit" = "Bearbeiten";
 "profile.about" = "Über die App";
-"profile.about_body" = "Stillō — dein Begleiter bei Angst und Panikattacken. Kostenlos, ohne Werbung, ohne Abos.";
+"profile.about_body" = "Stillō — dein Begleiter bei Angst. Grundfunktionen kostenlos, ohne Werbung. Optionales Premium verfügbar.";
 "profile.version %@" = "Version %@";
 "profile.breath_min" = "Atemminuten";
 
@@ -695,3 +695,5 @@
 "country.cn" = "China";
 "country.pt" = "Portugal";
 "country.kr" = "Südkorea";
+
+"siri_quick_log_note" = "Siri-Schnellprotokoll";

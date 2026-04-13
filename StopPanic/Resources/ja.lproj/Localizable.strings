@@ -354,7 +354,7 @@
 "cognitive.subtitle" = "CBTを使って不安な考えを分析しましょう";
 "cognitive.anxious_thought" = "不安な考え";
 "cognitive.write_thought" = "不安を引き起こしている考えを書いてください";
-"cognitive.thought_example" = "例：「心臓発作で死んでしまう」";
+"cognitive.thought_example" = "例：「何か恐ろしいことが起きる」";
 "cognitive.facts_against" = "反証となる事実";
 "cognitive.what_facts" = "この考えに反する事実は何ですか？";
 "cognitive.facts_example" = "例：「医師は心臓が健康だと言いました」";
@@ -528,7 +528,7 @@
 "profile.set_name" = "名前を設定";
 "profile.edit" = "編集";
 "profile.about" = "アプリについて";
-"profile.about_body" = "Stillō — 不安やパニック発作のためのパートナー。無料、広告なし、サブスクなし。";
+"profile.about_body" = "Stillō — 不安管理のパートナー。基本機能は無料、広告なし。オプションのプレミアムあり。";
 "profile.version %@" = "バージョン %@";
 "profile.breath_min" = "呼吸（分）";
 
@@ -695,3 +695,5 @@
 "country.cn" = "中国";
 "country.pt" = "ポルトガル";
 "country.kr" = "韓国";
+
+"siri_quick_log_note" = "Siriクイックログ";

@@ -109,9 +109,9 @@ struct PaywallView: View {
 
                         HStack(spacing: 16) {
                             Link(String(localized: "paywall_terms"),
-                                 destination: URL(string: "https://stillo.app/terms") ?? URL(string: "https://apple.com")!)
+                                 destination: URL(string: "https://www.apple.com/legal/internet-services/itunes/dev/stdeula/")!)
                             Link(String(localized: "paywall_privacy"),
-                                 destination: URL(string: "https://stillo.app/privacy") ?? URL(string: "https://apple.com")!)
+                                 destination: URL(string: "https://www.apple.com/legal/privacy/")!)
                         }
                         .font(SP.Typography.caption2)
                         .foregroundColor(SP.Colors.accent.opacity(0.8))

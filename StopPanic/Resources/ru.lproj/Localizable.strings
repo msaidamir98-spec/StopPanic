@@ -354,7 +354,7 @@
 "cognitive.subtitle" = "Разберём тревожную мысль по модели CBT";
 "cognitive.anxious_thought" = "Тревожная мысль";
 "cognitive.write_thought" = "Запиши мысль, которая вызывает тревогу";
-"cognitive.thought_example" = "Например: «Я сейчас умру от сердечного приступа»";
+"cognitive.thought_example" = "Например: «Сейчас случится что-то ужасное»";
 "cognitive.facts_against" = "Факты против";
 "cognitive.what_facts" = "Какие факты ПРОТИВ этой мысли?";
 "cognitive.facts_example" = "Например: «Врач сказал, что сердце здоровое»";
@@ -528,7 +528,7 @@
 "profile.set_name" = "Укажи имя";
 "profile.edit" = "Редактировать";
 "profile.about" = "О приложении";
-"profile.about_body" = "Stillō — твой помощник при тревоге и панических атаках. Бесплатно, без рекламы, без подписок.";
+"profile.about_body" = "Stillō — твой помощник при тревоге. Базовые функции бесплатны, без рекламы. Доступна премиум-подписка.";
 "profile.version %@" = "Версия %@";
 "profile.breath_min" = "Мин дыхания";
 
@@ -695,3 +695,5 @@
 "country.cn" = "Китай";
 "country.pt" = "Португалия";
 "country.kr" = "Южная Корея";
+
+"siri_quick_log_note" = "Быстрая запись Siri";

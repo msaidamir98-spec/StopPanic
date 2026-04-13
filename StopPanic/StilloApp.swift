@@ -22,7 +22,7 @@ struct StilloApp: App {
                 }
                 .onReceive(NotificationCenter.default.publisher(for: .triggerQuickLogFromIntent)) { notification in
                     let intensity = notification.userInfo?["intensity"] as? Int ?? 5
-                    coordinator.diaryService.addDiaryEpisode(intensity: intensity, notes: "Siri quick log")
+                    coordinator.diaryService.addDiaryEpisode(intensity: intensity, notes: String(localized: "siri_quick_log_note"))
                     coordinator.selectedTab = .journal
                 }
                 .task {

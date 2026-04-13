@@ -7,7 +7,7 @@
 "watch.irreg" = "不规则";
 "watch.hr_label" = "心率";
 "watch.hrv_ms" = "HRV ms";
-"watch.call_112" = "拨打120";
+"watch.call_112" = "咨询医生";
 "watch.close" = "关闭";
 
 /* WatchBreathingView */
@@ -33,8 +33,8 @@
 
 /* WatchDifferentialView */
 "watch.diff_title" = "参考";
-"watch.diff_panic" = "恐慌发作";
-"watch.diff_cardiac" = "心肌梗塞";
+"watch.diff_panic" = "焦虑反应";
+"watch.diff_cardiac" = "异常节律模式";
 "watch.diff_call_112" = "如有疑问——拨打120！";
 "watch.diff_pa_tab" = "恐慌";
 "watch.diff_cardiac_tab" = "心脏";
@@ -58,17 +58,17 @@
 /* WatchHeartService - Status */
 "watch.status_normal" = "正常";
 "watch.status_panic" = "疑似恐慌";
-"watch.status_cardiac" = "⚠️ 可能是心脏问题";
+"watch.status_cardiac" = "⚠️ 异常模式";
 "watch.status_analyzing" = "分析中…";
 
 /* WatchHeartService - Diagnosis titles */
 "watch.diag_normal_title" = "一切正常";
-"watch.diag_panic_title" = "恐慌发作";
-"watch.diag_cardiac_title" = "可能的心脏问题";
+"watch.diag_panic_title" = "焦虑反应";
+"watch.diag_cardiac_title" = "检测到异常节律";
 "watch.diag_inconclusive_title" = "数据不足";
 
 /* WatchHeartService - Diagnosis details */
 "watch.diag_normal_detail" = "您的心率正常。请继续监测。";
-"watch.diag_panic_detail" = "节奏稳定，心率偏高——典型的恐慌发作。请尝试4-7-8呼吸法。";
-"watch.diag_cardiac_detail" = "检测到心律不规则。请咨询医生或拨打急救电话。";
+"watch.diag_panic_detail" = "节奏稳定，心率偏高——典型的焦虑反应。请尝试4-7-8呼吸法。";
+"watch.diag_cardiac_detail" = "检测到心律不规则。建议咨询医疗专业人员。";
 "watch.diag_inconclusive_detail" = "请继续监测以获得更准确的分析。";

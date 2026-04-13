@@ -7,7 +7,7 @@
 "watch.irreg" = "Нерег.";
 "watch.hr_label" = "ЧСС";
 "watch.hrv_ms" = "HRV мс";
-"watch.call_112" = "Вызвать 112";
+"watch.call_112" = "Обратиться к врачу";
 "watch.close" = "Закрыть";
 
 /* WatchBreathingView */
@@ -33,8 +33,8 @@
 
 /* WatchDifferentialView */
 "watch.diff_title" = "Справка";
-"watch.diff_panic" = "Паническая атака";
-"watch.diff_cardiac" = "Сердечный приступ";
+"watch.diff_panic" = "Тревожная реакция";
+"watch.diff_cardiac" = "Необычный ритм";
 "watch.diff_call_112" = "При сомнениях — звоните 112!";
 "watch.diff_pa_tab" = "ПА";
 "watch.diff_cardiac_tab" = "Сердце";
@@ -58,17 +58,17 @@
 /* WatchHeartService - Status */
 "watch.status_normal" = "Норма";
 "watch.status_panic" = "Похоже на ПА";
-"watch.status_cardiac" = "⚠️ Возможно сердце";
+"watch.status_cardiac" = "⚠️ Необычный паттерн";
 "watch.status_analyzing" = "Анализирую...";
 
 /* WatchHeartService - Diagnosis titles */
 "watch.diag_normal_title" = "Всё в порядке";
-"watch.diag_panic_title" = "Паническая атака";
-"watch.diag_cardiac_title" = "Возможная сердечная проблема";
+"watch.diag_panic_title" = "Тревожная реакция";
+"watch.diag_cardiac_title" = "Обнаружен необычный ритм";
 "watch.diag_inconclusive_title" = "Недостаточно данных";
 
 /* WatchHeartService - Diagnosis details */
 "watch.diag_normal_detail" = "Ваш пульс в норме. Продолжайте мониторинг.";
-"watch.diag_panic_detail" = "Ритм ровный, ЧСС повышен — характерно для панической атаки. Попробуйте дыхание 4-7-8.";
-"watch.diag_cardiac_detail" = "Обнаружена нерегулярность ритма. Обратитесь к врачу или вызовите скорую.";
+"watch.diag_panic_detail" = "Ритм ровный, ЧСС повышен — характерно для тревоги. Попробуйте дыхание 4-7-8.";
+"watch.diag_cardiac_detail" = "Обнаружена нерегулярность ритма. Рекомендуем проконсультироваться с врачом.";
 "watch.diag_inconclusive_detail" = "Продолжайте мониторинг для более точного анализа.";

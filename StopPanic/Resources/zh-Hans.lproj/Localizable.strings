@@ -354,7 +354,7 @@
 "cognitive.subtitle" = "让我们用CBT分析焦虑的想法";
 "cognitive.anxious_thought" = "焦虑的想法";
 "cognitive.write_thought" = "写下引起焦虑的想法";
-"cognitive.thought_example" = "例如：「我会心脏病发作而死」";
+"cognitive.thought_example" = "例如：「可怕的事情即将发生」";
 "cognitive.facts_against" = "反驳的事实";
 "cognitive.what_facts" = "有什么事实可以反驳这个想法？";
 "cognitive.facts_example" = "例如：「医生说我的心脏很健康」";
@@ -528,7 +528,7 @@
 "profile.set_name" = "设置你的名字";
 "profile.edit" = "编辑";
 "profile.about" = "关于应用";
-"profile.about_body" = "Stillō——你的焦虑和恐慌发作伙伴。免费，无广告，无订阅。";
+"profile.about_body" = "Stillō——你的焦虑管理伙伴。基本功能免费，无广告。可选高级订阅。";
 "profile.version %@" = "版本 %@";
 "profile.breath_min" = "呼吸分钟数";
 
@@ -695,3 +695,5 @@
 "country.cn" = "中国";
 "country.pt" = "葡萄牙";
 "country.kr" = "韩国";
+
+"siri_quick_log_note" = "Siri快速记录";

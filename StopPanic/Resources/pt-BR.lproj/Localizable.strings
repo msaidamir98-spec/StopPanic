@@ -354,7 +354,7 @@
 "cognitive.subtitle" = "Vamos analisar o pensamento ansioso com TCC";
 "cognitive.anxious_thought" = "Pensamento ansioso";
 "cognitive.write_thought" = "Escreva o pensamento que causa ansiedade";
-"cognitive.thought_example" = "ex. \"Vou morrer de um infarto\"";
+"cognitive.thought_example" = "ex. \"Algo terrível está prestes a acontecer\"";
 "cognitive.facts_against" = "Fatos contra";
 "cognitive.what_facts" = "Que fatos vão CONTRA esse pensamento?";
 "cognitive.facts_example" = "ex. \"O médico disse que meu coração é saudável\"";
@@ -528,7 +528,7 @@
 "profile.set_name" = "Defina seu nome";
 "profile.edit" = "Editar";
 "profile.about" = "Sobre o app";
-"profile.about_body" = "Stillō — seu companheiro contra ansiedade e crises de pânico. Grátis, sem anúncios, sem assinaturas.";
+"profile.about_body" = "Stillō — seu companheiro contra ansiedade. Funções básicas gratuitas, sem anúncios. Premium opcional disponível.";
 "profile.version %@" = "Versão %@";
 "profile.breath_min" = "Min de respiração";
 
@@ -695,3 +695,5 @@
 "country.cn" = "China";
 "country.pt" = "Portugal";
 "country.kr" = "Coreia do Sul";
+
+"siri_quick_log_note" = "Registro rápido Siri";

@@ -7,7 +7,7 @@
 "watch.irreg" = "Irreg.";
 "watch.hr_label" = "HR";
 "watch.hrv_ms" = "HRV ms";
-"watch.call_112" = "Call 911";
+"watch.call_112" = "Consult a doctor";
 "watch.close" = "Close";
 
 /* WatchBreathingView */
@@ -33,8 +33,8 @@
 
 /* WatchDifferentialView */
 "watch.diff_title" = "Reference";
-"watch.diff_panic" = "Panic attack";
-"watch.diff_cardiac" = "Heart attack";
+"watch.diff_panic" = "Anxiety response";
+"watch.diff_cardiac" = "Unusual rhythm pattern";
 "watch.diff_call_112" = "When in doubt — call 911!";
 "watch.diff_pa_tab" = "PA";
 "watch.diff_cardiac_tab" = "Heart";
@@ -58,17 +58,17 @@
 /* WatchHeartService - Status */
 "watch.status_normal" = "Normal";
 "watch.status_panic" = "Looks like PA";
-"watch.status_cardiac" = "⚠️ Possible cardiac";
+"watch.status_cardiac" = "⚠️ Unusual pattern";
 "watch.status_analyzing" = "Analyzing…";
 
 /* WatchHeartService - Diagnosis titles */
 "watch.diag_normal_title" = "All good";
-"watch.diag_panic_title" = "Panic attack";
-"watch.diag_cardiac_title" = "Possible cardiac issue";
+"watch.diag_panic_title" = "Anxiety response";
+"watch.diag_cardiac_title" = "Unusual rhythm detected";
 "watch.diag_inconclusive_title" = "Insufficient data";
 
 /* WatchHeartService - Diagnosis details */
 "watch.diag_normal_detail" = "Your heart rate is normal. Continue monitoring.";
-"watch.diag_panic_detail" = "Steady rhythm, elevated HR — typical of a panic attack. Try 4-7-8 breathing.";
-"watch.diag_cardiac_detail" = "Rhythm irregularity detected. See a doctor or call emergency services.";
+"watch.diag_panic_detail" = "Steady rhythm, elevated HR — typical anxiety response. Try 4-7-8 breathing.";
+"watch.diag_cardiac_detail" = "Rhythm irregularity detected. Consider consulting a healthcare professional.";
 "watch.diag_inconclusive_detail" = "Continue monitoring for a more accurate analysis.";

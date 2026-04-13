@@ -354,7 +354,7 @@
 "cognitive.subtitle" = "Let's analyze the anxious thought using CBT";
 "cognitive.anxious_thought" = "Anxious thought";
 "cognitive.write_thought" = "Write down the thought causing anxiety";
-"cognitive.thought_example" = "e.g. \"I'm going to die of a heart attack\"";
+"cognitive.thought_example" = "e.g. \"Something terrible is about to happen\"";
 "cognitive.facts_against" = "Facts against";
 "cognitive.what_facts" = "What facts are AGAINST this thought?";
 "cognitive.facts_example" = "e.g. \"The doctor said my heart is healthy\"";
@@ -528,7 +528,7 @@
 "profile.set_name" = "Set your name";
 "profile.edit" = "Edit";
 "profile.about" = "About the app";
-"profile.about_body" = "Stillō — your companion for anxiety and panic attacks. Free, no ads, no subscriptions.";
+"profile.about_body" = "Stillō — your companion for managing anxiety. Core features are free, no ads. Optional premium available.";
 "profile.version %@" = "Version %@";
 "profile.breath_min" = "Breathing min";
 
@@ -695,3 +695,5 @@
 "country.cn" = "China";
 "country.pt" = "Portugal";
 "country.kr" = "South Korea";
+
+"siri_quick_log_note" = "Siri quick log";
