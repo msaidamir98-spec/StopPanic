@@ -1,32 +1,17 @@
 import SwiftUI
 
-// MARK: - Onboarding Flow — Premium WOW
+// MARK: - Onboarding Flow — Value First
 
-// Персонализированный онбординг с particle effects, staggered animations,
-// glassmorphism cards, haptic feedback на каждом шаге.
+// Бестселлер-подход:
+// Page 0: Welcome — крутой визуал + "Попробуй прямо сейчас"
+// Page 1: Mini Breathing — 30 сек дыхание 4-7-8 (VALUE!)
+// Page 2: Result — "Видишь? Пульс снизился. Это работает."
+// Page 3: Name — теперь можно спросить имя (trust earned)
+// Page 4: Experience + Goals (combined, быстрее)
+// Page 5: Ready + Notifications permission
 
 struct OnboardingFlowView: View {
     // MARK: Internal
-
-    enum PanicExperience: String, CaseIterable {
-        case first = "Впервые"
-        case rare = "Редко (пару раз)"
-        case sometimes = "Иногда"
-        case often = "Часто"
-        case daily = "Почти каждый день"
-
-        // MARK: Internal
-
-        var emoji: String {
-            switch self {
-            case .first: "🌱"
-            case .rare: "🌤️"
-            case .sometimes: "⛅"
-            case .often: "🌧️"
-            case .daily: "⛈️"
-            }
-        }
-    }
 
     @Environment(AppCoordinator.self)
     var coordinator
@@ -36,18 +21,17 @@ struct OnboardingFlowView: View {
             AmbientBackground(primaryColor: SP.Colors.accent, secondaryColor: SP.Colors.calm)
 
             VStack(spacing: 0) {
-                // Progress
                 progressBar
                     .padding(.top, 12)
                     .opacity(showContent ? 1 : 0)
 
-                // Pages
                 TabView(selection: $currentPage) {
                     welcomePage.tag(0)
-                    namePage.tag(1)
-                    experiencePage.tag(2)
-                    goalsPage.tag(3)
-                    readyPage.tag(4)
+                    miniBreathingPage.tag(1)
+                    resultPage.tag(2)
+                    namePage.tag(3)
+                    experiencePage.tag(4)
+                    readyPage.tag(5)
                 }
                 .tabViewStyle(.page(indexDisplayMode: .never))
                 .animation(SP.Anim.spring, value: currentPage)
@@ -57,53 +41,42 @@ struct OnboardingFlowView: View {
             withAnimation(.spring(response: 0.8, dampingFraction: 0.6)) {
                 showContent = true
                 logoScale = 1.0
-                logoRotation = 0
             }
         }
     }
 
     // MARK: Private
 
-    @State
-    private var currentPage = 0
-    @State
-    private var userName = ""
-    @State
-    private var selectedExperience: PanicExperience?
-    @State
-    private var selectedGoals: Set<String> = []
-    @State
-    private var showContent = false
-    @State
-    private var logoScale: CGFloat = 0.3
-    @State
-    private var logoRotation: Double = -30
+    @State private var currentPage = 0
+    @State private var userName = ""
+    @State private var selectedExperience: String?
+    @State private var showContent = false
+    @State private var logoScale: CGFloat = 0.3
 
-    private let goals = [
-        ("🫁", "Научиться дышать при панике"),
-        ("💓", "Понимать свой пульс и тревогу"),
-        ("📝", "Вести дневник тревоги"),
-        ("🧠", "Разобрать тревожные мысли"),
-        ("😌", "Снизить общую тревожность"),
-        ("🆘", "Иметь план на случай паники"),
+    // Mini breathing state
+    @State private var breathScale: CGFloat = 0.4
+    @State private var breathPhase = "Нажми старт"
+    @State private var isBreathing = false
+    @State private var breathCycles = 0
+    @State private var breathTimer: Timer?
+    @State private var miniBreathComplete = false
+
+    private let experiences = [
+        ("🌱", String(localized: "onb_exp_first")),
+        ("🌤️", String(localized: "onb_exp_rare")),
+        ("⛅", String(localized: "onb_exp_sometimes")),
+        ("🌧️", String(localized: "onb_exp_often")),
+        ("⛈️", String(localized: "onb_exp_daily")),
     ]
 
     // MARK: - Progress Bar
 
     private var progressBar: some View {
         HStack(spacing: 6) {
-            ForEach(0 ..< 5, id: \.self) { i in
+            ForEach(0 ..< 6, id: \.self) { i in
                 Capsule()
-                    .fill(i <= currentPage ? SP.Colors.accent : Color.white.opacity(0.1))
+                    .fill(i <= currentPage ? SP.Colors.accent : SP.Colors.textTertiary.opacity(0.2))
                     .frame(height: 4)
-                    .overlay(
-                        Capsule()
-                            .fill(i <= currentPage ? SP.Colors.accent : Color.clear)
-                            .shadow(
-                                color: SP.Colors.accent.opacity(i <= currentPage ? 0.5 : 0),
-                                radius: 4
-                            )
-                    )
                     .animation(SP.Anim.springSnappy.delay(Double(i) * 0.05), value: currentPage)
             }
         }
@@ -113,12 +86,11 @@ struct OnboardingFlowView: View {
     // MARK: - Page 0: Welcome
 
     private var welcomePage: some View {
-        VStack(spacing: 32) {
+        VStack(spacing: 28) {
             Spacer()
 
-            // Animated Logo
+            // Logo
             ZStack {
-                // Outer glow rings
                 ForEach(0 ..< 3, id: \.self) { i in
                     Circle()
                         .stroke(SP.Colors.accent.opacity(0.08 - Double(i) * 0.02), lineWidth: 1)
@@ -130,9 +102,7 @@ struct OnboardingFlowView: View {
                 Circle()
                     .fill(
                         RadialGradient(
-                            colors: [
-                                SP.Colors.accent.opacity(0.2), SP.Colors.accent.opacity(0.05),
-                            ],
+                            colors: [SP.Colors.accent.opacity(0.2), SP.Colors.accent.opacity(0.05)],
                             center: .center, startRadius: 10, endRadius: 60
                         )
                     )
@@ -142,49 +112,174 @@ struct OnboardingFlowView: View {
                     .font(.system(size: 50))
                     .foregroundColor(SP.Colors.accent)
                     .scaleEffect(logoScale)
-                    .rotationEffect(.degrees(logoRotation))
             }
 
             VStack(spacing: 12) {
                 Text("Stillō")
                     .font(.system(size: 40, weight: .bold, design: .rounded))
                     .foregroundColor(SP.Colors.textPrimary)
-                    .opacity(showContent ? 1 : 0)
-                    .offset(y: showContent ? 0 : 20)
-                    .animation(SP.Anim.spring.delay(0.2), value: showContent)
 
-                Text("Точка покоя\nв моменте тревоги")
+                Text(String(localized: "onb_tagline"))
                     .font(SP.Typography.title3)
                     .foregroundColor(SP.Colors.textSecondary)
                     .multilineTextAlignment(.center)
-                    .opacity(showContent ? 1 : 0)
-                    .offset(y: showContent ? 0 : 20)
-                    .animation(SP.Anim.spring.delay(0.35), value: showContent)
             }
 
-            // Feature lines with staggered animation
+            // Quick value props
             VStack(alignment: .leading, spacing: 14) {
-                featureLine(
-                    "🆘", "Помощь за 3 секунды", "Одна кнопка — моментальная помощь", delay: 0.5
-                )
-                featureLine("💓", "Мониторинг пульса", "Анализ ритма и дыхательный тест", delay: 0.6)
-                featureLine("📝", "Дневник тревоги", "Отслеживай паттерны и прогресс", delay: 0.7)
-                featureLine("⌚", "Apple Watch", "Мониторинг пульса на запястье", delay: 0.8)
+                featureLine("🆘", String(localized: "onb_feature_sos"), String(localized: "onb_feature_sos_sub"), delay: 0.5)
+                featureLine("💓", String(localized: "onb_feature_heart"), String(localized: "onb_feature_heart_sub"), delay: 0.6)
+                featureLine("🫁", String(localized: "onb_feature_breath"), String(localized: "onb_feature_breath_sub"), delay: 0.7)
             }
             .padding(.horizontal, 8)
 
             Spacer()
 
-            nextButton("Начнём →")
+            // CTA — "Попробуй прямо сейчас"
+            nextButton(String(localized: "onb_try_now"))
                 .opacity(showContent ? 1 : 0)
-                .offset(y: showContent ? 0 : 30)
                 .animation(SP.Anim.spring.delay(0.9), value: showContent)
         }
         .padding(.horizontal, SP.Layout.padding)
         .padding(.bottom, 40)
     }
 
-    // MARK: - Page 1: Name
+    // MARK: - Page 1: Mini Breathing (VALUE FIRST!)
+
+    private var miniBreathingPage: some View {
+        VStack(spacing: 24) {
+            Spacer()
+
+            Text(String(localized: "onb_breath_title"))
+                .font(SP.Typography.title1)
+                .foregroundColor(SP.Colors.textPrimary)
+                .multilineTextAlignment(.center)
+
+            Text(String(localized: "onb_breath_subtitle"))
+                .font(SP.Typography.callout)
+                .foregroundColor(SP.Colors.textSecondary)
+
+            // Breathing circle
+            ZStack {
+                // Outer glow
+                Circle()
+                    .fill(SP.Colors.calm.opacity(0.06))
+                    .frame(width: 260, height: 260)
+                    .scaleEffect(breathScale * 1.2)
+
+                // Ring
+                Circle()
+                    .stroke(SP.Colors.calm.opacity(0.15), lineWidth: 3)
+                    .frame(width: 200, height: 200)
+
+                // Main circle
+                Circle()
+                    .fill(
+                        RadialGradient(
+                            colors: [SP.Colors.calm.opacity(0.3), SP.Colors.calm.opacity(0.05)],
+                            center: .center, startRadius: 20, endRadius: 100
+                        )
+                    )
+                    .frame(width: 200, height: 200)
+                    .scaleEffect(breathScale)
+
+                // Phase text
+                VStack(spacing: 8) {
+                    Text(breathPhase)
+                        .font(SP.Typography.title2)
+                        .foregroundColor(SP.Colors.textPrimary)
+
+                    if isBreathing {
+                        Text("\(breathCycles)/3")
+                            .font(SP.Typography.caption)
+                            .foregroundColor(SP.Colors.textTertiary)
+                    }
+                }
+            }
+
+            Spacer()
+
+            if miniBreathComplete {
+                nextButton(String(localized: "onb_breath_done_next"))
+                    .transition(.scale.combined(with: .opacity))
+            } else if !isBreathing {
+                Button {
+                    startMiniBreathing()
+                } label: {
+                    Text(String(localized: "onb_breath_start"))
+                        .spPrimaryButton()
+                }
+                .buttonStyle(PremiumButtonStyle())
+                .glowPulse(color: SP.Colors.calm)
+            } else {
+                Text(String(localized: "onb_breath_follow"))
+                    .font(SP.Typography.callout)
+                    .foregroundColor(SP.Colors.textTertiary)
+            }
+        }
+        .padding(.horizontal, SP.Layout.padding)
+        .padding(.bottom, 40)
+    }
+
+    // MARK: - Page 2: Result
+
+    private var resultPage: some View {
+        VStack(spacing: 28) {
+            Spacer()
+
+            // Checkmark animation
+            ZStack {
+                Circle()
+                    .fill(SP.Colors.success.opacity(0.12))
+                    .frame(width: 130, height: 130)
+                    .scaleEffect(currentPage == 2 ? 1 : 0.3)
+                    .animation(.spring(response: 0.6, dampingFraction: 0.5), value: currentPage)
+
+                Image(systemName: "checkmark.circle.fill")
+                    .font(.system(size: 60))
+                    .foregroundColor(SP.Colors.success)
+                    .scaleEffect(currentPage == 2 ? 1 : 0.3)
+                    .animation(.spring(response: 0.7, dampingFraction: 0.4).delay(0.15), value: currentPage)
+            }
+
+            VStack(spacing: 12) {
+                Text(String(localized: "onb_result_title"))
+                    .font(SP.Typography.heroTitle)
+                    .foregroundColor(SP.Colors.textPrimary)
+                    .multilineTextAlignment(.center)
+
+                Text(String(localized: "onb_result_subtitle"))
+                    .font(SP.Typography.body)
+                    .foregroundColor(SP.Colors.textSecondary)
+                    .multilineTextAlignment(.center)
+                    .lineSpacing(4)
+            }
+
+            // Science card
+            VStack(alignment: .leading, spacing: 8) {
+                HStack(spacing: 8) {
+                    Image(systemName: "brain.head.profile")
+                        .foregroundColor(SP.Colors.accent)
+                    Text(String(localized: "onb_result_science_title"))
+                        .font(SP.Typography.headline)
+                        .foregroundColor(SP.Colors.textPrimary)
+                }
+                Text(String(localized: "onb_result_science_body"))
+                    .font(SP.Typography.caption)
+                    .foregroundColor(SP.Colors.textSecondary)
+                    .lineSpacing(3)
+            }
+            .spGlassCard(cornerRadius: SP.Layout.cornerSmall)
+
+            Spacer()
+
+            nextButton(String(localized: "onb_continue"))
+        }
+        .padding(.horizontal, SP.Layout.padding)
+        .padding(.bottom, 40)
+    }
+
+    // MARK: - Page 3: Name (trust earned)
 
     private var namePage: some View {
         VStack(spacing: 32) {
@@ -192,18 +287,18 @@ struct OnboardingFlowView: View {
 
             Text("👋")
                 .font(.system(size: 64))
-                .scaleEffect(currentPage == 1 ? 1 : 0.5)
+                .scaleEffect(currentPage == 3 ? 1 : 0.5)
                 .animation(.spring(response: 0.6, dampingFraction: 0.5), value: currentPage)
 
-            Text("Как тебя зовут?")
+            Text(String(localized: "onb_name_title"))
                 .font(SP.Typography.heroTitle)
                 .foregroundColor(SP.Colors.textPrimary)
 
-            Text("Так я смогу обращаться лично")
+            Text(String(localized: "onb_name_subtitle"))
                 .font(SP.Typography.callout)
                 .foregroundColor(SP.Colors.textSecondary)
 
-            TextField("Имя", text: $userName)
+            TextField(String(localized: "onb_name_placeholder"), text: $userName)
                 .textFieldStyle(.plain)
                 .font(SP.Typography.title2)
                 .multilineTextAlignment(.center)
@@ -211,55 +306,50 @@ struct OnboardingFlowView: View {
                 .background(
                     RoundedRectangle(cornerRadius: 16, style: .continuous)
                         .fill(.warmGlass)
-                        .overlay(
-                            RoundedRectangle(cornerRadius: 16, style: .continuous)
-                                .stroke(Color.white.opacity(0.12), lineWidth: 0.5)
-                        )
                 )
-                .foregroundColor(.white)
+                .foregroundColor(SP.Colors.textPrimary)
                 .padding(.horizontal, 40)
 
             Spacer()
 
-            nextButton(userName.isEmpty ? "Пропустить" : "Далее →")
+            nextButton(userName.isEmpty ? String(localized: "onb_skip") : String(localized: "onb_next"))
         }
         .padding(.horizontal, SP.Layout.padding)
         .padding(.bottom, 40)
     }
 
-    // MARK: - Page 2: Experience
+    // MARK: - Page 4: Experience (simplified)
 
     private var experiencePage: some View {
         VStack(spacing: 28) {
             Spacer()
 
-            Text("Как часто ты испытываешь\nпанические атаки?")
+            Text(String(localized: "onb_exp_title"))
                 .font(SP.Typography.title1)
                 .foregroundColor(SP.Colors.textPrimary)
                 .multilineTextAlignment(.center)
 
-            Text("Это поможет настроить приложение")
+            Text(String(localized: "onb_exp_subtitle"))
                 .font(SP.Typography.callout)
                 .foregroundColor(SP.Colors.textSecondary)
 
             VStack(spacing: 10) {
-                ForEach(Array(PanicExperience.allCases.enumerated()), id: \.element) { index, exp in
+                ForEach(Array(experiences.enumerated()), id: \.element.1) { index, exp in
+                    let isSelected = selectedExperience == exp.1
+
                     Button {
                         SP.Haptic.selectionChanged()
                         withAnimation(SP.Anim.springSnappy) {
-                            selectedExperience = exp
+                            selectedExperience = exp.1
                         }
                     } label: {
                         HStack {
-                            Text(exp.emoji)
-                                .font(.title3)
-                            Text(exp.rawValue)
+                            Text(exp.0).font(.title3)
+                            Text(exp.1)
                                 .font(SP.Typography.headline)
-                                .foregroundColor(
-                                    selectedExperience == exp ? .white : SP.Colors.textSecondary
-                                )
+                                .foregroundColor(isSelected ? .white : SP.Colors.textSecondary)
                             Spacer()
-                            if selectedExperience == exp {
+                            if isSelected {
                                 Image(systemName: "checkmark.circle.fill")
                                     .foregroundColor(.white)
                                     .transition(.scale.combined(with: .opacity))
@@ -269,32 +359,19 @@ struct OnboardingFlowView: View {
                         .padding(.vertical, 14)
                         .background(
                             RoundedRectangle(cornerRadius: 14, style: .continuous)
-                                .fill(
-                                    selectedExperience == exp
-                                        ? AnyShapeStyle(SP.Colors.heroGradient)
-                                        : AnyShapeStyle(.warmGlass)
-                                )
-                        )
-                        .overlay(
-                            RoundedRectangle(cornerRadius: 14, style: .continuous)
-                                .stroke(
-                                    selectedExperience == exp
-                                        ? SP.Colors.accent.opacity(0.5)
-                                        : Color.white.opacity(0.08),
-                                    lineWidth: 0.5
-                                )
+                                .fill(isSelected ? AnyShapeStyle(SP.Colors.heroGradient) : AnyShapeStyle(.warmGlass))
                         )
                     }
                     .buttonStyle(PremiumButtonStyle())
-                    .opacity(currentPage == 2 ? 1 : 0)
-                    .offset(y: currentPage == 2 ? 0 : 20)
+                    .opacity(currentPage == 4 ? 1 : 0)
+                    .offset(y: currentPage == 4 ? 0 : 20)
                     .animation(SP.Anim.spring.delay(Double(index) * 0.08), value: currentPage)
                 }
             }
 
             Spacer()
 
-            nextButton("Далее →")
+            nextButton(String(localized: "onb_next"))
                 .opacity(selectedExperience != nil ? 1 : 0.5)
                 .disabled(selectedExperience == nil)
         }
@@ -302,73 +379,19 @@ struct OnboardingFlowView: View {
         .padding(.bottom, 40)
     }
 
-    // MARK: - Page 3: Goals
-
-    private var goalsPage: some View {
-        VStack(spacing: 28) {
-            Spacer()
-
-            Text("Чего ты хочешь достичь?")
-                .font(SP.Typography.title1)
-                .foregroundColor(SP.Colors.textPrimary)
-                .multilineTextAlignment(.center)
-
-            Text("Выбери одну или несколько целей")
-                .font(SP.Typography.callout)
-                .foregroundColor(SP.Colors.textSecondary)
-
-            LazyVGrid(columns: [.init(.flexible()), .init(.flexible())], spacing: 12) {
-                ForEach(Array(goals.enumerated()), id: \.element.1) { index, goal in
-                    let (emoji, title) = goal
-                    let isSelected = selectedGoals.contains(title)
-
-                    Button {
-                        SP.Haptic.selectionChanged()
-                        withAnimation(SP.Anim.springSnappy) {
-                            if isSelected {
-                                selectedGoals.remove(title)
-                            } else {
-                                selectedGoals.insert(title)
-                            }
-                        }
-                    } label: {
-                        goalCardLabel(emoji: emoji, title: title, isSelected: isSelected)
-                    }
-                    .buttonStyle(PremiumButtonStyle())
-                    .opacity(currentPage == 3 ? 1 : 0)
-                    .offset(y: currentPage == 3 ? 0 : 20)
-                    .animation(SP.Anim.spring.delay(Double(index) * 0.06), value: currentPage)
-                }
-            }
-
-            Spacer()
-
-            nextButton("Далее →")
-                .opacity(selectedGoals.isEmpty ? 0.5 : 1)
-                .disabled(selectedGoals.isEmpty)
-        }
-        .padding(.horizontal, SP.Layout.padding)
-        .padding(.bottom, 40)
-    }
-
-    // MARK: - Page 4: Ready
+    // MARK: - Page 5: Ready
 
     private var readyPage: some View {
         VStack(spacing: 28) {
             Spacer()
 
             ZStack {
-                // Celebration rings
                 ForEach(0 ..< 3, id: \.self) { i in
                     Circle()
                         .stroke(SP.Colors.success.opacity(0.1 - Double(i) * 0.03), lineWidth: 1)
                         .frame(width: CGFloat(130 + i * 25), height: CGFloat(130 + i * 25))
-                        .scaleEffect(currentPage == 4 ? 1 : 0.5)
-                        .animation(
-                            .spring(response: 0.8, dampingFraction: 0.5).delay(
-                                0.2 + Double(i) * 0.1
-                            ), value: currentPage
-                        )
+                        .scaleEffect(currentPage == 5 ? 1 : 0.5)
+                        .animation(.spring(response: 0.8, dampingFraction: 0.5).delay(0.2 + Double(i) * 0.1), value: currentPage)
                 }
 
                 Circle()
@@ -378,38 +401,32 @@ struct OnboardingFlowView: View {
                 Image(systemName: "checkmark.shield.fill")
                     .font(.system(size: 56))
                     .foregroundColor(SP.Colors.success)
-                    .scaleEffect(currentPage == 4 ? 1 : 0.3)
-                    .animation(
-                        .spring(response: 0.6, dampingFraction: 0.5).delay(0.1), value: currentPage
-                    )
+                    .scaleEffect(currentPage == 5 ? 1 : 0.3)
+                    .animation(.spring(response: 0.6, dampingFraction: 0.5).delay(0.1), value: currentPage)
             }
 
-            Text("Всё готово\(userName.isEmpty ? "" : ", \(userName)")!")
+            Text(String(localized: "onb_ready_title \(userName.isEmpty ? "" : userName)"))
                 .font(SP.Typography.heroTitle)
                 .foregroundColor(SP.Colors.textPrimary)
 
-            Text(
-                "Твоё приложение настроено.\nСОС-кнопка всегда на главном экране.\n\nТы больше не один."
-            )
-            .font(SP.Typography.body)
-            .foregroundColor(SP.Colors.textSecondary)
-            .multilineTextAlignment(.center)
-            .lineSpacing(4)
+            Text(String(localized: "onb_ready_subtitle"))
+                .font(SP.Typography.body)
+                .foregroundColor(SP.Colors.textSecondary)
+                .multilineTextAlignment(.center)
+                .lineSpacing(4)
 
-            // Important note — glass card
+            // Medical disclaimer
             VStack(alignment: .leading, spacing: 8) {
                 HStack {
                     Image(systemName: "exclamationmark.triangle.fill")
                         .foregroundColor(.orange)
-                    Text("Важно")
+                    Text(String(localized: "onb_disclaimer_title"))
                         .font(SP.Typography.headline)
                         .foregroundColor(SP.Colors.textPrimary)
                 }
-                Text(
-                    "Stillō — помощник, НЕ замена врачу. При подозрении на сердечную проблему всегда вызывайте скорую."
-                )
-                .font(SP.Typography.caption)
-                .foregroundColor(SP.Colors.textSecondary)
+                Text(String(localized: "onb_disclaimer_body"))
+                    .font(SP.Typography.caption)
+                    .foregroundColor(SP.Colors.textSecondary)
             }
             .spGlassCard(cornerRadius: SP.Layout.cornerSmall)
 
@@ -418,14 +435,14 @@ struct OnboardingFlowView: View {
             Button {
                 SP.Haptic.success()
                 coordinator.userName = userName
-                coordinator.panicExperience = selectedExperience?.rawValue ?? "sometimes"
+                coordinator.panicExperience = selectedExperience ?? "sometimes"
                 coordinator.notificationService.requestAuthorization()
                 coordinator.healthManager.requestPermissions()
                 withAnimation(SP.Anim.spring) {
                     coordinator.hasSeenOnboarding = true
                 }
             } label: {
-                Text("Начать использовать")
+                Text(String(localized: "onb_start_using"))
                     .spPrimaryButton()
             }
             .glowPulse(color: SP.Colors.success)
@@ -434,14 +451,11 @@ struct OnboardingFlowView: View {
         .padding(.bottom, 40)
     }
 
-    private func featureLine(
-        _ emoji: String, _ title: String, _ subtitle: String, delay: Double = 0
-    ) -> some View {
-        HStack(spacing: 14) {
-            Text(emoji)
-                .font(.title2)
-                .frame(width: 36)
+    // MARK: - Helpers
 
+    private func featureLine(_ emoji: String, _ title: String, _ subtitle: String, delay: Double) -> some View {
+        HStack(spacing: 14) {
+            Text(emoji).font(.title2).frame(width: 36)
             VStack(alignment: .leading, spacing: 2) {
                 Text(title)
                     .font(SP.Typography.headline)
@@ -456,8 +470,6 @@ struct OnboardingFlowView: View {
         .animation(SP.Anim.spring.delay(delay), value: showContent)
     }
 
-    // MARK: - Reusable Next Button
-
     private func nextButton(_ title: String) -> some View {
         Button {
             SP.Haptic.soft()
@@ -471,40 +483,47 @@ struct OnboardingFlowView: View {
         .buttonStyle(PremiumButtonStyle())
     }
 
-    // MARK: - Goal Card Label (extracted for type-checker)
+    // MARK: - Mini Breathing Engine (30-sec 4-7-8)
 
-    private func goalCardLabel(emoji: String, title: String, isSelected: Bool) -> some View {
-        VStack(spacing: 8) {
-            Text(emoji)
-                .font(.title)
-                .scaleEffect(isSelected ? 1.15 : 1.0)
-            Text(title)
-                .font(SP.Typography.caption)
-                .foregroundColor(isSelected ? .white : SP.Colors.textSecondary)
-                .multilineTextAlignment(.center)
-                .lineLimit(2)
+    private func startMiniBreathing() {
+        isBreathing = true
+        breathCycles = 0
+        runBreathCycle()
+    }
+
+    private func runBreathCycle() {
+        guard breathCycles < 3 else {
+            // Complete!
+            isBreathing = false
+            withAnimation(SP.Anim.spring) {
+                miniBreathComplete = true
+                breathPhase = String(localized: "onb_breath_complete")
+            }
+            SP.Haptic.success()
+            return
         }
-        .frame(maxWidth: .infinity)
-        .padding(.vertical, 16)
-        .background(
-            RoundedRectangle(cornerRadius: 16, style: .continuous)
-                .fill(
-                    isSelected
-                        ? AnyShapeStyle(SP.Colors.heroGradient)
-                        : AnyShapeStyle(.warmGlass)
-                )
-        )
-        .overlay(
-            RoundedRectangle(cornerRadius: 16, style: .continuous)
-                .stroke(
-                    isSelected
-                        ? SP.Colors.accent.opacity(0.5) : Color.white.opacity(0.08),
-                    lineWidth: isSelected ? 1.5 : 0.5
-                )
-        )
-        .shadow(
-            color: isSelected ? SP.Colors.accent.opacity(0.2) : .clear,
-            radius: 8, y: 4
-        )
+
+        // Inhale (4s)
+        breathPhase = String(localized: "breath_inhale")
+        SP.Haptic.soft()
+        withAnimation(.easeInOut(duration: 4)) { breathScale = 1.0 }
+
+        DispatchQueue.main.asyncAfter(deadline: .now() + 4) {
+            // Hold (4s instead of 7 for mini)
+            breathPhase = String(localized: "breath_hold")
+            SP.Haptic.light()
+
+            DispatchQueue.main.asyncAfter(deadline: .now() + 4) {
+                // Exhale (4s instead of 8 for mini)
+                breathPhase = String(localized: "breath_exhale")
+                SP.Haptic.soft()
+                withAnimation(.easeInOut(duration: 4)) { breathScale = 0.4 }
+
+                DispatchQueue.main.asyncAfter(deadline: .now() + 4) {
+                    breathCycles += 1
+                    runBreathCycle()
+                }
+            }
+        }
     }
 }

@@ -1,3 +1,6 @@
+/* Japanese */
+
+/* General */
 "app.name" = "Stillō";
 "general.done" = "完了";
 "general.cancel" = "キャンセル";
@@ -9,31 +12,202 @@
 "general.close" = "閉じる";
 "general.important" = "重要";
 
-"tabs.home" = "ホーム";
-"tabs.tools" = "ツール";
-"tabs.heart" = "心拍";
-"tabs.journal" = "日記";
-"tabs.profile" = "プロフィール";
+/* Tabs */
+"tab_home" = "ホーム";
+"tab_tools" = "ツール";
+"tab_heart" = "心臓";
+"tab_journal" = "日記";
+"tab_profile" = "プロフィール";
 
-"home.sos.button" = "SOS";
-"home.sos.subtitle" = "不安を感じたらタップ";
-"home.quickActions" = "クイックアクション";
-"home.breathe" = "呼吸";
-"home.grounding" = "グラウンディング";
-"home.heartCheck" = "心拍";
+/* Greetings */
+"greeting_morning" = "おはようございます";
+"greeting_afternoon" = "こんにちは";
+"greeting_evening" = "こんばんは";
+"greeting_night" = "おやすみなさい";
 
-"sos.title" = "SOS — つらいです";
-"sos.stepByStep" = "今すぐステップバイステップのサポート";
-"sos.breatheIn" = "吸う";
-"sos.hold" = "止める";
-"sos.breatheOut" = "吐く";
+/* Motivational */
+"motivation_1" = "あなたは安全です。ここはあなたの場所です。";
+"motivation_2" = "一つ一つの呼吸が、落ち着きへの一歩です。";
+"motivation_3" = "今日のあなたは、昨日の不安よりも強い。";
+"motivation_4" = "パニックは一時的。あなたは永続的。";
+"motivation_5" = "呼吸して。感じて。あなたはここにいる。";
+"motivation_6" = "不安はお客様。あなたが主人です。";
+"motivation_7" = "前にも乗り越えた。今回も乗り越えられる。";
+
+/* Home */
+"home_sos_tap" = "つらい時はタップ";
+"home_help_3sec" = "3秒で助けが来ます";
+"home_quick_help" = "クイックヘルプ";
+"home_breathing" = "呼吸";
+"home_breathing_sub" = "4-7-8テクニック";
+"home_grounding" = "グラウンディング";
+"home_grounding_sub" = "5-4-3-2-1";
+"home_heart_analysis" = "心臓分析";
+"home_heart_sub" = "脈拍と不安";
+"home_relax" = "リラクゼーション";
+"home_relax_sub" = "筋弛緩";
+"home_did_you_know" = "知っていましたか？";
+"home_progress" = "あなたの進捗";
+"home_today" = "今日";
+"home_week" = "週";
+"home_streak" = "連続";
+"home_episodes" = "エピソード";
+"home_in_row" = "連続";
+"home_bpm" = "BPM";
+"home_sessions" = "セッション";
+"home_min" = "分";
+"home_risk" = "リスク";
+
+/* Daily Insights */
+"insight_1" = "パニック発作は平均10〜20分続きます。永遠に続いたパニック発作は歴史上ありません。";
+"insight_2" = "不安時には脈拍が上がりますが、リズムは規則的です。4-7-8呼吸法で素早く下げることができます。";
+"insight_3" = "4-7-8テクニックは迷走神経を活性化し、2〜3分で心拍数を下げます。科学的に証明されています。";
+"insight_4" = "40%の人が少なくとも一度はパニック発作を経験します。あなたは一人ではありません。";
+"insight_5" = "呼吸は、意識的にコントロールできる唯一の自律機能です。";
+"insight_6" = "5-4-3-2-1グラウンディングは、脳を扁桃体から前頭前皮質に切り替えます。";
+"insight_7" = "パニック発作は誤報です。あなたの体は存在しない危険に反応しています。";
+
+/* Onboarding */
+"onb_tagline" = "不安な瞬間に\n穏やかさのひとしずく";
+"onb_feature_sos" = "SOSヘルプ";
+"onb_feature_sos_sub" = "パニック時の即時サポート";
+"onb_feature_heart" = "心拍モニター";
+"onb_feature_heart_sub" = "Apple Watchでリアルタイム";
+"onb_feature_breath" = "呼吸テクニック";
+"onb_feature_breath_sub" = "科学的に証明された方法";
+"onb_try_now" = "今すぐ試してみよう";
+"onb_breath_title" = "今すぐ試してみよう";
+"onb_breath_subtitle" = "30秒の呼吸ですべてが変わります";
+"onb_breath_start" = "呼吸を始める";
+"onb_breath_follow" = "円に合わせて…";
+"onb_breath_complete" = "すばらしい！ ✨";
+"onb_breath_done_next" = "気分はどうですか？ →";
+"onb_result_title" = "感じましたか？";
+"onb_result_subtitle" = "効果があります。3回の呼吸サイクルで迷走神経が活性化し、不安が軽減されました。";
+"onb_result_science_title" = "科学的根拠";
+"onb_result_science_body" = "4-7-8テクニックは2〜3分で心拍数を下げます。ハーバード大学医学部の研究で証明されています。";
+"onb_continue" = "続ける";
+"onb_name_title" = "あなたのことを教えてください";
+"onb_name_subtitle" = "お名前でお呼びするために";
+"onb_name_placeholder" = "あなたの名前";
+"onb_skip" = "スキップ";
+"onb_next" = "次へ →";
+"onb_exp_title" = "あなたについて教えてください";
+"onb_exp_subtitle" = "アプリをパーソナライズするために";
+"onb_exp_first" = "初めての経験です";
+"onb_exp_rare" = "まれに、数回";
+"onb_exp_sometimes" = "時々あります";
+"onb_exp_often" = "よく悩まされます";
+"onb_exp_daily" = "毎日";
+"onb_ready_title %@" = "準備完了%@！";
+"onb_ready_subtitle" = "Stillōはいつでもここにいます。アプリを開くか、SOSをタップするだけ。";
+"onb_disclaimer_title" = "重要";
+"onb_disclaimer_body" = "Stillōはサポートツールであり、医師の代わりではありません。心臓の問題が疑われる場合は、必ず救急サービスに連絡してください。";
+"onb_start_using" = "使い始める ✨";
+
+/* Breathing */
+"breath_inhale" = "吸う";
+"breath_hold" = "止める";
+"breath_exhale" = "吐く";
+"breath_478_name" = "4-7-8呼吸法";
+"breath_478_sub" = "パニックに最も効果的";
+"breath_box_name" = "ボックス呼吸法";
+"breath_box_sub" = "バランスと集中";
+"breath_2x_name" = "2倍呼吸法";
+"breath_2x_sub" = "吐く時間を吸う時間の2倍に";
+"breath_resonance_name" = "共鳴呼吸法";
+"breath_resonance_sub" = "毎分5.5回の呼吸 — コヒーレンス";
+
+/* Tools Hub */
+"tools_title" = "ツール";
+"tools_subtitle" = "あなたの不安解消ツールキット";
+"tools_cat_emergency" = "緊急";
+"tools_cat_breathing" = "呼吸";
+"tools_cat_techniques" = "テクニック";
+"tools_sos_title" = "SOS — パニック中です";
+"tools_sos_sub" = "今すぐステップバイステップのヘルプ";
+"tools_steps_title" = "パニック対処ステップ";
+"tools_steps_sub" = "テキストベースの5つのグラウンディングステップ";
+"tools_heart_title" = "心臓分析";
+"tools_heart_sub" = "リズム、不安、落ち着き";
+"tools_grounding_title" = "グラウンディング 5-4-3-2-1";
+"tools_grounding_sub" = "5つの感覚に注意を向ける";
+"tools_calm_title" = "カームセッション";
+"tools_calm_sub" = "呼吸 → グラウンディング → 振り返り";
+"tools_muscle_title" = "筋弛緩法";
+"tools_muscle_sub" = "漸進的筋弛緩法";
+"tools_cognitive_title" = "認知再構成";
+"tools_cognitive_sub" = "不安な思考をステップバイステップで分析";
+"tools_patterns_title" = "パターン分析";
+"tools_patterns_sub" = "あなたの記録に基づく統計";
+"tools_crisis_title" = "危機相談窓口";
+"tools_crisis_call" = "電話する";
+
+/* Pattern Analysis */
+"pattern_empty" = "より正確な分析のために日記をつけましょう";
+"pattern_critical" = "⚠️ 高い活動。専門家への相談を検討してください。";
+"pattern_high" = "不安が高まっています。4-7-8呼吸法を試してみてください。";
+"pattern_moderate" = "中程度のレベル。練習を続けましょう。";
+"pattern_low" = "素晴らしい一週間でした！ 🎉";
+
+/* Triggers */
+"trigger_stress" = "ストレス";
+"trigger_sleep" = "睡眠不足";
+"trigger_caffeine" = "カフェイン";
+"trigger_transport" = "交通機関";
+"trigger_crowds" = "人混み";
+"trigger_night" = "夜";
+
+/* Day names */
+"day_sun" = "日";
+"day_mon" = "月";
+"day_tue" = "火";
+"day_wed" = "水";
+"day_thu" = "木";
+"day_fri" = "金";
+"day_sat" = "土";
+
+/* Notifications */
+"notif_breathing_title" = "呼吸の時間です 🌬️";
+"notif_breathing_body" = "2分間の4-7-8テクニックで不安を軽減。今すぐ試してみましょう。";
+"notif_hr_high_title" = "💓 心拍数が上昇しています";
+"notif_hr_high_body %lld" = "心拍数 %lld BPM — 通常より高めです。4-7-8呼吸法で落ち着きましょう。";
+"notif_streak_title" = "🔥 連続記録を途切れさせないで！";
+"notif_streak_body %lld" = "%lld日連続です！続けましょう — 2分間の呼吸。";
+"notif_reflection_title" = "🌙 夜の振り返り";
+"notif_reflection_body" = "今日はどんな一日でしたか？日記に気持ちを書きましょう。";
+"notif_morning_title" = "☀️ おはようございます";
+"notif_morning_body" = "2分間の穏やかな呼吸で一日を始めましょう。";
+
+/* Paywall */
+"paywall_title" = "Stillō プレミアム";
+"paywall_subtitle" = "すべてのテクニックへのフルアクセス";
+"paywall_feature_breathing" = "すべての呼吸テクニック";
+"paywall_feature_analytics" = "高度な分析";
+"paywall_feature_diary" = "無制限の日記";
+"paywall_feature_themes" = "すべてのテーマ";
+"paywall_feature_heart" = "スマート心拍アラート";
+"paywall_yearly" = "年額";
+"paywall_monthly" = "月額";
+"paywall_save_50" = "50%お得";
+"paywall_loading_error" = "価格の読み込みに失敗しました";
+"paywall_restore" = "購入を復元";
+"paywall_legal" = "サブスクリプションは自動更新されます。Apple IDの設定からいつでも解約できます。";
+
+/* SOS */
+"sos.title" = "SOS — 助けが必要です";
+"sos.stepByStep" = "今すぐステップバイステップのヘルプ";
+"sos.breatheIn" = "吸って";
+"sos.hold" = "止めて";
+"sos.breatheOut" = "吐いて";
 "sos.youAreSafe" = "あなたは安全です";
-"sos.panicWillPass" = "不安は去ります。一時的なものです。";
+"sos.panicWillPass" = "不安は過ぎ去ります。一時的なものです。";
 
-"breathing.ready" = "準備はいい？";
-"breathing.inhale" = "吸う";
-"breathing.hold" = "止める";
-"breathing.exhale" = "吐く";
+/* Breathing Session */
+"breathing.ready" = "準備はいいですか？";
+"breathing.inhale" = "吸って";
+"breathing.hold" = "止めて";
+"breathing.exhale" = "吐いて";
 "breathing.pause" = "休憩";
 "breathing.complete" = "完了！";
 "breathing.excellent" = "素晴らしい！ 🎉";
@@ -44,38 +218,52 @@
 "breathing.throughMouth" = "口から 💨";
 "breathing.relax" = "リラックス";
 
+/* Journal */
 "journal.title" = "日記";
-"journal.entries" = "件";
+"journal.entries" = "記録";
 "journal.episodes" = "エピソード";
 "journal.mood" = "気分";
 "journal.insights" = "インサイト";
-"journal.empty.title" = "日記はまだ空です";
-"journal.empty.subtitle" = "エピソードを記録してパターンを見つけよう";
-"journal.perWeek" = "今週";
+"journal.empty.title" = "日記は空です";
+"journal.empty.subtitle" = "パターンを見るためにエピソードを記録しましょう";
+"journal.perWeek" = "週あたり";
 "journal.avgIntensity" = "平均強度";
-"journal.trend" = "トレンド";
+"journal.trend" = "傾向";
 
+/* Profile */
 "profile.member" = "Stillōメンバー";
-"profile.setName" = "名前を入力";
+"profile.setName" = "名前を設定";
 "profile.entries" = "記録";
 "profile.sessions" = "セッション";
 "profile.breathingMin" = "分";
-"profile.awards" = "実績";
+"profile.awards" = "アワード";
 "profile.sosContacts" = "SOS連絡先";
 "profile.settings" = "設定";
 "profile.notifications" = "通知";
-"profile.crisisLine" = "相談窓口";
+"profile.crisisLine" = "危機相談窓口";
+"profile.premium" = "プレミアム";
+"profile.getPremium" = "プレミアムを取得 ✨";
 
-"onboarding.tagline" = "不安の中の\n静けさの一点";
+/* Legacy */
+"home.sos.button" = "SOS";
+"home.sos.subtitle" = "不安な時にタップ";
+"home.quickActions" = "クイックアクション";
+"home.breathe" = "呼吸";
+"home.grounding" = "グラウンディング";
+"home.heartCheck" = "心臓";
+"tabs.home" = "ホーム";
+"tabs.tools" = "ツール";
+"tabs.heart" = "心臓";
+"tabs.journal" = "日記";
+"tabs.profile" = "プロフィール";
+"onboarding.tagline" = "不安な瞬間に\n穏やかさのひとしずく";
 "onboarding.name" = "お名前は？";
 "onboarding.howOften" = "どのくらいの頻度で\n不安を感じますか？";
 "onboarding.whatGoals" = "何を達成したいですか？";
 "onboarding.allReady" = "準備完了";
 "onboarding.startUsing" = "使い始める";
-"onboarding.notAlone" = "もうひとりじゃない。";
-"onboarding.disclaimer" = "Stillōはサポートツールであり、医師の代わりではありません。心臓に問題がある場合は必ず救急に連絡してください。";
-
+"onboarding.notAlone" = "あなたは一人ではありません。";
+"onboarding.disclaimer" = "Stillōはサポートツールであり、医師の代わりではありません。心臓の問題が疑われる場合は、必ず救急サービスに連絡してください。";
 "greeting.morning" = "おはようございます";
 "greeting.afternoon" = "こんにちは";
 "greeting.evening" = "こんばんは";
-"greeting.night" = "おやすみなさい";

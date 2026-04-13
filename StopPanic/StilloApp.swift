@@ -1,5 +1,6 @@
 import BackgroundTasks
 import SwiftUI
+import UserNotifications
 
 @main
 struct StilloApp: App {
@@ -19,6 +20,12 @@ struct StilloApp: App {
                 .onReceive(NotificationCenter.default.publisher(for: .triggerBreathingFromIntent)) { _ in
                     coordinator.showBreathingSheet = true
                 }
+                .task {
+                    // Start listening for StoreKit transactions
+                    coordinator.premiumManager.listenForTransactions()
+                    await coordinator.premiumManager.loadProducts()
+                    await coordinator.premiumManager.checkSubscriptionStatus()
+                }
         }
         .onChange(of: scenePhase) { _, newPhase in
             handleScenePhase(newPhase)
@@ -37,6 +44,9 @@ struct StilloApp: App {
         switch phase {
         case .active:
             coordinator.refreshPredictions()
+            Task {
+                await coordinator.premiumManager.checkSubscriptionStatus()
+            }
         case .inactive:
             break
         case .background:
@@ -48,15 +58,13 @@ struct StilloApp: App {
     }
 
     private func saveAppState() {
-        // Force sync UserDefaults before suspension
         UserDefaults.standard.synchronize()
-        // Persist diary data
         coordinator.diaryService.forceSave()
     }
 
     private func scheduleAppRefresh() {
         let request = BGAppRefreshTaskRequest(identifier: "com.stillo.breathingReminder")
-        request.earliestBeginDate = Date(timeIntervalSinceNow: 4 * 3600) // 4 hours
+        request.earliestBeginDate = Date(timeIntervalSinceNow: 4 * 3600)
         do {
             try BGTaskScheduler.shared.submit(request)
         } catch {
@@ -66,8 +74,8 @@ struct StilloApp: App {
 
     private func scheduleBreathingNotification() async {
         let content = UNMutableNotificationContent()
-        content.title = "Время для дыхания 🌬️"
-        content.body = "2 минуты техники 4-7-8 снизят тревогу. Попробуй сейчас."
+        content.title = String(localized: "notif_breathing_title")
+        content.body = String(localized: "notif_breathing_body")
         content.sound = .default
 
         let trigger = UNTimeIntervalNotificationTrigger(timeInterval: 1, repeats: false)
@@ -75,5 +83,3 @@ struct StilloApp: App {
         try? await UNUserNotificationCenter.current().add(request)
     }
 }
-
-import UserNotifications

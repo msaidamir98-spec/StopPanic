@@ -1,3 +1,6 @@
+/* French */
+
+/* General */
 "app.name" = "Stillō";
 "general.done" = "Terminé";
 "general.cancel" = "Annuler";
@@ -9,28 +12,199 @@
 "general.close" = "Fermer";
 "general.important" = "Important";
 
-"tabs.home" = "Accueil";
-"tabs.tools" = "Outils";
-"tabs.heart" = "Cœur";
-"tabs.journal" = "Journal";
-"tabs.profile" = "Profil";
+/* Tabs */
+"tab_home" = "Accueil";
+"tab_tools" = "Outils";
+"tab_heart" = "Cœur";
+"tab_journal" = "Journal";
+"tab_profile" = "Profil";
 
-"home.sos.button" = "SOS";
-"home.sos.subtitle" = "Appuie en cas d'anxiété";
-"home.quickActions" = "Actions rapides";
-"home.breathe" = "Respirer";
-"home.grounding" = "Ancrage";
-"home.heartCheck" = "Pouls";
+/* Greetings */
+"greeting_morning" = "Bonjour";
+"greeting_afternoon" = "Bon après-midi";
+"greeting_evening" = "Bonsoir";
+"greeting_night" = "Bonne nuit";
 
-"sos.title" = "SOS — Je me sens mal";
+/* Motivational */
+"motivation_1" = "Tu es en sécurité. Cet espace est le tien.";
+"motivation_2" = "Chaque respiration est un pas vers le calme.";
+"motivation_3" = "Aujourd'hui tu es plus fort(e) que l'anxiété d'hier.";
+"motivation_4" = "La panique est temporaire. Tu es permanent(e).";
+"motivation_5" = "Respire. Ressens. Tu es ici.";
+"motivation_6" = "L'anxiété est une invitée. Tu es l'hôte.";
+"motivation_7" = "Tu l'as déjà surmonté. Tu le surmonteras encore.";
+
+/* Home */
+"home_sos_tap" = "Appuie si tu te sens mal";
+"home_help_3sec" = "Aide en 3 secondes";
+"home_quick_help" = "Aide rapide";
+"home_breathing" = "Respirer";
+"home_breathing_sub" = "Technique 4-7-8";
+"home_grounding" = "Ancrage";
+"home_grounding_sub" = "5-4-3-2-1";
+"home_heart_analysis" = "Analyse cardiaque";
+"home_heart_sub" = "Pouls et anxiété";
+"home_relax" = "Relaxation";
+"home_relax_sub" = "Musculaire";
+"home_did_you_know" = "Le savais-tu ?";
+"home_progress" = "Tes progrès";
+"home_today" = "Aujourd'hui";
+"home_week" = "Semaine";
+"home_streak" = "Série";
+"home_episodes" = "épisodes";
+"home_in_row" = "d'affilée";
+"home_bpm" = "BPM";
+"home_sessions" = "séances";
+"home_min" = "min";
+"home_risk" = "risque";
+
+/* Daily Insights */
+"insight_1" = "Une crise de panique dure en moyenne 10 à 20 minutes. Aucune crise de panique n'a jamais duré éternellement.";
+"insight_2" = "Pendant l'anxiété, ton pouls augmente mais le rythme reste régulier. La respiration 4-7-8 aide à le réduire rapidement.";
+"insight_3" = "La technique 4-7-8 active le nerf vague et réduit la fréquence cardiaque en 2-3 minutes. Scientifiquement prouvé.";
+"insight_4" = "40 % des gens vivent au moins une crise de panique. Tu n'es pas seul(e).";
+"insight_5" = "La respiration est la seule fonction autonome que tu peux contrôler consciemment.";
+"insight_6" = "L'ancrage 5-4-3-2-1 redirige ton cerveau de l'amygdale vers le cortex préfrontal.";
+"insight_7" = "Une crise de panique est une fausse alerte. Ton corps réagit à un danger inexistant.";
+
+/* Onboarding */
+"onb_tagline" = "Un point de calme\ndans un moment d'anxiété";
+"onb_feature_sos" = "Aide SOS";
+"onb_feature_sos_sub" = "Aide instantanée en cas de panique";
+"onb_feature_heart" = "Moniteur cardiaque";
+"onb_feature_heart_sub" = "Apple Watch en temps réel";
+"onb_feature_breath" = "Techniques de respiration";
+"onb_feature_breath_sub" = "Méthodes scientifiquement prouvées";
+"onb_try_now" = "Essaye maintenant";
+"onb_breath_title" = "Essaye maintenant";
+"onb_breath_subtitle" = "30 secondes de respiration changent tout";
+"onb_breath_start" = "Commencer à respirer";
+"onb_breath_follow" = "Suis le cercle…";
+"onb_breath_complete" = "Incroyable ! ✨";
+"onb_breath_done_next" = "Comment te sens-tu ? →";
+"onb_result_title" = "Tu le sens ?";
+"onb_result_subtitle" = "Ça fonctionne. 3 cycles de respiration ont activé ton nerf vague et réduit l'anxiété.";
+"onb_result_science_title" = "La science";
+"onb_result_science_body" = "La technique 4-7-8 réduit la fréquence cardiaque en 2-3 minutes. Prouvé par la recherche de Harvard Medical School.";
+"onb_continue" = "Continuer";
+"onb_name_title" = "Faisons connaissance";
+"onb_name_subtitle" = "Pour que nous puissions t'appeler par ton prénom";
+"onb_name_placeholder" = "Ton prénom";
+"onb_skip" = "Passer";
+"onb_next" = "Suivant →";
+"onb_exp_title" = "Parle-nous de toi";
+"onb_exp_subtitle" = "Cela aide à personnaliser l'application";
+"onb_exp_first" = "C'est la première fois";
+"onb_exp_rare" = "Rarement, quelques fois";
+"onb_exp_sometimes" = "Ça m'arrive parfois";
+"onb_exp_often" = "Ça me gêne souvent";
+"onb_exp_daily" = "Tous les jours";
+"onb_ready_title %@" = "Tout est prêt%@ !";
+"onb_ready_subtitle" = "Stillō est toujours là. Ouvre simplement l'app ou appuie sur SOS.";
+"onb_disclaimer_title" = "Important";
+"onb_disclaimer_body" = "Stillō est un assistant, PAS un substitut au médecin. Si tu suspectes un problème cardiaque, appelle toujours les urgences.";
+"onb_start_using" = "Commencer ✨";
+
+/* Breathing */
+"breath_inhale" = "Inspirer";
+"breath_hold" = "Retenir";
+"breath_exhale" = "Expirer";
+"breath_478_name" = "Respiration 4-7-8";
+"breath_478_sub" = "La plus puissante contre la panique";
+"breath_box_name" = "Respiration carrée";
+"breath_box_sub" = "Équilibre et concentration";
+"breath_2x_name" = "Respiration 2x";
+"breath_2x_sub" = "Expirer deux fois plus longtemps qu'inspirer";
+"breath_resonance_name" = "Respiration de résonance";
+"breath_resonance_sub" = "5,5 respirations par minute — cohérence";
+
+/* Tools Hub */
+"tools_title" = "Outils";
+"tools_subtitle" = "Ta boîte à outils anti-anxiété";
+"tools_cat_emergency" = "Urgence";
+"tools_cat_breathing" = "Respiration";
+"tools_cat_techniques" = "Techniques";
+"tools_sos_title" = "SOS — Je panique";
+"tools_sos_sub" = "Aide étape par étape maintenant";
+"tools_steps_title" = "Étapes anti-panique";
+"tools_steps_sub" = "5 étapes d'ancrage textuelles";
+"tools_heart_title" = "Analyse cardiaque";
+"tools_heart_sub" = "Rythme, anxiété et calme";
+"tools_grounding_title" = "Ancrage 5-4-3-2-1";
+"tools_grounding_sub" = "Diriger l'attention vers les 5 sens";
+"tools_calm_title" = "Séance de calme";
+"tools_calm_sub" = "Respirer → Ancrer → Réfléchir";
+"tools_muscle_title" = "Relaxation musculaire";
+"tools_muscle_sub" = "Relaxation musculaire progressive";
+"tools_cognitive_title" = "Restructuration cognitive";
+"tools_cognitive_sub" = "Analyser les pensées anxieuses étape par étape";
+"tools_patterns_title" = "Analyse des schémas";
+"tools_patterns_sub" = "Statistiques basées sur tes entrées";
+"tools_crisis_title" = "Lignes de crise";
+"tools_crisis_call" = "Appeler";
+
+/* Pattern Analysis */
+"pattern_empty" = "Tiens un journal pour une analyse plus précise";
+"pattern_critical" = "⚠️ Activité élevée. Envisage de consulter un spécialiste.";
+"pattern_high" = "Anxiété élevée. Essaye la respiration 4-7-8.";
+"pattern_moderate" = "Niveau modéré. Continue à pratiquer.";
+"pattern_low" = "Super semaine ! 🎉";
+
+/* Triggers */
+"trigger_stress" = "Stress";
+"trigger_sleep" = "Manque de sommeil";
+"trigger_caffeine" = "Caféine";
+"trigger_transport" = "Transport";
+"trigger_crowds" = "Foules";
+"trigger_night" = "Nuit";
+
+/* Day names */
+"day_sun" = "Dim";
+"day_mon" = "Lun";
+"day_tue" = "Mar";
+"day_wed" = "Mer";
+"day_thu" = "Jeu";
+"day_fri" = "Ven";
+"day_sat" = "Sam";
+
+/* Notifications */
+"notif_breathing_title" = "L'heure de respirer 🌬️";
+"notif_breathing_body" = "2 minutes de technique 4-7-8 réduiront l'anxiété. Essaye maintenant.";
+"notif_hr_high_title" = "💓 Fréquence cardiaque élevée";
+"notif_hr_high_body %lld" = "Fréquence cardiaque %lld BPM — au-dessus de la normale. Essaye la respiration 4-7-8 pour te calmer.";
+"notif_streak_title" = "🔥 Ne brise pas ta série !";
+"notif_streak_body %lld" = "Tu as une série de %lld jours ! Continue — 2 minutes de respiration.";
+"notif_reflection_title" = "🌙 Réflexion du soir";
+"notif_reflection_body" = "Comment s'est passée ta journée ? Écris tes ressentis dans le journal.";
+"notif_morning_title" = "☀️ Bonjour";
+"notif_morning_body" = "Commence ta journée avec 2 minutes de respiration calme.";
+
+/* Paywall */
+"paywall_title" = "Stillō Premium";
+"paywall_subtitle" = "Accès complet à toutes les techniques";
+"paywall_feature_breathing" = "Toutes les techniques de respiration";
+"paywall_feature_analytics" = "Analyses avancées";
+"paywall_feature_diary" = "Journal illimité";
+"paywall_feature_themes" = "Tous les thèmes";
+"paywall_feature_heart" = "Alertes cardiaques intelligentes";
+"paywall_yearly" = "Annuel";
+"paywall_monthly" = "Mensuel";
+"paywall_save_50" = "Économisez 50 %";
+"paywall_loading_error" = "Échec du chargement des prix";
+"paywall_restore" = "Restaurer les achats";
+"paywall_legal" = "L'abonnement se renouvelle automatiquement. Annulation possible à tout moment dans les réglages Apple ID.";
+
+/* SOS */
+"sos.title" = "SOS — J'ai besoin d'aide";
 "sos.stepByStep" = "Aide étape par étape maintenant";
 "sos.breatheIn" = "Inspire";
 "sos.hold" = "Retiens";
 "sos.breatheOut" = "Expire";
 "sos.youAreSafe" = "Tu es en sécurité";
-"sos.panicWillPass" = "L'anxiété va passer. C'est temporaire.";
+"sos.panicWillPass" = "L'anxiété passera. C'est temporaire.";
 
-"breathing.ready" = "Prêt ?";
+/* Breathing Session */
+"breathing.ready" = "Prêt(e) ?";
 "breathing.inhale" = "Inspire";
 "breathing.hold" = "Retiens";
 "breathing.exhale" = "Expire";
@@ -44,38 +218,52 @@
 "breathing.throughMouth" = "par la bouche 💨";
 "breathing.relax" = "détends-toi";
 
+/* Journal */
 "journal.title" = "Journal";
 "journal.entries" = "entrées";
 "journal.episodes" = "Épisodes";
 "journal.mood" = "Humeur";
-"journal.insights" = "Insights";
+"journal.insights" = "Aperçus";
 "journal.empty.title" = "Le journal est vide";
-"journal.empty.subtitle" = "Note les épisodes pour repérer les schémas";
-"journal.perWeek" = "cette semaine";
+"journal.empty.subtitle" = "Enregistre des épisodes pour voir les tendances";
+"journal.perWeek" = "par semaine";
 "journal.avgIntensity" = "intensité moy.";
 "journal.trend" = "tendance";
 
+/* Profile */
 "profile.member" = "Membre Stillō";
-"profile.setName" = "Ton prénom";
+"profile.setName" = "Définir ton nom";
 "profile.entries" = "Entrées";
 "profile.sessions" = "Séances";
 "profile.breathingMin" = "min";
-"profile.awards" = "Succès";
+"profile.awards" = "Récompenses";
 "profile.sosContacts" = "Contacts SOS";
 "profile.settings" = "Réglages";
 "profile.notifications" = "Notifications";
 "profile.crisisLine" = "Ligne de crise";
+"profile.premium" = "Premium";
+"profile.getPremium" = "Obtenir Premium ✨";
 
+/* Legacy */
+"home.sos.button" = "SOS";
+"home.sos.subtitle" = "Appuie si tu es anxieux/se";
+"home.quickActions" = "Actions rapides";
+"home.breathe" = "Respirer";
+"home.grounding" = "Ancrage";
+"home.heartCheck" = "Cœur";
+"tabs.home" = "Accueil";
+"tabs.tools" = "Outils";
+"tabs.heart" = "Cœur";
+"tabs.journal" = "Journal";
+"tabs.profile" = "Profil";
 "onboarding.tagline" = "Un point de calme\ndans un moment d'anxiété";
 "onboarding.name" = "Comment t'appelles-tu ?";
-"onboarding.howOften" = "À quelle fréquence\nressens-tu de l'anxiété ?";
-"onboarding.whatGoals" = "Que veux-tu atteindre ?";
+"onboarding.howOften" = "À quelle fréquence ressens-tu\nde l'anxiété ?";
+"onboarding.whatGoals" = "Que souhaites-tu accomplir ?";
 "onboarding.allReady" = "Tout est prêt";
 "onboarding.startUsing" = "Commencer";
-"onboarding.notAlone" = "Tu n'es plus seul.";
-"onboarding.disclaimer" = "Stillō est un assistant, PAS un substitut médical. En cas de suspicion cardiaque, appelle toujours les urgences.";
-
+"onboarding.notAlone" = "Tu n'es pas seul(e).";
+"onboarding.disclaimer" = "Stillō est un assistant, PAS un substitut au médecin. Si tu suspectes un problème cardiaque, appelle toujours les urgences.";
 "greeting.morning" = "Bonjour";
 "greeting.afternoon" = "Bon après-midi";
 "greeting.evening" = "Bonsoir";
-"greeting.night" = "Bonne nuit";

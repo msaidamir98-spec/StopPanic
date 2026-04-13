@@ -3,7 +3,6 @@ import SwiftUI
 // MARK: - Main Tab View — Premium
 
 // 5 tabs, Apple HIG. SOS overlay accessible from any tab.
-// ✨ Glass tab bar, smooth transitions
 
 struct MainTabView: View {
     // MARK: Internal
@@ -18,13 +17,13 @@ struct MainTabView: View {
             TabView(selection: $coordinator.selectedTab) {
                 HomeScreenView()
                     .tabItem {
-                        Label(AppTab.home.rawValue, systemImage: AppTab.home.icon)
+                        Label(AppTab.home.title, systemImage: AppTab.home.icon)
                     }
                     .tag(AppTab.home)
 
                 ToolsHubView()
                     .tabItem {
-                        Label(AppTab.tools.rawValue, systemImage: AppTab.tools.icon)
+                        Label(AppTab.tools.title, systemImage: AppTab.tools.icon)
                     }
                     .tag(AppTab.tools)
 
@@ -32,19 +31,19 @@ struct MainTabView: View {
                     HeartAnalysisView()
                 }
                 .tabItem {
-                    Label(AppTab.heart.rawValue, systemImage: AppTab.heart.icon)
+                    Label(AppTab.heart.title, systemImage: AppTab.heart.icon)
                 }
                 .tag(AppTab.heart)
 
                 JournalView()
                     .tabItem {
-                        Label(AppTab.journal.rawValue, systemImage: AppTab.journal.icon)
+                        Label(AppTab.journal.title, systemImage: AppTab.journal.icon)
                     }
                     .tag(AppTab.journal)
 
                 ProfileHubView()
                     .tabItem {
-                        Label(AppTab.profile.rawValue, systemImage: AppTab.profile.icon)
+                        Label(AppTab.profile.title, systemImage: AppTab.profile.icon)
                     }
                     .tag(AppTab.profile)
             }
@@ -56,6 +55,12 @@ struct MainTabView: View {
                     .transition(.move(edge: .bottom).combined(with: .opacity))
                     .zIndex(100)
             }
+
+            // Paywall Sheet
+        }
+        .sheet(isPresented: $coordinator.showPaywall) {
+            PaywallView()
+                .environment(coordinator)
         }
         .animation(SP.Anim.spring, value: coordinator.showSOSOverlay)
         .onAppear {
@@ -90,11 +95,11 @@ struct MainTabView: View {
         UITabBar.appearance().standardAppearance = tabAppearance
         UITabBar.appearance().scrollEdgeAppearance = tabAppearance
 
-        // MARK: Navigation Bar — тёплый фон вместо белого
+        // MARK: Navigation Bar
         let navAppearance = UINavigationBarAppearance()
         navAppearance.configureWithOpaqueBackground()
         navAppearance.backgroundColor = UIColor(theme.bg)
-        navAppearance.shadowColor = .clear // убираем серую полоску
+        navAppearance.shadowColor = .clear
         navAppearance.titleTextAttributes = [.foregroundColor: UIColor(theme.textPrimary)]
         navAppearance.largeTitleTextAttributes = [.foregroundColor: UIColor(theme.textPrimary)]
 

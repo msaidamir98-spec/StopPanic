@@ -1,3 +1,6 @@
+/* Russian — Primary Language */
+
+/* General */
 "app.name" = "Stillō";
 "general.done" = "Готово";
 "general.cancel" = "Отмена";
@@ -9,19 +12,189 @@
 "general.close" = "Закрыть";
 "general.important" = "Важно";
 
-"tabs.home" = "Главная";
-"tabs.tools" = "Инструменты";
-"tabs.heart" = "Сердце";
-"tabs.journal" = "Дневник";
-"tabs.profile" = "Профиль";
+/* Tabs */
+"tab_home" = "Главная";
+"tab_tools" = "Техники";
+"tab_heart" = "Сердце";
+"tab_journal" = "Дневник";
+"tab_profile" = "Профиль";
 
-"home.sos.button" = "SOS";
-"home.sos.subtitle" = "Нажми, если тревога";
-"home.quickActions" = "Быстрые действия";
-"home.breathe" = "Дыхание";
-"home.grounding" = "Заземление";
-"home.heartCheck" = "Пульс";
+/* Greetings */
+"greeting_morning" = "Доброе утро";
+"greeting_afternoon" = "Добрый день";
+"greeting_evening" = "Добрый вечер";
+"greeting_night" = "Доброй ночи";
 
+/* Motivational messages */
+"motivation_1" = "Ты в безопасности. Это место — для тебя.";
+"motivation_2" = "Каждый вдох — шаг к спокойствию.";
+"motivation_3" = "Сегодня ты сильнее вчерашней тревоги.";
+"motivation_4" = "Паника временна. Ты — постоянен.";
+"motivation_5" = "Дыши. Чувствуй. Ты здесь.";
+"motivation_6" = "Тревога — гость. Ты — хозяин.";
+"motivation_7" = "Ты уже справлялся. Справишься и сейчас.";
+
+/* Home Screen */
+"home_sos_tap" = "Нажми, если плохо";
+"home_help_3sec" = "Помощь за 3 секунды";
+"home_quick_help" = "Быстрая помощь";
+"home_breathing" = "Дыхание";
+"home_breathing_sub" = "4-7-8 техника";
+"home_grounding" = "Заземление";
+"home_grounding_sub" = "5-4-3-2-1";
+"home_heart_analysis" = "Анализ пульса";
+"home_heart_sub" = "Пульс и тревога";
+"home_relax" = "Релаксация";
+"home_relax_sub" = "Мышечная";
+"home_did_you_know" = "Знал ли ты?";
+"home_progress" = "Твой прогресс";
+"home_today" = "Сегодня";
+"home_week" = "Неделя";
+"home_streak" = "Серия";
+"home_episodes" = "эпизодов";
+"home_in_row" = "подряд";
+"home_bpm" = "BPM";
+"home_sessions" = "сессий";
+"home_min" = "мин";
+"home_risk" = "риск";
+
+/* Daily Insights */
+"insight_1" = "Паническая атака длится в среднем 10-20 минут. Ни одна паническая атака в истории не длилась вечно.";
+"insight_2" = "При тревоге пульс учащается, но ритм остаётся регулярным. Дыхание 4-7-8 помогает быстро его снизить.";
+"insight_3" = "Техника 4-7-8 активирует блуждающий нерв и снижает ЧСС за 2-3 минуты. Научно доказано.";
+"insight_4" = "40% людей хотя бы раз в жизни испытывают паническую атаку. Ты не один.";
+"insight_5" = "Дыхание — единственная автономная функция, которой ты можешь управлять сознательно.";
+"insight_6" = "Заземление 5-4-3-2-1 переключает мозг с миндалины на префронтальную кору.";
+"insight_7" = "Паническая атака — ложная тревога. Тело реагирует на несуществующую опасность.";
+
+/* Onboarding — Value-first */
+"onb_tagline" = "Точка покоя\nв моменте тревоги";
+"onb_feature_sos" = "SOS помощь";
+"onb_feature_sos_sub" = "Мгновенная помощь в панике";
+"onb_feature_heart" = "Мониторинг пульса";
+"onb_feature_heart_sub" = "Apple Watch в реальном времени";
+"onb_feature_breath" = "Дыхательные техники";
+"onb_feature_breath_sub" = "Научно доказанные методы";
+"onb_try_now" = "Попробовать прямо сейчас";
+"onb_breath_title" = "Попробуй прямо сейчас";
+"onb_breath_subtitle" = "30 секунд дыхания изменят всё";
+"onb_breath_start" = "Начать дыхание";
+"onb_breath_follow" = "Следуй за кругом…";
+"onb_breath_complete" = "Отлично! ✨";
+"onb_breath_done_next" = "Как ощущения? →";
+"onb_result_title" = "Чувствуешь?";
+"onb_result_subtitle" = "Это работает. 3 цикла дыхания активировали блуждающий нерв и снизили тревогу.";
+"onb_result_science_title" = "Наука";
+"onb_result_science_body" = "Техника 4-7-8 снижает ЧСС за 2-3 минуты. Доказано исследованиями в Harvard Medical School.";
+"onb_continue" = "Продолжить";
+"onb_name_title" = "Давай знакомиться";
+"onb_name_subtitle" = "Чтобы обращаться к тебе по имени";
+"onb_name_placeholder" = "Твоё имя";
+"onb_skip" = "Пропустить";
+"onb_next" = "Далее →";
+"onb_exp_title" = "Расскажи о себе";
+"onb_exp_subtitle" = "Это поможет настроить приложение";
+"onb_exp_first" = "Впервые испытываю";
+"onb_exp_rare" = "Редко, пару раз";
+"onb_exp_sometimes" = "Иногда бывает";
+"onb_exp_often" = "Часто мучает";
+"onb_exp_daily" = "Каждый день";
+"onb_ready_title %@" = "Готово%@!";
+"onb_ready_subtitle" = "Stillō всегда рядом. Просто открой приложение или нажми SOS.";
+"onb_disclaimer_title" = "Важно";
+"onb_disclaimer_body" = "Stillō — помощник, НЕ замена врачу. При подозрении на сердечную проблему всегда вызывайте скорую.";
+"onb_start_using" = "Начать использовать ✨";
+
+/* Breathing */
+"breath_inhale" = "Вдох";
+"breath_hold" = "Задержка";
+"breath_exhale" = "Выдох";
+"breath_478_name" = "4-7-8 Дыхание";
+"breath_478_sub" = "Самое мощное для паники";
+"breath_box_name" = "Квадратное дыхание";
+"breath_box_sub" = "Баланс и фокус";
+"breath_2x_name" = "Дыхание 2x";
+"breath_2x_sub" = "Выдох вдвое длиннее вдоха";
+"breath_resonance_name" = "Резонансное дыхание";
+"breath_resonance_sub" = "5.5 вдохов в минуту — когерентность";
+
+/* Tools Hub */
+"tools_title" = "Инструменты";
+"tools_subtitle" = "Твой арсенал против тревоги";
+"tools_cat_emergency" = "Экстренно";
+"tools_cat_breathing" = "Дыхание";
+"tools_cat_techniques" = "Техники";
+"tools_sos_title" = "SOS — Я в панике";
+"tools_sos_sub" = "Пошаговая помощь прямо сейчас";
+"tools_steps_title" = "Шаги при панике";
+"tools_steps_sub" = "5 текстовых шагов заземления";
+"tools_heart_title" = "Анализ пульса";
+"tools_heart_sub" = "Ритм, тревога и спокойствие";
+"tools_grounding_title" = "Заземление 5-4-3-2-1";
+"tools_grounding_sub" = "Переключи внимание на 5 органов чувств";
+"tools_calm_title" = "Сессия спокойствия";
+"tools_calm_sub" = "Дыхание → Заземление → Рефлексия";
+"tools_muscle_title" = "Мышечная релаксация";
+"tools_muscle_sub" = "Прогрессивное расслабление мышц";
+"tools_cognitive_title" = "Когнитивный рефрейминг";
+"tools_cognitive_sub" = "Разберём тревожные мысли по полочкам";
+"tools_patterns_title" = "Анализ паттернов";
+"tools_patterns_sub" = "Статистика на основе твоих записей";
+"tools_crisis_title" = "Телефоны доверия";
+"tools_crisis_call" = "Позвонить";
+
+/* Pattern Analysis (honest naming) */
+"pattern_empty" = "Ведите дневник для более точного анализа";
+"pattern_critical" = "⚠️ Высокая активность. Обратитесь к специалисту.";
+"pattern_high" = "Повышенная тревожность. Попробуйте дыхание 4-7-8.";
+"pattern_moderate" = "Умеренный уровень. Продолжайте практики.";
+"pattern_low" = "Отличная неделя! 🎉";
+
+/* Triggers */
+"trigger_stress" = "Стресс";
+"trigger_sleep" = "Недосып";
+"trigger_caffeine" = "Кофеин";
+"trigger_transport" = "Транспорт";
+"trigger_crowds" = "Толпа";
+"trigger_night" = "Ночь";
+
+/* Day names */
+"day_sun" = "Вс";
+"day_mon" = "Пн";
+"day_tue" = "Вт";
+"day_wed" = "Ср";
+"day_thu" = "Чт";
+"day_fri" = "Пт";
+"day_sat" = "Сб";
+
+/* Notifications */
+"notif_breathing_title" = "Время для дыхания 🌬️";
+"notif_breathing_body" = "2 минуты техники 4-7-8 снизят тревогу. Попробуй сейчас.";
+"notif_hr_high_title" = "💓 Пульс повышен";
+"notif_hr_high_body %lld" = "Пульс %lld BPM — выше нормы. Попробуй дыхание 4-7-8 для успокоения.";
+"notif_streak_title" = "�� Не потеряй серию!";
+"notif_streak_body %lld" = "У тебя серия %lld дней! Продолжай — 2 минуты дыхания.";
+"notif_reflection_title" = "🌙 Вечерняя рефлексия";
+"notif_reflection_body" = "Как прошёл день? Запиши свои ощущения в дневник.";
+"notif_morning_title" = "☀️ Доброе утро";
+"notif_morning_body" = "Начни день с 2 минут спокойного дыхания.";
+
+/* Paywall */
+"paywall_title" = "Stillō Premium";
+"paywall_subtitle" = "Полный доступ ко всем техникам";
+"paywall_feature_breathing" = "Все дыхательные техники";
+"paywall_feature_analytics" = "Расширенная аналитика";
+"paywall_feature_diary" = "Безлимитный дневник";
+"paywall_feature_themes" = "Все темы оформления";
+"paywall_feature_heart" = "Умные уведомления пульса";
+"paywall_yearly" = "Годовая подписка";
+"paywall_monthly" = "Месячная подписка";
+"paywall_save_50" = "Экономия 50%";
+"paywall_loading_error" = "Не удалось загрузить цены";
+"paywall_restore" = "Восстановить покупки";
+"paywall_legal" = "Подписка автоматически продлевается. Отменить можно в настройках Apple ID.";
+
+/* SOS */
 "sos.title" = "SOS — Мне плохо";
 "sos.stepByStep" = "Пошаговая помощь прямо сейчас";
 "sos.breatheIn" = "Вдох";
@@ -30,6 +203,7 @@
 "sos.youAreSafe" = "Ты в безопасности";
 "sos.panicWillPass" = "Тревога пройдёт. Это временно.";
 
+/* Breathing Session */
 "breathing.ready" = "Готов?";
 "breathing.inhale" = "Вдох";
 "breathing.hold" = "Задержка";
@@ -44,6 +218,7 @@
 "breathing.throughMouth" = "через рот 💨";
 "breathing.relax" = "расслабься";
 
+/* Journal */
 "journal.title" = "Дневник";
 "journal.entries" = "записей";
 "journal.episodes" = "Эпизоды";
@@ -55,6 +230,7 @@
 "journal.avgIntensity" = "средняя сила";
 "journal.trend" = "тренд";
 
+/* Profile */
 "profile.member" = "Участник Stillō";
 "profile.setName" = "Укажи имя";
 "profile.entries" = "Записей";
@@ -65,7 +241,21 @@
 "profile.settings" = "Настройки";
 "profile.notifications" = "Уведомления";
 "profile.crisisLine" = "Телефон доверия";
+"profile.premium" = "Premium";
+"profile.getPremium" = "Получить Premium ✨";
 
+/* Legacy compatibility keys */
+"home.sos.button" = "SOS";
+"home.sos.subtitle" = "Нажми, если тревога";
+"home.quickActions" = "Быстрые действия";
+"home.breathe" = "Дыхание";
+"home.grounding" = "Заземление";
+"home.heartCheck" = "Пульс";
+"tabs.home" = "Главная";
+"tabs.tools" = "Инструменты";
+"tabs.heart" = "Сердце";
+"tabs.journal" = "Дневник";
+"tabs.profile" = "Профиль";
 "onboarding.tagline" = "Точка покоя\nв моменте тревоги";
 "onboarding.name" = "Как тебя зовут?";
 "onboarding.howOften" = "Как часто ты испытываешь\nтревожные состояния?";
@@ -74,8 +264,6 @@
 "onboarding.startUsing" = "Начать использовать";
 "onboarding.notAlone" = "Ты больше не один.";
 "onboarding.disclaimer" = "Stillō — помощник, НЕ замена врачу. При подозрении на сердечную проблему всегда вызывайте скорую.";
-
 "greeting.morning" = "Доброе утро";
 "greeting.afternoon" = "Добрый день";
 "greeting.evening" = "Добрый вечер";
-"greeting.night" = "Спокойной ночи";

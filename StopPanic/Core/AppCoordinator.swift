@@ -21,12 +21,16 @@ final class AppCoordinator {
     let notificationService = NotificationService()
     let watchConnectivity = WatchConnectivityService.shared
     let themeManager = ThemeManager.shared
+    let premiumManager = PremiumManager.shared
+    let streakService = StreakService()
+    let reviewService = ReviewService.shared
 
     // MARK: - Navigation State
 
     var selectedTab: AppTab = .home
     var showSOSOverlay: Bool = false
     var showBreathingSheet: Bool = false
+    var showPaywall: Bool = false
 
     // MARK: - User State (persisted via UserDefaults)
 
@@ -56,25 +60,20 @@ final class AppCoordinator {
         let hour = Calendar.current.component(.hour, from: Date())
         let name = userName.isEmpty ? "" : ", \(userName)"
         switch hour {
-        case 5 ..< 12: return "Доброе утро\(name)"
-        case 12 ..< 17: return "Добрый день\(name)"
-        case 17 ..< 22: return "Добрый вечер\(name)"
-        default: return "Доброй ночи\(name)"
+        case 5 ..< 12: return String(localized: "greeting_morning") + name
+        case 12 ..< 17: return String(localized: "greeting_afternoon") + name
+        case 17 ..< 22: return String(localized: "greeting_evening") + name
+        default: return String(localized: "greeting_night") + name
         }
     }
 
     var motivationalMessage: String {
-        let messages = [
-            "Ты в безопасности. Это место — для тебя.",
-            "Каждый вдох — шаг к спокойствию.",
-            "Сегодня ты сильнее вчерашней тревоги.",
-            "Паника временна. Ты — постоянен.",
-            "Дыши. Чувствуй. Ты здесь.",
-            "Тревога — гость. Ты — хозяин.",
-            "Ты уже справлялся. Справишься и сейчас.",
+        let messages: [String.LocalizationValue] = [
+            "motivation_1", "motivation_2", "motivation_3",
+            "motivation_4", "motivation_5", "motivation_6", "motivation_7",
         ]
         let dayOfYear = Calendar.current.ordinality(of: .day, in: .year, for: Date()) ?? 0
-        return messages[dayOfYear % messages.count]
+        return String(localized: messages[dayOfYear % messages.count])
     }
 
     func triggerSOS() {
@@ -87,6 +86,8 @@ final class AppCoordinator {
     func completedSession() {
         sessionsCompleted += 1
         achievementService.updateProgress(id: "first_breath")
+        streakService.recordActivity()
+        reviewService.trackSessionCompleted()
         SP.Haptic.success()
     }
 
@@ -98,13 +99,23 @@ final class AppCoordinator {
 // MARK: - AppTab
 
 enum AppTab: String, CaseIterable {
-    case home = "Главная"
-    case tools = "Техники"
-    case heart = "Сердце"
-    case journal = "Дневник"
-    case profile = "Профиль"
+    case home
+    case tools
+    case heart
+    case journal
+    case profile
 
     // MARK: Internal
+
+    var title: String {
+        switch self {
+        case .home: String(localized: "tab_home")
+        case .tools: String(localized: "tab_tools")
+        case .heart: String(localized: "tab_heart")
+        case .journal: String(localized: "tab_journal")
+        case .profile: String(localized: "tab_profile")
+        }
+    }
 
     var icon: String {
         switch self {
