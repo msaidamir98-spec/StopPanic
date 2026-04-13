@@ -697,3 +697,35 @@
 "country.kr" = "Corea del Sur";
 
 "siri_quick_log_note" = "Registro rápido de Siri";
+
+// MARK: - Journal (PM#6 fix)
+"journal.achievements" = "Logros";
+"journal.add_intensity" = "Intensidad";
+"journal.add_notes" = "Notas";
+"journal.add_notes_placeholder" = "¿Qué sentías?";
+"journal.add_save" = "Guardar";
+"journal.add_title" = "Nuevo episodio";
+"journal.add_triggers" = "Desencadenantes";
+"journal.add_triggers_prefix" = "Desencadenantes:";
+"journal.common_triggers" = "Desencadenantes comunes";
+"journal.intensity_1" = "Apenas perceptible";
+"journal.intensity_2" = "Malestar leve";
+"journal.intensity_3" = "Ansiedad moderada";
+"journal.intensity_4" = "Ansiedad fuerte";
+"journal.intensity_5" = "Abrumador";
+"journal.mood_empty_title" = "Aún no hay registros de ánimo";
+"journal.mood_empty_subtitle" = "Registra tu ánimo para descubrir patrones";
+"journal.trigger_food" = "Comida";
+"journal.trigger_sport" = "Ejercicio";
+"journal.triggers_empty" = "Datos insuficientes aún";
+"journal.unlocked" = "desbloqueados";
+"trigger_opt_caffeine" = "Cafeína";
+"trigger_opt_crowds" = "Multitud";
+"trigger_opt_family" = "Familia";
+"trigger_opt_meds" = "Medicación";
+"trigger_opt_money" = "Finanzas";
+"trigger_opt_night" = "Noche";
+"trigger_opt_none" = "No sé";
+"trigger_opt_sleep" = "Mal sueño";
+"trigger_opt_social" = "Redes sociales";
+"trigger_opt_transport" = "Transporte";

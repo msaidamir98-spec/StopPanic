@@ -697,3 +697,35 @@
 "country.kr" = "韓国";
 
 "siri_quick_log_note" = "Siriクイックログ";
+
+// MARK: - Journal (PM#6 fix)
+"journal.achievements" = "実績";
+"journal.add_intensity" = "強度";
+"journal.add_notes" = "メモ";
+"journal.add_notes_placeholder" = "どう感じましたか？";
+"journal.add_save" = "保存";
+"journal.add_title" = "新しいエピソード";
+"journal.add_triggers" = "トリガー";
+"journal.add_triggers_prefix" = "トリガー：";
+"journal.common_triggers" = "よくあるトリガー";
+"journal.intensity_1" = "ほとんど感じない";
+"journal.intensity_2" = "軽い不快感";
+"journal.intensity_3" = "中程度の不安";
+"journal.intensity_4" = "強い不安";
+"journal.intensity_5" = "圧倒的";
+"journal.mood_empty_title" = "まだ気分の記録がありません";
+"journal.mood_empty_subtitle" = "気分を記録してパターンを見つけましょう";
+"journal.trigger_food" = "食事";
+"journal.trigger_sport" = "運動";
+"journal.triggers_empty" = "データがまだ不十分です";
+"journal.unlocked" = "達成";
+"trigger_opt_caffeine" = "カフェイン";
+"trigger_opt_crowds" = "群衆";
+"trigger_opt_family" = "家族";
+"trigger_opt_meds" = "薬";
+"trigger_opt_money" = "お金";
+"trigger_opt_night" = "夜";
+"trigger_opt_none" = "不明";
+"trigger_opt_sleep" = "睡眠不足";
+"trigger_opt_social" = "SNS";
+"trigger_opt_transport" = "交通機関";

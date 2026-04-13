@@ -697,3 +697,35 @@
 "country.kr" = "South Korea";
 
 "siri_quick_log_note" = "Siri quick log";
+
+// MARK: - Journal (PM#6 fix)
+"journal.achievements" = "Achievements";
+"journal.add_intensity" = "Intensity";
+"journal.add_notes" = "Notes";
+"journal.add_notes_placeholder" = "What were you feeling?";
+"journal.add_save" = "Save";
+"journal.add_title" = "New Episode";
+"journal.add_triggers" = "Triggers";
+"journal.add_triggers_prefix" = "Triggers:";
+"journal.common_triggers" = "Common triggers";
+"journal.intensity_1" = "Barely noticeable";
+"journal.intensity_2" = "Mild discomfort";
+"journal.intensity_3" = "Moderate anxiety";
+"journal.intensity_4" = "Strong anxiety";
+"journal.intensity_5" = "Overwhelming";
+"journal.mood_empty_title" = "No mood entries yet";
+"journal.mood_empty_subtitle" = "Track your mood to discover patterns";
+"journal.trigger_food" = "Food";
+"journal.trigger_sport" = "Exercise";
+"journal.triggers_empty" = "Not enough data yet";
+"journal.unlocked" = "unlocked";
+"trigger_opt_caffeine" = "Caffeine";
+"trigger_opt_crowds" = "Crowds";
+"trigger_opt_family" = "Family";
+"trigger_opt_meds" = "Medication";
+"trigger_opt_money" = "Finances";
+"trigger_opt_night" = "Night";
+"trigger_opt_none" = "Unknown";
+"trigger_opt_sleep" = "Poor sleep";
+"trigger_opt_social" = "Social media";
+"trigger_opt_transport" = "Transport";

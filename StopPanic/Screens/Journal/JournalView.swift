@@ -582,6 +582,9 @@ struct FlowLayoutView<Item: Hashable, Content: View>: View {
     @ViewBuilder
     let content: (Item) -> Content
 
+    @State
+    private var totalHeight: CGFloat = 10
+
     var body: some View {
         var width = CGFloat.zero
         var height = CGFloat.zero
@@ -614,7 +617,20 @@ struct FlowLayoutView<Item: Hashable, Content: View>: View {
                         }
                 }
             }
+            .background(
+                GeometryReader { geo in
+                    Color.clear.preference(key: FlowHeightPreferenceKey.self, value: geo.size.height)
+                }
+            )
         }
-        .frame(height: 120) // approximate
+        .onPreferenceChange(FlowHeightPreferenceKey.self) { totalHeight = $0 }
+        .frame(height: totalHeight)
+    }
+}
+
+private struct FlowHeightPreferenceKey: PreferenceKey {
+    static let defaultValue: CGFloat = 10
+    static func reduce(value: inout CGFloat, nextValue: () -> CGFloat) {
+        value = max(value, nextValue())
     }
 }
