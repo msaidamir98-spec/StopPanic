@@ -410,7 +410,7 @@ struct AddEpisodeSheet: View {
     var body: some View {
         NavigationStack {
             ZStack {
-                SP.Colors.bg.ignoresSafeArea()
+                coordinator.themeManager.bg.ignoresSafeArea()
 
                 ScrollView {
                     VStack(spacing: 24) {

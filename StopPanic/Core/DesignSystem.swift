@@ -363,14 +363,14 @@ struct AmbientBackground: View {
 
             // Large primary orb
             Circle()
-                .fill(primaryColor.opacity(0.08))
+                .fill(primaryColor.opacity(coordinator.themeManager.ambientPrimaryOpacity))
                 .frame(width: 350, height: 350)
                 .blur(radius: 100)
                 .offset(x: animate ? -60 : -100, y: animate ? -180 : -220)
 
             // Secondary orb
             Circle()
-                .fill(secondaryColor.opacity(0.06))
+                .fill(secondaryColor.opacity(coordinator.themeManager.ambientSecondaryOpacity))
                 .frame(width: 250, height: 250)
                 .blur(radius: 80)
                 .offset(x: animate ? 140 : 100, y: animate ? 280 : 320)
