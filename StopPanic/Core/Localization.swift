@@ -9,7 +9,7 @@ enum L10n {
     // MARK: - General
 
     enum General {
-        static let appName = String(localized: "app.name", defaultValue: "StopPanic")
+        static let appName = String(localized: "app.name", defaultValue: "Stillō")
         static let done = String(localized: "general.done", defaultValue: "Готово")
         static let cancel = String(localized: "general.cancel", defaultValue: "Отмена")
         static let save = String(localized: "general.save", defaultValue: "Сохранить")
@@ -90,7 +90,7 @@ enum L10n {
     // MARK: - Profile
 
     enum Profile {
-        static let member = String(localized: "profile.member", defaultValue: "Участник StopPanic")
+        static let member = String(localized: "profile.member", defaultValue: "Участник Stillō")
         static let setName = String(localized: "profile.setName", defaultValue: "Укажи имя")
         static let entries = String(localized: "profile.entries", defaultValue: "Записей")
         static let sessions = String(localized: "profile.sessions", defaultValue: "Сессий")
@@ -105,7 +105,7 @@ enum L10n {
     // MARK: - Onboarding
 
     enum Onboarding {
-        static let tagline = String(localized: "onboarding.tagline", defaultValue: "Твой карманный щит\nпротив панических атак")
+        static let tagline = String(localized: "onboarding.tagline", defaultValue: "Точка покоя\nв моменте тревоги")
         static let whatsYourName = String(localized: "onboarding.name", defaultValue: "Как тебя зовут?")
         static let howOften = String(localized: "onboarding.howOften", defaultValue: "Как часто ты испытываешь\nпанические атаки?")
         static let whatGoals = String(localized: "onboarding.whatGoals", defaultValue: "Чего ты хочешь достичь?")
@@ -114,7 +114,7 @@ enum L10n {
         static let notAlone = String(localized: "onboarding.notAlone", defaultValue: "Ты больше не один.")
         static let medicalDisclaimer = String(
             localized: "onboarding.disclaimer",
-            defaultValue: "StopPanic — помощник, НЕ замена врачу. При подозрении на сердечную проблему всегда вызывайте скорую."
+            defaultValue: "Stillō — помощник, НЕ замена врачу. При подозрении на сердечную проблему всегда вызывайте скорую."
         )
     }
 

@@ -89,11 +89,11 @@ struct SplashScreenView: View {
                 .opacity(logoOpacity)
 
                 VStack(spacing: 6) {
-                    Text("StopPanic")
+                    Text("Stillō")
                         .font(.system(size: 32, weight: .heavy, design: .rounded))
                         .foregroundColor(.white)
 
-                    Text("Ты справишься")
+                    Text("Точка покоя")
                         .font(.system(size: 15, weight: .medium, design: .rounded))
                         .foregroundColor(.white.opacity(0.5))
                 }

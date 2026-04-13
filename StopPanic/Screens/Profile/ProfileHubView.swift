@@ -115,7 +115,7 @@ struct ProfileHubView: View {
                         }
                 }
 
-                Text("Участник StopPanic")
+                Text("Участник Stillō")
                     .font(SP.Typography.caption)
                     .foregroundColor(SP.Colors.textTertiary)
             }
@@ -270,7 +270,7 @@ struct ProfileHubView: View {
 
     private var aboutSection: some View {
         VStack(spacing: 8) {
-            Text("StopPanic")
+            Text("Stillō")
                 .font(SP.Typography.headline)
                 .foregroundColor(SP.Colors.textPrimary)
             Text("v\(appVersion) · Made with ❤️")

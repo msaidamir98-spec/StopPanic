@@ -152,7 +152,7 @@ struct WatchHomeView: View {
             }
             .padding(.horizontal, 4)
         }
-        .navigationTitle("StopPanic")
+        .navigationTitle("Stillō")
         .sheet(isPresented: $showAnalysis) {
             WatchAnalysisResultView(heartService: heartService)
         }

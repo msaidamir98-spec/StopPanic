@@ -139,7 +139,7 @@ struct ProfileView: View {
                 .font(SP.Typography.headline)
                 .foregroundColor(SP.Colors.textPrimary)
 
-            Text("StopPanic — твой помощник в борьбе с паническими атаками. 100% бесплатно, без рекламы, без подписок.")
+            Text("Stillō — твой помощник при тревоге и панических атаках. Бесплатно, без рекламы, без подписок.")
                 .font(SP.Typography.body)
                 .foregroundColor(SP.Colors.textSecondary)
                 .lineSpacing(4)

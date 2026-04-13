@@ -70,9 +70,9 @@ struct QuickLogPanicIntent: AppIntent {
     }
 }
 
-// MARK: - StopPanicShortcuts
+// MARK: - StilloShortcuts
 
-struct StopPanicShortcuts: AppShortcutsProvider {
+struct StilloShortcuts: AppShortcutsProvider {
     static var appShortcuts: [AppShortcut] {
         AppShortcut(
             intent: SOSIntent(),

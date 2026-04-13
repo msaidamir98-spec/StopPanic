@@ -304,11 +304,11 @@
 				DEVELOPMENT_TEAM = 6K26HD4XFR;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
-				INFOPLIST_KEY_CFBundleDisplayName = StopPanic;
+				INFOPLIST_KEY_CFBundleDisplayName = "Stillō";
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
-				INFOPLIST_KEY_NSHealthShareUsageDescription = "StopPanic читает пульс с Apple Watch для анализа панических атак.";
-				INFOPLIST_KEY_NSHealthUpdateUsageDescription = "StopPanic записывает данные о панических атаках для отслеживания прогресса.";
+				INFOPLIST_KEY_NSHealthShareUsageDescription = "Stillō читает пульс с Apple Watch для анализа тревожных состояний.";
+				INFOPLIST_KEY_NSHealthUpdateUsageDescription = "Stillō записывает данные об эпизодах тревоги для отслеживания прогресса.";
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
@@ -340,11 +340,11 @@
 				DEVELOPMENT_TEAM = 6K26HD4XFR;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
-				INFOPLIST_KEY_CFBundleDisplayName = StopPanic;
+				INFOPLIST_KEY_CFBundleDisplayName = "Stillō";
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
-				INFOPLIST_KEY_NSHealthShareUsageDescription = "StopPanic читает пульс с Apple Watch для анализа панических атак.";
-				INFOPLIST_KEY_NSHealthUpdateUsageDescription = "StopPanic записывает данные о панических атаках для отслеживания прогресса.";
+				INFOPLIST_KEY_NSHealthShareUsageDescription = "Stillō читает пульс с Apple Watch для анализа тревожных состояний.";
+				INFOPLIST_KEY_NSHealthUpdateUsageDescription = "Stillō записывает данные об эпизодах тревоги для отслеживания прогресса.";
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
@@ -377,7 +377,7 @@
                         DEVELOPMENT_TEAM = 6K26HD4XFR;
                         ENABLE_PREVIEWS = YES;
                         GENERATE_INFOPLIST_FILE = YES;
-                        INFOPLIST_KEY_CFBundleDisplayName = StopPanic;
+                        INFOPLIST_KEY_CFBundleDisplayName = "Stillō";
                         INFOPLIST_KEY_NSHealthShareUsageDescription = "Reading heart rate for panic attack analysis on your wrist.";
                         INFOPLIST_KEY_NSHealthUpdateUsageDescription = "Recording panic attack data.";
                         INFOPLIST_KEY_UISupportedInterfaceOrientations = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown";
@@ -412,7 +412,7 @@
                         DEVELOPMENT_TEAM = 6K26HD4XFR;
                         ENABLE_PREVIEWS = YES;
                         GENERATE_INFOPLIST_FILE = YES;
-                        INFOPLIST_KEY_CFBundleDisplayName = StopPanic;
+                        INFOPLIST_KEY_CFBundleDisplayName = "Stillō";
                         INFOPLIST_KEY_NSHealthShareUsageDescription = "Reading heart rate for panic attack analysis on your wrist.";
                         INFOPLIST_KEY_NSHealthUpdateUsageDescription = "Recording panic attack data.";
                         INFOPLIST_KEY_UISupportedInterfaceOrientations = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown";

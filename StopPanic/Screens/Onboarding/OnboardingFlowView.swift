@@ -146,14 +146,14 @@ struct OnboardingFlowView: View {
             }
 
             VStack(spacing: 12) {
-                Text("StopPanic")
+                Text("Stillō")
                     .font(.system(size: 40, weight: .bold, design: .rounded))
                     .foregroundColor(SP.Colors.textPrimary)
                     .opacity(showContent ? 1 : 0)
                     .offset(y: showContent ? 0 : 20)
                     .animation(SP.Anim.spring.delay(0.2), value: showContent)
 
-                Text("Твой карманный щит\nпротив панических атак")
+                Text("Точка покоя\nв моменте тревоги")
                     .font(SP.Typography.title3)
                     .foregroundColor(SP.Colors.textSecondary)
                     .multilineTextAlignment(.center)
@@ -406,7 +406,7 @@ struct OnboardingFlowView: View {
                         .foregroundColor(SP.Colors.textPrimary)
                 }
                 Text(
-                    "StopPanic — помощник, НЕ замена врачу. При подозрении на сердечную проблему всегда вызывайте скорую."
+                    "Stillō — помощник, НЕ замена врачу. При подозрении на сердечную проблему всегда вызывайте скорую."
                 )
                 .font(SP.Typography.caption)
                 .foregroundColor(SP.Colors.textSecondary)
