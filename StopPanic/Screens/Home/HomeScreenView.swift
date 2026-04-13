@@ -74,13 +74,13 @@ struct HomeScreenView: View {
 
     private var dailyInsight: String {
         let insights = [
-            "Паническая атака длится в среднем 10-20 минут. Ни одна паническая атака в истории не длилась вечно.",
-            "При тревоге пульс учащается, но ритм остаётся регулярным. Дыхание 4-7-8 помогает быстро его снизить.",
-            "Техника 4-7-8 активирует блуждающий нерв и снижает ЧСС за 2-3 минуты. Научно доказано.",
-            "40% людей хотя бы раз в жизни испытывают паническую атаку. Ты не один.",
-            "Дыхание — единственная автономная функция, которой ты можешь управлять сознательно.",
-            "Заземление 5-4-3-2-1 переключает мозг с миндалины на префронтальную кору.",
-            "Паническая атака — ложная тревога. Тело реагирует на несуществующую опасность.",
+            String(localized: "insight_1"),
+            String(localized: "insight_2"),
+            String(localized: "insight_3"),
+            String(localized: "insight_4"),
+            String(localized: "insight_5"),
+            String(localized: "insight_6"),
+            String(localized: "insight_7"),
         ]
         let dayOfYear = Calendar.current.ordinality(of: .day, in: .year, for: Date()) ?? 0
         return insights[dayOfYear % insights.count]
@@ -236,7 +236,7 @@ struct HomeScreenView: View {
                             .tracking(6)
                             .shadow(color: .black.opacity(0.3), radius: 4, y: 2)
 
-                        Text("Нажми, если плохо")
+                        Text(String(localized: "home_sos_tap"))
                             .font(SP.Typography.caption)
                             .foregroundColor(.white.opacity(0.85))
                     }
@@ -244,7 +244,7 @@ struct HomeScreenView: View {
             }
             .buttonStyle(SOSButtonStyle())
 
-            Text("Помощь за 3 секунды")
+            Text(String(localized: "home_help_3sec"))
                 .font(SP.Typography.caption)
                 .foregroundColor(SP.Colors.textTertiary)
         }
@@ -261,16 +261,16 @@ struct HomeScreenView: View {
             )
             Divider().frame(height: 30).overlay(Color.white.opacity(0.1))
             statusItem(
-                icon: "flame.fill", value: "\(coordinator.sessionsCompleted)", label: "сессий",
+                icon: "flame.fill", value: "\(coordinator.sessionsCompleted)", label: String(localized: "home_sessions"),
                 color: SP.Colors.warmth
             )
             Divider().frame(height: 30).overlay(Color.white.opacity(0.1))
             statusItem(
-                icon: "wind", value: "\(coordinator.totalBreathingMinutes)", label: "мин",
+                icon: "wind", value: "\(coordinator.totalBreathingMinutes)", label: String(localized: "home_min"),
                 color: SP.Colors.calm
             )
             Divider().frame(height: 30).overlay(Color.white.opacity(0.1))
-            statusItem(icon: riskIcon, value: riskText, label: "риск", color: riskColor)
+            statusItem(icon: riskIcon, value: riskText, label: String(localized: "home_risk"), color: riskColor)
         }
         .spGlassCard(cornerRadius: SP.Layout.cornerMedium)
     }
@@ -279,7 +279,7 @@ struct HomeScreenView: View {
 
     private var quickActionsGrid: some View {
         VStack(alignment: .leading, spacing: 12) {
-            Text("Быстрая помощь")
+            Text(String(localized: "home_quick_help"))
                 .font(SP.Typography.title3)
                 .foregroundColor(SP.Colors.textPrimary)
 
@@ -288,20 +288,20 @@ struct HomeScreenView: View {
                 spacing: 12
             ) {
                 QuickActionCard(
-                    icon: "wind", title: "Дыхание", subtitle: "4-7-8 техника",
+                    icon: "wind", title: String(localized: "home_breathing"), subtitle: String(localized: "home_breathing_sub"),
                     color: SP.Colors.calm, gradient: SP.Colors.calmGradient
                 ) { coordinator.selectedTab = .tools }
                 QuickActionCard(
-                    icon: "eye.fill", title: "Заземление", subtitle: "5-4-3-2-1",
+                    icon: "eye.fill", title: String(localized: "home_grounding"), subtitle: String(localized: "home_grounding_sub"),
                     color: SP.Colors.accent, gradient: SP.Colors.heroGradient
                 ) { coordinator.selectedTab = .tools }
                 QuickActionCard(
-                    icon: "heart.text.square.fill", title: "Анализ пульса",
-                    subtitle: "Пульс и тревога", color: SP.Colors.danger,
+                    icon: "heart.text.square.fill", title: String(localized: "home_heart_analysis"),
+                    subtitle: String(localized: "home_heart_sub"), color: SP.Colors.danger,
                     gradient: SP.Colors.sosGradient
                 ) { coordinator.selectedTab = .heart }
                 QuickActionCard(
-                    icon: "figure.strengthtraining.traditional", title: "Релаксация", subtitle: "Мышечная",
+                    icon: "figure.strengthtraining.traditional", title: String(localized: "home_relax"), subtitle: String(localized: "home_relax_sub"),
                     color: SP.Colors.warmth, gradient: SP.Colors.warmGradient
                 ) { coordinator.selectedTab = .tools }
             }
@@ -315,7 +315,7 @@ struct HomeScreenView: View {
             HStack {
                 Image(systemName: "lightbulb.fill")
                     .foregroundColor(SP.Colors.warning)
-                Text("Знал ли ты?")
+                Text(String(localized: "home_did_you_know"))
                     .font(SP.Typography.headline)
                     .foregroundColor(SP.Colors.textPrimary)
                 Spacer()
@@ -334,21 +334,21 @@ struct HomeScreenView: View {
 
     private var progressSection: some View {
         VStack(alignment: .leading, spacing: 12) {
-            Text("Твой прогресс")
+            Text(String(localized: "home_progress"))
                 .font(SP.Typography.title3)
                 .foregroundColor(SP.Colors.textPrimary)
 
             HStack(spacing: 12) {
                 ProgressMiniCard(
-                    title: "Сегодня", value: "\(todayEpisodes)", subtitle: "эпизодов",
+                    title: String(localized: "home_today"), value: "\(todayEpisodes)", subtitle: String(localized: "home_episodes"),
                     color: todayEpisodes == 0 ? SP.Colors.success : SP.Colors.warning
                 )
                 ProgressMiniCard(
-                    title: "Неделя", value: "\(weekEpisodes)", subtitle: "эпизодов",
+                    title: String(localized: "home_week"), value: "\(weekEpisodes)", subtitle: String(localized: "home_episodes"),
                     color: SP.Colors.accent
                 )
                 ProgressMiniCard(
-                    title: "Серия", value: "\(streakDays)д", subtitle: "подряд",
+                    title: String(localized: "home_streak"), value: "\(streakDays)", subtitle: String(localized: "home_in_row"),
                     color: SP.Colors.calm
                 )
             }

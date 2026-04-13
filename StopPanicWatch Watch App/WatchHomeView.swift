@@ -72,7 +72,7 @@ struct WatchHomeView: View {
                             .foregroundStyle(.white)
                             .contentTransition(.numericText(value: heartService.currentHR))
                         
-                        Text("уд/мин")
+                        Text(String(localized: "watch.bpm"))
                             .font(.system(size: 9, weight: .medium))
                             .foregroundStyle(.secondary)
                     }
@@ -93,7 +93,7 @@ struct WatchHomeView: View {
                         )
                         miniStat(
                             value: String(format: "%.0f%%", heartService.irregularity * 100),
-                            label: "Нерег.",
+                            label: String(localized: "watch.irreg"),
                             icon: "waveform",
                             color: heartService.irregularity > 0.35 ? .red : .green
                         )
@@ -113,7 +113,7 @@ struct WatchHomeView: View {
                     HStack(spacing: 6) {
                         Image(systemName: heartService.isMonitoring ? "stop.circle.fill" : "heart.circle.fill")
                             .font(.body)
-                        Text(heartService.isMonitoring ? "Остановить" : "Мониторинг")
+                        Text(heartService.isMonitoring ? String(localized: "watch.stop") : String(localized: "watch.monitoring"))
                             .font(.system(.caption, design: .rounded, weight: .semibold))
                     }
                     .frame(maxWidth: .infinity)
@@ -129,7 +129,7 @@ struct WatchHomeView: View {
                         HStack(spacing: 6) {
                             Image(systemName: "heart.text.square.fill")
                                 .font(.body)
-                            Text("Диагностика")
+                            Text(String(localized: "watch.diagnosis"))
                                 .font(.system(.caption, design: .rounded, weight: .semibold))
                         }
                         .frame(maxWidth: .infinity)
@@ -144,7 +144,7 @@ struct WatchHomeView: View {
                     HStack(spacing: 4) {
                         Image(systemName: "iphone.radiowaves.left.and.right")
                             .font(.system(size: 8))
-                        Text("iPhone подключён")
+                        Text(String(localized: "watch.iphone_connected"))
                             .font(.system(size: 9))
                     }
                     .foregroundStyle(.green.opacity(0.7))
@@ -250,7 +250,7 @@ struct WatchAnalysisResultView: View {
                 HStack(spacing: 0) {
                     metricCard(
                         value: "\(Int(heartService.currentHR))",
-                        label: "ЧСС",
+                        label: String(localized: "watch.hr_label"),
                         color: .red
                     )
                     
@@ -260,7 +260,7 @@ struct WatchAnalysisResultView: View {
                     
                     metricCard(
                         value: String(format: "%.0f", heartService.hrvValue),
-                        label: "HRV мс",
+                        label: String(localized: "watch.hrv_ms"),
                         color: .cyan
                     )
                     
@@ -270,7 +270,7 @@ struct WatchAnalysisResultView: View {
                     
                     metricCard(
                         value: String(format: "%.0f%%", heartService.irregularity * 100),
-                        label: "Нерег.",
+                        label: String(localized: "watch.irreg"),
                         color: heartService.irregularity > 0.35 ? .red : .green
                     )
                 }
@@ -283,7 +283,7 @@ struct WatchAnalysisResultView: View {
                     } label: {
                         HStack(spacing: 4) {
                             Image(systemName: "phone.fill")
-                            Text("Вызвать 112")
+                            Text(String(localized: "watch.call_112"))
                                 .font(.system(.caption, weight: .bold))
                         }
                         .frame(maxWidth: .infinity)
@@ -295,7 +295,7 @@ struct WatchAnalysisResultView: View {
                 Button {
                     dismiss()
                 } label: {
-                    Text("Закрыть")
+                    Text(String(localized: "watch.close"))
                         .font(.system(.caption, design: .rounded, weight: .medium))
                         .frame(maxWidth: .infinity)
                 }

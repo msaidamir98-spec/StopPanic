@@ -7,8 +7,15 @@ struct WatchDifferentialView: View {
     @State private var selectedTab: DiffTab = .panic
     
     enum DiffTab: String, CaseIterable {
-        case panic = "ПА"
-        case cardiac = "Сердце"
+        case panic = "panic"
+        case cardiac = "cardiac"
+
+        var text: String {
+            switch self {
+            case .panic: String(localized: "watch.diff_pa_tab")
+            case .cardiac: String(localized: "watch.diff_cardiac_tab")
+            }
+        }
     }
     
     var body: some View {
@@ -22,7 +29,7 @@ struct WatchDifferentialView: View {
                                 selectedTab = tab
                             }
                         } label: {
-                            Text(tab.rawValue)
+                            Text(tab.text)
                                 .font(.system(.caption2, design: .rounded, weight: .semibold))
                                 .foregroundStyle(selectedTab == tab ? .white : .secondary)
                                 .frame(maxWidth: .infinity)
@@ -59,7 +66,7 @@ struct WatchDifferentialView: View {
                 HStack(spacing: 4) {
                     Image(systemName: "exclamationmark.triangle.fill")
                         .font(.system(size: 10))
-                    Text("При сомнениях — звоните 112!")
+                    Text(String(localized: "watch.diff_call_112"))
                         .font(.system(size: 10, weight: .medium, design: .rounded))
                 }
                 .foregroundStyle(.orange)
@@ -69,7 +76,7 @@ struct WatchDifferentialView: View {
             }
             .padding(.horizontal, 2)
         }
-        .navigationTitle("Справка")
+        .navigationTitle(String(localized: "watch.diff_title"))
     }
     
     // MARK: - Panic Attack Card
@@ -80,17 +87,17 @@ struct WatchDifferentialView: View {
                 Image(systemName: "brain.head.profile")
                     .font(.caption)
                     .foregroundStyle(.yellow)
-                Text("Паническая атака")
+                Text(String(localized: "watch.diff_panic"))
                     .font(.system(.caption, design: .rounded, weight: .bold))
                     .foregroundStyle(.yellow)
             }
             
-            symptomRow(icon: "heart.fill", text: "ЧСС 100–150 уд/мин", color: .yellow)
-            symptomRow(icon: "waveform.path", text: "Ритм ровный, регулярный", color: .yellow)
-            symptomRow(icon: "clock.fill", text: "Пик 10–20 минут", color: .yellow)
-            symptomRow(icon: "wind", text: "Дыхание помогает", color: .yellow)
-            symptomRow(icon: "hand.raised.fill", text: "Покалывание в руках", color: .yellow)
-            symptomRow(icon: "bolt.fill", text: "Чувство нереальности", color: .yellow)
+            symptomRow(icon: "heart.fill", text: String(localized: "watch.diff_pa_hr"), color: .yellow)
+            symptomRow(icon: "waveform.path", text: String(localized: "watch.diff_pa_rhythm"), color: .yellow)
+            symptomRow(icon: "clock.fill", text: String(localized: "watch.diff_pa_peak"), color: .yellow)
+            symptomRow(icon: "wind", text: String(localized: "watch.diff_pa_breathing"), color: .yellow)
+            symptomRow(icon: "hand.raised.fill", text: String(localized: "watch.diff_pa_tingling"), color: .yellow)
+            symptomRow(icon: "bolt.fill", text: String(localized: "watch.diff_pa_unreality"), color: .yellow)
         }
         .padding(10)
         .background(.yellow.opacity(0.08), in: RoundedRectangle(cornerRadius: 12))
@@ -108,17 +115,17 @@ struct WatchDifferentialView: View {
                 Image(systemName: "heart.slash.fill")
                     .font(.caption)
                     .foregroundStyle(.red)
-                Text("Сердечный приступ")
+                Text(String(localized: "watch.diff_cardiac"))
                     .font(.system(.caption, design: .rounded, weight: .bold))
                     .foregroundStyle(.red)
             }
             
-            symptomRow(icon: "heart.fill", text: "Пульс нерегулярный", color: .red)
-            symptomRow(icon: "waveform.path.ecg", text: "Аритмия, перебои", color: .red)
-            symptomRow(icon: "clock.fill", text: "Не проходит 20+ мин", color: .red)
-            symptomRow(icon: "figure.arms.open", text: "Боль в челюсти / руке", color: .red)
-            symptomRow(icon: "drop.fill", text: "Холодный пот", color: .red)
-            symptomRow(icon: "lungs.fill", text: "Давящая боль в груди", color: .red)
+            symptomRow(icon: "heart.fill", text: String(localized: "watch.diff_card_pulse"), color: .red)
+            symptomRow(icon: "waveform.path.ecg", text: String(localized: "watch.diff_card_arrhythmia"), color: .red)
+            symptomRow(icon: "clock.fill", text: String(localized: "watch.diff_card_duration"), color: .red)
+            symptomRow(icon: "figure.arms.open", text: String(localized: "watch.diff_card_jaw_arm"), color: .red)
+            symptomRow(icon: "drop.fill", text: String(localized: "watch.diff_card_sweat"), color: .red)
+            symptomRow(icon: "lungs.fill", text: String(localized: "watch.diff_card_chest"), color: .red)
         }
         .padding(10)
         .background(.red.opacity(0.08), in: RoundedRectangle(cornerRadius: 12))

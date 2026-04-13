@@ -70,7 +70,7 @@ struct SOSFlowView: View {
     @State
     private var breathScale: CGFloat = 0.6
     @State
-    private var breathPhase: String = "Вдох"
+    private var breathPhase: String = String(localized: "breath_inhale")
     @State
     private var breathTimer: Timer?
     @State
@@ -97,9 +97,9 @@ struct SOSFlowView: View {
 
     private var breathHint: String {
         switch breathPhase {
-        case "Вдох": "через нос, медленно"
-        case "Задержка": "не напрягайся"
-        case "Выдох": "через рот, долго"
+        case String(localized: "breath_inhale"): String(localized: "sos.hint_inhale")
+        case String(localized: "breath_hold"): String(localized: "sos.hint_hold")
+        case String(localized: "breath_exhale"): String(localized: "sos.hint_exhale")
         default: ""
         }
     }
@@ -128,7 +128,7 @@ struct SOSFlowView: View {
                 HStack(spacing: 6) {
                     Image(systemName: "xmark")
                         .font(.system(size: 14, weight: .bold))
-                    Text("Закрыть")
+                    Text(String(localized: "general.close"))
                         .font(SP.Typography.subheadline)
                 }
                 .foregroundColor(SP.Colors.textSecondary)
@@ -168,11 +168,11 @@ struct SOSFlowView: View {
 
     private var breathingStepView: some View {
         VStack(spacing: 24) {
-            Text("Дыши со мной")
+            Text(String(localized: "sos.breathe_with_me"))
                 .font(SP.Typography.title1)
                 .foregroundColor(SP.Colors.textPrimary)
 
-            Text("Ты в безопасности. Паника пройдёт.")
+            Text(String(localized: "sos.you_are_safe_detail"))
                 .font(SP.Typography.callout)
                 .foregroundColor(SP.Colors.textSecondary)
 
@@ -260,22 +260,22 @@ struct SOSFlowView: View {
 
     private var groundingStepView: some View {
         let steps = [
-            ("👁️", "5 вещей", "которые ты ВИДИШЬ"),
-            ("✋", "4 вещи", "которые можешь ПОТРОГАТЬ"),
-            ("👂", "3 звука", "которые ты СЛЫШИШЬ"),
-            ("👃", "2 запаха", "которые ты ЧУВСТВУЕШЬ"),
-            ("👅", "1 вкус", "который ты ОЩУЩАЕШЬ"),
+            ("👁️", String(localized: "sos.ground_see_title"), String(localized: "sos.ground_see_sub")),
+            ("✋", String(localized: "sos.ground_touch_title"), String(localized: "sos.ground_touch_sub")),
+            ("👂", String(localized: "sos.ground_hear_title"), String(localized: "sos.ground_hear_sub")),
+            ("👃", String(localized: "sos.ground_smell_title"), String(localized: "sos.ground_smell_sub")),
+            ("👅", String(localized: "sos.ground_taste_title"), String(localized: "sos.ground_taste_sub")),
         ]
 
         let current = min(groundingStep, steps.count - 1)
         let (emoji, title, sub) = steps[current]
 
         return VStack(spacing: 28) {
-            Text("Заземление")
+            Text(String(localized: "sos.grounding"))
                 .font(SP.Typography.title1)
                 .foregroundColor(SP.Colors.textPrimary)
 
-            Text("Переключи внимание на ощущения")
+            Text(String(localized: "sos.grounding_sub"))
                 .font(SP.Typography.callout)
                 .foregroundColor(SP.Colors.textSecondary)
 
@@ -311,7 +311,7 @@ struct SOSFlowView: View {
                     SP.Haptic.light()
                     withAnimation(SP.Anim.spring) { groundingStep += 1 }
                 } label: {
-                    Text("Готово, дальше →")
+                    Text(String(localized: "sos.ground_next"))
                         .spSecondaryButton()
                 }
                 .padding(.top, 8)
@@ -340,13 +340,11 @@ struct SOSFlowView: View {
                 SP.Haptic.success()
             }
 
-            Text("Ты справился")
+            Text(String(localized: "sos.you_did_it"))
                 .font(SP.Typography.heroTitle)
                 .foregroundColor(SP.Colors.textPrimary)
 
-            Text(
-                "Паническая атака — это НЕ опасно.\nОна всегда проходит.\nТы только что доказал это себе."
-            )
+            Text(String(localized: "sos.affirmation_body"))
             .font(SP.Typography.body)
             .foregroundColor(SP.Colors.textSecondary)
             .multilineTextAlignment(.center)
@@ -354,7 +352,7 @@ struct SOSFlowView: View {
 
             VStack(spacing: 12) {
                 HStack {
-                    Label("Длительность", systemImage: "clock")
+                    Label(String(localized: "sos.duration"), systemImage: "clock")
                     Spacer()
                     Text(timeString).bold()
                 }
@@ -362,7 +360,7 @@ struct SOSFlowView: View {
                 .foregroundColor(SP.Colors.textSecondary)
 
                 HStack {
-                    Label("Дыхательных циклов", systemImage: "wind")
+                    Label(String(localized: "sos.breath_cycles"), systemImage: "wind")
                     Spacer()
                     Text("\(breathingCycles)").bold()
                 }
@@ -376,13 +374,13 @@ struct SOSFlowView: View {
                 let estimatedIntensity = min(max(10 - (secondsElapsed / 60), 3), 9)
                 coordinator.diaryService.addDiaryEpisode(
                     intensity: estimatedIntensity,
-                    notes: "SOS сессия, длительность: \(timeString), циклов: \(breathingCycles)"
+                    notes: "SOS session, duration: \(timeString), cycles: \(breathingCycles)"
                 )
                 coordinator.completedSession()
                 ReviewService.shared.trackSessionCompleted()
                 coordinator.showSOSOverlay = false
             } label: {
-                Text("📝 Записать в дневник и закрыть")
+                Text(String(localized: "sos.save_and_close"))
                     .spPrimaryButton()
             }
         }
@@ -398,7 +396,7 @@ struct SOSFlowView: View {
                     withAnimation(SP.Anim.spring) { advanceStep() }
                 } label: {
                     HStack {
-                        Text(currentStep == .breathing ? "Я немного лучше →" : "Далее →")
+                        Text(currentStep == .breathing ? String(localized: "sos.feeling_better") : String(localized: "general.next"))
                         Image(systemName: "arrow.right")
                     }
                     .spPrimaryButton()
@@ -419,7 +417,7 @@ struct SOSFlowView: View {
         let durations: [TimeInterval] = [4, 7, 8]
         var elapsed: TimeInterval = 0
 
-        breathPhase = "Вдох"
+        breathPhase = String(localized: "breath_inhale")
         withAnimation(.easeInOut(duration: 4)) { breathScale = 1.0 }
 
         breathTimer = Timer.scheduledTimer(withTimeInterval: 0.1, repeats: true) { [self] _ in
@@ -429,15 +427,15 @@ struct SOSFlowView: View {
                 phase = (phase + 1) % 3
                 switch phase {
                 case 0:
-                    breathPhase = "Вдох"
+                    breathPhase = String(localized: "breath_inhale")
                     breathingCycles += 1
                     SP.Haptic.soft()
                     withAnimation(.easeInOut(duration: 4)) { breathScale = 1.0 }
                 case 1:
-                    breathPhase = "Задержка"
+                    breathPhase = String(localized: "breath_hold")
                     withAnimation(.easeInOut(duration: 0.3)) { breathScale = 0.95 }
                 case 2:
-                    breathPhase = "Выдох"
+                    breathPhase = String(localized: "breath_exhale")
                     SP.Haptic.soft()
                     withAnimation(.easeInOut(duration: 8)) { breathScale = 0.6 }
                 default: break

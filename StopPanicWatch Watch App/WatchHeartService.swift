@@ -33,13 +33,13 @@ class WatchHeartService: ObservableObject {
     var currentStatus: HeartStatus {
         switch diagnosis {
         case .normal:
-            return HeartStatus(text: "Норма", color: .green)
+            return HeartStatus(text: String(localized: "watch.status_normal"), color: .green)
         case .panicAttack:
-            return HeartStatus(text: "Похоже на ПА", color: .yellow)
+            return HeartStatus(text: String(localized: "watch.status_panic"), color: .yellow)
         case .possibleCardiac:
-            return HeartStatus(text: "⚠️ Возможно сердце", color: .red)
+            return HeartStatus(text: String(localized: "watch.status_cardiac"), color: .red)
         case .inconclusive:
-            return HeartStatus(text: "Анализирую...", color: .orange)
+            return HeartStatus(text: String(localized: "watch.status_analyzing"), color: .orange)
         }
     }
     
@@ -59,26 +59,26 @@ class WatchHeartService: ObservableObject {
     var diagnosisTitle: String {
         switch diagnosis {
         case .normal:
-            return "Всё в порядке"
+            return String(localized: "watch.diag_normal_title")
         case .panicAttack:
-            return "Паническая атака"
+            return String(localized: "watch.diag_panic_title")
         case .possibleCardiac:
-            return "Возможная сердечная проблема"
+            return String(localized: "watch.diag_cardiac_title")
         case .inconclusive:
-            return "Недостаточно данных"
+            return String(localized: "watch.diag_inconclusive_title")
         }
     }
     
     var diagnosisDetail: String {
         switch diagnosis {
         case .normal:
-            return "Ваш пульс в норме. Продолжайте мониторинг."
+            return String(localized: "watch.diag_normal_detail")
         case .panicAttack:
-            return "Ритм ровный, ЧСС повышен — характерно для панической атаки. Попробуйте дыхание 4-7-8."
+            return String(localized: "watch.diag_panic_detail")
         case .possibleCardiac:
-            return "Обнаружена нерегулярность ритма. Обратитесь к врачу или вызовите скорую."
+            return String(localized: "watch.diag_cardiac_detail")
         case .inconclusive:
-            return "Продолжайте мониторинг для более точного анализа."
+            return String(localized: "watch.diag_inconclusive_detail")
         }
     }
     

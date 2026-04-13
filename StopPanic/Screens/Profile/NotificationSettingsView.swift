@@ -32,7 +32,7 @@ struct NotificationSettingsView: View {
                 .padding(.bottom, 40)
             }
         }
-        .navigationTitle("Уведомления")
+        .navigationTitle(String(localized: "notif.title"))
         .navigationBarTitleDisplayMode(.inline)
         .onAppear {
             checkStatus()
@@ -66,13 +66,13 @@ struct NotificationSettingsView: View {
                     .foregroundColor(isAuthorized ? SP.Colors.success : SP.Colors.danger)
             }
 
-            Text(isAuthorized ? "Уведомления включены" : "Уведомления выключены")
+            Text(isAuthorized ? String(localized: "notif.enabled") : String(localized: "notif.disabled"))
                 .font(SP.Typography.headline)
                 .foregroundColor(SP.Colors.textPrimary)
 
             Text(isAuthorized
-                ? "Stillō может напоминать о дыхательных практиках"
-                : "Разреши уведомления, чтобы не забывать о практиках")
+                ? String(localized: "notif.enabled_body")
+                : String(localized: "notif.disabled_body"))
                 .font(SP.Typography.caption)
                 .foregroundColor(SP.Colors.textTertiary)
                 .multilineTextAlignment(.center)
@@ -81,7 +81,7 @@ struct NotificationSettingsView: View {
                 Button {
                     requestPermission()
                 } label: {
-                    Text("Разрешить уведомления")
+                    Text(String(localized: "notif.allow"))
                         .spPrimaryButton()
                 }
                 .padding(.top, 4)
@@ -98,7 +98,7 @@ struct NotificationSettingsView: View {
             HStack {
                 Image(systemName: "lungs.fill")
                     .foregroundColor(SP.Colors.calm)
-                Text("Напоминание о дыхании")
+                Text(String(localized: "notif.breathing_reminder"))
                     .font(SP.Typography.headline)
                     .foregroundColor(SP.Colors.textPrimary)
                 Spacer()
@@ -114,7 +114,7 @@ struct NotificationSettingsView: View {
                     showTimePicker.toggle()
                 } label: {
                     HStack {
-                        Text("Время")
+                        Text(String(localized: "notif.time"))
                             .font(SP.Typography.callout)
                             .foregroundColor(SP.Colors.textSecondary)
                         Spacer()
@@ -130,7 +130,7 @@ struct NotificationSettingsView: View {
 
                 if showTimePicker {
                     HStack(spacing: 0) {
-                        Picker("Час", selection: $reminderHour) {
+                        Picker(String(localized: "notif.hour"), selection: $reminderHour) {
                             ForEach(0 ..< 24, id: \.self) { h in
                                 Text(String(format: "%02d", h))
                                     .tag(h)
@@ -145,7 +145,7 @@ struct NotificationSettingsView: View {
                             .font(SP.Typography.title1)
                             .foregroundColor(SP.Colors.textPrimary)
 
-                        Picker("Минута", selection: $reminderMinute) {
+                        Picker(String(localized: "notif.minute"), selection: $reminderMinute) {
                             ForEach([0, 15, 30, 45], id: \.self) { m in
                                 Text(String(format: "%02d", m))
                                     .tag(m)
@@ -163,7 +163,7 @@ struct NotificationSettingsView: View {
                 Button {
                     saveReminder()
                 } label: {
-                    Text("Сохранить напоминание")
+                    Text(String(localized: "notif.save_reminder"))
                         .font(SP.Typography.callout)
                         .foregroundColor(.white)
                         .frame(maxWidth: .infinity)
@@ -187,10 +187,10 @@ struct NotificationSettingsView: View {
 
     private var infoCard: some View {
         VStack(spacing: 8) {
-            Text("💡 Как это работает")
+            Text(String(localized: "notif.how_it_works"))
                 .font(SP.Typography.headline)
                 .foregroundColor(SP.Colors.textPrimary)
-            Text("Stillō отправит мягкое напоминание в выбранное время. Дыхательная практика занимает всего 2 минуты и доказанно снижает уровень кортизола.")
+            Text(String(localized: "notif.how_body"))
                 .font(SP.Typography.caption)
                 .foregroundColor(SP.Colors.textTertiary)
                 .multilineTextAlignment(.center)

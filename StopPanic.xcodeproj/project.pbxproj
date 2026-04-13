@@ -133,6 +133,7 @@
 			projectRoot = "";
 			targets = (
 				6647ADFE2EFC144600A1E680 /* StopPanic */,
+				AA10000000000003WATCHTGT /* StopPanicWatch Watch App */,
 			);
 		};
 /* End PBXProject section */

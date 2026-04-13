@@ -101,7 +101,7 @@ struct ProfileHubView: View {
                         editName = coordinator.userName
                         showEditName = true
                     } label: {
-                        Text("Укажи имя")
+                        Text(String(localized: "profile.setName"))
                             .font(SP.Typography.title2)
                             .foregroundColor(SP.Colors.accent)
                     }
@@ -115,7 +115,7 @@ struct ProfileHubView: View {
                         }
                 }
 
-                Text("Участник Stillō")
+                Text(String(localized: "profile.member"))
                     .font(SP.Typography.caption)
                     .foregroundColor(SP.Colors.textTertiary)
             }
@@ -123,12 +123,12 @@ struct ProfileHubView: View {
         .frame(maxWidth: .infinity)
         .padding(.vertical, 12)
         .opacity(appear ? 1 : 0)
-        .alert("Имя", isPresented: $showEditName) {
-            TextField("Введи имя", text: $editName)
-            Button("Сохранить") {
+        .alert(String(localized: "profile.name_alert"), isPresented: $showEditName) {
+            TextField(String(localized: "profile.name_placeholder"), text: $editName)
+            Button(String(localized: "general.save")) {
                 coordinator.userName = editName
             }
-            Button("Отмена", role: .cancel) {}
+            Button(String(localized: "general.cancel"), role: .cancel) {}
         }
     }
 
@@ -136,12 +136,12 @@ struct ProfileHubView: View {
 
     private var statsOverview: some View {
         HStack(spacing: 12) {
-            statTile("📝", coordinator.diaryService.diaryEpisodes.count, "Записей")
-            statTile("🧘", coordinator.sessionsCompleted, "Сессий")
-            statTile("🌬️", coordinator.totalBreathingMinutes, "мин")
+            statTile("📝", coordinator.diaryService.diaryEpisodes.count, String(localized: "profile.entries"))
+            statTile("🧘", coordinator.sessionsCompleted, String(localized: "profile.sessions"))
+            statTile("🌬️", coordinator.totalBreathingMinutes, String(localized: "profile.breathingMin"))
             statTile(
                 "🏆", coordinator.achievementService.achievements.filter(\.isUnlocked).count,
-                "Наград"
+                String(localized: "profile.awards")
             )
         }
         .opacity(appear ? 1 : 0)
@@ -156,7 +156,7 @@ struct ProfileHubView: View {
             HStack {
                 Image(systemName: "person.2.fill")
                     .foregroundColor(SP.Colors.danger)
-                Text("SOS Контакты")
+                Text(String(localized: "profile.sosContacts"))
                     .font(SP.Typography.title3)
                     .foregroundColor(SP.Colors.textPrimary)
                 Spacer()
@@ -170,7 +170,7 @@ struct ProfileHubView: View {
             }
 
             if coordinator.sosService.contacts.isEmpty {
-                Text("Добавь людей, которым отправится SOS при панике")
+                Text(String(localized: "profile.sos_empty"))
                     .font(SP.Typography.callout)
                     .foregroundColor(SP.Colors.textTertiary)
                     .padding(.vertical, 8)
@@ -228,14 +228,14 @@ struct ProfileHubView: View {
 
     private var settingsSection: some View {
         VStack(alignment: .leading, spacing: 12) {
-            Text("Настройки")
+            Text(String(localized: "profile.settings"))
                 .font(SP.Typography.title3)
                 .foregroundColor(SP.Colors.textPrimary)
 
             NavigationLink {
                 NotificationSettingsView()
             } label: {
-                settingsRowLabel(icon: "bell.fill", title: "Уведомления", color: SP.Colors.accent)
+                settingsRowLabel(icon: "bell.fill", title: String(localized: "profile.notifications"), color: SP.Colors.accent)
             }
             .buttonStyle(.plain)
 
@@ -249,7 +249,7 @@ struct ProfileHubView: View {
             NavigationLink {
                 CrisisLineView()
             } label: {
-                settingsRowLabel(icon: "globe", title: "Телефон доверия", color: SP.Colors.success)
+                settingsRowLabel(icon: "globe", title: String(localized: "profile.crisisLine"), color: SP.Colors.success)
             }
             .buttonStyle(.plain)
 
@@ -257,7 +257,7 @@ struct ProfileHubView: View {
                 ProfileView(service: coordinator.profileService)
             } label: {
                 settingsRowLabel(
-                    icon: "person.fill", title: "Подробный профиль", color: SP.Colors.warmth
+                    icon: "person.fill", title: String(localized: "profile.detailed"), color: SP.Colors.warmth
                 )
             }
             .buttonStyle(.plain)
@@ -265,14 +265,14 @@ struct ProfileHubView: View {
             NavigationLink {
                 MoodMapView(service: coordinator.moodMapService)
             } label: {
-                settingsRowLabel(icon: "map.fill", title: "Карта настроений", color: SP.Colors.calm)
+                settingsRowLabel(icon: "map.fill", title: String(localized: "profile.moodMap"), color: SP.Colors.calm)
             }
             .buttonStyle(.plain)
 
             NavigationLink {
                 ThemePickerView()
             } label: {
-                settingsRowLabel(icon: "paintbrush.fill", title: "Оформление", color: SP.Colors.accentSoft)
+                settingsRowLabel(icon: "paintbrush.fill", title: String(localized: "profile.theme"), color: SP.Colors.accentSoft)
             }
             .buttonStyle(.plain)
         }
@@ -291,9 +291,7 @@ struct ProfileHubView: View {
             Text("v\(appVersion) · Made with ❤️")
                 .font(SP.Typography.caption)
                 .foregroundColor(SP.Colors.textTertiary)
-            Text(
-                "⚠️ Это приложение НЕ заменяет профессиональную помощь.\nПри серьёзных проблемах обратитесь к врачу."
-            )
+            Text(String(localized: "profile.disclaimer"))
             .font(SP.Typography.caption2)
             .foregroundColor(SP.Colors.textTertiary)
             .multilineTextAlignment(.center)
@@ -359,10 +357,10 @@ struct AddContactSheet: View {
 
                 VStack(spacing: 20) {
                     VStack(alignment: .leading, spacing: 8) {
-                        Text("Имя")
+                        Text(String(localized: "profile.contact_name"))
                             .font(SP.Typography.caption)
                             .foregroundColor(SP.Colors.textTertiary)
-                        TextField("Имя контакта", text: $name)
+                        TextField(String(localized: "profile.contact_name_placeholder"), text: $name)
                             .textFieldStyle(.plain)
                             .padding(14)
                             .background(
@@ -373,7 +371,7 @@ struct AddContactSheet: View {
                     }
 
                     VStack(alignment: .leading, spacing: 8) {
-                        Text("Телефон")
+                        Text(String(localized: "profile.contact_phone"))
                             .font(SP.Typography.caption)
                             .foregroundColor(SP.Colors.textTertiary)
                         TextField("+7...", text: $phone)
@@ -388,10 +386,10 @@ struct AddContactSheet: View {
                     }
 
                     VStack(alignment: .leading, spacing: 8) {
-                        Text("Кто это?")
+                        Text(String(localized: "profile.contact_who"))
                             .font(SP.Typography.caption)
                             .foregroundColor(SP.Colors.textTertiary)
-                        TextField("Мама, друг, терапевт...", text: $relationship)
+                        TextField(String(localized: "profile.contact_who_placeholder"), text: $relationship)
                             .textFieldStyle(.plain)
                             .padding(14)
                             .background(
@@ -402,7 +400,7 @@ struct AddContactSheet: View {
                     }
 
                     Toggle(isOn: $notifyOnPanic) {
-                        Text("Уведомлять при SOS")
+                        Text(String(localized: "profile.contact_notify"))
                             .font(SP.Typography.callout)
                             .foregroundColor(SP.Colors.textPrimary)
                     }
@@ -423,7 +421,7 @@ struct AddContactSheet: View {
                         SP.Haptic.success()
                         dismiss()
                     } label: {
-                        Text("Добавить контакт")
+                        Text(String(localized: "profile.contact_add"))
                             .spPrimaryButton()
                     }
                     .disabled(name.trimmingCharacters(in: .whitespaces).isEmpty || phone.trimmingCharacters(in: .whitespaces).isEmpty)
@@ -431,11 +429,11 @@ struct AddContactSheet: View {
                 .padding(.horizontal, SP.Layout.padding)
                 .padding(.top, 20)
             }
-            .navigationTitle("Новый контакт")
+            .navigationTitle(String(localized: "profile.contact_new"))
             .navigationBarTitleDisplayMode(.inline)
             .toolbar {
                 ToolbarItem(placement: .cancellationAction) {
-                    Button("Отмена") { dismiss() }
+                    Button(String(localized: "general.cancel")) { dismiss() }
                         .foregroundColor(SP.Colors.textSecondary)
                 }
             }

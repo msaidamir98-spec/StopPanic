@@ -155,7 +155,7 @@ final class HeartAnalysisService: ObservableObject {
                 diagnosis: .inconclusive, confidence: 0.1,
                 heartRate: samples.last?.bpm ?? 0, hrvMs: 0,
                 irregularity: 0, risePattern: .noChange,
-                recommendation: "Недостаточно данных. Подождите 30 секунд.",
+                recommendation: String(localized: "heart.rec_collecting"),
                 shouldCallEmergency: false
             )
         }
@@ -305,48 +305,25 @@ final class HeartAnalysisService: ObservableObject {
         irregularity: Double,
         breathingHelped: Bool
     ) -> String {
+        let bpm = Int(avgBPM)
         switch diagnosis {
         case .panicAttack:
             if breathingHelped {
-                return """
-                ✅ Ваш пульс реагирует на дыхание — это характерно для тревожного состояния. \
-                Продолжайте дыхание 4-7-8. Через несколько минут станет легче. \
-                Вы в безопасности.
-                """
+                return String(localized: "heart.rec_panic_breathing_helped")
             }
-            return """
-            🟡 Признаки тревожного состояния: ритм регулярный, ЧСС \(Int(avgBPM)) BPM. \
-            Попробуйте дыхание 4-7-8 — оно активирует парасимпатическую систему. \
-            Если появилась боль в груди или онемение — обратитесь к врачу.
-            """
+            return String(localized: "heart.rec_panic \(bpm)")
 
         case .likelyCardiac:
-            return """
-            🔴 ВНИМАНИЕ: Обнаружен нерегулярный ритм (\(Int(avgBPM)) BPM). \
-            Это может указывать на проблему, требующую медицинской помощи. \
-            Позвоните в скорую (103/112). \
-            Сядьте, не двигайтесь, расстегните одежду.
-            """
+            return String(localized: "heart.rec_cardiac \(bpm)")
 
         case .arrhythmia:
-            return """
-            🟠 Обнаружена нерегулярность ритма. \
-            Рекомендуем обратиться к кардиологу в ближайшее время. \
-            При боли в груди, одышке или головокружении — вызовите скорую.
-            """
+            return String(localized: "heart.rec_arrhythmia")
 
         case .normal:
-            return """
-            🟢 Ритм в норме: \(Int(avgBPM)) BPM, регулярный. \
-            Если чувствуете тревогу — это может быть субъективное ощущение. \
-            Дыхательная техника поможет расслабиться.
-            """
+            return String(localized: "heart.rec_normal \(bpm)")
 
         case .inconclusive:
-            return """
-            ⚪ Недостаточно данных для анализа. \
-            Продолжайте мониторинг. При усилении симптомов — обратитесь к врачу.
-            """
+            return String(localized: "heart.rec_collecting")
         }
     }
 }

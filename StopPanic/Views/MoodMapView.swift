@@ -17,10 +17,10 @@ struct MoodMapView: View {
                 VStack(spacing: 24) {
                     // Header
                     VStack(alignment: .leading, spacing: 6) {
-                        Text("Карта настроений")
+                        Text(String(localized: "mood.title"))
                             .font(SP.Typography.title1)
                             .foregroundColor(SP.Colors.textPrimary)
-                        Text("Отслеживай своё эмоциональное состояние")
+                        Text(String(localized: "mood.subtitle"))
                             .font(SP.Typography.callout)
                             .foregroundColor(SP.Colors.textSecondary)
                     }
@@ -41,7 +41,7 @@ struct MoodMapView: View {
                     } label: {
                         HStack {
                             Image(systemName: "plus.circle.fill")
-                            Text("Записать настроение")
+                            Text(String(localized: "mood.add_mood"))
                         }
                         .spPrimaryButton()
                     }
@@ -52,10 +52,10 @@ struct MoodMapView: View {
                         VStack(spacing: 12) {
                             Text("📊")
                                 .font(.system(size: 48))
-                            Text("Пока пусто")
+                            Text(String(localized: "mood.empty_title"))
                                 .font(SP.Typography.headline)
                                 .foregroundColor(SP.Colors.textPrimary)
-                            Text("Записывай настроение, чтобы увидеть паттерны")
+                            Text(String(localized: "mood.empty_body"))
                                 .font(SP.Typography.caption)
                                 .foregroundColor(SP.Colors.textTertiary)
                         }
@@ -70,7 +70,7 @@ struct MoodMapView: View {
                 .padding(.vertical, 20)
             }
         }
-        .navigationTitle("Настроения")
+        .navigationTitle(String(localized: "mood.nav_title"))
         .navigationBarTitleDisplayMode(.inline)
         .onAppear {
             withAnimation(.easeOut(duration: 0.6)) { appear = true }
@@ -101,7 +101,7 @@ struct MoodMapView: View {
 
     private var moodChart: some View {
         VStack(alignment: .leading, spacing: 12) {
-            Text("Последние 7 дней")
+            Text(String(localized: "mood.last_7_days"))
                 .font(SP.Typography.headline)
                 .foregroundColor(SP.Colors.textPrimary)
 
@@ -124,7 +124,7 @@ struct MoodMapView: View {
 
             if let avg = averageMood {
                 HStack {
-                    Text("Среднее:")
+                    Text(String(localized: "mood.average"))
                         .font(SP.Typography.caption)
                         .foregroundColor(SP.Colors.textTertiary)
                     Text(String(format: "%.1f", avg))
@@ -143,7 +143,7 @@ struct MoodMapView: View {
 
     private var historyList: some View {
         VStack(alignment: .leading, spacing: 12) {
-            Text("История")
+            Text(String(localized: "mood.history"))
                 .font(SP.Typography.headline)
                 .foregroundColor(SP.Colors.textPrimary)
 
@@ -190,7 +190,7 @@ struct MoodMapView: View {
                     Text(moodEmoji(Int(newMood)))
                         .font(.system(size: 64))
 
-                    Text("Как ты себя чувствуешь?")
+                    Text(String(localized: "mood.how_feel"))
                         .font(SP.Typography.title2)
                         .foregroundColor(SP.Colors.textPrimary)
 
@@ -198,7 +198,7 @@ struct MoodMapView: View {
                         Slider(value: $newMood, in: 1 ... 10, step: 1)
                             .tint(moodColor(Int(newMood)))
                         HStack {
-                            Text("Ужасно")
+                            Text(String(localized: "mood.awful"))
                                 .font(SP.Typography.caption2)
                                 .foregroundColor(SP.Colors.textTertiary)
                             Spacer()
@@ -206,14 +206,14 @@ struct MoodMapView: View {
                                 .font(SP.Typography.title3)
                                 .foregroundColor(moodColor(Int(newMood)))
                             Spacer()
-                            Text("Отлично")
+                            Text(String(localized: "mood.great"))
                                 .font(SP.Typography.caption2)
                                 .foregroundColor(SP.Colors.textTertiary)
                         }
                     }
                     .padding(.horizontal, 16)
 
-                    TextField("Заметка (опционально)", text: $newNote)
+                    TextField(String(localized: "mood.note_optional"), text: $newNote)
                         .textFieldStyle(.plain)
                         .font(SP.Typography.body)
                         .padding(14)
@@ -232,18 +232,18 @@ struct MoodMapView: View {
                         newNote = ""
                         showAddSheet = false
                     } label: {
-                        Text("Сохранить")
+                        Text(String(localized: "general.save"))
                             .spPrimaryButton()
                     }
                 }
                 .padding(.horizontal, SP.Layout.padding)
                 .padding(.bottom, 40)
             }
-            .navigationTitle("Настроение")
+            .navigationTitle(String(localized: "mood.mood"))
             .navigationBarTitleDisplayMode(.inline)
             .toolbar {
                 ToolbarItem(placement: .navigationBarLeading) {
-                    Button("Отмена") { showAddSheet = false }
+                    Button(String(localized: "general.cancel")) { showAddSheet = false }
                         .foregroundColor(SP.Colors.textSecondary)
                 }
             }

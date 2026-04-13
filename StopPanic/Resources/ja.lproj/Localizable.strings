@@ -267,3 +267,418 @@
 "greeting.morning" = "おはようございます";
 "greeting.afternoon" = "こんにちは";
 "greeting.evening" = "こんばんは";
+
+/* ========== NEW KEYS (Localization Pass) ========== */
+
+/* General (new) */
+"general.back" = "戻る";
+
+/* Splash */
+"splash.tagline" = "穏やかさのひとしずく";
+
+/* SOS Flow (new) */
+"sos.breathe_with_me" = "一緒に呼吸しましょう";
+"sos.ground_step1" = "見えるもの5つ";
+"sos.ground_step2" = "聞こえるもの4つ";
+"sos.ground_step3" = "触れるもの3つ";
+"sos.ground_step4" = "匂うもの2つ";
+"sos.ground_step5" = "味わえるもの1つ";
+"sos.ground_title" = "グラウンディング";
+"sos.ground_subtitle" = "五感に集中しましょう";
+"sos.ground_done" = "完了、次へ →";
+"sos.affirmation_title" = "やり遂げました 💪";
+"sos.affirmation_body" = "不安は誤報です。\nあなたの体は存在しない危険に反応しました。\nあなたは安全です。";
+"sos.duration_label" = "所要時間";
+"sos.cycles_label" = "呼吸サイクル";
+"sos.note_text" = "SOSセッション完了";
+"sos.save_entry" = "日記に保存";
+"sos.calm_session" = "カームセッション";
+"sos.breathing_exercise" = "呼吸エクササイズ";
+"sos.notif_title %@" = "🆘 SOS — %@";
+"sos.notif_body %@" = "パニック発作。電話: %@";
+"sos.crisis_notif_title" = "🆘 パニック発作";
+"sos.crisis_notif_body %@" = "相談窓口: %@";
+
+/* Breathing Session (new) */
+"breathing.stats_label" = "サイクル";
+"breathing.time_label" = "時間";
+"breathing.start_button" = "呼吸を始める";
+
+/* Grounding Exercise */
+"grounding.sense_see" = "見る";
+"grounding.sense_touch" = "触れる";
+"grounding.sense_hear" = "聞く";
+"grounding.sense_smell" = "嗅ぐ";
+"grounding.sense_taste" = "味わう";
+"grounding.verb_see" = "見える";
+"grounding.verb_touch" = "触れる";
+"grounding.verb_hear" = "聞こえる";
+"grounding.verb_smell" = "匂う";
+"grounding.verb_taste" = "味わえる";
+"grounding.step_of %lld %lld" = "ステップ %lld / %lld";
+"grounding.name_count %lld" = "%lld つ挙げましょう";
+"grounding.what_you %@" = "%@ もの";
+"grounding.i_verb %@ %@" = "私が%@: %@";
+"grounding.enter" = "入力...";
+"grounding.next" = "次へ →";
+"grounding.finish" = "完了";
+"grounding.done_title" = "グラウンディング完了 🌍";
+"grounding.done_body" = "不安から現実へ注意を向け直しました。\n脳は今、論理的モードに入っています。";
+
+/* Muscle Relaxation */
+"muscle.hands_title" = "手";
+"muscle.hands_desc" = "できるだけ強く拳を握りましょう";
+"muscle.forearms_title" = "前腕";
+"muscle.forearms_desc" = "肘を曲げて前腕を緊張させましょう";
+"muscle.shoulders_title" = "肩";
+"muscle.shoulders_desc" = "肩を耳まで上げましょう";
+"muscle.face_title" = "顔";
+"muscle.face_desc" = "目を細め、歯を食いしばり、額にしわを寄せましょう";
+"muscle.neck_title" = "首";
+"muscle.neck_desc" = "あごを胸に押し付けましょう";
+"muscle.back_title" = "背中";
+"muscle.back_desc" = "背中を反らし、肩甲骨を寄せましょう";
+"muscle.abs_title" = "腹筋";
+"muscle.abs_desc" = "できるだけ強く腹筋を緊張させましょう";
+"muscle.legs_title" = "脚";
+"muscle.legs_desc" = "脚を伸ばし、太ももとふくらはぎを緊張させましょう";
+"muscle.tense" = "5秒間 力を入れて！💪";
+"muscle.relax" = "リラックス... 力を抜いて... 😌";
+"muscle.tense_button" = "力を入れる →";
+"muscle.relaxing" = "リラックス中...";
+"muscle.done_title" = "体がリラックスしました 🧘";
+
+/* Cognitive Reframing */
+"cognitive.title" = "🧠 認知再構成";
+"cognitive.subtitle" = "CBTを使って不安な考えを分析しましょう";
+"cognitive.anxious_thought" = "不安な考え";
+"cognitive.write_thought" = "不安を引き起こしている考えを書いてください";
+"cognitive.thought_example" = "例：「心臓発作で死んでしまう」";
+"cognitive.facts_against" = "反証となる事実";
+"cognitive.what_facts" = "この考えに反する事実は何ですか？";
+"cognitive.facts_example" = "例：「医師は心臓が健康だと言いました」";
+"cognitive.distortions_title" = "考えられる認知の歪み：";
+"cognitive.catastrophizing" = "破局的思考";
+"cognitive.catastrophizing_desc" = "最悪の場合＝唯一の場合";
+"cognitive.black_white" = "白黒思考";
+"cognitive.black_white_desc" = "全か無か";
+"cognitive.mind_reading" = "読心術";
+"cognitive.mind_reading_desc" = "他人の考えがわかる";
+"cognitive.emotional_reasoning" = "感情的推論";
+"cognitive.emotional_reasoning_desc" = "感じること＝事実";
+"cognitive.alternative" = "代替的な考え";
+"cognitive.how_reframe" = "どう言い換えられますか？";
+"cognitive.alternative_example" = "例：「これは不安です。一時的なものです。私は安全です」";
+"cognitive.excellent" = "素晴らしい！";
+"cognitive.done_body" = "CBTのテクニックを使いました。その考えが戻ってきたら、代替的な考えを思い出してください。";
+"cognitive.done_button" = "完了 ✓";
+
+/* Now Help View */
+"nowhelp.step1_title" = "止まる";
+"nowhelp.step1_instruction" = "動きを止めてください。楽な姿勢を取りましょう — 座るか壁にもたれかかってください。あなたは安全です。";
+"nowhelp.step2_title" = "ゆっくり呼吸する";
+"nowhelp.step2_instruction" = "鼻から4秒吸います。7秒止めます。口から8秒吐きます。3回繰り返してください。";
+"nowhelp.step3_title" = "グラウンディング";
+"nowhelp.step3_instruction" = "声に出して言いましょう：見えるもの5つ。聞こえるもの4つ。触れるもの3つ。";
+"nowhelp.step4_title" = "自分に言い聞かせる";
+"nowhelp.step4_instruction" = "「これはパニック発作です。一時的なものです。死にません。危険ではありません。」";
+"nowhelp.step5_title" = "体をリラックスさせる";
+"nowhelp.step5_instruction" = "5秒間拳を握る — 放す。肩を耳まで上げる — 下ろす。あごの力を抜く。";
+"nowhelp.step_of %lld %lld" = "ステップ %lld / %lld";
+"nowhelp.next" = "次へ →";
+"nowhelp.finish" = "完了 ✓";
+"nowhelp.well_done" = "よくできました！💪";
+"nowhelp.done_body" = "5つのステップすべてを完了しました。\nパニックは治まっています。乗り越えました。";
+
+/* Panic Radar */
+"radar.title" = "パニックレーダー";
+"radar.risk_level" = "リスクレベル";
+"radar.by_weekday" = "曜日別";
+"radar.triggers" = "トリガー";
+"radar.recommendation" = "おすすめ";
+
+/* Risk Levels */
+"risk.low" = "低い";
+"risk.moderate" = "中程度";
+"risk.high" = "やや高い";
+"risk.critical" = "危険";
+
+/* Heart Analysis View */
+"heart.title" = "モニタリング ❤️";
+"heart.important_info" = "重要な情報";
+"heart.disclaimer_body" = "このツールは情報提供のためのものであり、医療機器ではありません。診断は行いません。胸の痛み、息切れ、体調不良がある場合は、直ちに救急に電話してください（いのちの電話）。";
+"heart.waiting" = "待機中...";
+"heart.pulse_monitoring" = "心拍数モニタリング";
+"heart.call_emergency" = "🚨 救急に電話する";
+"heart.emergency_numbers" = "119 (日本) · 911 (米国) · 112 (欧州)";
+"heart.breathing_test" = "呼吸テスト";
+"heart.breathing_test_body" = "4-7-8呼吸後に心拍数が下がれば、心臓の問題ではなく不安を間接的に示唆しています。";
+"heart.fix_pulse" = "📌 脈拍を記録";
+"heart.check" = "✅ 確認";
+"heart.pulse_dropped" = "呼吸後に脈拍が下がりました";
+"heart.stop" = "停止";
+"heart.start_monitoring" = "モニタリングを開始";
+"heart.how_it_works" = "仕組み";
+"heart.info_reads_pulse" = "Apple Health / Watchで心拍数を読み取ります";
+"heart.info_analyzes_rhythm" = "リズムの規則性を分析します";
+"heart.info_compares_patterns" = "不安と心臓のパターンを比較します";
+"heart.info_checks_breathing" = "呼吸への反応を確認します";
+"heart.algorithm_disclaimer" = "このアルゴリズムは、不安は規則的なリズム（洞性頻脈）を、心臓の問題は不規則なリズムを生み出すという事実に基づいています。これはECGや医師の代わりにはなりません。";
+"heart.confidence %lld" = "信頼度: %lld%%";
+"heart.anxiety_signs" = "不安の兆候（心臓の問題ではありません）：";
+"heart.regular_rhythm" = "規則的なリズム（洞性頻脈）";
+"heart.hr_typical %lld" = "心拍数 %lld BPM — 不安に典型的";
+"heart.pattern %@" = "パターン: %@";
+"heart.pulse_responds" = "脈拍が呼吸に反応しています ✓";
+"heart.try_breathing" = "確認のために呼吸を試してください";
+"heart.doctor_signs" = "医療的注意が必要な兆候：";
+"heart.irregular_rhythm %@" = "不規則なリズム（%@）";
+"heart.hrv_value %@" = "HRV: %@ ms";
+"heart.no_breathing_response" = "呼吸法に反応しません";
+"heart.recommend_emergency" = "救急への電話をお勧めします";
+"heart.metric_hr" = "❤️ 心拍数";
+"heart.metric_hrv" = "📈 HRV";
+"heart.metric_regularity" = "🔀 規則性";
+"heart.metric_pattern" = "📊 パターン";
+"heart.ms" = "ms";
+"heart.recommendation" = "おすすめ";
+
+/* Diagnosis */
+"diagnosis.anxiety" = "不安状態";
+"diagnosis.cardiac" = "医療的注意が必要です";
+"diagnosis.arrhythmia" = "不規則なリズム";
+"diagnosis.normal" = "正常なリズム";
+"diagnosis.collecting" = "データ収集中...";
+
+/* Rise Patterns */
+"pattern.sudden_regular" = "急な規則的上昇";
+"pattern.sudden_irregular" = "急な不規則";
+"pattern.gradual" = "緩やか";
+"pattern.no_change" = "変化なし";
+
+/* Calm Session */
+"calm.phase_intro" = "カームセッション";
+"calm.phase_breathing" = "呼吸";
+"calm.phase_grounding" = "グラウンディング";
+"calm.phase_reflection" = "振り返り";
+"calm.phase_complete" = "完了！";
+"calm.start_breathing" = "呼吸を始める →";
+"calm.to_grounding" = "グラウンディングへ →";
+"calm.to_reflection" = "振り返りへ →";
+"calm.finish" = "終了 ✓";
+"calm.intro_body" = "このセッションは3つのステージで進みます：";
+"calm.intro_breathing_desc" = "神経系を落ち着かせます";
+"calm.intro_grounding_desc" = "注意を切り替えます";
+"calm.intro_reflection_desc" = "考えを整理します";
+"calm.breathe_478" = "4-7-8で呼吸する";
+"calm.breathe_instructions" = "4秒吸う → 7秒止める → 8秒吐く\n\n4サイクル行い、次へをタップしてください";
+"calm.ground_see" = "見えるもの5つ";
+"calm.ground_hear" = "聞こえる音4つ";
+"calm.ground_touch" = "触れるもの3つ";
+"calm.ground_smell" = "匂うもの2つ";
+"calm.ground_taste" = "味わえるもの1つ";
+"calm.reflection_title" = "書くか声に出して言いましょう：";
+"calm.reflection_q1" = "・何が不安を引き起こしましたか？";
+"calm.reflection_q2" = "・脅威はどれくらい現実的でしたか？（1-10）";
+"calm.reflection_q3" = "・何が落ち着くのに役立ちましたか？";
+"calm.reflection_q4" = "・次回、自分に何と言いますか？";
+"calm.session_done" = "セッション完了！🎉";
+"calm.session_done_body" = "呼吸、グラウンディング、振り返りを完了しました。\nセッションを重ねるたびに強くなります。";
+
+/* Mood Map */
+"mood.title" = "気分マップ";
+"mood.subtitle" = "感情の状態を記録しましょう";
+"mood.add_mood" = "気分を記録";
+"mood.empty_title" = "まだありません";
+"mood.empty_body" = "気分を記録してパターンを見つけましょう";
+"mood.nav_title" = "気分";
+"mood.last_7_days" = "過去7日間";
+"mood.average" = "平均：";
+"mood.history" = "履歴";
+"mood.how_feel" = "今の気分は？";
+"mood.awful" = "最悪";
+"mood.great" = "最高";
+"mood.note_optional" = "メモ（任意）";
+"mood.mood" = "気分";
+
+/* Achievements */
+"achievements.title" = "実績";
+"achievements.unlocked" = "解除済み";
+"achievements.unlocked_count %lld %lld" = "%lld / %lld 解除";
+"achievement.cat_streak" = "連続";
+"achievement.cat_breathing" = "呼吸";
+"achievement.cat_diary" = "日記";
+"achievement.cat_techniques" = "テクニック";
+"achievement.cat_milestone" = "マイルストーン";
+"achievement.first_breath_title" = "はじめての呼吸";
+"achievement.first_breath_desc" = "最初の呼吸エクササイズを完了する";
+"achievement.week_warrior_title" = "ウィークウォリアー";
+"achievement.week_warrior_desc" = "パニック発作なしで7日連続";
+"achievement.diary_master_title" = "日記マスター";
+"achievement.diary_master_desc" = "日記を30回書く";
+"achievement.technique_explorer_title" = "エクスプローラー";
+"achievement.technique_explorer_desc" = "10のテクニックすべてを試す";
+"achievement.calm_month_title" = "穏やかな1ヶ月";
+"achievement.calm_month_desc" = "30日連続で実践する";
+
+/* Profile View (new) */
+"profile.title" = "プロフィール";
+"profile.name" = "名前";
+"profile.set_name" = "名前を設定";
+"profile.edit" = "編集";
+"profile.about" = "アプリについて";
+"profile.about_body" = "Stillō — 不安やパニック発作のためのパートナー。無料、広告なし、サブスクなし。";
+"profile.version %@" = "バージョン %@";
+"profile.breath_min" = "呼吸（分）";
+
+/* Journal (new) */
+"journal.week_summary" = "週あたり";
+"journal.avg_intensity" = "平均強度";
+"journal.trend_label" = "傾向";
+"journal.mood_empty" = "気分を記録してパターンを見つけましょう";
+"journal.radar_title" = "パニックレーダー";
+"journal.achievements_title" = "実績";
+"journal.frequent_triggers" = "よくあるトリガー";
+"journal.no_triggers" = "データがまだありません";
+"journal.no_notes" = "メモなし";
+"journal.intensity" = "強度";
+"journal.triggers_label" = "トリガー";
+"journal.notes_label" = "メモ";
+"journal.notes_placeholder" = "どんな気持ちでしたか？";
+"journal.trigger_separator" = "、";
+"journal.save" = "保存";
+"journal.add_episode" = "新しいエピソード";
+"journal.cancel" = "キャンセル";
+"journal.intensity_minimal" = "わずか";
+"journal.intensity_mild" = "軽い";
+"journal.intensity_moderate" = "中程度";
+"journal.intensity_severe" = "ひどい";
+"journal.intensity_extreme" = "耐えられない";
+
+/* Trigger Options */
+"trigger_opt_work" = "仕事";
+"trigger_opt_health" = "健康";
+"trigger_opt_conflict" = "対人関係";
+"trigger_opt_loneliness" = "孤独";
+"trigger_opt_news" = "ニュース";
+"trigger_opt_unknown" = "わからない";
+
+/* Theme */
+"theme.title" = "外観";
+"theme.preview" = "プレビュー";
+"theme.theme" = "テーマ";
+"theme.tip_title" = "💡 ヒント";
+"theme.tip_body" = "自動モードはデバイスの設定に合わせます。ダークテーマは夜向けです — 目の疲れを軽減し、リラックスを助けます。";
+
+/* Crisis Line */
+"crisis.title" = "相談窓口";
+"crisis.not_alone" = "あなたは一人ではありません";
+"crisis.subtitle" = "つらいときは電話してください。無料・匿名・24時間対応です。";
+"crisis.call" = "電話する";
+"crisis.lines_by_country" = "🌍 国別相談窓口";
+"crisis.important" = "覚えておいてください";
+"crisis.info_free" = "電話は無料で匿名です";
+"crisis.info_24h" = "専門家が24時間対応しています";
+"crisis.info_any_issue" = "どんなことでも相談できます";
+"crisis.info_panic_safe" = "パニック発作は危険ではありません — 必ず治まります";
+"crisis.emergency_112" = "⚠️ 命の危険がある場合は119に電話してください";
+
+/* Country Names */
+"country.ru" = "ロシア";
+"country.us" = "アメリカ";
+"country.uk" = "イギリス";
+"country.de" = "ドイツ";
+"country.fr" = "フランス";
+"country.es" = "スペイン";
+"country.it" = "イタリア";
+"country.jp" = "日本";
+
+/* HealthKit Settings */
+"health.unavailable" = "ヘルスケアが利用できません";
+"health.connected" = "Apple Health 接続済み";
+"health.not_connected" = "Apple Health 未接続";
+"health.unavailable_body" = "このデバイスではHealthKitを利用できません。心拍数にはApple Watch付きのiPhoneをお使いください。";
+"health.connected_body" = "Stillōは心拍数データを読み取り、不安レベルを追跡します";
+"health.not_connected_body" = "Apple Healthを接続して、StillōがApple Watchの心拍数を読み取れるようにしてください";
+"health.unavailable_device" = "このデバイスではHealthKitを利用できません";
+"health.connect" = "Apple Healthに接続";
+"health.connected_label" = "接続済み";
+"health.data_title" = "📊 読み取るデータ";
+"health.data_pulse" = "脈拍（BPM）";
+"health.data_pulse_desc" = "Apple Watchからの心拍数";
+"health.data_hrv" = "HRV（SDNN）";
+"health.data_hrv_desc" = "心拍変動 — ストレスの指標";
+"health.privacy_title" = "プライバシー";
+"health.privacy_body" = "すべてのデータはデバイス上にのみ保存されます。Stillōはデータの読み取りのみ行います — Apple Healthへの書き込みやサーバーへのデータ送信は行いません。";
+
+/* Notification Settings */
+"notif.title" = "通知";
+"notif.enabled" = "通知が有効です";
+"notif.disabled" = "通知が無効です";
+"notif.enabled_body" = "Stillōが呼吸練習をリマインドします";
+"notif.disabled_body" = "練習を忘れないよう通知を許可してください";
+"notif.allow" = "通知を許可する";
+"notif.breathing_reminder" = "呼吸リマインダー";
+"notif.time" = "時間";
+"notif.save_reminder" = "リマインダーを保存";
+"notif.how_it_works" = "💡 仕組み";
+"notif.how_body" = "Stillōは選んだ時間にやさしいリマインダーを送ります。呼吸練習はたった2分で、コルチゾールレベルを下げることが証明されています。";
+
+/* ProfileHub (new) */
+"profile.name_alert_title" = "名前を設定";
+"profile.name_placeholder" = "名前";
+"profile.sos_empty" = "SOS発動時に通知される連絡先を追加してください";
+"profile.theme" = "外観";
+"profile.health" = "Apple Health";
+"profile.about_app" = "アプリについて";
+"profile.disclaimer" = "Stillōはヘルパーであり、医療機器ではありません。医師の代わりにはなりません。";
+"profile.contact_name" = "名前";
+"profile.contact_phone" = "電話番号";
+"profile.contact_who" = "誰ですか？";
+"profile.contact_who_placeholder" = "お母さん、友人、セラピスト...";
+"profile.contact_notify" = "SOS時に通知する";
+"profile.contact_add" = "追加";
+"profile.contact_new" = "新しい連絡先";
+
+/* HeartAnalysis Service Recommendations */
+"heart.rec_collecting" = "⚪ データが不足しています。30秒お待ちください。";
+"heart.rec_panic_breathing_helped" = "✅ 脈拍が呼吸に反応しています — これは不安に典型的です。4-7-8呼吸を続けてください。数分で楽になります。あなたは安全です。";
+"heart.rec_panic %lld" = "🟡 不安の兆候：規則的なリズム、心拍数 %lld BPM。4-7-8呼吸を試してください — 副交感神経系を活性化します。胸の痛みやしびれがある場合は医師に相談してください。";
+"heart.rec_cardiac %lld" = "🔴 警告：不規則なリズムを検出しました（%lld BPM）。医療的注意が必要な状態の可能性があります。救急（119）に電話してください。座って、動かず、衣服を緩めてください。";
+"heart.rec_arrhythmia" = "🟠 リズムの不規則性を検出しました。早めに循環器科の受診をお勧めします。胸の痛み、息切れ、めまいがある場合は救急に電話してください。";
+"heart.rec_normal %lld" = "🟢 リズムは正常です：%lld BPM、規則的。不安を感じている場合 — 主観的な感覚かもしれません。呼吸法でリラックスできます。";
+
+/* Onboarding */
+"onb_tap_start" = "タップして開始";
+
+/* Notification Pickers */
+"notif.hour" = "時";
+"notif.minute" = "分";
+
+/* Theme Names */
+"theme.auto" = "自動";
+"theme.dark" = "ダーク";
+"theme.light" = "ライト";
+
+/* Empty States */
+"empty.journal_title" = "日記は空です";
+"empty.journal_message" = "良いお知らせです！エピソードを記録して進捗を追跡し、パターンを見つけましょう。";
+"empty.journal_action" = "最初のエピソードを記録";
+"empty.tools_done_title" = "すべてのテクニックをマスター 🎉";
+"empty.tools_done_message" = "すばらしい！練習を続けましょう — 毎回のセッションがあなたを強くします。";
+"empty.heart_title" = "心拍データがありません";
+"empty.heart_message" = "Apple Watchを接続するか、カメラで心拍を測定してください。";
+"empty.heart_action" = "Healthに接続";
+"empty.achievements_title" = "旅を始めましょう";
+"empty.achievements_message" = "エクササイズをして、日記をつけて、アチーブメントを獲得しましょう。一歩一歩が大切です。";
+"empty.achievements_action" = "始める";
+"empty.search_title" = "見つかりません";
+"empty.search_message %@" = "「%@」の検索結果はありません。別のキーワードを試してください。";
+
+/* Accessibility */
+"a11y.breath_phase %@" = "呼吸フェーズ: %@";
+"a11y.breath_idle" = "呼吸セッションは開始されていません";
+"a11y.breath_follow" = "画面の指示に従ってください";
+"a11y.breath_tap_start" = "開始ボタンを押してセッションを始めてください";
+"a11y.sos_started" = "緊急ヘルプが起動しました。画面の指示に従ってください。";
+"a11y.session_complete" = "セッション完了。お疲れ様でした！";

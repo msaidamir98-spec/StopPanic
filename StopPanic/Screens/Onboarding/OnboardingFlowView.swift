@@ -55,7 +55,7 @@ struct OnboardingFlowView: View {
 
     // Mini breathing state
     @State private var breathScale: CGFloat = 0.4
-    @State private var breathPhase = "Нажми старт"
+    @State private var breathPhase = String(localized: "onb_tap_start")
     @State private var isBreathing = false
     @State private var breathCycles = 0
     @State private var breathTimer: Timer?

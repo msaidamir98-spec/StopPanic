@@ -29,7 +29,7 @@ struct HeartAnalysisView: View {
                 .padding(.vertical, 16)
             }
         }
-        .navigationTitle("Мониторинг ❤️")
+        .navigationTitle(String(localized: "heart.title"))
         .navigationBarTitleDisplayMode(.inline)
     }
 
@@ -37,8 +37,6 @@ struct HeartAnalysisView: View {
 
     @StateObject
     private var service = HeartAnalysisService()
-    @State
-    private var showDisclaimer = true
 
     private var diagnosisColor: Color {
         switch service.currentAnalysis?.diagnosis {
@@ -53,40 +51,26 @@ struct HeartAnalysisView: View {
     // MARK: - Disclaimer
 
     private var disclaimerCard: some View {
-        Group {
-            if showDisclaimer {
-                VStack(alignment: .leading, spacing: 10) {
-                    HStack {
-                        Image(systemName: "exclamationmark.triangle.fill")
-                            .foregroundColor(.orange)
-                            .font(.system(size: 18))
-                        Text("Важная информация")
-                            .font(SP.Typography.headline)
-                            .foregroundColor(SP.Colors.textPrimary)
-                        Spacer()
-                        Button {
-                            withAnimation(SP.Anim.springFast) { showDisclaimer = false }
-                        } label: {
-                            Image(systemName: "xmark.circle.fill")
-                                .foregroundColor(SP.Colors.textTertiary)
-                        }
-                    }
-                    Text(
-                        "Этот инструмент — информационный помощник, НЕ медицинское устройство. " +
-                            "Он НЕ ставит диагнозы. При боли в груди, одышке или плохом самочувствии " +
-                            "НЕМЕДЛЕННО вызовите скорую помощь (103 / 112)."
-                    )
-                    .font(SP.Typography.caption)
-                    .foregroundColor(SP.Colors.textSecondary)
-                    .lineSpacing(3)
-                }
-                .spGlassCard(cornerRadius: SP.Layout.cornerMedium)
-                .overlay(
-                    RoundedRectangle(cornerRadius: SP.Layout.cornerMedium)
-                        .stroke(Color.orange.opacity(0.3), lineWidth: 1)
-                )
+        VStack(alignment: .leading, spacing: 10) {
+            HStack {
+                Image(systemName: "exclamationmark.triangle.fill")
+                    .foregroundColor(.orange)
+                    .font(.system(size: 18))
+                Text(String(localized: "heart.important_info"))
+                    .font(SP.Typography.headline)
+                    .foregroundColor(SP.Colors.textPrimary)
+                Spacer()
             }
+            Text(String(localized: "heart.disclaimer_body"))
+            .font(SP.Typography.caption)
+            .foregroundColor(SP.Colors.textSecondary)
+            .lineSpacing(3)
         }
+        .spGlassCard(cornerRadius: SP.Layout.cornerMedium)
+        .overlay(
+            RoundedRectangle(cornerRadius: SP.Layout.cornerMedium)
+                .stroke(Color.orange.opacity(0.3), lineWidth: 1)
+        )
     }
 
     // MARK: - Status Circle
@@ -114,7 +98,7 @@ struct HeartAnalysisView: View {
                         .font(.system(size: 36))
                         .foregroundColor(diagnosisColor)
                         .symbolEffect(.pulse, isActive: service.isMonitoring)
-                    Text(service.currentAnalysis?.diagnosis.rawValue ?? "Ожидание...")
+                    Text(service.currentAnalysis?.diagnosis.localizedTitle ?? String(localized: "heart.waiting"))
                         .font(SP.Typography.subheadline)
                         .foregroundColor(SP.Colors.textPrimary)
                     if let hr = service.currentAnalysis?.heartRate {
@@ -125,7 +109,7 @@ struct HeartAnalysisView: View {
                     }
                 }
             }
-            Text("Мониторинг пульса")
+            Text(String(localized: "heart.pulse_monitoring"))
                 .font(SP.Typography.title3)
                 .foregroundColor(SP.Colors.textPrimary)
         }
@@ -136,10 +120,10 @@ struct HeartAnalysisView: View {
 
     private var emergencyBanner: some View {
         VStack(spacing: 10) {
-            Text("🚨 ВЫЗОВИТЕ СКОРУЮ")
+            Text(String(localized: "heart.call_emergency"))
                 .font(SP.Typography.title3)
                 .foregroundColor(.white)
-            Text("103 (Россия) · 112 (Европа) · 911 (США)")
+            Text(String(localized: "heart.emergency_numbers"))
                 .font(SP.Typography.headline)
                 .foregroundColor(.white.opacity(0.9))
         }
@@ -160,14 +144,12 @@ struct HeartAnalysisView: View {
                     HStack {
                         Image(systemName: "lungs.fill")
                             .foregroundColor(SP.Colors.calm)
-                        Text("Дыхательный тест")
+                        Text(String(localized: "heart.breathing_test"))
                             .font(SP.Typography.headline)
                             .foregroundColor(SP.Colors.textPrimary)
                     }
 
-                    Text(
-                        "Если пульс снижается после дыхания 4-7-8 — это косвенно указывает на тревогу, а не на сердечную проблему."
-                    )
+                    Text(String(localized: "heart.breathing_test_body"))
                     .font(SP.Typography.caption)
                     .foregroundColor(SP.Colors.textSecondary)
                     .lineSpacing(3)
@@ -177,7 +159,7 @@ struct HeartAnalysisView: View {
                             SP.Haptic.light()
                             service.markPreBreathingHR()
                         } label: {
-                            Text("📌 Зафиксировать пульс")
+                            Text(String(localized: "heart.fix_pulse"))
                                 .font(SP.Typography.caption)
                                 .foregroundColor(SP.Colors.calm)
                                 .padding(.horizontal, 14)
@@ -188,7 +170,7 @@ struct HeartAnalysisView: View {
                             SP.Haptic.light()
                             service.checkBreathingResponse()
                         } label: {
-                            Text("✅ Проверить")
+                            Text(String(localized: "heart.check"))
                                 .font(SP.Typography.caption)
                                 .foregroundColor(SP.Colors.success)
                                 .padding(.horizontal, 14)
@@ -201,7 +183,7 @@ struct HeartAnalysisView: View {
                         HStack(spacing: 6) {
                             Image(systemName: "checkmark.circle.fill")
                                 .foregroundColor(SP.Colors.success)
-                            Text("Пульс снизился после дыхания")
+                            Text(String(localized: "heart.pulse_dropped"))
                                 .font(SP.Typography.caption)
                                 .foregroundColor(SP.Colors.success)
                         }
@@ -226,7 +208,7 @@ struct HeartAnalysisView: View {
             HStack(spacing: 10) {
                 Image(systemName: service.isMonitoring ? "stop.fill" : "heart.fill")
                     .contentTransition(.symbolEffect(.replace))
-                Text(service.isMonitoring ? "Остановить" : "Начать мониторинг")
+                Text(service.isMonitoring ? String(localized: "heart.stop") : String(localized: "heart.start_monitoring"))
             }
             .font(SP.Typography.headline)
             .foregroundColor(.white)
@@ -251,21 +233,18 @@ struct HeartAnalysisView: View {
             HStack {
                 Image(systemName: "info.circle.fill")
                     .foregroundColor(SP.Colors.accent)
-                Text("Как это работает")
+                Text(String(localized: "heart.how_it_works"))
                     .font(SP.Typography.headline)
                     .foregroundColor(SP.Colors.textPrimary)
             }
             VStack(alignment: .leading, spacing: 8) {
-                infoLine("heart.fill", "Считывает пульс через Apple Health / Watch")
-                infoLine("waveform.path", "Анализирует регулярность ритма")
-                infoLine("brain.head.profile", "Сравнивает паттерны тревоги и сердечных проблем")
-                infoLine("lungs.fill", "Проверяет реакцию на дыхание")
+                infoLine("heart.fill", String(localized: "heart.info_reads_pulse"))
+                infoLine("waveform.path", String(localized: "heart.info_analyzes_rhythm"))
+                infoLine("brain.head.profile", String(localized: "heart.info_compares_patterns"))
+                infoLine("lungs.fill", String(localized: "heart.info_checks_breathing"))
             }
 
-            Text(
-                "Алгоритм основан на том, что при тревоге ритм ровный (синусовая тахикардия), " +
-                    "а при сердечных проблемах — нерегулярный. Это НЕ замена ЭКГ или врача."
-            )
+            Text(String(localized: "heart.algorithm_disclaimer"))
             .font(SP.Typography.caption2)
             .foregroundColor(SP.Colors.textTertiary)
             .lineSpacing(3)
@@ -293,10 +272,10 @@ struct HeartAnalysisView: View {
                 Text(diagnosisEmoji(a.diagnosis))
                     .font(.title)
                 VStack(alignment: .leading, spacing: 2) {
-                    Text(a.diagnosis.rawValue)
+                    Text(a.diagnosis.localizedTitle)
                         .font(SP.Typography.headline)
                         .foregroundColor(SP.Colors.textPrimary)
-                    Text("Уверенность: \(Int(a.confidence * 100))%")
+                    Text(String(localized: "heart.confidence \(Int(a.confidence * 100))"))
                         .font(SP.Typography.caption)
                         .foregroundColor(SP.Colors.textTertiary)
                 }
@@ -305,25 +284,25 @@ struct HeartAnalysisView: View {
 
             if a.diagnosis == .panicAttack {
                 differenceExplanation(
-                    title: "Признаки тревоги (не сердечной проблемы):",
+                    title: String(localized: "heart.anxiety_signs"),
                     points: [
-                        "Ритм регулярный (синусовая тахикардия)",
-                        "ЧСС \(Int(a.heartRate)) BPM — характерно для тревоги",
-                        "Паттерн: \(a.risePattern.rawValue)",
+                        String(localized: "heart.regular_rhythm"),
+                        String(localized: "heart.hr_typical \(Int(a.heartRate))"),
+                        String(localized: "heart.pattern \(a.risePattern.localizedTitle)"),
                         service.breathingResponseDetected
-                            ? "Пульс реагирует на дыхание ✓"
-                            : "Попробуйте дыхание для проверки",
+                            ? String(localized: "heart.pulse_responds")
+                            : String(localized: "heart.try_breathing"),
                     ],
                     color: SP.Colors.warning
                 )
             } else if a.diagnosis == .likelyCardiac || a.diagnosis == .arrhythmia {
                 differenceExplanation(
-                    title: "Признаки, требующие внимания врача:",
+                    title: String(localized: "heart.doctor_signs"),
                     points: [
-                        "Нерегулярный ритм (\(String(format: "%.0f%%", a.irregularity * 100)))",
-                        "HRV: \(String(format: "%.0f", a.hrvMs)) мс",
-                        "Не реагирует на дыхательные техники",
-                        "Рекомендуем вызвать скорую",
+                        String(localized: "heart.irregular_rhythm \(String(format: "%.0f%%", a.irregularity * 100))"),
+                        String(localized: "heart.hrv_value \(String(format: "%.0f", a.hrvMs))"),
+                        String(localized: "heart.no_breathing_response"),
+                        String(localized: "heart.recommend_emergency"),
                     ],
                     color: SP.Colors.danger
                 )
@@ -356,10 +335,10 @@ struct HeartAnalysisView: View {
 
     private func metricsGrid(_ a: HeartAnalysis) -> some View {
         LazyVGrid(columns: [.init(.flexible(), spacing: 12), .init(.flexible(), spacing: 12)], spacing: 12) {
-            metricTile("❤️ ЧСС", value: "\(Int(a.heartRate))", unit: "BPM")
-            metricTile("📈 HRV", value: String(format: "%.0f", a.hrvMs), unit: "мс")
-            metricTile("🔀 Регулярность", value: String(format: "%.0f%%", (1 - a.irregularity) * 100), unit: "")
-            metricTile("📊 Паттерн", value: a.risePattern.rawValue, unit: "")
+            metricTile(String(localized: "heart.metric_hr"), value: "\(Int(a.heartRate))", unit: "BPM")
+            metricTile(String(localized: "heart.metric_hrv"), value: String(format: "%.0f", a.hrvMs), unit: String(localized: "heart.ms"))
+            metricTile(String(localized: "heart.metric_regularity"), value: String(format: "%.0f%%", (1 - a.irregularity) * 100), unit: "")
+            metricTile(String(localized: "heart.metric_pattern"), value: a.risePattern.localizedTitle, unit: "")
         }
     }
 
@@ -387,7 +366,7 @@ struct HeartAnalysisView: View {
             HStack {
                 Image(systemName: "lightbulb.fill")
                     .foregroundColor(SP.Colors.warning)
-                Text("Рекомендация")
+                Text(String(localized: "heart.recommendation"))
                     .font(SP.Typography.headline)
                     .foregroundColor(SP.Colors.textPrimary)
             }

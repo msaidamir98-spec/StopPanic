@@ -107,9 +107,9 @@ struct JournalEmptyState: View {
     var body: some View {
         EmptyStateView(
             icon: "book.closed.fill",
-            title: "Дневник пуст",
-            message: "Это хорошая новость! Записывай эпизоды, чтобы отслеживать прогресс и находить паттерны.",
-            actionTitle: "Записать первый эпизод"
+            title: String(localized: "empty.journal_title"),
+            message: String(localized: "empty.journal_message"),
+            actionTitle: String(localized: "empty.journal_action")
         )
     }
 }
@@ -120,8 +120,8 @@ struct ToolsCompletedState: View {
     var body: some View {
         EmptyStateView(
             icon: "checkmark.seal.fill",
-            title: "Все техники освоены 🎉",
-            message: "Ты молодец! Продолжай практиковать — каждая сессия делает тебя сильнее."
+            title: String(localized: "empty.tools_done_title"),
+            message: String(localized: "empty.tools_done_message")
         )
     }
 }
@@ -132,9 +132,9 @@ struct HeartDataEmptyState: View {
     var body: some View {
         EmptyStateView(
             icon: "heart.text.square",
-            title: "Нет данных пульса",
-            message: "Подключи Apple Watch или используй камеру для измерения пульса и анализа.",
-            actionTitle: "Подключить Health"
+            title: String(localized: "empty.heart_title"),
+            message: String(localized: "empty.heart_message"),
+            actionTitle: String(localized: "empty.heart_action")
         )
     }
 }
@@ -145,9 +145,9 @@ struct AchievementsEmptyState: View {
     var body: some View {
         EmptyStateView(
             icon: "trophy.fill",
-            title: "Начни свой путь",
-            message: "Выполняй упражнения, записывай дневник и зарабатывай достижения. Каждый шаг считается.",
-            actionTitle: "Начать"
+            title: String(localized: "empty.achievements_title"),
+            message: String(localized: "empty.achievements_message"),
+            actionTitle: String(localized: "empty.achievements_action")
         )
     }
 }
@@ -160,8 +160,8 @@ struct SearchEmptyState: View {
     var body: some View {
         EmptyStateView(
             icon: "magnifyingglass",
-            title: "Ничего не найдено",
-            message: "По запросу «\(query)» нет результатов. Попробуй другие ключевые слова."
+            title: String(localized: "empty.search_title"),
+            message: String(localized: "empty.search_message \(query)")
         )
     }
 }

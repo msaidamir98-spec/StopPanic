@@ -1,0 +1,74 @@
+/* WatchHomeView */
+"watch.bpm" = "уд/мин";
+"watch.monitoring" = "Мониторинг";
+"watch.stop" = "Остановить";
+"watch.diagnosis" = "Диагностика";
+"watch.iphone_connected" = "iPhone подключён";
+"watch.irreg" = "Нерег.";
+"watch.hr_label" = "ЧСС";
+"watch.hrv_ms" = "HRV мс";
+"watch.call_112" = "Вызвать 112";
+"watch.close" = "Закрыть";
+
+/* WatchBreathingView */
+"watch.breath_title" = "Дыхание";
+"watch.breath_ready" = "Готов к дыханию";
+"watch.breath_inhale" = "Вдох";
+"watch.breath_hold" = "Задержка";
+"watch.breath_exhale" = "Выдох";
+"watch.breath_done" = "Отлично!";
+"watch.breath_again" = "Ещё раз";
+"watch.breath_start" = "Начать 4-7-8";
+"watch.breath_stop" = "Остановить";
+
+/* WatchSOSView */
+"watch.sos_sent" = "SOS отправлен";
+"watch.sos_iphone_notify" = "Уведомление на iPhone";
+"watch.sos_delivered" = "Доставлено";
+"watch.sos_cancel" = "Отменить";
+"watch.sos_countdown" = "SOS через";
+"watch.sos_cancel_short" = "Отмена";
+"watch.sos_emergency" = "Экстренный сигнал";
+"watch.sos_send" = "Отправить SOS на iPhone";
+
+/* WatchDifferentialView */
+"watch.diff_title" = "Справка";
+"watch.diff_panic" = "Паническая атака";
+"watch.diff_cardiac" = "Сердечный приступ";
+"watch.diff_call_112" = "При сомнениях — звоните 112!";
+"watch.diff_pa_tab" = "ПА";
+"watch.diff_cardiac_tab" = "Сердце";
+
+/* Differential - Panic symptoms */
+"watch.diff_pa_hr" = "ЧСС 100–150 уд/мин";
+"watch.diff_pa_rhythm" = "Ритм ровный, регулярный";
+"watch.diff_pa_peak" = "Пик 10–20 минут";
+"watch.diff_pa_breathing" = "Дыхание помогает";
+"watch.diff_pa_tingling" = "Покалывание в руках";
+"watch.diff_pa_unreality" = "Чувство нереальности";
+
+/* Differential - Cardiac symptoms */
+"watch.diff_card_pulse" = "Пульс нерегулярный";
+"watch.diff_card_arrhythmia" = "Аритмия, перебои";
+"watch.diff_card_duration" = "Не проходит 20+ мин";
+"watch.diff_card_jaw_arm" = "Боль в челюсти / руке";
+"watch.diff_card_sweat" = "Холодный пот";
+"watch.diff_card_chest" = "Давящая боль в груди";
+
+/* WatchHeartService - Status */
+"watch.status_normal" = "Норма";
+"watch.status_panic" = "Похоже на ПА";
+"watch.status_cardiac" = "⚠️ Возможно сердце";
+"watch.status_analyzing" = "Анализирую...";
+
+/* WatchHeartService - Diagnosis titles */
+"watch.diag_normal_title" = "Всё в порядке";
+"watch.diag_panic_title" = "Паническая атака";
+"watch.diag_cardiac_title" = "Возможная сердечная проблема";
+"watch.diag_inconclusive_title" = "Недостаточно данных";
+
+/* WatchHeartService - Diagnosis details */
+"watch.diag_normal_detail" = "Ваш пульс в норме. Продолжайте мониторинг.";
+"watch.diag_panic_detail" = "Ритм ровный, ЧСС повышен — характерно для панической атаки. Попробуйте дыхание 4-7-8.";
+"watch.diag_cardiac_detail" = "Обнаружена нерегулярность ритма. Обратитесь к врачу или вызовите скорую.";
+"watch.diag_inconclusive_detail" = "Продолжайте мониторинг для более точного анализа.";

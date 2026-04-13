@@ -10,12 +10,23 @@ struct BreathingSessionView: View {
     // MARK: Internal
 
     enum BreathPhase: String {
-        case ready = "Готов?"
-        case inhale = "Вдох"
-        case hold = "Задержка"
-        case exhale = "Выдох"
-        case holdAfter = "Пауза"
-        case complete = "Готово!"
+        case ready = "ready"
+        case inhale = "inhale"
+        case hold = "hold"
+        case exhale = "exhale"
+        case holdAfter = "holdAfter"
+        case complete = "complete"
+
+        var text: String {
+            switch self {
+            case .ready: String(localized: "breathing.ready")
+            case .inhale: String(localized: "breathing.inhale")
+            case .hold: String(localized: "breathing.hold")
+            case .exhale: String(localized: "breathing.exhale")
+            case .holdAfter: String(localized: "breathing.pause")
+            case .complete: String(localized: "breathing.complete")
+            }
+        }
     }
 
     let technique: BreathingTechnique
@@ -81,7 +92,7 @@ struct BreathingSessionView: View {
     @State
     private var phase: BreathPhase = .ready
     @State
-    private var phaseText: String = "Готов?"
+    private var phaseText: String = String(localized: "breathing.ready")
     @State
     private var cycleCount = 0
     @State
@@ -111,10 +122,10 @@ struct BreathingSessionView: View {
 
     private var phaseHint: String {
         switch phase {
-        case .inhale: "через нос 🫁"
-        case .hold: "спокойно 🧘"
-        case .exhale: "через рот 💨"
-        case .holdAfter: "расслабься"
+        case .inhale: String(localized: "breathing.throughNose")
+        case .hold: String(localized: "breathing.calmly")
+        case .exhale: String(localized: "breathing.throughMouth")
+        case .holdAfter: String(localized: "breathing.relax")
         default: ""
         }
     }
@@ -247,8 +258,8 @@ struct BreathingSessionView: View {
 
     private var statsRow: some View {
         HStack(spacing: 14) {
-            statItem(icon: "repeat", value: "\(cycleCount)", label: "циклов")
-            statItem(icon: "clock", value: formattedTime, label: "время")
+            statItem(icon: "repeat", value: "\(cycleCount)", label: String(localized: "breathing.cycles"))
+            statItem(icon: "clock", value: formattedTime, label: String(localized: "breathing.time"))
             statItem(
                 icon: "bolt.heart", value: "\(Int(coordinator.healthManager.heartRate))",
                 label: "BPM"
@@ -271,7 +282,7 @@ struct BreathingSessionView: View {
             HStack(spacing: 10) {
                 Image(systemName: isActive ? "stop.fill" : "play.fill")
                     .contentTransition(.symbolEffect(.replace))
-                Text(isActive ? "Остановить" : "Начать")
+                Text(isActive ? String(localized: "general.stop") : String(localized: "general.start"))
             }
             .font(SP.Typography.headline)
             .foregroundColor(.white)
@@ -379,7 +390,7 @@ struct BreathingSessionView: View {
     private func setPhase(_ p: BreathPhase, duration: TimeInterval) {
         withAnimation(SP.Anim.springSnappy) {
             phase = p
-            phaseText = p.rawValue
+            phaseText = p.text
         }
         SP.Haptic.soft()
 
@@ -417,7 +428,7 @@ struct BreathingSessionView: View {
 
         withAnimation(SP.Anim.spring) {
             phase = .complete
-            phaseText = cycleCount > 0 ? "Отлично! 🎉" : "Готов?"
+            phaseText = cycleCount > 0 ? String(localized: "breathing.excellent") : String(localized: "breathing.ready")
         }
     }
 }

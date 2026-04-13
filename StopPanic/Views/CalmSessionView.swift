@@ -16,11 +16,11 @@ final class CalmSessionViewModel: ObservableObject {
 
         var title: String {
             switch self {
-            case .intro: "Сессия спокойствия"
-            case .breathing: "Дыхание"
-            case .grounding: "Заземление"
-            case .reflection: "Рефлексия"
-            case .complete: "Готово!"
+            case .intro: String(localized: "calm.phase_intro")
+            case .breathing: String(localized: "calm.phase_breathing")
+            case .grounding: String(localized: "calm.phase_grounding")
+            case .reflection: String(localized: "calm.phase_reflection")
+            case .complete: String(localized: "calm.phase_complete")
             }
         }
 
@@ -109,7 +109,7 @@ struct CalmSessionView: View {
                         SP.Haptic.success()
                         dismiss()
                     } label: {
-                        Text("Закрыть")
+                        Text(String(localized: "general.close"))
                             .spPrimaryButton()
                     }
                 }
@@ -120,7 +120,7 @@ struct CalmSessionView: View {
         .navigationBarTitleDisplayMode(.inline)
         .toolbar {
             ToolbarItem(placement: .navigationBarTrailing) {
-                Button("Закрыть") { dismiss() }
+                Button(String(localized: "general.close")) { dismiss() }
                     .foregroundColor(SP.Colors.textSecondary)
             }
         }
@@ -138,11 +138,11 @@ struct CalmSessionView: View {
 
     private var nextButtonTitle: String {
         switch viewModel.phase {
-        case .intro: "Начать дыхание →"
-        case .breathing: "К заземлению →"
-        case .grounding: "К рефлексии →"
-        case .reflection: "Завершить ✓"
-        case .complete: "Закрыть"
+        case .intro: String(localized: "calm.start_breathing")
+        case .breathing: String(localized: "calm.to_grounding")
+        case .grounding: String(localized: "calm.to_reflection")
+        case .reflection: String(localized: "calm.finish")
+        case .complete: String(localized: "general.close")
         }
     }
 
@@ -151,26 +151,26 @@ struct CalmSessionView: View {
         switch viewModel.phase {
         case .intro:
             VStack(spacing: 12) {
-                Text("Эта сессия проведёт тебя через 3 этапа:")
+                Text(String(localized: "calm.intro_body"))
                     .font(SP.Typography.body)
                     .foregroundColor(SP.Colors.textSecondary)
                     .multilineTextAlignment(.center)
 
                 VStack(alignment: .leading, spacing: 10) {
-                    phaseItem("1", "Дыхание", "Успокоим нервную систему", SP.Colors.calm)
-                    phaseItem("2", "Заземление", "Переключим внимание", SP.Colors.accent)
-                    phaseItem("3", "Рефлексия", "Проработаем мысли", SP.Colors.warmth)
+                    phaseItem("1", String(localized: "calm.phase_breathing"), String(localized: "calm.intro_breathing_desc"), SP.Colors.calm)
+                    phaseItem("2", String(localized: "calm.phase_grounding"), String(localized: "calm.intro_grounding_desc"), SP.Colors.accent)
+                    phaseItem("3", String(localized: "calm.phase_reflection"), String(localized: "calm.intro_reflection_desc"), SP.Colors.warmth)
                 }
                 .spGlassCard()
             }
 
         case .breathing:
             VStack(spacing: 16) {
-                Text("Дыши по схеме 4-7-8")
+                Text(String(localized: "calm.breathe_478"))
                     .font(SP.Typography.title3)
                     .foregroundColor(SP.Colors.textPrimary)
 
-                Text("Вдох 4 сек → Задержка 7 сек → Выдох 8 сек\n\nСделай 4 цикла, затем нажми «Далее»")
+                Text(String(localized: "calm.breathe_instructions"))
                     .font(SP.Typography.body)
                     .foregroundColor(SP.Colors.textSecondary)
                     .multilineTextAlignment(.center)
@@ -185,26 +185,26 @@ struct CalmSessionView: View {
                     .foregroundColor(SP.Colors.textPrimary)
 
                 VStack(alignment: .leading, spacing: 10) {
-                    groundingLine("👁️", "5 вещей, которые ты ВИДИШЬ")
-                    groundingLine("👂", "4 звука, которые ты СЛЫШИШЬ")
-                    groundingLine("✋", "3 предмета, которых КАСАЕШЬСЯ")
-                    groundingLine("👃", "2 запаха, которые ЧУВСТВУЕШЬ")
-                    groundingLine("👅", "1 вкус, который ОЩУЩАЕШЬ")
+                    groundingLine("👁️", String(localized: "calm.ground_see"))
+                    groundingLine("👂", String(localized: "calm.ground_hear"))
+                    groundingLine("✋", String(localized: "calm.ground_touch"))
+                    groundingLine("👃", String(localized: "calm.ground_smell"))
+                    groundingLine("👅", String(localized: "calm.ground_taste"))
                 }
                 .spGlassCard()
             }
 
         case .reflection:
             VStack(spacing: 16) {
-                Text("Запиши или проговори:")
+                Text(String(localized: "calm.reflection_title"))
                     .font(SP.Typography.title3)
                     .foregroundColor(SP.Colors.textPrimary)
 
                 VStack(alignment: .leading, spacing: 12) {
-                    Text("• Что вызвало тревогу?")
-                    Text("• Насколько она была реальной угрозой? (1-10)")
-                    Text("• Что помогло успокоиться?")
-                    Text("• Что ты скажешь себе в следующий раз?")
+                    Text(String(localized: "calm.reflection_q1"))
+                    Text(String(localized: "calm.reflection_q2"))
+                    Text(String(localized: "calm.reflection_q3"))
+                    Text(String(localized: "calm.reflection_q4"))
                 }
                 .font(SP.Typography.body)
                 .foregroundColor(SP.Colors.textSecondary)
@@ -213,11 +213,11 @@ struct CalmSessionView: View {
 
         case .complete:
             VStack(spacing: 12) {
-                Text("Сессия завершена! 🎉")
+                Text(String(localized: "calm.session_done"))
                     .font(SP.Typography.title3)
                     .foregroundColor(SP.Colors.textPrimary)
 
-                Text("Ты прошёл дыхание, заземление и рефлексию.\nКаждая сессия делает тебя сильнее.")
+                Text(String(localized: "calm.session_done_body"))
                     .font(SP.Typography.body)
                     .foregroundColor(SP.Colors.textSecondary)
                     .multilineTextAlignment(.center)

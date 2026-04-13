@@ -1,0 +1,162 @@
+{
+  "identifier" : "com.stillo.products",
+  "nonRenewingSubscriptions" : [
+
+  ],
+  "products" : [
+
+  ],
+  "settings" : {
+    "_applicationInternalID" : "",
+    "_developerTeamID" : "6K26HD4XFR",
+    "_failTransactionsEnabled" : false,
+    "_lastSynchronizedDate" : "",
+    "_storeKitErrors" : [
+      {
+        "current" : null,
+        "enabled" : false,
+        "name" : "Load Products"
+      },
+      {
+        "current" : null,
+        "enabled" : false,
+        "name" : "Purchase"
+      },
+      {
+        "current" : null,
+        "enabled" : false,
+        "name" : "Verification"
+      },
+      {
+        "current" : null,
+        "enabled" : false,
+        "name" : "App Store Sync"
+      },
+      {
+        "current" : null,
+        "enabled" : false,
+        "name" : "Subscription Status"
+      },
+      {
+        "current" : null,
+        "enabled" : false,
+        "name" : "App Transaction"
+      },
+      {
+        "current" : null,
+        "enabled" : false,
+        "name" : "Manage Subscriptions Sheet"
+      },
+      {
+        "current" : null,
+        "enabled" : false,
+        "name" : "Refund Request Sheet"
+      },
+      {
+        "current" : null,
+        "enabled" : false,
+        "name" : "Offer Code Redeem Sheet"
+      }
+    ]
+  },
+  "subscriptionGroups" : [
+    {
+      "id" : "com.stillo.premium",
+      "localizations" : [
+        {
+          "description" : "Unlock all tools, unlimited sessions, and premium features",
+          "displayName" : "Stillō Premium",
+          "locale" : "en_US"
+        },
+        {
+          "description" : "Все инструменты, безлимитные сессии и премиум-функции",
+          "displayName" : "Stillō Премиум",
+          "locale" : "ru"
+        }
+      ],
+      "name" : "Stillō Premium",
+      "subscriptions" : [
+        {
+          "adHocOffers" : [
+
+          ],
+          "codeOffers" : [
+
+          ],
+          "displayPrice" : "4.99",
+          "familyShareable" : false,
+          "groupNumber" : 1,
+          "internalID" : "monthly_001",
+          "introductoryOffer" : {
+            "displayPrice" : "0.00",
+            "internalID" : "monthly_trial",
+            "paymentMode" : "free",
+            "subscriptionPeriod" : "P3D"
+          },
+          "localizations" : [
+            {
+              "description" : "Full access to all premium features",
+              "displayName" : "Monthly",
+              "locale" : "en_US"
+            },
+            {
+              "description" : "Полный доступ ко всем премиум-функциям",
+              "displayName" : "Месяц",
+              "locale" : "ru"
+            }
+          ],
+          "productID" : "com.stillo.premium.monthly",
+          "recurringSubscriptionPeriod" : "P1M",
+          "referenceName" : "Monthly Premium",
+          "subscriptionGroupID" : "com.stillo.premium",
+          "type" : "RecurringSubscription",
+          "winbackOffers" : [
+
+          ]
+        },
+        {
+          "adHocOffers" : [
+
+          ],
+          "codeOffers" : [
+
+          ],
+          "displayPrice" : "29.99",
+          "familyShareable" : false,
+          "groupNumber" : 1,
+          "internalID" : "yearly_001",
+          "introductoryOffer" : {
+            "displayPrice" : "0.00",
+            "internalID" : "yearly_trial",
+            "paymentMode" : "free",
+            "subscriptionPeriod" : "P1W"
+          },
+          "localizations" : [
+            {
+              "description" : "Full access — save 50% compared to monthly",
+              "displayName" : "Yearly",
+              "locale" : "en_US"
+            },
+            {
+              "description" : "Полный доступ — экономия 50% по сравнению с месяцем",
+              "displayName" : "Год",
+              "locale" : "ru"
+            }
+          ],
+          "productID" : "com.stillo.premium.yearly",
+          "recurringSubscriptionPeriod" : "P1Y",
+          "referenceName" : "Yearly Premium",
+          "subscriptionGroupID" : "com.stillo.premium",
+          "type" : "RecurringSubscription",
+          "winbackOffers" : [
+
+          ]
+        }
+      ]
+    }
+  ],
+  "version" : {
+    "major" : 4,
+    "minor" : 0
+  }
+}

@@ -15,10 +15,10 @@ struct PanicPrediction: Codable, Identifiable {
         }
 
         var title: String {
-            switch self { case .low: "Низкий"
-            case .moderate: "Умеренный"
-            case .high: "Повышенный"
-            case .critical: "Критический" }
+            switch self { case .low: String(localized: "risk.low")
+            case .moderate: String(localized: "risk.moderate")
+            case .high: String(localized: "risk.high")
+            case .critical: String(localized: "risk.critical") }
         }
     }
 

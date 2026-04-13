@@ -75,7 +75,7 @@ struct HealthKitSettingsView: View {
 
             if !isAvailable {
                 // HealthKit not available (simulator, iPad, etc.)
-                Label("HealthKit недоступен на этом устройстве", systemImage: "exclamationmark.triangle.fill")
+                Label(String(localized: "health.unavailable_device"), systemImage: "exclamationmark.triangle.fill")
                     .font(SP.Typography.caption)
                     .foregroundColor(SP.Colors.warmth)
                     .padding(10)
@@ -92,14 +92,14 @@ struct HealthKitSettingsView: View {
                             ProgressView()
                                 .tint(.white)
                         }
-                        Text("Подключить Apple Health")
+                        Text(String(localized: "health.connect"))
                     }
                     .spPrimaryButton()
                 }
                 .disabled(isConnecting)
                 .padding(.top, 4)
             } else {
-                Label("Подключено", systemImage: "checkmark.circle.fill")
+                Label(String(localized: "health.connected_label"), systemImage: "checkmark.circle.fill")
                     .font(SP.Typography.callout)
                     .foregroundColor(SP.Colors.success)
             }
@@ -112,29 +112,29 @@ struct HealthKitSettingsView: View {
 
     private var statusTitle: String {
         if !isAvailable {
-            return "Health недоступен"
+            return String(localized: "health.unavailable")
         }
-        return isConnected ? "Apple Health подключён" : "Apple Health не подключён"
+        return isConnected ? String(localized: "health.connected") : String(localized: "health.not_connected")
     }
 
     private var statusSubtitle: String {
         if !isAvailable {
-            return "На этом устройстве нет доступа к HealthKit. Используй iPhone с Apple Watch для чтения пульса."
+            return String(localized: "health.unavailable_body")
         }
         return isConnected
-            ? "Stillō считывает данные пульса для отслеживания тревожности"
-            : "Подключи Apple Health, чтобы Stillō мог считывать пульс с Apple Watch"
+            ? String(localized: "health.connected_body")
+            : String(localized: "health.not_connected_body")
     }
 
     private var dataExplanationCard: some View {
         VStack(alignment: .leading, spacing: 14) {
-            Text("📊 Какие данные считываются")
+            Text(String(localized: "health.data_title"))
                 .font(SP.Typography.headline)
                 .foregroundColor(SP.Colors.textPrimary)
 
-            dataRow(icon: "heart.fill", title: "Пульс (BPM)", description: "Частота сердечных сокращений с Apple Watch", color: SP.Colors.danger)
+            dataRow(icon: "heart.fill", title: String(localized: "health.data_pulse"), description: String(localized: "health.data_pulse_desc"), color: SP.Colors.danger)
 
-            dataRow(icon: "waveform.path.ecg", title: "HRV (SDNN)", description: "Вариабельность сердечного ритма — маркер стресса", color: SP.Colors.accent)
+            dataRow(icon: "waveform.path.ecg", title: String(localized: "health.data_hrv"), description: String(localized: "health.data_hrv_desc"), color: SP.Colors.accent)
         }
         .frame(maxWidth: .infinity, alignment: .leading)
         .spGlassCard()
@@ -149,11 +149,11 @@ struct HealthKitSettingsView: View {
                 .font(.system(size: 28))
                 .foregroundColor(SP.Colors.accent)
 
-            Text("Приватность")
+            Text(String(localized: "health.privacy_title"))
                 .font(SP.Typography.headline)
                 .foregroundColor(SP.Colors.textPrimary)
 
-            Text("Все данные хранятся только на устройстве. Stillō только читает данные — мы ничего не записываем в Apple Health и не передаём на серверы.")
+            Text(String(localized: "health.privacy_body"))
                 .font(SP.Typography.caption)
                 .foregroundColor(SP.Colors.textTertiary)
                 .multilineTextAlignment(.center)

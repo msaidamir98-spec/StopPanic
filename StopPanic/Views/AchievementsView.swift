@@ -26,7 +26,7 @@ struct AchievementsView: View {
                             font: SP.Typography.heroTitle,
                             color: SP.Colors.warning
                         )
-                        Text("\(service.achievements.filter(\.isUnlocked).count) / \(service.achievements.count) разблокировано")
+                        Text(String(localized: "achievements.unlocked_count \(service.achievements.filter(\.isUnlocked).count) \(service.achievements.count)"))
                             .font(SP.Typography.subheadline)
                             .foregroundColor(SP.Colors.textSecondary)
                     }
@@ -48,7 +48,7 @@ struct AchievementsView: View {
                 .padding(.horizontal, SP.Layout.padding)
             }
         }
-        .navigationTitle("Достижения")
+        .navigationTitle(String(localized: "achievements.title"))
         .navigationBarTitleDisplayMode(.inline)
         .onAppear {
             withAnimation(.easeOut(duration: 0.6)) { appear = true }
@@ -100,7 +100,7 @@ struct AchievementsView: View {
                 HStack(spacing: 4) {
                     Image(systemName: "checkmark.circle.fill")
                         .font(.system(size: 10))
-                    Text("Разблокировано")
+                    Text(String(localized: "achievements.unlocked"))
                         .font(SP.Typography.caption2)
                 }
                 .foregroundColor(SP.Colors.success)

@@ -18,11 +18,21 @@ struct WatchBreathingView: View {
     private let totalCycles = 4
     
     enum BreathPhase: String {
-        case idle = "Готов к дыханию"
-        case inhale = "Вдох"
-        case hold = "Задержка"
-        case exhale = "Выдох"
-        case done = "Отлично!"
+        case idle = "idle"
+        case inhale = "inhale"
+        case hold = "hold"
+        case exhale = "exhale"
+        case done = "done"
+
+        var text: String {
+            switch self {
+            case .idle: String(localized: "watch.breath_ready")
+            case .inhale: String(localized: "watch.breath_inhale")
+            case .hold: String(localized: "watch.breath_hold")
+            case .exhale: String(localized: "watch.breath_exhale")
+            case .done: String(localized: "watch.breath_done")
+            }
+        }
     }
     
     private var phaseColor: Color {
@@ -38,7 +48,7 @@ struct WatchBreathingView: View {
     var body: some View {
         VStack(spacing: 6) {
             // Phase label
-            Text(phase.rawValue)
+            Text(phase.text)
                 .font(.system(.caption, design: .rounded, weight: .semibold))
                 .foregroundStyle(phaseColor)
                 .animation(.easeInOut(duration: 0.3), value: phase)
@@ -155,14 +165,14 @@ struct WatchBreathingView: View {
             .tint(isRunning ? .red.opacity(0.8) : phaseColor)
         }
         .padding(.vertical, 4)
-        .navigationTitle("Дыхание")
+        .navigationTitle(String(localized: "watch.breath_title"))
     }
     
     private var buttonLabel: String {
         switch phase {
-        case .done: return "Ещё раз"
-        case .idle: return "Начать 4-7-8"
-        default: return "Остановить"
+        case .done: return String(localized: "watch.breath_again")
+        case .idle: return String(localized: "watch.breath_start")
+        default: return String(localized: "watch.breath_stop")
         }
     }
     

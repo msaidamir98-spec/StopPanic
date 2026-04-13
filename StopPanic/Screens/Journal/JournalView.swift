@@ -58,10 +58,10 @@ struct JournalView: View {
     private var header: some View {
         HStack {
             VStack(alignment: .leading, spacing: 4) {
-                Text("Дневник")
+                Text(String(localized: "journal.title"))
                     .font(SP.Typography.title1)
                     .foregroundColor(SP.Colors.textPrimary)
-                Text("\(coordinator.diaryService.diaryEpisodes.count) записей")
+                Text("\(coordinator.diaryService.diaryEpisodes.count) \(String(localized: "journal.entries"))")
                     .font(SP.Typography.caption)
                     .foregroundColor(SP.Colors.textTertiary)
                     .contentTransition(.numericText())
@@ -88,9 +88,9 @@ struct JournalView: View {
 
     private var segmentPicker: some View {
         HStack(spacing: 4) {
-            segmentButton("Эпизоды", index: 0)
-            segmentButton("Настроение", index: 1)
-            segmentButton("Инсайты", index: 2)
+            segmentButton(String(localized: "journal.episodes"), index: 0)
+            segmentButton(String(localized: "journal.mood"), index: 1)
+            segmentButton(String(localized: "journal.insights"), index: 2)
         }
         .padding(4)
         .background(
@@ -113,8 +113,8 @@ struct JournalView: View {
             if coordinator.diaryService.diaryEpisodes.isEmpty {
                 emptyState(
                     icon: "book.closed.fill",
-                    title: "Дневник пока пуст",
-                    subtitle: "Записывай эпизоды, чтобы увидеть паттерны"
+                    title: String(localized: "journal.empty.title"),
+                    subtitle: String(localized: "journal.empty.subtitle")
                 )
             } else {
                 weekSummaryCard
@@ -146,7 +146,7 @@ struct JournalView: View {
                     font: SP.Typography.bigNumber,
                     color: weekEp.count > 3 ? SP.Colors.danger : SP.Colors.accent
                 )
-                Text("за неделю")
+                Text(String(localized: "journal.perWeek"))
                     .font(SP.Typography.caption2)
                     .foregroundColor(SP.Colors.textTertiary)
             }
@@ -157,7 +157,7 @@ struct JournalView: View {
                 Text("\(avgIntensity)/10")
                     .font(SP.Typography.title2)
                     .foregroundColor(intensityColor(avgIntensity))
-                Text("средняя сила")
+                Text(String(localized: "journal.avgIntensity"))
                     .font(SP.Typography.caption2)
                     .foregroundColor(SP.Colors.textTertiary)
             }
@@ -168,7 +168,7 @@ struct JournalView: View {
                 Image(systemName: weekEp.count <= 2 ? "arrow.down.right" : "arrow.up.right")
                     .font(.system(size: 20))
                     .foregroundColor(weekEp.count <= 2 ? SP.Colors.success : SP.Colors.warning)
-                Text("тренд")
+                Text(String(localized: "journal.trend"))
                     .font(SP.Typography.caption2)
                     .foregroundColor(SP.Colors.textTertiary)
             }
@@ -183,8 +183,8 @@ struct JournalView: View {
             if coordinator.moodMapService.points.isEmpty {
                 emptyState(
                     icon: "map.fill",
-                    title: "Карта настроений пуста",
-                    subtitle: "Отмечай настроение в разных местах"
+                    title: String(localized: "journal.mood_empty_title"),
+                    subtitle: String(localized: "journal.mood_empty_subtitle")
                 )
             } else {
                 ForEach(coordinator.moodMapService.points.sorted(by: { $0.date > $1.date })) { point in
@@ -225,8 +225,8 @@ struct JournalView: View {
             } label: {
                 ToolCardLabel(
                     icon: "dot.radiowaves.left.and.right",
-                    title: "Радар паники",
-                    subtitle: "Предсказание на основе данных",
+                    title: String(localized: "tools_patterns_title"),
+                    subtitle: String(localized: "tools_patterns_sub"),
                     color: SP.Colors.accent
                 )
             }
@@ -236,8 +236,8 @@ struct JournalView: View {
             } label: {
                 ToolCardLabel(
                     icon: "trophy.fill",
-                    title: "Достижения",
-                    subtitle: "\(coordinator.achievementService.achievements.filter(\.isUnlocked).count)/\(coordinator.achievementService.achievements.count) разблокировано",
+                    title: String(localized: "journal.achievements"),
+                    subtitle: "\(coordinator.achievementService.achievements.filter(\.isUnlocked).count)/\(coordinator.achievementService.achievements.count) \(String(localized: "journal.unlocked"))",
                     color: SP.Colors.warning
                 )
             }
@@ -254,10 +254,10 @@ struct JournalView: View {
         let allNotes = coordinator.diaryService.diaryEpisodes.suffix(30)
             .map(\.notes).joined(separator: " ").lowercased()
         let triggerMap = [
-            "работа": ("💼", "Работа"), "сон": ("😴", "Недосып"),
-            "кофе": ("☕", "Кофеин"), "метро": ("🚇", "Транспорт"),
-            "толпа": ("👥", "Толпа"), "ночь": ("🌙", "Ночь"),
-            "еда": ("🍔", "Еда"), "спорт": ("🏃", "Спорт"),
+            "работа": ("💼", String(localized: "trigger_stress")), "сон": ("😴", String(localized: "trigger_sleep")),
+            "кофе": ("☕", String(localized: "trigger_caffeine")), "метро": ("🚇", String(localized: "trigger_transport")),
+            "толпа": ("👥", String(localized: "trigger_crowds")), "ночь": ("🌙", String(localized: "trigger_night")),
+            "еда": ("🍔", String(localized: "journal.trigger_food")), "спорт": ("🏃", String(localized: "journal.trigger_sport")),
         ]
         let found = triggerMap.compactMap { allNotes.contains($0.key) ? $0.value : nil }
 
@@ -265,13 +265,13 @@ struct JournalView: View {
             HStack {
                 Image(systemName: "bolt.fill")
                     .foregroundColor(SP.Colors.warning)
-                Text("Частые триггеры")
+                Text(String(localized: "journal.common_triggers"))
                     .font(SP.Typography.headline)
                     .foregroundColor(SP.Colors.textPrimary)
             }
 
             if found.isEmpty {
-                Text("Записывайте больше эпизодов, чтобы обнаружить паттерны")
+                Text(String(localized: "journal.triggers_empty"))
                     .font(SP.Typography.callout)
                     .foregroundColor(SP.Colors.textTertiary)
             } else {
@@ -372,7 +372,7 @@ struct EpisodeCard: View {
             }
 
             VStack(alignment: .leading, spacing: 4) {
-                Text(episode.notes.isEmpty ? "Без заметок" : episode.notes)
+                Text(episode.notes.isEmpty ? String(localized: "journal.no_notes") : episode.notes)
                     .font(SP.Typography.callout)
                     .foregroundColor(SP.Colors.textPrimary)
                     .lineLimit(2)
@@ -417,7 +417,7 @@ struct AddEpisodeSheet: View {
                         // Intensity
                         VStack(spacing: 12) {
                             HStack {
-                                Text("Сила эпизода")
+                                Text(String(localized: "journal.add_intensity"))
                                     .font(SP.Typography.headline)
                                     .foregroundColor(SP.Colors.textPrimary)
                                 Spacer()
@@ -438,7 +438,7 @@ struct AddEpisodeSheet: View {
 
                         // Triggers
                         VStack(alignment: .leading, spacing: 12) {
-                            Text("Что могло вызвать?")
+                            Text(String(localized: "journal.add_triggers"))
                                 .font(SP.Typography.headline)
                                 .foregroundColor(SP.Colors.textPrimary)
 
@@ -483,11 +483,11 @@ struct AddEpisodeSheet: View {
 
                         // Notes
                         VStack(alignment: .leading, spacing: 10) {
-                            Text("Заметки")
+                            Text(String(localized: "journal.add_notes"))
                                 .font(SP.Typography.headline)
                                 .foregroundColor(SP.Colors.textPrimary)
 
-                            TextField("Что произошло? Как себя чувствуешь?", text: $notes, axis: .vertical)
+                            TextField(String(localized: "journal.add_notes_placeholder"), text: $notes, axis: .vertical)
                                 .textFieldStyle(.plain)
                                 .padding(14)
                                 .background(
@@ -501,7 +501,7 @@ struct AddEpisodeSheet: View {
                         // Save
                         Button {
                             let triggerText = selectedTriggers.joined(separator: ", ")
-                            let fullNotes = [notes, triggerText].filter { !$0.isEmpty }.joined(separator: " | Триггеры: ")
+                            let fullNotes = [notes, triggerText].filter { !$0.isEmpty }.joined(separator: " | \(String(localized: "journal.add_triggers_prefix"))")
                             coordinator.diaryService.addDiaryEpisode(
                                 intensity: Int(intensity),
                                 notes: fullNotes
@@ -511,7 +511,7 @@ struct AddEpisodeSheet: View {
                             SP.Haptic.success()
                             dismiss()
                         } label: {
-                            Text("Сохранить запись")
+                            Text(String(localized: "journal.add_save"))
                                 .spPrimaryButton()
                         }
                     }
@@ -519,11 +519,11 @@ struct AddEpisodeSheet: View {
                     .padding(.vertical, 20)
                 }
             }
-            .navigationTitle("Новая запись")
+            .navigationTitle(String(localized: "journal.add_title"))
             .navigationBarTitleDisplayMode(.inline)
             .toolbar {
                 ToolbarItem(placement: .cancellationAction) {
-                    Button("Отмена") { dismiss() }
+                    Button(String(localized: "general.cancel")) { dismiss() }
                         .foregroundColor(SP.Colors.textSecondary)
                 }
             }
@@ -543,9 +543,9 @@ struct AddEpisodeSheet: View {
     private var selectedTriggers: Set<String> = []
 
     private let triggerOptions = [
-        "💼 Работа", "🚇 Транспорт", "👥 Толпа", "🌙 Ночь",
-        "☕ Кофеин", "😴 Недосып", "💊 Лекарства", "🏥 Здоровье",
-        "💰 Деньги", "👨‍👩‍👧 Семья", "📱 Соцсети", "❓ Без причины",
+        "💼 \(String(localized: "trigger_opt_work"))", "🚇 \(String(localized: "trigger_opt_transport"))", "👥 \(String(localized: "trigger_opt_crowds"))", "🌙 \(String(localized: "trigger_opt_night"))",
+        "☕ \(String(localized: "trigger_opt_caffeine"))", "😴 \(String(localized: "trigger_opt_sleep"))", "💊 \(String(localized: "trigger_opt_meds"))", "🏥 \(String(localized: "trigger_opt_health"))",
+        "💰 \(String(localized: "trigger_opt_money"))", "👨‍👩‍👧 \(String(localized: "trigger_opt_family"))", "📱 \(String(localized: "trigger_opt_social"))", "❓ \(String(localized: "trigger_opt_none"))",
     ]
 
     private var sliderColor: Color {
@@ -559,11 +559,11 @@ struct AddEpisodeSheet: View {
 
     private var intensityLabel: String {
         switch Int(intensity) {
-        case 1 ... 2: "Лёгкая тревога"
-        case 3 ... 4: "Умеренная тревога"
-        case 5 ... 6: "Сильная тревога"
-        case 7 ... 8: "Паническая атака"
-        default: "Сильная паника"
+        case 1 ... 2: String(localized: "journal.intensity_1")
+        case 3 ... 4: String(localized: "journal.intensity_2")
+        case 5 ... 6: String(localized: "journal.intensity_3")
+        case 7 ... 8: String(localized: "journal.intensity_4")
+        default: String(localized: "journal.intensity_5")
         }
     }
 }

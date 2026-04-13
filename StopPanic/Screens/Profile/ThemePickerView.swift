@@ -24,7 +24,7 @@ struct ThemePickerView: View {
                 .padding(.bottom, 40)
             }
         }
-        .navigationTitle("Оформление")
+        .navigationTitle(String(localized: "theme.title"))
         .navigationBarTitleDisplayMode(.inline)
         .onAppear {
             withAnimation(SP.Anim.spring) { appear = true }
@@ -103,7 +103,7 @@ struct ThemePickerView: View {
                 .padding(16)
             }
 
-            Text("Предпросмотр")
+            Text(String(localized: "theme.preview"))
                 .font(SP.Typography.caption)
                 .foregroundColor(SP.Colors.textTertiary)
         }
@@ -113,7 +113,7 @@ struct ThemePickerView: View {
 
     private var themeSelectorCard: some View {
         VStack(alignment: .leading, spacing: 14) {
-            Text("Тема")
+            Text(String(localized: "theme.theme"))
                 .font(SP.Typography.headline)
                 .foregroundColor(SP.Colors.textPrimary)
 
@@ -165,10 +165,10 @@ struct ThemePickerView: View {
 
     private var infoCard: some View {
         VStack(spacing: 8) {
-            Text("💡 Подсказка")
+            Text(String(localized: "theme.tip_title"))
                 .font(SP.Typography.headline)
                 .foregroundColor(SP.Colors.textPrimary)
-            Text("Режим «Авто» подстраивается под настройки устройства. Тёмная тема лучше для вечера — она снижает нагрузку на глаза и помогает расслабиться.")
+            Text(String(localized: "theme.tip_body"))
                 .font(SP.Typography.caption)
                 .foregroundColor(SP.Colors.textTertiary)
                 .multilineTextAlignment(.center)

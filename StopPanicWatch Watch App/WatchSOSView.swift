@@ -66,11 +66,11 @@ struct WatchSOSView: View {
             }
         }
         
-        Text("SOS отправлен")
+        Text(String(localized: "watch.sos_sent"))
             .font(.system(.headline, design: .rounded))
             .foregroundStyle(.red)
         
-        Text("Уведомление на iPhone")
+        Text(String(localized: "watch.sos_iphone_notify"))
             .font(.system(.caption2, design: .rounded))
             .foregroundStyle(.secondary)
         
@@ -78,7 +78,7 @@ struct WatchSOSView: View {
             HStack(spacing: 4) {
                 Image(systemName: "checkmark.circle.fill")
                     .font(.system(size: 10))
-                Text("Доставлено")
+                Text(String(localized: "watch.sos_delivered"))
                     .font(.system(size: 10))
             }
             .foregroundStyle(.green)
@@ -92,7 +92,7 @@ struct WatchSOSView: View {
             rippleScale = 0.8
             rippleOpacity = 0.5
         } label: {
-            Text("Отменить")
+            Text(String(localized: "watch.sos_cancel"))
                 .font(.system(.caption, design: .rounded, weight: .medium))
                 .frame(maxWidth: .infinity)
         }
@@ -105,7 +105,7 @@ struct WatchSOSView: View {
     private var countdownView: some View {
         Spacer()
         
-        Text("SOS через")
+        Text(String(localized: "watch.sos_countdown"))
             .font(.system(.caption2, design: .rounded))
             .foregroundStyle(.red.opacity(0.7))
         
@@ -141,7 +141,7 @@ struct WatchSOSView: View {
             HStack(spacing: 4) {
                 Image(systemName: "xmark.circle.fill")
                     .font(.caption)
-                Text("Отмена")
+                Text(String(localized: "watch.sos_cancel_short"))
                     .font(.system(.caption, design: .rounded, weight: .semibold))
             }
             .frame(maxWidth: .infinity)
@@ -156,7 +156,7 @@ struct WatchSOSView: View {
     private var mainSOSButton: some View {
         Spacer()
         
-        Text("Экстренный сигнал")
+        Text(String(localized: "watch.sos_emergency"))
             .font(.system(.caption, design: .rounded, weight: .medium))
             .foregroundStyle(.secondary)
         
@@ -211,7 +211,7 @@ struct WatchSOSView: View {
         }
         .buttonStyle(.plain)
         
-        Text("Отправить SOS на iPhone")
+        Text(String(localized: "watch.sos_send"))
             .font(.system(size: 9))
             .foregroundStyle(.secondary)
         

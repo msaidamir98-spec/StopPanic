@@ -3,18 +3,28 @@ import Foundation
 /// Достижения и геймификация
 struct Achievement: Codable, Identifiable {
     enum Category: String, Codable, CaseIterable {
-        case streak = "Серия"
-        case breathing = "Дыхание"
-        case diary = "Дневник"
-        case techniques = "Техники"
-        case milestone = "Вехи"
+        case streak = "streak"
+        case breathing = "breathing"
+        case diary = "diary"
+        case techniques = "techniques"
+        case milestone = "milestone"
+
+        var localizedTitle: String {
+            switch self {
+            case .streak: String(localized: "achievement.cat_streak")
+            case .breathing: String(localized: "achievement.cat_breathing")
+            case .diary: String(localized: "achievement.cat_diary")
+            case .techniques: String(localized: "achievement.cat_techniques")
+            case .milestone: String(localized: "achievement.cat_milestone")
+            }
+        }
     }
 
     static let all: [Self] = [
         .init(
             id: "first_breath",
-            title: "Первый вдох",
-            description: "Завершите первое дыхательное упражнение",
+            title: String(localized: "achievement.first_breath_title"),
+            description: String(localized: "achievement.first_breath_desc"),
             icon: "wind",
             category: .breathing,
             requirement: 1,
@@ -23,8 +33,8 @@ struct Achievement: Codable, Identifiable {
         ),
         .init(
             id: "week_warrior",
-            title: "Воин недели",
-            description: "7 дней подряд без панической атаки",
+            title: String(localized: "achievement.week_warrior_title"),
+            description: String(localized: "achievement.week_warrior_desc"),
             icon: "flame.fill",
             category: .streak,
             requirement: 7,
@@ -33,8 +43,8 @@ struct Achievement: Codable, Identifiable {
         ),
         .init(
             id: "diary_master",
-            title: "Мастер дневника",
-            description: "Запишите 30 записей в дневник",
+            title: String(localized: "achievement.diary_master_title"),
+            description: String(localized: "achievement.diary_master_desc"),
             icon: "book.fill",
             category: .diary,
             requirement: 30,
@@ -43,8 +53,8 @@ struct Achievement: Codable, Identifiable {
         ),
         .init(
             id: "technique_explorer",
-            title: "Исследователь",
-            description: "Попробуйте все 10 техник",
+            title: String(localized: "achievement.technique_explorer_title"),
+            description: String(localized: "achievement.technique_explorer_desc"),
             icon: "star.fill",
             category: .techniques,
             requirement: 10,
@@ -53,8 +63,8 @@ struct Achievement: Codable, Identifiable {
         ),
         .init(
             id: "calm_month",
-            title: "Спокойный месяц",
-            description: "30 дней подряд практики",
+            title: String(localized: "achievement.calm_month_title"),
+            description: String(localized: "achievement.calm_month_desc"),
             icon: "trophy.fill",
             category: .milestone,
             requirement: 30,

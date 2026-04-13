@@ -69,8 +69,8 @@ struct AccessibleBreathingModifier: ViewModifier {
     func body(content: Content) -> some View {
         content
             .accessibilityElement(children: .combine)
-            .accessibilityLabel(isActive ? "Фаза дыхания: \(phase)" : "Дыхательная сессия не начата")
-            .accessibilityHint(isActive ? "Следуйте инструкциям на экране" : "Нажмите кнопку Начать для запуска сессии")
+            .accessibilityLabel(isActive ? String(localized: "a11y.breath_phase \(phase)") : String(localized: "a11y.breath_idle"))
+            .accessibilityHint(isActive ? String(localized: "a11y.breath_follow") : String(localized: "a11y.breath_tap_start"))
     }
 }
 
@@ -91,7 +91,7 @@ enum SOSAccessibilityAnnouncement {
     }
 
     static func announceSOSStarted() {
-        announce("Экстренная помощь активирована. Следуйте инструкциям на экране.")
+        announce(String(localized: "a11y.sos_started"))
     }
 
     static func announcePhaseChange(_ phase: String) {
@@ -99,6 +99,6 @@ enum SOSAccessibilityAnnouncement {
     }
 
     static func announceSessionComplete() {
-        announce("Сессия завершена. Молодец!")
+        announce(String(localized: "a11y.session_complete"))
     }
 }

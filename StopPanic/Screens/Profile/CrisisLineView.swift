@@ -21,7 +21,7 @@ struct CrisisLineView: View {
                 .padding(.bottom, 40)
             }
         }
-        .navigationTitle("Телефон доверия")
+        .navigationTitle(String(localized: "crisis.title"))
         .navigationBarTitleDisplayMode(.inline)
         .onAppear {
             withAnimation(SP.Anim.spring) { appear = true }
@@ -57,11 +57,11 @@ struct CrisisLineView: View {
                     .foregroundColor(SP.Colors.success)
             }
 
-            Text("Ты не один")
+            Text(String(localized: "crisis.not_alone"))
                 .font(SP.Typography.title1)
                 .foregroundColor(SP.Colors.textPrimary)
 
-            Text("Если тебе плохо — позвони. Это бесплатно, анонимно, круглосуточно.")
+            Text(String(localized: "crisis.subtitle"))
                 .font(SP.Typography.callout)
                 .foregroundColor(SP.Colors.textSecondary)
                 .multilineTextAlignment(.center)
@@ -74,7 +74,7 @@ struct CrisisLineView: View {
                     Image(systemName: "phone.arrow.up.right.fill")
                         .font(.system(size: 18))
                     VStack(alignment: .leading, spacing: 2) {
-                        Text("Позвонить")
+                        Text(String(localized: "crisis.call"))
                             .font(SP.Typography.headline)
                         Text(currentLine)
                             .font(SP.Typography.caption)
@@ -100,7 +100,7 @@ struct CrisisLineView: View {
 
     private var crisisLinesCard: some View {
         VStack(alignment: .leading, spacing: 14) {
-            Text("🌍 Линии по странам")
+            Text(String(localized: "crisis.lines_by_country"))
                 .font(SP.Typography.headline)
                 .foregroundColor(SP.Colors.textPrimary)
 
@@ -144,18 +144,18 @@ struct CrisisLineView: View {
                 .font(.system(size: 28))
                 .foregroundColor(SP.Colors.warmth)
 
-            Text("Важно помнить")
+            Text(String(localized: "crisis.important"))
                 .font(SP.Typography.headline)
                 .foregroundColor(SP.Colors.textPrimary)
 
             VStack(alignment: .leading, spacing: 8) {
-                infoPoint("Звонки бесплатные и анонимные")
-                infoPoint("Специалисты работают круглосуточно")
-                infoPoint("Можно звонить по любому вопросу")
-                infoPoint("Паническая атака — это не опасно, она пройдёт")
+                infoPoint(String(localized: "crisis.info_free"))
+                infoPoint(String(localized: "crisis.info_24h"))
+                infoPoint(String(localized: "crisis.info_any_issue"))
+                infoPoint(String(localized: "crisis.info_panic_safe"))
             }
 
-            Text("⚠️ При угрозе жизни звони 112")
+            Text(String(localized: "crisis.emergency_112"))
                 .font(SP.Typography.callout)
                 .foregroundColor(SP.Colors.danger)
                 .padding(.top, 4)
@@ -211,9 +211,9 @@ struct CrisisLineView: View {
 
     private func countryName(for code: String) -> String {
         let names: [String: String] = [
-            "RU": "Россия", "US": "США", "UK": "Великобритания",
-            "DE": "Германия", "FR": "Франция", "ES": "Испания",
-            "IT": "Италия", "JP": "Япония",
+            "RU": String(localized: "country.ru"), "US": String(localized: "country.us"), "UK": String(localized: "country.uk"),
+            "DE": String(localized: "country.de"), "FR": String(localized: "country.fr"), "ES": String(localized: "country.es"),
+            "IT": String(localized: "country.it"), "JP": String(localized: "country.jp"),
         ]
         return names[code] ?? code
     }

@@ -20,19 +20,38 @@ struct HeartAnalysis: Codable, Identifiable {
     ///  • НЕ реагирует на дыхание
     ///  • Может сопровождаться резким падением SpO2
     enum Diagnosis: String, Codable {
-        case panicAttack = "Тревожное состояние"
-        case likelyCardiac = "Требует внимания врача"
-        case arrhythmia = "Нерегулярный ритм"
-        case normal = "Нормальный ритм"
-        case inconclusive = "Сбор данных..."
+        case panicAttack = "anxiety"
+        case likelyCardiac = "cardiac"
+        case arrhythmia = "arrhythmia"
+        case normal = "normal"
+        case inconclusive = "collecting"
+
+        var localizedTitle: String {
+            switch self {
+            case .panicAttack: String(localized: "diagnosis.anxiety")
+            case .likelyCardiac: String(localized: "diagnosis.cardiac")
+            case .arrhythmia: String(localized: "diagnosis.arrhythmia")
+            case .normal: String(localized: "diagnosis.normal")
+            case .inconclusive: String(localized: "diagnosis.collecting")
+            }
+        }
     }
 
     /// Паттерн нарастания ЧСС
     enum RisePattern: String, Codable {
-        case suddenRegular = "Резкий регулярный подъём" // ПА
-        case suddenIrregular = "Резкий нерегулярный" // Кардио
-        case gradual = "Постепенный" // Норма/стресс
-        case noChange = "Без изменений"
+        case suddenRegular = "sudden_regular"
+        case suddenIrregular = "sudden_irregular"
+        case gradual = "gradual"
+        case noChange = "no_change"
+
+        var localizedTitle: String {
+            switch self {
+            case .suddenRegular: String(localized: "pattern.sudden_regular")
+            case .suddenIrregular: String(localized: "pattern.sudden_irregular")
+            case .gradual: String(localized: "pattern.gradual")
+            case .noChange: String(localized: "pattern.no_change")
+            }
+        }
     }
 
     let id: UUID

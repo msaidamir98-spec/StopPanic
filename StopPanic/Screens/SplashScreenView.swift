@@ -12,8 +12,8 @@ struct SplashScreenView: View {
 
     var body: some View {
         ZStack {
-            // Dark background matching the app theme
-            Color(red: 0.06, green: 0.06, blue: 0.10)
+            // Theme-aware background
+            SP.Colors.bg
                 .ignoresSafeArea()
 
             // Subtle ambient particles
@@ -21,8 +21,8 @@ struct SplashScreenView: View {
                 Circle()
                     .fill(
                         i.isMultiple(of: 2)
-                            ? Color(red: 0.45, green: 0.40, blue: 0.95).opacity(0.08)
-                            : Color(red: 0.35, green: 0.75, blue: 0.85).opacity(0.06)
+                            ? SP.Colors.accent.opacity(0.08)
+                            : SP.Colors.calm.opacity(0.06)
                     )
                     .frame(width: CGFloat(30 + i * 10), height: CGFloat(30 + i * 10))
                     .offset(
@@ -41,9 +41,9 @@ struct SplashScreenView: View {
                         .stroke(
                             LinearGradient(
                                 colors: [
-                                    Color(red: 0.45, green: 0.40, blue: 0.95).opacity(0.3),
-                                    Color(red: 0.35, green: 0.75, blue: 0.85).opacity(0.2),
-                                    Color(red: 0.45, green: 0.40, blue: 0.95).opacity(0.1),
+                                    SP.Colors.accent.opacity(0.3),
+                                    SP.Colors.calm.opacity(0.2),
+                                    SP.Colors.accent.opacity(0.1),
                                 ],
                                 startPoint: .topLeading,
                                 endPoint: .bottomTrailing
@@ -57,7 +57,7 @@ struct SplashScreenView: View {
                     // Inner ring
                     Circle()
                         .stroke(
-                            Color(red: 0.45, green: 0.40, blue: 0.95).opacity(0.15),
+                            SP.Colors.accent.opacity(0.15),
                             lineWidth: 1
                         )
                         .frame(width: 100, height: 100)
@@ -66,23 +66,14 @@ struct SplashScreenView: View {
 
                     // Logo circle
                     Circle()
-                        .fill(
-                            LinearGradient(
-                                colors: [
-                                    Color(red: 0.45, green: 0.40, blue: 0.95),
-                                    Color(red: 0.35, green: 0.30, blue: 0.85),
-                                ],
-                                startPoint: .topLeading,
-                                endPoint: .bottomTrailing
-                            )
-                        )
+                        .fill(SP.Colors.heroGradient)
                         .frame(width: 80, height: 80)
-                        .shadow(color: Color(red: 0.45, green: 0.40, blue: 0.95).opacity(0.4), radius: 20, y: 8)
+                        .shadow(color: SP.Colors.accent.opacity(0.4), radius: 20, y: 8)
 
                     // Shield icon
                     Image(systemName: "hand.raised.fill")
                         .font(.system(size: 32, weight: .bold))
-                        .foregroundColor(.white)
+                        .foregroundColor(SP.Colors.textOnAccent)
                         .shadow(color: .black.opacity(0.2), radius: 4, y: 2)
                 }
                 .scaleEffect(logoScale)
@@ -91,11 +82,11 @@ struct SplashScreenView: View {
                 VStack(spacing: 6) {
                     Text("Stillō")
                         .font(.system(size: 32, weight: .heavy, design: .rounded))
-                        .foregroundColor(.white)
+                        .foregroundColor(SP.Colors.textPrimary)
 
-                    Text("Точка покоя")
+                    Text(String(localized: "splash.tagline"))
                         .font(.system(size: 15, weight: .medium, design: .rounded))
-                        .foregroundColor(.white.opacity(0.5))
+                        .foregroundColor(SP.Colors.textTertiary)
                 }
                 .opacity(textOpacity)
             }

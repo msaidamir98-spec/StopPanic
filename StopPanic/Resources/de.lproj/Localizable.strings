@@ -267,3 +267,418 @@
 "greeting.morning" = "Guten Morgen";
 "greeting.afternoon" = "Guten Tag";
 "greeting.evening" = "Guten Abend";
+
+/* ========== NEW KEYS (Localization Pass) ========== */
+
+/* General (new) */
+"general.back" = "Zurück";
+
+/* Splash */
+"splash.tagline" = "Ein Moment der Ruhe";
+
+/* SOS Flow (new) */
+"sos.breathe_with_me" = "Atme mit mir";
+"sos.ground_step1" = "5 Dinge, die du SIEHST";
+"sos.ground_step2" = "4 Dinge, die du HÖRST";
+"sos.ground_step3" = "3 Dinge, die du BERÜHRST";
+"sos.ground_step4" = "2 Dinge, die du RIECHST";
+"sos.ground_step5" = "1 Ding, das du SCHMECKST";
+"sos.ground_title" = "Erdung";
+"sos.ground_subtitle" = "Konzentriere dich auf deine Sinne";
+"sos.ground_done" = "Fertig, weiter →";
+"sos.affirmation_title" = "Du hast es geschafft 💪";
+"sos.affirmation_body" = "Angst ist ein Fehlalarm.\nDein Körper hat auf eine nicht existierende Gefahr reagiert.\nDu bist sicher.";
+"sos.duration_label" = "Dauer";
+"sos.cycles_label" = "Atemzyklen";
+"sos.note_text" = "SOS-Sitzung abgeschlossen";
+"sos.save_entry" = "Im Tagebuch speichern";
+"sos.calm_session" = "Ruhe-Sitzung";
+"sos.breathing_exercise" = "Atemübung";
+"sos.notif_title %@" = "🆘 SOS — %@";
+"sos.notif_body %@" = "Panikattacke. Anrufen: %@";
+"sos.crisis_notif_title" = "🆘 Panikattacke";
+"sos.crisis_notif_body %@" = "Krisentelefon: %@";
+
+/* Breathing Session (new) */
+"breathing.stats_label" = "Zyklen";
+"breathing.time_label" = "Zeit";
+"breathing.start_button" = "Atmung starten";
+
+/* Grounding Exercise */
+"grounding.sense_see" = "SEHEN";
+"grounding.sense_touch" = "BERÜHREN";
+"grounding.sense_hear" = "HÖREN";
+"grounding.sense_smell" = "RIECHEN";
+"grounding.sense_taste" = "SCHMECKEN";
+"grounding.verb_see" = "siehst";
+"grounding.verb_touch" = "berührst";
+"grounding.verb_hear" = "hörst";
+"grounding.verb_smell" = "riechst";
+"grounding.verb_taste" = "schmeckst";
+"grounding.step_of %lld %lld" = "Schritt %lld von %lld";
+"grounding.name_count %lld" = "Nenne %lld";
+"grounding.what_you %@" = "Dinge, die du %@";
+"grounding.i_verb %@ %@" = "Ich %@: %@";
+"grounding.enter" = "Eingeben...";
+"grounding.next" = "Weiter →";
+"grounding.finish" = "Fertig";
+"grounding.done_title" = "Du bist geerdet 🌍";
+"grounding.done_body" = "Du hast deine Aufmerksamkeit von der Angst auf die Realität gelenkt.\nDein Gehirn ist jetzt im logischen Modus.";
+
+/* Muscle Relaxation */
+"muscle.hands_title" = "Hände";
+"muscle.hands_desc" = "Balle deine Fäuste so fest du kannst";
+"muscle.forearms_title" = "Unterarme";
+"muscle.forearms_desc" = "Beuge die Arme an den Ellbogen, spanne die Unterarme an";
+"muscle.shoulders_title" = "Schultern";
+"muscle.shoulders_desc" = "Ziehe die Schultern zu den Ohren hoch";
+"muscle.face_title" = "Gesicht";
+"muscle.face_desc" = "Zusammenkneifen, Zähne zusammenbeißen, Stirn runzeln";
+"muscle.neck_title" = "Nacken";
+"muscle.neck_desc" = "Drücke das Kinn zur Brust";
+"muscle.back_title" = "Rücken";
+"muscle.back_desc" = "Wölbe deinen Rücken, drücke die Schulterblätter zusammen";
+"muscle.abs_title" = "Bauch";
+"muscle.abs_desc" = "Spanne die Bauchmuskeln so fest wie möglich an";
+"muscle.legs_title" = "Beine";
+"muscle.legs_desc" = "Strecke die Beine, spanne Oberschenkel und Waden an";
+"muscle.tense" = "ANSPANNEN für 5 Sekunden! ��";
+"muscle.relax" = "Entspannen... loslassen... ��";
+"muscle.tense_button" = "Anspannen →";
+"muscle.relaxing" = "Entspannen...";
+"muscle.done_title" = "Körper entspannt 🧘";
+
+/* Cognitive Reframing */
+"cognitive.title" = "🧠 Kognitive Umstrukturierung";
+"cognitive.subtitle" = "Lass uns den ängstlichen Gedanken mit KVT analysieren";
+"cognitive.anxious_thought" = "Ängstlicher Gedanke";
+"cognitive.write_thought" = "Schreibe den Gedanken auf, der Angst auslöst";
+"cognitive.thought_example" = "z.B. \"Ich werde an einem Herzinfarkt sterben\"";
+"cognitive.facts_against" = "Fakten dagegen";
+"cognitive.what_facts" = "Welche Fakten sprechen GEGEN diesen Gedanken?";
+"cognitive.facts_example" = "z.B. \"Der Arzt hat gesagt, mein Herz ist gesund\"";
+"cognitive.distortions_title" = "Mögliche kognitive Verzerrungen:";
+"cognitive.catastrophizing" = "Katastrophisieren";
+"cognitive.catastrophizing_desc" = "Schlimmster Fall = einziger Fall";
+"cognitive.black_white" = "Schwarz-Weiß-Denken";
+"cognitive.black_white_desc" = "Alles oder nichts";
+"cognitive.mind_reading" = "Gedankenlesen";
+"cognitive.mind_reading_desc" = "Ich weiß, was andere denken";
+"cognitive.emotional_reasoning" = "Emotionales Schlussfolgern";
+"cognitive.emotional_reasoning_desc" = "Ich fühle es = es stimmt";
+"cognitive.alternative" = "Alternativer Gedanke";
+"cognitive.how_reframe" = "Wie kannst du das umformulieren?";
+"cognitive.alternative_example" = "z.B. \"Das ist Angst, sie ist vorübergehend. Ich bin sicher\"";
+"cognitive.excellent" = "Ausgezeichnet!";
+"cognitive.done_body" = "Du hast gerade eine KVT-Technik angewandt. Jedes Mal, wenn der Gedanke zurückkehrt, erinnere dich an die Alternative.";
+"cognitive.done_button" = "Fertig ✓";
+
+/* Now Help View */
+"nowhelp.step1_title" = "Stopp";
+"nowhelp.step1_instruction" = "Halte inne. Mach es dir bequem — setz dich hin oder lehne dich an eine Wand. Du bist sicher.";
+"nowhelp.step2_title" = "Langsam atmen";
+"nowhelp.step2_instruction" = "4 Sekunden durch die Nase einatmen. 7 halten. 8 Sekunden durch den Mund ausatmen. 3 Mal wiederholen.";
+"nowhelp.step3_title" = "Erde dich";
+"nowhelp.step3_instruction" = "Nenne laut: 5 Dinge, die du siehst. 4, die du hörst. 3, die du berühren kannst.";
+"nowhelp.step4_title" = "Erinnere dich";
+"nowhelp.step4_instruction" = "\"Das ist eine Panikattacke. Sie ist vorübergehend. Ich sterbe NICHT. Ich bin nicht in Gefahr.\"";
+"nowhelp.step5_title" = "Entspanne deinen Körper";
+"nowhelp.step5_instruction" = "Balle Fäuste für 5 Sekunden — loslassen. Schultern zu den Ohren — fallen lassen. Kiefer entspannen.";
+"nowhelp.step_of %lld %lld" = "Schritt %lld von %lld";
+"nowhelp.next" = "Weiter →";
+"nowhelp.finish" = "Fertig ✓";
+"nowhelp.well_done" = "Gut gemacht! 💪";
+"nowhelp.done_body" = "Du hast alle 5 Schritte abgeschlossen.\nDie Panik lässt nach. Du hast es geschafft.";
+
+/* Panic Radar */
+"radar.title" = "Panik-Radar";
+"radar.risk_level" = "Risikostufe";
+"radar.by_weekday" = "Nach Wochentag";
+"radar.triggers" = "Auslöser";
+"radar.recommendation" = "Empfehlung";
+
+/* Risk Levels */
+"risk.low" = "Niedrig";
+"risk.moderate" = "Mittel";
+"risk.high" = "Erhöht";
+"risk.critical" = "Kritisch";
+
+/* Heart Analysis View */
+"heart.title" = "Überwachung ❤️";
+"heart.important_info" = "Wichtige Information";
+"heart.disclaimer_body" = "Dieses Tool ist ein Informationshelfer, KEIN medizinisches Gerät. Es stellt KEINE Diagnose. Bei Brustschmerzen, Atemnot oder Unwohlsein SOFORT den Notruf wählen (112).";
+"heart.waiting" = "Warte...";
+"heart.pulse_monitoring" = "Herzfrequenz-Überwachung";
+"heart.call_emergency" = "🚨 NOTRUF WÄHLEN";
+"heart.emergency_numbers" = "112 (Europa) · 911 (USA) · 999 (UK)";
+"heart.breathing_test" = "Atemtest";
+"heart.breathing_test_body" = "Wenn dein Puls nach der 4-7-8-Atmung sinkt, deutet das indirekt auf Angst und nicht auf ein Herzproblem hin.";
+"heart.fix_pulse" = "📌 Puls aufzeichnen";
+"heart.check" = "✅ Prüfen";
+"heart.pulse_dropped" = "Puls nach der Atmung gesunken";
+"heart.stop" = "Stopp";
+"heart.start_monitoring" = "Überwachung starten";
+"heart.how_it_works" = "So funktioniert es";
+"heart.info_reads_pulse" = "Liest Herzfrequenz über Apple Health / Watch";
+"heart.info_analyzes_rhythm" = "Analysiert die Rhythmusregelmäßigkeit";
+"heart.info_compares_patterns" = "Vergleicht Angst- und Herzmuster";
+"heart.info_checks_breathing" = "Prüft Reaktion auf Atmung";
+"heart.algorithm_disclaimer" = "Der Algorithmus basiert darauf, dass Angst einen regelmäßigen Rhythmus erzeugt (Sinustachykardie), während Herzprobleme einen unregelmäßigen erzeugen. Dies ist KEIN Ersatz für ein EKG oder einen Arzt.";
+"heart.confidence %lld" = "Zuverlässigkeit: %lld%%";
+"heart.anxiety_signs" = "Anzeichen von Angst (kein Herzproblem):";
+"heart.regular_rhythm" = "Regelmäßiger Rhythmus (Sinustachykardie)";
+"heart.hr_typical %lld" = "HF %lld BPM — typisch für Angst";
+"heart.pattern %@" = "Muster: %@";
+"heart.pulse_responds" = "Puls reagiert auf Atmung ✓";
+"heart.try_breathing" = "Probiere Atemübungen zur Prüfung";
+"heart.doctor_signs" = "Anzeichen, die ärztliche Aufmerksamkeit erfordern:";
+"heart.irregular_rhythm %@" = "Unregelmäßiger Rhythmus (%@)";
+"heart.hrv_value %@" = "HRV: %@ ms";
+"heart.no_breathing_response" = "Reagiert nicht auf Atemtechniken";
+"heart.recommend_emergency" = "Wir empfehlen, den Notruf zu wählen";
+"heart.metric_hr" = "❤️ HF";
+"heart.metric_hrv" = "📈 HRV";
+"heart.metric_regularity" = "🔀 Regelmäßigkeit";
+"heart.metric_pattern" = "📊 Muster";
+"heart.ms" = "ms";
+"heart.recommendation" = "Empfehlung";
+
+/* Diagnosis */
+"diagnosis.anxiety" = "Angstzustand";
+"diagnosis.cardiac" = "Ärztliche Aufmerksamkeit erforderlich";
+"diagnosis.arrhythmia" = "Unregelmäßiger Rhythmus";
+"diagnosis.normal" = "Normaler Rhythmus";
+"diagnosis.collecting" = "Daten werden erfasst...";
+
+/* Rise Patterns */
+"pattern.sudden_regular" = "Plötzlicher regelmäßiger Anstieg";
+"pattern.sudden_irregular" = "Plötzlich unregelmäßig";
+"pattern.gradual" = "Allmählich";
+"pattern.no_change" = "Keine Veränderung";
+
+/* Calm Session */
+"calm.phase_intro" = "Ruhe-Sitzung";
+"calm.phase_breathing" = "Atmung";
+"calm.phase_grounding" = "Erdung";
+"calm.phase_reflection" = "Reflexion";
+"calm.phase_complete" = "Fertig!";
+"calm.start_breathing" = "Atmung starten →";
+"calm.to_grounding" = "Zur Erdung →";
+"calm.to_reflection" = "Zur Reflexion →";
+"calm.finish" = "Abschließen ✓";
+"calm.intro_body" = "Diese Sitzung führt dich durch 3 Phasen:";
+"calm.intro_breathing_desc" = "Beruhige das Nervensystem";
+"calm.intro_grounding_desc" = "Lenke deine Aufmerksamkeit um";
+"calm.intro_reflection_desc" = "Verarbeite deine Gedanken";
+"calm.breathe_478" = "Atme mit 4-7-8";
+"calm.breathe_instructions" = "Einatmen 4 Sek → Halten 7 Sek → Ausatmen 8 Sek\n\nMache 4 Zyklen, dann tippe auf Weiter";
+"calm.ground_see" = "5 Dinge, die du SIEHST";
+"calm.ground_hear" = "4 Geräusche, die du HÖRST";
+"calm.ground_touch" = "3 Dinge, die du BERÜHRST";
+"calm.ground_smell" = "2 Dinge, die du RIECHST";
+"calm.ground_taste" = "1 Geschmack, den du WAHRNIMMST";
+"calm.reflection_title" = "Schreib auf oder sage laut:";
+"calm.reflection_q1" = "• Was hat die Angst ausgelöst?";
+"calm.reflection_q2" = "• Wie real war die Bedrohung? (1-10)";
+"calm.reflection_q3" = "• Was hat dir geholfen, dich zu beruhigen?";
+"calm.reflection_q4" = "• Was wirst du dir beim nächsten Mal sagen?";
+"calm.session_done" = "Sitzung abgeschlossen! 🎉";
+"calm.session_done_body" = "Du hast Atmung, Erdung und Reflexion abgeschlossen.\nJede Sitzung macht dich stärker.";
+
+/* Mood Map */
+"mood.title" = "Stimmungskarte";
+"mood.subtitle" = "Verfolge deinen emotionalen Zustand";
+"mood.add_mood" = "Stimmung erfassen";
+"mood.empty_title" = "Noch nichts";
+"mood.empty_body" = "Erfasse deine Stimmung, um Muster zu erkennen";
+"mood.nav_title" = "Stimmungen";
+"mood.last_7_days" = "Letzte 7 Tage";
+"mood.average" = "Durchschnitt:";
+"mood.history" = "Verlauf";
+"mood.how_feel" = "Wie fühlst du dich?";
+"mood.awful" = "Schrecklich";
+"mood.great" = "Großartig";
+"mood.note_optional" = "Notiz (optional)";
+"mood.mood" = "Stimmung";
+
+/* Achievements */
+"achievements.title" = "Erfolge";
+"achievements.unlocked" = "Freigeschaltet";
+"achievements.unlocked_count %lld %lld" = "%lld / %lld freigeschaltet";
+"achievement.cat_streak" = "Serie";
+"achievement.cat_breathing" = "Atmung";
+"achievement.cat_diary" = "Tagebuch";
+"achievement.cat_techniques" = "Techniken";
+"achievement.cat_milestone" = "Meilensteine";
+"achievement.first_breath_title" = "Erster Atemzug";
+"achievement.first_breath_desc" = "Schließe deine erste Atemübung ab";
+"achievement.week_warrior_title" = "Wochenkämpfer";
+"achievement.week_warrior_desc" = "7 Tage am Stück ohne Panikattacke";
+"achievement.diary_master_title" = "Tagebuch-Meister";
+"achievement.diary_master_desc" = "Schreibe 30 Tagebucheinträge";
+"achievement.technique_explorer_title" = "Entdecker";
+"achievement.technique_explorer_desc" = "Probiere alle 10 Techniken aus";
+"achievement.calm_month_title" = "Ruhiger Monat";
+"achievement.calm_month_desc" = "30 Tage Übung am Stück";
+
+/* Profile View (new) */
+"profile.title" = "Profil";
+"profile.name" = "Name";
+"profile.set_name" = "Namen festlegen";
+"profile.edit" = "Bearbeiten";
+"profile.about" = "Über die App";
+"profile.about_body" = "Stillō — dein Begleiter bei Angst und Panikattacken. Kostenlos, ohne Werbung, ohne Abos.";
+"profile.version %@" = "Version %@";
+"profile.breath_min" = "Atemminuten";
+
+/* Journal (new) */
+"journal.week_summary" = "pro Woche";
+"journal.avg_intensity" = "Ø Intensität";
+"journal.trend_label" = "Trend";
+"journal.mood_empty" = "Erfasse deine Stimmung, um Muster zu erkennen";
+"journal.radar_title" = "Panik-Radar";
+"journal.achievements_title" = "Erfolge";
+"journal.frequent_triggers" = "Häufige Auslöser";
+"journal.no_triggers" = "Noch keine Daten";
+"journal.no_notes" = "Keine Notizen";
+"journal.intensity" = "Intensität";
+"journal.triggers_label" = "Auslöser";
+"journal.notes_label" = "Notizen";
+"journal.notes_placeholder" = "Was hast du gefühlt?";
+"journal.trigger_separator" = ", ";
+"journal.save" = "Speichern";
+"journal.add_episode" = "Neue Episode";
+"journal.cancel" = "Abbrechen";
+"journal.intensity_minimal" = "Minimal";
+"journal.intensity_mild" = "Leicht";
+"journal.intensity_moderate" = "Mittel";
+"journal.intensity_severe" = "Schwer";
+"journal.intensity_extreme" = "Unerträglich";
+
+/* Trigger Options */
+"trigger_opt_work" = "Arbeit";
+"trigger_opt_health" = "Gesundheit";
+"trigger_opt_conflict" = "Konflikt";
+"trigger_opt_loneliness" = "Einsamkeit";
+"trigger_opt_news" = "Nachrichten";
+"trigger_opt_unknown" = "Ich weiß nicht";
+
+/* Theme */
+"theme.title" = "Erscheinungsbild";
+"theme.preview" = "Vorschau";
+"theme.theme" = "Design";
+"theme.tip_title" = "💡 Tipp";
+"theme.tip_body" = "Der automatische Modus passt sich an deine Geräteeinstellungen an. Das dunkle Design ist besser für abends — es schont die Augen und hilft beim Entspannen.";
+
+/* Crisis Line */
+"crisis.title" = "Krisentelefon";
+"crisis.not_alone" = "Du bist nicht allein";
+"crisis.subtitle" = "Wenn du dich quälst — ruf an. Kostenlos, anonym, rund um die Uhr.";
+"crisis.call" = "Anrufen";
+"crisis.lines_by_country" = "🌍 Nummern nach Land";
+"crisis.important" = "Wichtig zu wissen";
+"crisis.info_free" = "Anrufe sind kostenlos und anonym";
+"crisis.info_24h" = "Fachleute sind rund um die Uhr erreichbar";
+"crisis.info_any_issue" = "Du kannst wegen allem anrufen";
+"crisis.info_panic_safe" = "Eine Panikattacke ist nicht gefährlich — sie geht vorbei";
+"crisis.emergency_112" = "⚠️ Bei Lebensgefahr ruf 112 an";
+
+/* Country Names */
+"country.ru" = "Russland";
+"country.us" = "USA";
+"country.uk" = "Vereinigtes Königreich";
+"country.de" = "Deutschland";
+"country.fr" = "Frankreich";
+"country.es" = "Spanien";
+"country.it" = "Italien";
+"country.jp" = "Japan";
+
+/* HealthKit Settings */
+"health.unavailable" = "Health nicht verfügbar";
+"health.connected" = "Apple Health verbunden";
+"health.not_connected" = "Apple Health nicht verbunden";
+"health.unavailable_body" = "HealthKit ist auf diesem Gerät nicht verfügbar. Verwende ein iPhone mit Apple Watch für die Herzfrequenz.";
+"health.connected_body" = "Stillō liest Herzfrequenzdaten, um Angstniveaus zu verfolgen";
+"health.not_connected_body" = "Verbinde Apple Health, damit Stillō die Herzfrequenz von der Apple Watch lesen kann";
+"health.unavailable_device" = "HealthKit ist auf diesem Gerät nicht verfügbar";
+"health.connect" = "Apple Health verbinden";
+"health.connected_label" = "Verbunden";
+"health.data_title" = "📊 Welche Daten gelesen werden";
+"health.data_pulse" = "Puls (BPM)";
+"health.data_pulse_desc" = "Herzfrequenz von der Apple Watch";
+"health.data_hrv" = "HRV (SDNN)";
+"health.data_hrv_desc" = "Herzratenvariabilität — ein Stressmarker";
+"health.privacy_title" = "Datenschutz";
+"health.privacy_body" = "Alle Daten werden nur auf deinem Gerät gespeichert. Stillō liest nur Daten — wir schreiben nicht in Apple Health und senden keine Daten an Server.";
+
+/* Notification Settings */
+"notif.title" = "Benachrichtigungen";
+"notif.enabled" = "Benachrichtigungen aktiviert";
+"notif.disabled" = "Benachrichtigungen deaktiviert";
+"notif.enabled_body" = "Stillō kann dich an Atemübungen erinnern";
+"notif.disabled_body" = "Erlaube Benachrichtigungen, um die Übungen nicht zu vergessen";
+"notif.allow" = "Benachrichtigungen erlauben";
+"notif.breathing_reminder" = "Atemerinnnerung";
+"notif.time" = "Uhrzeit";
+"notif.save_reminder" = "Erinnerung speichern";
+"notif.how_it_works" = "💡 So funktioniert es";
+"notif.how_body" = "Stillō sendet eine sanfte Erinnerung zur gewählten Zeit. Eine Atemübung dauert nur 2 Minuten und senkt nachweislich den Cortisolspiegel.";
+
+/* ProfileHub (new) */
+"profile.name_alert_title" = "Namen festlegen";
+"profile.name_placeholder" = "Name";
+"profile.sos_empty" = "Füge einen Kontakt hinzu, der bei SOS-Auslösung benachrichtigt wird";
+"profile.theme" = "Erscheinungsbild";
+"profile.health" = "Apple Health";
+"profile.about_app" = "Über die App";
+"profile.disclaimer" = "Stillō ist ein Helfer, KEIN medizinisches Gerät. Es ersetzt keinen Arzt.";
+"profile.contact_name" = "Name";
+"profile.contact_phone" = "Telefon";
+"profile.contact_who" = "Wer ist das?";
+"profile.contact_who_placeholder" = "Mama, Freund, Therapeut...";
+"profile.contact_notify" = "Bei SOS benachrichtigen";
+"profile.contact_add" = "Hinzufügen";
+"profile.contact_new" = "Neuer Kontakt";
+
+/* HeartAnalysis Service Recommendations */
+"heart.rec_collecting" = "⚪ Nicht genug Daten. Bitte warte 30 Sekunden.";
+"heart.rec_panic_breathing_helped" = "✅ Dein Puls reagiert auf Atmung — das ist typisch für Angst. Mach weiter mit der 4-7-8-Atmung. Du wirst dich in wenigen Minuten besser fühlen. Du bist sicher.";
+"heart.rec_panic %lld" = "🟡 Anzeichen von Angst: regelmäßiger Rhythmus, HF %lld BPM. Probiere die 4-7-8-Atmung — sie aktiviert das parasympathische System. Bei Brustschmerzen oder Taubheit — zum Arzt gehen.";
+"heart.rec_cardiac %lld" = "🔴 WARNUNG: Unregelmäßiger Rhythmus erkannt (%lld BPM). Dies kann auf einen Zustand hinweisen, der ärztliche Aufmerksamkeit erfordert. Ruf den Notruf (112) an. Setz dich hin, bleib ruhig, lockere die Kleidung.";
+"heart.rec_arrhythmia" = "🟠 Rhythmusunregelmäßigkeit erkannt. Wir empfehlen einen baldigen Besuch beim Kardiologen. Bei Brustschmerzen, Atemnot oder Schwindel — ruf den Notruf an.";
+"heart.rec_normal %lld" = "🟢 Rhythmus ist normal: %lld BPM, regelmäßig. Wenn du dich ängstlich fühlst — es könnte ein subjektives Empfinden sein. Atemtechniken helfen dir, dich zu entspannen.";
+
+/* Onboarding */
+"onb_tap_start" = "Tippe zum Starten";
+
+/* Notification Pickers */
+"notif.hour" = "Stunde";
+"notif.minute" = "Minute";
+
+/* Theme Names */
+"theme.auto" = "Automatisch";
+"theme.dark" = "Dunkel";
+"theme.light" = "Hell";
+
+/* Empty States */
+"empty.journal_title" = "Tagebuch ist leer";
+"empty.journal_message" = "Das sind gute Nachrichten! Notiere Episoden, um deinen Fortschritt zu verfolgen und Muster zu finden.";
+"empty.journal_action" = "Erste Episode aufzeichnen";
+"empty.tools_done_title" = "Alle Techniken gemeistert 🎉";
+"empty.tools_done_message" = "Super! Übe weiter — jede Sitzung macht dich stärker.";
+"empty.heart_title" = "Keine Pulsdaten";
+"empty.heart_message" = "Verbinde die Apple Watch oder nutze die Kamera zur Pulsmessung.";
+"empty.heart_action" = "Health verbinden";
+"empty.achievements_title" = "Starte deine Reise";
+"empty.achievements_message" = "Mache Übungen, führe Tagebuch und sammle Erfolge. Jeder Schritt zählt.";
+"empty.achievements_action" = "Starten";
+"empty.search_title" = "Nichts gefunden";
+"empty.search_message %@" = "Keine Ergebnisse für «%@». Versuche andere Suchbegriffe.";
+
+/* Accessibility */
+"a11y.breath_phase %@" = "Atemphase: %@";
+"a11y.breath_idle" = "Atemsitzung nicht gestartet";
+"a11y.breath_follow" = "Folge den Anweisungen auf dem Bildschirm";
+"a11y.breath_tap_start" = "Tippe auf Start, um die Sitzung zu beginnen";
+"a11y.sos_started" = "Nothilfe aktiviert. Folge den Anweisungen auf dem Bildschirm.";
+"a11y.session_complete" = "Sitzung abgeschlossen. Gut gemacht!";

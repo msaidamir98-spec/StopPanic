@@ -15,9 +15,9 @@ enum AppTheme: String, CaseIterable, Identifiable {
 
     var displayName: String {
         switch self {
-        case .system: "Авто"
-        case .dark: "Тёмная"
-        case .light: "Светлая"
+        case .system: String(localized: "theme.auto")
+        case .dark: String(localized: "theme.dark")
+        case .light: String(localized: "theme.light")
         }
     }
 

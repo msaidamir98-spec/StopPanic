@@ -46,8 +46,8 @@ final class SOSService: ObservableObject {
         // Send local notification for each SOS contact
         for contact in contacts where contact.notifyOnPanic {
             let content = UNMutableNotificationContent()
-            content.title = "🆘 SOS — \(contact.name)"
-            content.body = "Паническая атака. Позвони: \(contact.phone)"
+            content.title = String(localized: "sos.notif_title \(contact.name)")
+            content.body = String(localized: "sos.notif_body \(contact.phone)")
             content.sound = .defaultCritical
             content.interruptionLevel = .critical
             let request = UNNotificationRequest(
@@ -61,8 +61,8 @@ final class SOSService: ObservableObject {
         // If no contacts, still show crisis line
         if contacts.filter(\.notifyOnPanic).isEmpty {
             let content = UNMutableNotificationContent()
-            content.title = "🆘 Паническая атака"
-            content.body = "Телефон доверия: \(Self.getCrisisLine())"
+            content.title = String(localized: "sos.crisis_notif_title")
+            content.body = String(localized: "sos.crisis_notif_body \(Self.getCrisisLine())")
             content.sound = .defaultCritical
             let request = UNNotificationRequest(
                 identifier: "sos_crisis",

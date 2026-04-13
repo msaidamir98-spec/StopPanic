@@ -13,36 +13,36 @@ final class NowHelpViewModel: ObservableObject {
     let steps: [PanicStep] = [
         PanicStep(
             number: 1,
-            title: "Остановись",
-            instruction: "Замри. Прими удобную позу — сядь или обопрись о стену. Ты в безопасности.",
+            title: String(localized: "nowhelp.step1_title"),
+            instruction: String(localized: "nowhelp.step1_instruction"),
             icon: "hand.raised.fill",
             color: .red
         ),
         PanicStep(
             number: 2,
-            title: "Дыши медленно",
-            instruction: "Вдох на 4 секунды через нос. Задержка на 7. Выдох на 8 через рот. Повтори 3 раза.",
+            title: String(localized: "nowhelp.step2_title"),
+            instruction: String(localized: "nowhelp.step2_instruction"),
             icon: "wind",
             color: .cyan
         ),
         PanicStep(
             number: 3,
-            title: "Заземлись",
-            instruction: "Назови вслух: 5 вещей, которые видишь. 4, которые слышишь. 3, которых касаешься.",
+            title: String(localized: "nowhelp.step3_title"),
+            instruction: String(localized: "nowhelp.step3_instruction"),
             icon: "eye.fill",
             color: .purple
         ),
         PanicStep(
             number: 4,
-            title: "Напомни себе",
-            instruction: "\"Это паническая атака. Она временна. Я НЕ умираю. Мне не грозит опасность.\"",
+            title: String(localized: "nowhelp.step4_title"),
+            instruction: String(localized: "nowhelp.step4_instruction"),
             icon: "brain.head.profile",
             color: .orange
         ),
         PanicStep(
             number: 5,
-            title: "Расслабь тело",
-            instruction: "Сожми кулаки на 5 секунд — отпусти. Подними плечи к ушам — опусти. Расслабь челюсть.",
+            title: String(localized: "nowhelp.step5_title"),
+            instruction: String(localized: "nowhelp.step5_instruction"),
             icon: "figure.mind.and.body",
             color: .green
         ),
@@ -94,7 +94,7 @@ struct NowHelpView: View {
         .navigationBarTitleDisplayMode(.inline)
         .toolbar {
             ToolbarItem(placement: .navigationBarTrailing) {
-                Button("Закрыть") { dismiss() }
+                Button(String(localized: "general.close")) { dismiss() }
                     .foregroundColor(SP.Colors.textSecondary)
             }
         }
@@ -143,7 +143,7 @@ struct NowHelpView: View {
 
             // Title
             VStack(spacing: 12) {
-                Text("Шаг \(step.number) из \(viewModel.steps.count)")
+                Text(String(localized: "nowhelp.step_of \(step.number) \(viewModel.steps.count)"))
                     .font(SP.Typography.caption)
                     .foregroundColor(SP.Colors.textTertiary)
 
@@ -174,7 +174,7 @@ struct NowHelpView: View {
                     } label: {
                         HStack {
                             Image(systemName: "chevron.left")
-                            Text("Назад")
+                            Text(String(localized: "general.back"))
                         }
                         .font(SP.Typography.headline)
                         .foregroundColor(SP.Colors.textSecondary)
@@ -190,7 +190,7 @@ struct NowHelpView: View {
                         viewModel.nextStep()
                     }
                 } label: {
-                    Text(viewModel.currentStep < viewModel.steps.count - 1 ? "Далее →" : "Готово ✓")
+                    Text(viewModel.currentStep < viewModel.steps.count - 1 ? String(localized: "nowhelp.next") : String(localized: "nowhelp.finish"))
                         .spPrimaryButton()
                 }
             }
@@ -214,11 +214,11 @@ struct NowHelpView: View {
                     .foregroundColor(SP.Colors.success)
             }
 
-            Text("Молодец! 💪")
+            Text(String(localized: "nowhelp.well_done"))
                 .font(SP.Typography.heroTitle)
                 .foregroundColor(SP.Colors.textPrimary)
 
-            Text("Ты прошёл все 5 шагов.\nПаника отступает. Ты справился.")
+            Text(String(localized: "nowhelp.done_body"))
                 .font(SP.Typography.body)
                 .foregroundColor(SP.Colors.textSecondary)
                 .multilineTextAlignment(.center)
@@ -230,7 +230,7 @@ struct NowHelpView: View {
                 SP.Haptic.success()
                 dismiss()
             } label: {
-                Text("Закрыть")
+                Text(String(localized: "general.close"))
                     .spPrimaryButton()
             }
         }

@@ -1,0 +1,74 @@
+/* WatchHomeView */
+"watch.bpm" = "BPM";
+"watch.monitoring" = "Monitor";
+"watch.stop" = "Stop";
+"watch.diagnosis" = "Diagnostics";
+"watch.iphone_connected" = "iPhone connected";
+"watch.irreg" = "Irreg.";
+"watch.hr_label" = "HR";
+"watch.hrv_ms" = "HRV ms";
+"watch.call_112" = "Call 911";
+"watch.close" = "Close";
+
+/* WatchBreathingView */
+"watch.breath_title" = "Breathing";
+"watch.breath_ready" = "Ready to breathe";
+"watch.breath_inhale" = "Inhale";
+"watch.breath_hold" = "Hold";
+"watch.breath_exhale" = "Exhale";
+"watch.breath_done" = "Great!";
+"watch.breath_again" = "Again";
+"watch.breath_start" = "Start 4-7-8";
+"watch.breath_stop" = "Stop";
+
+/* WatchSOSView */
+"watch.sos_sent" = "SOS sent";
+"watch.sos_iphone_notify" = "Notification to iPhone";
+"watch.sos_delivered" = "Delivered";
+"watch.sos_cancel" = "Cancel";
+"watch.sos_countdown" = "SOS in";
+"watch.sos_cancel_short" = "Cancel";
+"watch.sos_emergency" = "Emergency signal";
+"watch.sos_send" = "Send SOS to iPhone";
+
+/* WatchDifferentialView */
+"watch.diff_title" = "Reference";
+"watch.diff_panic" = "Panic attack";
+"watch.diff_cardiac" = "Heart attack";
+"watch.diff_call_112" = "When in doubt — call 911!";
+"watch.diff_pa_tab" = "PA";
+"watch.diff_cardiac_tab" = "Heart";
+
+/* Differential - Panic symptoms */
+"watch.diff_pa_hr" = "HR 100–150 BPM";
+"watch.diff_pa_rhythm" = "Rhythm steady, regular";
+"watch.diff_pa_peak" = "Peak 10–20 minutes";
+"watch.diff_pa_breathing" = "Breathing helps";
+"watch.diff_pa_tingling" = "Tingling in hands";
+"watch.diff_pa_unreality" = "Feeling of unreality";
+
+/* Differential - Cardiac symptoms */
+"watch.diff_card_pulse" = "Irregular pulse";
+"watch.diff_card_arrhythmia" = "Arrhythmia, skipped beats";
+"watch.diff_card_duration" = "Lasts 20+ minutes";
+"watch.diff_card_jaw_arm" = "Jaw / arm pain";
+"watch.diff_card_sweat" = "Cold sweat";
+"watch.diff_card_chest" = "Crushing chest pain";
+
+/* WatchHeartService - Status */
+"watch.status_normal" = "Normal";
+"watch.status_panic" = "Looks like PA";
+"watch.status_cardiac" = "⚠️ Possible cardiac";
+"watch.status_analyzing" = "Analyzing…";
+
+/* WatchHeartService - Diagnosis titles */
+"watch.diag_normal_title" = "All good";
+"watch.diag_panic_title" = "Panic attack";
+"watch.diag_cardiac_title" = "Possible cardiac issue";
+"watch.diag_inconclusive_title" = "Insufficient data";
+
+/* WatchHeartService - Diagnosis details */
+"watch.diag_normal_detail" = "Your heart rate is normal. Continue monitoring.";
+"watch.diag_panic_detail" = "Steady rhythm, elevated HR — typical of a panic attack. Try 4-7-8 breathing.";
+"watch.diag_cardiac_detail" = "Rhythm irregularity detected. See a doctor or call emergency services.";
+"watch.diag_inconclusive_detail" = "Continue monitoring for a more accurate analysis.";

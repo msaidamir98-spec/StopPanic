@@ -267,3 +267,418 @@
 "greeting.morning" = "早上好";
 "greeting.afternoon" = "下午好";
 "greeting.evening" = "晚上好";
+
+/* ========== NEW KEYS (Localization Pass) ========== */
+
+/* General (new) */
+"general.back" = "返回";
+
+/* Splash */
+"splash.tagline" = "一滴宁静";
+
+/* SOS Flow (new) */
+"sos.breathe_with_me" = "跟我一起呼吸";
+"sos.ground_step1" = "你看到的5样东西";
+"sos.ground_step2" = "你听到的4种声音";
+"sos.ground_step3" = "你能触摸的3样东西";
+"sos.ground_step4" = "你闻到的2种气味";
+"sos.ground_step5" = "你尝到的1种味道";
+"sos.ground_title" = "接地练习";
+"sos.ground_subtitle" = "专注于你的感官";
+"sos.ground_done" = "完成，下一步 →";
+"sos.affirmation_title" = "你做到了 💪";
+"sos.affirmation_body" = "焦虑是一次误报。\n你的身体对不存在的危险做出了反应。\n你是安全的。";
+"sos.duration_label" = "持续时间";
+"sos.cycles_label" = "呼吸循环";
+"sos.note_text" = "SOS会话已完成";
+"sos.save_entry" = "保存到日记";
+"sos.calm_session" = "平静会话";
+"sos.breathing_exercise" = "呼吸练习";
+"sos.notif_title %@" = "🆘 SOS — %@";
+"sos.notif_body %@" = "恐慌发作。拨打：%@";
+"sos.crisis_notif_title" = "🆘 恐慌发作";
+"sos.crisis_notif_body %@" = "危机热线：%@";
+
+/* Breathing Session (new) */
+"breathing.stats_label" = "循环";
+"breathing.time_label" = "时间";
+"breathing.start_button" = "开始呼吸";
+
+/* Grounding Exercise */
+"grounding.sense_see" = "看";
+"grounding.sense_touch" = "触摸";
+"grounding.sense_hear" = "听";
+"grounding.sense_smell" = "闻";
+"grounding.sense_taste" = "尝";
+"grounding.verb_see" = "看到";
+"grounding.verb_touch" = "触摸到";
+"grounding.verb_hear" = "听到";
+"grounding.verb_smell" = "闻到";
+"grounding.verb_taste" = "尝到";
+"grounding.step_of %lld %lld" = "第 %lld 步，共 %lld 步";
+"grounding.name_count %lld" = "说出 %lld 个";
+"grounding.what_you %@" = "你%@的东西";
+"grounding.i_verb %@ %@" = "我%@：%@";
+"grounding.enter" = "输入...";
+"grounding.next" = "下一步 →";
+"grounding.finish" = "完成";
+"grounding.done_title" = "你已接地 🌍";
+"grounding.done_body" = "你把注意力从焦虑转移到了现实。\n你的大脑现在处于理性模式。";
+
+/* Muscle Relaxation */
+"muscle.hands_title" = "双手";
+"muscle.hands_desc" = "尽可能用力握紧拳头";
+"muscle.forearms_title" = "前臂";
+"muscle.forearms_desc" = "弯曲手臂，绷紧前臂";
+"muscle.shoulders_title" = "肩膀";
+"muscle.shoulders_desc" = "将肩膀提到耳朵位置";
+"muscle.face_title" = "面部";
+"muscle.face_desc" = "眯眼、咬紧牙关、皱眉";
+"muscle.neck_title" = "颈部";
+"muscle.neck_desc" = "将下巴压向胸口";
+"muscle.back_title" = "背部";
+"muscle.back_desc" = "弓起背部，夹紧肩胛骨";
+"muscle.abs_title" = "腹部";
+"muscle.abs_desc" = "尽可能用力绷紧腹肌";
+"muscle.legs_title" = "腿部";
+"muscle.legs_desc" = "伸展双腿，绷紧大腿和小腿";
+"muscle.tense" = "绷紧5秒！💪";
+"muscle.relax" = "放松...松开... 😌";
+"muscle.tense_button" = "绷紧 →";
+"muscle.relaxing" = "放松中...";
+"muscle.done_title" = "身体已放松 🧘";
+
+/* Cognitive Reframing */
+"cognitive.title" = "🧠 认知重构";
+"cognitive.subtitle" = "让我们用CBT分析焦虑的想法";
+"cognitive.anxious_thought" = "焦虑的想法";
+"cognitive.write_thought" = "写下引起焦虑的想法";
+"cognitive.thought_example" = "例如：「我会心脏病发作而死」";
+"cognitive.facts_against" = "反驳的事实";
+"cognitive.what_facts" = "有什么事实可以反驳这个想法？";
+"cognitive.facts_example" = "例如：「医生说我的心脏很健康」";
+"cognitive.distortions_title" = "可能的认知扭曲：";
+"cognitive.catastrophizing" = "灾难化";
+"cognitive.catastrophizing_desc" = "最坏的情况 = 唯一的情况";
+"cognitive.black_white" = "非黑即白思维";
+"cognitive.black_white_desc" = "全有或全无";
+"cognitive.mind_reading" = "读心术";
+"cognitive.mind_reading_desc" = "我知道别人在想什么";
+"cognitive.emotional_reasoning" = "情绪推理";
+"cognitive.emotional_reasoning_desc" = "我感觉到了 = 这就是真的";
+"cognitive.alternative" = "替代想法";
+"cognitive.how_reframe" = "你可以怎样重新表述？";
+"cognitive.alternative_example" = "例如：「这是焦虑，是暂时的。我是安全的」";
+"cognitive.excellent" = "太棒了！";
+"cognitive.done_body" = "你刚刚使用了CBT技术。每当那个想法回来时，记住替代想法。";
+"cognitive.done_button" = "完成 ✓";
+
+/* Now Help View */
+"nowhelp.step1_title" = "停下来";
+"nowhelp.step1_instruction" = "停下来。让自己舒适一些——坐下或靠在墙上。你是安全的。";
+"nowhelp.step2_title" = "慢慢呼吸";
+"nowhelp.step2_instruction" = "用鼻子吸气4秒。屏住7秒。用嘴呼气8秒。重复3次。";
+"nowhelp.step3_title" = "接地";
+"nowhelp.step3_instruction" = "大声说出：你看到的5样东西。听到的4种声音。能触摸的3样东西。";
+"nowhelp.step4_title" = "提醒自己";
+"nowhelp.step4_instruction" = "「这是恐慌发作。是暂时的。我不会死。我没有危险。」";
+"nowhelp.step5_title" = "放松身体";
+"nowhelp.step5_instruction" = "握紧拳头5秒——松开。肩膀提到耳朵——放下。放松下巴。";
+"nowhelp.step_of %lld %lld" = "第 %lld 步，共 %lld 步";
+"nowhelp.next" = "下一步 →";
+"nowhelp.finish" = "完成 ✓";
+"nowhelp.well_done" = "做得好！💪";
+"nowhelp.done_body" = "你完成了全部5个步骤。\n恐慌正在消退。你挺过来了。";
+
+/* Panic Radar */
+"radar.title" = "恐慌雷达";
+"radar.risk_level" = "风险等级";
+"radar.by_weekday" = "按星期";
+"radar.triggers" = "触发因素";
+"radar.recommendation" = "建议";
+
+/* Risk Levels */
+"risk.low" = "低";
+"risk.moderate" = "中等";
+"risk.high" = "偏高";
+"risk.critical" = "危急";
+
+/* Heart Analysis View */
+"heart.title" = "监测 ❤️";
+"heart.important_info" = "重要信息";
+"heart.disclaimer_body" = "此工具是信息辅助工具，不是医疗设备。不进行诊断。如果你有胸痛、呼吸困难或感觉不适，请立即拨打急救电话（12320-5）。";
+"heart.waiting" = "等待中...";
+"heart.pulse_monitoring" = "心率监测";
+"heart.call_emergency" = "🚨 拨打急救电话";
+"heart.emergency_numbers" = "120 (中国) · 911 (美国) · 112 (欧洲)";
+"heart.breathing_test" = "呼吸测试";
+"heart.breathing_test_body" = "如果4-7-8呼吸后心率下降，这间接提示是焦虑而非心脏问题。";
+"heart.fix_pulse" = "📌 记录脉搏";
+"heart.check" = "✅ 检查";
+"heart.pulse_dropped" = "呼吸后脉搏下降了";
+"heart.stop" = "停止";
+"heart.start_monitoring" = "开始监测";
+"heart.how_it_works" = "工作原理";
+"heart.info_reads_pulse" = "通过Apple Health / Watch读取心率";
+"heart.info_analyzes_rhythm" = "分析节律规律性";
+"heart.info_compares_patterns" = "比较焦虑和心脏模式";
+"heart.info_checks_breathing" = "检查对呼吸的反应";
+"heart.algorithm_disclaimer" = "该算法基于这样的事实：焦虑产生规律节律（窦性心动过速），而心脏问题产生不规律节律。这不能替代心电图或医生。";
+"heart.confidence %lld" = "置信度：%lld%%";
+"heart.anxiety_signs" = "焦虑的迹象（非心脏问题）：";
+"heart.regular_rhythm" = "规律节律（窦性心动过速）";
+"heart.hr_typical %lld" = "心率 %lld BPM — 焦虑的典型表现";
+"heart.pattern %@" = "模式：%@";
+"heart.pulse_responds" = "脉搏对呼吸有反应 ✓";
+"heart.try_breathing" = "尝试呼吸来检验";
+"heart.doctor_signs" = "需要就医的迹象：";
+"heart.irregular_rhythm %@" = "不规律节律（%@）";
+"heart.hrv_value %@" = "HRV：%@ ms";
+"heart.no_breathing_response" = "对呼吸技术无反应";
+"heart.recommend_emergency" = "建议拨打急救电话";
+"heart.metric_hr" = "❤️ 心率";
+"heart.metric_hrv" = "📈 HRV";
+"heart.metric_regularity" = "🔀 规律性";
+"heart.metric_pattern" = "📊 模式";
+"heart.ms" = "ms";
+"heart.recommendation" = "建议";
+
+/* Diagnosis */
+"diagnosis.anxiety" = "焦虑状态";
+"diagnosis.cardiac" = "需要就医";
+"diagnosis.arrhythmia" = "心律不齐";
+"diagnosis.normal" = "正常节律";
+"diagnosis.collecting" = "正在收集数据...";
+
+/* Rise Patterns */
+"pattern.sudden_regular" = "突然规律上升";
+"pattern.sudden_irregular" = "突然不规律";
+"pattern.gradual" = "缓慢";
+"pattern.no_change" = "无变化";
+
+/* Calm Session */
+"calm.phase_intro" = "平静会话";
+"calm.phase_breathing" = "呼吸";
+"calm.phase_grounding" = "接地";
+"calm.phase_reflection" = "反思";
+"calm.phase_complete" = "完成！";
+"calm.start_breathing" = "开始呼吸 →";
+"calm.to_grounding" = "到接地练习 →";
+"calm.to_reflection" = "到反思 →";
+"calm.finish" = "结束 ✓";
+"calm.intro_body" = "这个会话将引导你完成3个阶段：";
+"calm.intro_breathing_desc" = "平复神经系统";
+"calm.intro_grounding_desc" = "转移注意力";
+"calm.intro_reflection_desc" = "整理思绪";
+"calm.breathe_478" = "用4-7-8呼吸";
+"calm.breathe_instructions" = "吸气4秒 → 屏住7秒 → 呼气8秒\n\n做4个循环，然后点击下一步";
+"calm.ground_see" = "你看到的5样东西";
+"calm.ground_hear" = "你听到的4种声音";
+"calm.ground_touch" = "你能触摸的3样东西";
+"calm.ground_smell" = "你闻到的2种气味";
+"calm.ground_taste" = "你注意到的1种味道";
+"calm.reflection_title" = "写下来或大声说出：";
+"calm.reflection_q1" = "· 什么引起了焦虑？";
+"calm.reflection_q2" = "· 威胁有多真实？（1-10）";
+"calm.reflection_q3" = "· 什么帮助你平静下来？";
+"calm.reflection_q4" = "· 下次你会对自己说什么？";
+"calm.session_done" = "会话完成！🎉";
+"calm.session_done_body" = "你完成了呼吸、接地和反思。\n每次会话都让你更强大。";
+
+/* Mood Map */
+"mood.title" = "心情地图";
+"mood.subtitle" = "追踪你的情绪状态";
+"mood.add_mood" = "记录心情";
+"mood.empty_title" = "还没有记录";
+"mood.empty_body" = "记录你的心情来发现规律";
+"mood.nav_title" = "心情";
+"mood.last_7_days" = "最近7天";
+"mood.average" = "平均：";
+"mood.history" = "历史";
+"mood.how_feel" = "你现在感觉怎样？";
+"mood.awful" = "糟糕";
+"mood.great" = "很好";
+"mood.note_optional" = "备注（可选）";
+"mood.mood" = "心情";
+
+/* Achievements */
+"achievements.title" = "成就";
+"achievements.unlocked" = "已解锁";
+"achievements.unlocked_count %lld %lld" = "已解锁 %lld / %lld";
+"achievement.cat_streak" = "连续";
+"achievement.cat_breathing" = "呼吸";
+"achievement.cat_diary" = "日记";
+"achievement.cat_techniques" = "技巧";
+"achievement.cat_milestone" = "里程碑";
+"achievement.first_breath_title" = "第一次呼吸";
+"achievement.first_breath_desc" = "完成你的第一次呼吸练习";
+"achievement.week_warrior_title" = "一周勇士";
+"achievement.week_warrior_desc" = "连续7天没有恐慌发作";
+"achievement.diary_master_title" = "日记大师";
+"achievement.diary_master_desc" = "写30篇日记";
+"achievement.technique_explorer_title" = "探索者";
+"achievement.technique_explorer_desc" = "尝试全部10种技巧";
+"achievement.calm_month_title" = "平静之月";
+"achievement.calm_month_desc" = "连续练习30天";
+
+/* Profile View (new) */
+"profile.title" = "个人资料";
+"profile.name" = "姓名";
+"profile.set_name" = "设置你的名字";
+"profile.edit" = "编辑";
+"profile.about" = "关于应用";
+"profile.about_body" = "Stillō——你的焦虑和恐慌发作伙伴。免费，无广告，无订阅。";
+"profile.version %@" = "版本 %@";
+"profile.breath_min" = "呼吸分钟数";
+
+/* Journal (new) */
+"journal.week_summary" = "每周";
+"journal.avg_intensity" = "平均强度";
+"journal.trend_label" = "趋势";
+"journal.mood_empty" = "记录你的心情来发现规律";
+"journal.radar_title" = "恐慌雷达";
+"journal.achievements_title" = "成就";
+"journal.frequent_triggers" = "常见触发因素";
+"journal.no_triggers" = "暂无数据";
+"journal.no_notes" = "暂无备注";
+"journal.intensity" = "强度";
+"journal.triggers_label" = "触发因素";
+"journal.notes_label" = "备注";
+"journal.notes_placeholder" = "你当时有什么感受？";
+"journal.trigger_separator" = "、";
+"journal.save" = "保存";
+"journal.add_episode" = "新记录";
+"journal.cancel" = "取消";
+"journal.intensity_minimal" = "极轻";
+"journal.intensity_mild" = "轻度";
+"journal.intensity_moderate" = "中度";
+"journal.intensity_severe" = "重度";
+"journal.intensity_extreme" = "无法忍受";
+
+/* Trigger Options */
+"trigger_opt_work" = "工作";
+"trigger_opt_health" = "健康";
+"trigger_opt_conflict" = "冲突";
+"trigger_opt_loneliness" = "孤独";
+"trigger_opt_news" = "新闻";
+"trigger_opt_unknown" = "不知道";
+
+/* Theme */
+"theme.title" = "外观";
+"theme.preview" = "预览";
+"theme.theme" = "主题";
+"theme.tip_title" = "💡 提示";
+"theme.tip_body" = "自动模式会适应你的设备设置。深色主题更适合晚上使用——它减少眼睛疲劳，帮助你放松。";
+
+/* Crisis Line */
+"crisis.title" = "危机热线";
+"crisis.not_alone" = "你不是一个人";
+"crisis.subtitle" = "如果你正在痛苦中——打电话。免费、匿名、全天候。";
+"crisis.call" = "拨打";
+"crisis.lines_by_country" = "🌍 各国热线";
+"crisis.important" = "请记住";
+"crisis.info_free" = "电话免费且匿名";
+"crisis.info_24h" = "专业人员全天候在线";
+"crisis.info_any_issue" = "任何问题都可以拨打";
+"crisis.info_panic_safe" = "恐慌发作并不危险——它会过去的";
+"crisis.emergency_112" = "⚠️ 如有生命危险，请拨打120";
+
+/* Country Names */
+"country.ru" = "俄罗斯";
+"country.us" = "美国";
+"country.uk" = "英国";
+"country.de" = "德国";
+"country.fr" = "法国";
+"country.es" = "西班牙";
+"country.it" = "意大利";
+"country.jp" = "日本";
+
+/* HealthKit Settings */
+"health.unavailable" = "健康功能不可用";
+"health.connected" = "Apple Health 已连接";
+"health.not_connected" = "Apple Health 未连接";
+"health.unavailable_body" = "此设备不支持HealthKit。请使用配有Apple Watch的iPhone来获取心率。";
+"health.connected_body" = "Stillō读取心率数据以追踪焦虑水平";
+"health.not_connected_body" = "连接Apple Health，让Stillō能够读取Apple Watch的心率数据";
+"health.unavailable_device" = "此设备不支持HealthKit";
+"health.connect" = "连接Apple Health";
+"health.connected_label" = "已连接";
+"health.data_title" = "📊 读取的数据";
+"health.data_pulse" = "脉搏（BPM）";
+"health.data_pulse_desc" = "来自Apple Watch的心率";
+"health.data_hrv" = "HRV（SDNN）";
+"health.data_hrv_desc" = "心率变异性——压力指标";
+"health.privacy_title" = "隐私";
+"health.privacy_body" = "所有数据仅存储在你的设备上。Stillō只读取数据——不会写入Apple Health，也不会向服务器发送数据。";
+
+/* Notification Settings */
+"notif.title" = "通知";
+"notif.enabled" = "通知已开启";
+"notif.disabled" = "通知已关闭";
+"notif.enabled_body" = "Stillō可以提醒你进行呼吸练习";
+"notif.disabled_body" = "开启通知以免忘记练习";
+"notif.allow" = "开启通知";
+"notif.breathing_reminder" = "呼吸提醒";
+"notif.time" = "时间";
+"notif.save_reminder" = "保存提醒";
+"notif.how_it_works" = "💡 工作原理";
+"notif.how_body" = "Stillō会在你选择的时间发送温柔的提醒。呼吸练习只需2分钟，已被证实能降低皮质醇水平。";
+
+/* ProfileHub (new) */
+"profile.name_alert_title" = "设置你的名字";
+"profile.name_placeholder" = "姓名";
+"profile.sos_empty" = "添加一个在触发SOS时会被通知的联系人";
+"profile.theme" = "外观";
+"profile.health" = "Apple Health";
+"profile.about_app" = "关于应用";
+"profile.disclaimer" = "Stillō是辅助工具，不是医疗设备。不能替代医生。";
+"profile.contact_name" = "姓名";
+"profile.contact_phone" = "电话";
+"profile.contact_who" = "这是谁？";
+"profile.contact_who_placeholder" = "妈妈、朋友、心理咨询师...";
+"profile.contact_notify" = "SOS时通知";
+"profile.contact_add" = "添加";
+"profile.contact_new" = "新联系人";
+
+/* HeartAnalysis Service Recommendations */
+"heart.rec_collecting" = "⚪ 数据不足。请等待30秒。";
+"heart.rec_panic_breathing_helped" = "✅ 你的脉搏对呼吸有反应——这是焦虑的典型表现。继续4-7-8呼吸。几分钟后你会感觉好些。你是安全的。";
+"heart.rec_panic %lld" = "�� 焦虑迹象：规律节律，心率 %lld BPM。试试4-7-8呼吸——它能激活副交感神经系统。如果你感到胸痛或麻木——请就医。";
+"heart.rec_cardiac %lld" = "🔴 警告：检测到不规律节律（%lld BPM）。这可能表明需要就医。请拨打急救电话（120）。坐下，不要动，松开衣物。";
+"heart.rec_arrhythmia" = "🟠 检测到节律不规律。建议尽快看心内科医生。如果你有胸痛、呼吸困难或头晕——请拨打急救电话。";
+"heart.rec_normal %lld" = "🟢 节律正常：%lld BPM，规律。如果你感到焦虑——可能是主观感受。呼吸技巧可以帮助你放松。";
+
+/* Onboarding */
+"onb_tap_start" = "点击开始";
+
+/* Notification Pickers */
+"notif.hour" = "时";
+"notif.minute" = "分";
+
+/* Theme Names */
+"theme.auto" = "自动";
+"theme.dark" = "深色";
+"theme.light" = "浅色";
+
+/* Empty States */
+"empty.journal_title" = "日记为空";
+"empty.journal_message" = "这是好消息！记录发作以追踪进展并发现规律。";
+"empty.journal_action" = "记录第一次发作";
+"empty.tools_done_title" = "所有技巧已掌握 🎉";
+"empty.tools_done_message" = "做得好！继续练习 — 每次练习都让你更强大。";
+"empty.heart_title" = "无心率数据";
+"empty.heart_message" = "连接Apple Watch或使用相机测量心率。";
+"empty.heart_action" = "连接健康";
+"empty.achievements_title" = "开始你的旅程";
+"empty.achievements_message" = "做练习，写日记，赢取成就。每一步都很重要。";
+"empty.achievements_action" = "开始";
+"empty.search_title" = "未找到结果";
+"empty.search_message %@" = "没有「%@」的搜索结果。尝试其他关键词。";
+
+/* Accessibility */
+"a11y.breath_phase %@" = "呼吸阶段：%@";
+"a11y.breath_idle" = "呼吸练习尚未开始";
+"a11y.breath_follow" = "请按照屏幕上的指示操作";
+"a11y.breath_tap_start" = "点击开始按钮来启动练习";
+"a11y.sos_started" = "紧急帮助已激活。请按照屏幕上的指示操作。";
+"a11y.session_complete" = "练习完成。做得好！";

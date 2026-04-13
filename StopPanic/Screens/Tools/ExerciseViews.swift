@@ -62,11 +62,11 @@ struct GroundingExerciseView: View {
     private var isFocused: Bool
 
     private let steps: [GroundingStep] = [
-        GroundingStep(emoji: "👁️", count: 5, sense: "ВИДИШЬ", verb: "вижу", color: SP.Colors.accent),
-        GroundingStep(emoji: "✋", count: 4, sense: "ТРОГАЕШЬ", verb: "касаюсь", color: SP.Colors.calm),
-        GroundingStep(emoji: "👂", count: 3, sense: "СЛЫШИШЬ", verb: "слышу", color: SP.Colors.warmth),
-        GroundingStep(emoji: "👃", count: 2, sense: "ЧУВСТВУЕШЬ", verb: "чувствую запах", color: SP.Colors.success),
-        GroundingStep(emoji: "👅", count: 1, sense: "ОЩУЩАЕШЬ", verb: "ощущаю вкус", color: SP.Colors.accent),
+        GroundingStep(emoji: "👁️", count: 5, sense: String(localized: "grounding.sense_see"), verb: String(localized: "grounding.verb_see"), color: SP.Colors.accent),
+        GroundingStep(emoji: "✋", count: 4, sense: String(localized: "grounding.sense_touch"), verb: String(localized: "grounding.verb_touch"), color: SP.Colors.calm),
+        GroundingStep(emoji: "👂", count: 3, sense: String(localized: "grounding.sense_hear"), verb: String(localized: "grounding.verb_hear"), color: SP.Colors.warmth),
+        GroundingStep(emoji: "👃", count: 2, sense: String(localized: "grounding.sense_smell"), verb: String(localized: "grounding.verb_smell"), color: SP.Colors.success),
+        GroundingStep(emoji: "👅", count: 1, sense: String(localized: "grounding.sense_taste"), verb: String(localized: "grounding.verb_taste"), color: SP.Colors.accent),
     ]
 
     // MARK: - Exercise View
@@ -88,7 +88,7 @@ struct GroundingExerciseView: View {
                         .overlay(Circle().stroke(Color.white.opacity(0.1), lineWidth: 0.5))
                 }
                 Spacer()
-                Text("Шаг \(currentStep + 1) из 5")
+                Text(String(localized: "grounding.step_of \(currentStep + 1) \(5)"))
                     .font(SP.Typography.caption)
                     .foregroundColor(SP.Colors.textTertiary)
             }
@@ -117,11 +117,11 @@ struct GroundingExerciseView: View {
                 .scaleEffect(appear ? 1 : 0.5)
                 .animation(.spring(response: 0.6, dampingFraction: 0.5), value: currentStep)
 
-            Text("Назови \(step.count)")
+            Text(String(localized: "grounding.name_count \(step.count)"))
                 .font(SP.Typography.heroTitle)
                 .foregroundColor(step.color)
 
-            Text("то, что ты \(step.sense)")
+            Text(String(localized: "grounding.what_you \(step.sense)"))
                 .font(SP.Typography.title3)
                 .foregroundColor(SP.Colors.textSecondary)
 
@@ -132,7 +132,7 @@ struct GroundingExerciseView: View {
                         Image(systemName: "checkmark.circle.fill")
                             .foregroundColor(step.color)
                             .font(.system(size: 16))
-                        Text("Я \(step.verb): \(item)")
+                        Text(String(localized: "grounding.i_verb \(step.verb) \(item)"))
                             .font(SP.Typography.callout)
                             .foregroundColor(SP.Colors.textPrimary)
                         Spacer()
@@ -162,7 +162,7 @@ struct GroundingExerciseView: View {
             // Input
             if inputs[currentStep].count < step.count {
                 HStack(spacing: 12) {
-                    TextField("Введи...", text: $currentInput)
+                    TextField(String(localized: "grounding.enter"), text: $currentInput)
                         .textFieldStyle(.plain)
                         .padding(14)
                         .background(
@@ -195,7 +195,7 @@ struct GroundingExerciseView: View {
                         }
                     }
                 } label: {
-                    Text(currentStep < 4 ? "Дальше →" : "Завершить")
+                    Text(currentStep < 4 ? String(localized: "grounding.next") : String(localized: "grounding.finish"))
                         .spPrimaryButton()
                 }
                 .buttonStyle(PremiumButtonStyle())
@@ -237,13 +237,11 @@ struct GroundingExerciseView: View {
                 }
             }
 
-            Text("Ты заземлился 🌍")
+            Text(String(localized: "grounding.done_title"))
                 .font(SP.Typography.heroTitle)
                 .foregroundColor(SP.Colors.textPrimary)
 
-            Text(
-                "Ты переключил внимание с тревоги на реальность.\nТвой мозг сейчас работает в логическом режиме."
-            )
+            Text(String(localized: "grounding.done_body"))
             .font(SP.Typography.body)
             .foregroundColor(SP.Colors.textSecondary)
             .multilineTextAlignment(.center)
@@ -254,7 +252,7 @@ struct GroundingExerciseView: View {
             Button {
                 dismiss()
             } label: {
-                Text("Готово")
+                Text(String(localized: "general.done"))
                     .spPrimaryButton()
             }
             .buttonStyle(PremiumButtonStyle())
@@ -334,7 +332,7 @@ struct MuscleRelaxView: View {
                         .font(SP.Typography.heroTitle)
                         .foregroundColor(SP.Colors.textPrimary)
 
-                    Text(isTensing ? "НАПРЯГИ на 5 секунд! 💪" : "Расслабь... отпусти... 😌")
+                    Text(isTensing ? String(localized: "muscle.tense") : String(localized: "muscle.relax"))
                         .font(SP.Typography.title3)
                         .foregroundColor(isTensing ? SP.Colors.warmth : SP.Colors.calm)
                         .contentTransition(.opacity)
@@ -350,7 +348,7 @@ struct MuscleRelaxView: View {
                     Button {
                         startTenseRelax()
                     } label: {
-                        Text(isTensing ? "Расслабляюсь..." : "Напрячь →")
+                        Text(isTensing ? String(localized: "muscle.relaxing") : String(localized: "muscle.tense_button"))
                             .spPrimaryButton()
                     }
                     .buttonStyle(PremiumButtonStyle())
@@ -367,7 +365,7 @@ struct MuscleRelaxView: View {
                             .foregroundColor(SP.Colors.success)
                     }
 
-                    Text("Тело расслаблено 🧘")
+                    Text(String(localized: "muscle.done_title"))
                         .font(SP.Typography.heroTitle)
                         .foregroundColor(SP.Colors.textPrimary)
 
@@ -376,7 +374,7 @@ struct MuscleRelaxView: View {
                     Button {
                         dismiss()
                     } label: {
-                        Text("Готово")
+                        Text(String(localized: "general.done"))
                             .spPrimaryButton()
                     }
                     .buttonStyle(PremiumButtonStyle())
@@ -410,14 +408,14 @@ struct MuscleRelaxView: View {
     private var relaxTimer: Timer?
 
     private let muscleGroups = [
-        ("Кисти рук", "Сожми кулаки как можно сильнее", "figure.hand.draw"),
-        ("Предплечья", "Согни руки в локтях, напряги предплечья", "figure.arms.open"),
-        ("Плечи", "Подними плечи к ушам", "figure.stand"),
-        ("Лицо", "Зажмурься, сожми зубы, наморщи лоб", "face.smiling.inverse"),
-        ("Шея", "Прижми подбородок к груди", "figure.mind.and.body"),
-        ("Спина", "Выгни спину, сведи лопатки", "figure.strengthtraining.traditional"),
-        ("Живот", "Напряги пресс максимально", "figure.core.training"),
-        ("Ноги", "Вытяни ноги, напряги бёдра и икры", "figure.walk"),
+        (String(localized: "muscle.hands_title"), String(localized: "muscle.hands_desc"), "figure.hand.draw"),
+        (String(localized: "muscle.forearms_title"), String(localized: "muscle.forearms_desc"), "figure.arms.open"),
+        (String(localized: "muscle.shoulders_title"), String(localized: "muscle.shoulders_desc"), "figure.stand"),
+        (String(localized: "muscle.face_title"), String(localized: "muscle.face_desc"), "face.smiling.inverse"),
+        (String(localized: "muscle.neck_title"), String(localized: "muscle.neck_desc"), "figure.mind.and.body"),
+        (String(localized: "muscle.back_title"), String(localized: "muscle.back_desc"), "figure.strengthtraining.traditional"),
+        (String(localized: "muscle.abs_title"), String(localized: "muscle.abs_desc"), "figure.core.training"),
+        (String(localized: "muscle.legs_title"), String(localized: "muscle.legs_desc"), "figure.walk"),
     ]
 
     private func startTenseRelax() {
@@ -476,29 +474,29 @@ struct CognitiveReframingView: View {
                     }
                     .padding(.top, 12)
 
-                    Text("🧠 Когнитивный рефрейминг")
+                    Text(String(localized: "cognitive.title"))
                         .font(SP.Typography.title1)
                         .foregroundColor(SP.Colors.textPrimary)
                         .opacity(appear ? 1 : 0)
                         .offset(y: appear ? 0 : -10)
 
-                    Text("Разберём тревожную мысль по модели CBT")
+                    Text(String(localized: "cognitive.subtitle"))
                         .font(SP.Typography.callout)
                         .foregroundColor(SP.Colors.textSecondary)
                         .opacity(appear ? 1 : 0)
 
                     // Step 1
                     VStack(alignment: .leading, spacing: 10) {
-                        Label("Тревожная мысль", systemImage: "exclamationmark.bubble.fill")
+                        Label(String(localized: "cognitive.anxious_thought"), systemImage: "exclamationmark.bubble.fill")
                             .font(SP.Typography.headline)
                             .foregroundColor(SP.Colors.danger)
 
-                        Text("Запиши мысль, которая вызывает тревогу")
+                        Text(String(localized: "cognitive.write_thought"))
                             .font(SP.Typography.caption)
                             .foregroundColor(SP.Colors.textTertiary)
 
                         TextField(
-                            "Например: «Я сейчас умру от сердечного приступа»",
+                            String(localized: "cognitive.thought_example"),
                             text: $anxiousThought, axis: .vertical
                         )
                         .textFieldStyle(.plain)
@@ -515,16 +513,16 @@ struct CognitiveReframingView: View {
                     if !anxiousThought.isEmpty {
                         // Step 2
                         VStack(alignment: .leading, spacing: 10) {
-                            Label("Факты против", systemImage: "magnifyingglass")
+                            Label(String(localized: "cognitive.facts_against"), systemImage: "magnifyingglass")
                                 .font(SP.Typography.headline)
                                 .foregroundColor(SP.Colors.warning)
 
-                            Text("Какие факты ПРОТИВ этой мысли?")
+                            Text(String(localized: "cognitive.what_facts"))
                                 .font(SP.Typography.caption)
                                 .foregroundColor(SP.Colors.textTertiary)
 
                             TextField(
-                                "Например: «Врач сказал, что сердце здоровое»", text: $evidence,
+                                String(localized: "cognitive.facts_example"), text: $evidence,
                                 axis: .vertical
                             )
                             .textFieldStyle(.plain)
@@ -537,14 +535,14 @@ struct CognitiveReframingView: View {
                             .frame(minHeight: 60)
 
                             VStack(alignment: .leading, spacing: 8) {
-                                Text("Возможные когнитивные искажения:")
+                                Text(String(localized: "cognitive.distortions_title"))
                                     .font(SP.Typography.caption)
                                     .foregroundColor(SP.Colors.textTertiary)
 
-                                distortionChip("Катастрофизация", "Худший сценарий = единственный")
-                                distortionChip("Чёрно-белое мышление", "Всё или ничего")
-                                distortionChip("Чтение мыслей", "Знаю, что думают другие")
-                                distortionChip("Эмоциональное рассуждение", "Чувствую = правда")
+                                distortionChip(String(localized: "cognitive.catastrophizing"), String(localized: "cognitive.catastrophizing_desc"))
+                                distortionChip(String(localized: "cognitive.black_white"), String(localized: "cognitive.black_white_desc"))
+                                distortionChip(String(localized: "cognitive.mind_reading"), String(localized: "cognitive.mind_reading_desc"))
+                                distortionChip(String(localized: "cognitive.emotional_reasoning"), String(localized: "cognitive.emotional_reasoning_desc"))
                             }
                         }
                         .spGlassCard(cornerRadius: SP.Layout.cornerMedium)
@@ -554,16 +552,16 @@ struct CognitiveReframingView: View {
                     if !evidence.isEmpty {
                         // Step 3
                         VStack(alignment: .leading, spacing: 10) {
-                            Label("Альтернативная мысль", systemImage: "lightbulb.fill")
+                            Label(String(localized: "cognitive.alternative"), systemImage: "lightbulb.fill")
                                 .font(SP.Typography.headline)
                                 .foregroundColor(SP.Colors.success)
 
-                            Text("Как можно переформулировать?")
+                            Text(String(localized: "cognitive.how_reframe"))
                                 .font(SP.Typography.caption)
                                 .foregroundColor(SP.Colors.textTertiary)
 
                             TextField(
-                                "Например: «Это тревога, она временна. Я в безопасности»",
+                                String(localized: "cognitive.alternative_example"),
                                 text: $alternative, axis: .vertical
                             )
                             .textFieldStyle(.plain)
@@ -585,12 +583,10 @@ struct CognitiveReframingView: View {
                             Image(systemName: "brain.head.profile")
                                 .font(.system(size: 40))
                                 .foregroundColor(SP.Colors.success)
-                            Text("Отлично!")
+                            Text(String(localized: "cognitive.excellent"))
                                 .font(SP.Typography.title2)
                                 .foregroundColor(SP.Colors.textPrimary)
-                            Text(
-                                "Ты только что применил CBT-технику. Каждый раз, когда мысль вернётся, вспоминай альтернативу."
-                            )
+                            Text(String(localized: "cognitive.done_body"))
                             .font(SP.Typography.callout)
                             .foregroundColor(SP.Colors.textSecondary)
                             .multilineTextAlignment(.center)
@@ -602,7 +598,7 @@ struct CognitiveReframingView: View {
                                 )
                                 dismiss()
                             } label: {
-                                Text("Готово ✓")
+                                Text(String(localized: "cognitive.done_button"))
                                     .spSecondaryButton()
                             }
                             .buttonStyle(PremiumButtonStyle())

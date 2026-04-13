@@ -41,7 +41,7 @@ struct PanicRadarView: View {
                 .padding(.top, 16)
             }
         }
-        .navigationTitle("Радар паники")
+        .navigationTitle(String(localized: "radar.title"))
         .navigationBarTitleDisplayMode(.inline)
         .onAppear {
             withAnimation(.easeOut(duration: 0.7)) { appear = true }
@@ -85,7 +85,7 @@ struct PanicRadarView: View {
                         .foregroundColor(SP.Colors.textPrimary)
                 }
             }
-            Text("Уровень риска")
+            Text(String(localized: "radar.risk_level"))
                 .font(SP.Typography.title3)
                 .foregroundColor(SP.Colors.textPrimary)
         }
@@ -99,7 +99,7 @@ struct PanicRadarView: View {
             HStack {
                 Image(systemName: "calendar")
                     .foregroundColor(SP.Colors.accent)
-                Text("По дням недели")
+                Text(String(localized: "radar.by_weekday"))
                     .font(SP.Typography.headline)
                     .foregroundColor(SP.Colors.textPrimary)
             }
@@ -127,7 +127,7 @@ struct PanicRadarView: View {
             HStack {
                 Image(systemName: "bolt.fill")
                     .foregroundColor(SP.Colors.warning)
-                Text("Триггеры")
+                Text(String(localized: "radar.triggers"))
                     .font(SP.Typography.headline)
                     .foregroundColor(SP.Colors.textPrimary)
             }
@@ -153,7 +153,7 @@ struct PanicRadarView: View {
             HStack {
                 Image(systemName: "lightbulb.fill")
                     .foregroundColor(SP.Colors.warning)
-                Text("Рекомендация")
+                Text(String(localized: "radar.recommendation"))
                     .font(SP.Typography.headline)
                     .foregroundColor(SP.Colors.textPrimary)
             }

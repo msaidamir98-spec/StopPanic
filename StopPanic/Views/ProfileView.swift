@@ -31,7 +31,7 @@ struct ProfileView: View {
                     // Name
                     VStack(spacing: 6) {
                         if isEditing {
-                            TextField("Имя", text: $editingName)
+                            TextField(String(localized: "profile.name"), text: $editingName)
                                 .textFieldStyle(.plain)
                                 .font(SP.Typography.title2)
                                 .multilineTextAlignment(.center)
@@ -44,7 +44,7 @@ struct ProfileView: View {
                                 .padding(.horizontal, 60)
                                 .onSubmit { saveName() }
                         } else {
-                            Text(service.displayName.isEmpty ? "Укажи имя" : service.displayName)
+                            Text(service.displayName.isEmpty ? String(localized: "profile.set_name") : service.displayName)
                                 .font(SP.Typography.title1)
                                 .foregroundColor(SP.Colors.textPrimary)
                         }
@@ -58,7 +58,7 @@ struct ProfileView: View {
                                 isEditing = true
                             }
                         } label: {
-                            Text(isEditing ? "Сохранить" : "Редактировать")
+                            Text(isEditing ? String(localized: "general.save") : String(localized: "profile.edit"))
                                 .font(SP.Typography.caption)
                                 .foregroundColor(SP.Colors.accent)
                         }
@@ -79,7 +79,7 @@ struct ProfileView: View {
                 .padding(.vertical, 20)
             }
         }
-        .navigationTitle("Профиль")
+        .navigationTitle(String(localized: "profile.title"))
         .navigationBarTitleDisplayMode(.inline)
         .onAppear {
             withAnimation(.easeOut(duration: 0.6)) { appear = true }
@@ -114,17 +114,17 @@ struct ProfileView: View {
     private var statsSection: some View {
         HStack(spacing: 12) {
             statCard(
-                title: "Записей",
+                title: String(localized: "profile.entries"),
                 value: "\(coordinator.diaryService.diaryEpisodes.count)",
                 color: SP.Colors.accent
             )
             statCard(
-                title: "Сессий",
+                title: String(localized: "profile.sessions"),
                 value: "\(coordinator.sessionsCompleted)",
                 color: SP.Colors.warmth
             )
             statCard(
-                title: "Мин дыхания",
+                title: String(localized: "profile.breath_min"),
                 value: "\(coordinator.totalBreathingMinutes)",
                 color: SP.Colors.calm
             )
@@ -135,16 +135,16 @@ struct ProfileView: View {
 
     private var infoSection: some View {
         VStack(alignment: .leading, spacing: 12) {
-            Text("О приложении")
+            Text(String(localized: "profile.about"))
                 .font(SP.Typography.headline)
                 .foregroundColor(SP.Colors.textPrimary)
 
-            Text("Stillō — твой помощник при тревоге и панических атаках. Бесплатно, без рекламы, без подписок.")
+            Text(String(localized: "profile.about_body"))
                 .font(SP.Typography.body)
                 .foregroundColor(SP.Colors.textSecondary)
                 .lineSpacing(4)
 
-            Text("Версия \(appVersion)")
+            Text(String(localized: "profile.version \(appVersion)"))
                 .font(SP.Typography.caption)
                 .foregroundColor(SP.Colors.textTertiary)
         }
