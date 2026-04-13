@@ -683,25 +683,9 @@
 "a11y.sos_started" = "Экстренная помощь активирована. Следуйте инструкциям на экране.";
 "a11y.session_complete" = "Сессия завершена. Молодец!";
 
-/* Empty States */
-"empty.journal_title" = "Дневник пуст";
-"empty.journal_message" = "Это хорошая новость! Записывай эпизоды, чтобы отслеживать прогресс и находить паттерны.";
-"empty.journal_action" = "Записать первый эпизод";
-"empty.tools_done_title" = "Все техники освоены 🎉";
-"empty.tools_done_message" = "Ты молодец! Продолжай практиковать — каждая сессия делает тебя сильнее.";
-"empty.heart_title" = "Нет данных пульса";
-"empty.heart_message" = "Подключи Apple Watch или используй камеру для измерения пульса и анализа.";
-"empty.heart_action" = "Подключить Health";
-"empty.achievements_title" = "Начни свой путь";
-"empty.achievements_message" = "Выполняй упражнения, записывай дневник и зарабатывай достижения. Каждый шаг считается.";
-"empty.achievements_action" = "Начать";
-"empty.search_title" = "Ничего не найдено";
-"empty.search_message %@" = "По запросу «%@» нет результатов. Попробуй другие ключевые слова.";
+/* Paywall Legal Links */
+"paywall_terms" = "Условия использования";
+"paywall_privacy" = "Политика конфиденциальности";
 
-/* Accessibility */
-"a11y.breath_phase %@" = "Фаза дыхания: %@";
-"a11y.breath_idle" = "Дыхательная сессия не начата";
-"a11y.breath_follow" = "Следуйте инструкциям на экране";
-"a11y.breath_tap_start" = "Нажмите кнопку Начать для запуска сессии";
-"a11y.sos_started" = "Экстренная помощь активирована. Следуйте инструкциям на экране.";
-"a11y.session_complete" = "Сессия завершена. Молодец!";
+/* Intent Results */
+"intent.open_forecast" = "Откройте приложение для просмотра прогноза тревожности.";

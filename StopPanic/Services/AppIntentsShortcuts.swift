@@ -2,12 +2,12 @@ import AppIntents
 
 // MARK: - SOSIntent
 
-// Позволяет пользователю запускать SOS, дыхание и другое через Siri.
-// "Привет Siri, я паникую" → запускает SOS Flow.
+// Allows users to trigger SOS, breathing, and more via Siri.
+// "Hey Siri, I'm panicking" → triggers SOS Flow.
 
 struct SOSIntent: AppIntent {
-    static var title: LocalizedStringResource = "Я паникую — SOS"
-    static var description = IntentDescription("Запускает экстренную помощь при панической атаке")
+    static var title: LocalizedStringResource = "I'm panicking — SOS"
+    static var description = IntentDescription("Activates emergency help during a panic attack")
     static var openAppWhenRun: Bool = true
 
     func perform() async throws -> some IntentResult {
@@ -21,8 +21,8 @@ struct SOSIntent: AppIntent {
 // MARK: - StartBreathingIntent
 
 struct StartBreathingIntent: AppIntent {
-    static var title: LocalizedStringResource = "Начать дыхание 4-7-8"
-    static var description = IntentDescription("Запускает дыхательную сессию 4-7-8 для успокоения")
+    static var title: LocalizedStringResource = "Start 4-7-8 Breathing"
+    static var description = IntentDescription("Starts a calming 4-7-8 breathing session")
     static var openAppWhenRun: Bool = true
 
     func perform() async throws -> some IntentResult {
@@ -36,25 +36,25 @@ struct StartBreathingIntent: AppIntent {
 // MARK: - CheckAnxietyStatusIntent
 
 struct CheckAnxietyStatusIntent: AppIntent {
-    static var title: LocalizedStringResource = "Проверить уровень тревоги"
-    static var description = IntentDescription("Показывает текущий прогноз уровня тревоги")
+    static var title: LocalizedStringResource = "Check anxiety level"
+    static var description = IntentDescription("Shows the current anxiety forecast")
     static var openAppWhenRun: Bool = true
 
     func perform() async throws -> some IntentResult & ReturnsValue<String> {
-        .result(value: "Откройте приложение для просмотра прогноза")
+        .result(value: String(localized: "intent.open_forecast"))
     }
 }
 
 // MARK: - QuickLogPanicIntent
 
 struct QuickLogPanicIntent: AppIntent {
-    static var title: LocalizedStringResource = "Записать паническую атаку"
+    static var title: LocalizedStringResource = "Log a panic attack"
     static var description = IntentDescription(
-        "Быстро записывает эпизод панической атаки в дневник"
+        "Quickly logs a panic episode in the diary"
     )
     static var openAppWhenRun: Bool = true
 
-    @Parameter(title: "Сила (1-10)")
+    @Parameter(title: "Intensity (1-10)")
     var intensity: Int?
 
     func perform() async throws -> some IntentResult {
@@ -77,34 +77,34 @@ struct StilloShortcuts: AppShortcutsProvider {
         AppShortcut(
             intent: SOSIntent(),
             phrases: [
-                "Я паникую в \(.applicationName)",
-                "SOS в \(.applicationName)",
-                "Помоги мне \(.applicationName)",
-                "Паническая атака \(.applicationName)",
-                "Мне плохо \(.applicationName)",
+                "I'm panicking in \(.applicationName)",
+                "SOS in \(.applicationName)",
+                "Help me \(.applicationName)",
+                "Panic attack \(.applicationName)",
+                "I feel bad \(.applicationName)",
             ],
-            shortTitle: "SOS Паника",
+            shortTitle: "SOS Panic",
             systemImageName: "hand.raised.fill"
         )
 
         AppShortcut(
             intent: StartBreathingIntent(),
             phrases: [
-                "Дыши со мной в \(.applicationName)",
-                "Начни дыхание в \(.applicationName)",
-                "Дыхание 4-7-8 в \(.applicationName)",
+                "Breathe with me in \(.applicationName)",
+                "Start breathing in \(.applicationName)",
+                "4-7-8 breathing in \(.applicationName)",
             ],
-            shortTitle: "Дыхание 4-7-8",
+            shortTitle: "4-7-8 Breathing",
             systemImageName: "wind"
         )
 
         AppShortcut(
             intent: QuickLogPanicIntent(),
             phrases: [
-                "Запиши паническую атаку в \(.applicationName)",
-                "Запись в дневник \(.applicationName)",
+                "Log a panic attack in \(.applicationName)",
+                "Diary entry in \(.applicationName)",
             ],
-            shortTitle: "Записать эпизод",
+            shortTitle: "Log Episode",
             systemImageName: "pencil.circle.fill"
         )
     }

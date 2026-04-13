@@ -1,0 +1,3 @@
+/* HealthKit permission dialogs */
+"NSHealthShareUsageDescription" = "Stillō читает ваш пульс с Apple Watch для анализа тревожных эпизодов и помощи в понимании стрессовой реакции организма.";
+"NSHealthUpdateUsageDescription" = "Stillō записывает данные о тревожных эпизодах для отслеживания вашего прогресса и выявления паттернов.";

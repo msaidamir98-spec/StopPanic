@@ -682,3 +682,10 @@
 "a11y.breath_tap_start" = "Toque em Iniciar para começar a sessão";
 "a11y.sos_started" = "Ajuda de emergência ativada. Siga as instruções na tela.";
 "a11y.session_complete" = "Sessão concluída. Parabéns!";
+
+/* Paywall Legal Links */
+"paywall_terms" = "Termos de Uso";
+"paywall_privacy" = "Política de Privacidade";
+
+/* Intent Results */
+"intent.open_forecast" = "Abra o app para ver sua previsão de ansiedade.";

@@ -20,6 +20,11 @@ struct StilloApp: App {
                 .onReceive(NotificationCenter.default.publisher(for: .triggerBreathingFromIntent)) { _ in
                     coordinator.showBreathingSheet = true
                 }
+                .onReceive(NotificationCenter.default.publisher(for: .triggerQuickLogFromIntent)) { notification in
+                    let intensity = notification.userInfo?["intensity"] as? Int ?? 5
+                    coordinator.diaryService.addDiaryEpisode(intensity: intensity, notes: "Siri quick log")
+                    coordinator.selectedTab = .journal
+                }
                 .task {
                     // Start listening for StoreKit transactions
                     coordinator.premiumManager.listenForTransactions()

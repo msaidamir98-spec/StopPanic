@@ -101,11 +101,22 @@ struct PaywallView: View {
                     }
 
                     // Legal
-                    Text(String(localized: "paywall_legal"))
+                    VStack(spacing: 8) {
+                        Text(String(localized: "paywall_legal"))
+                            .font(SP.Typography.caption2)
+                            .foregroundColor(SP.Colors.textTertiary.opacity(0.7))
+                            .multilineTextAlignment(.center)
+
+                        HStack(spacing: 16) {
+                            Link(String(localized: "paywall_terms"),
+                                 destination: URL(string: "https://stillo.app/terms")!)
+                            Link(String(localized: "paywall_privacy"),
+                                 destination: URL(string: "https://stillo.app/privacy")!)
+                        }
                         .font(SP.Typography.caption2)
-                        .foregroundColor(SP.Colors.textTertiary.opacity(0.7))
-                        .multilineTextAlignment(.center)
-                        .padding(.bottom, 20)
+                        .foregroundColor(SP.Colors.accent.opacity(0.8))
+                    }
+                    .padding(.bottom, 20)
                 }
                 .padding(.horizontal, SP.Layout.padding)
             }
@@ -147,6 +158,7 @@ struct PaywallView: View {
 
     private func priceCard(product: Product, title: String, badge: String?, isPopular: Bool) -> some View {
         Button {
+            guard !purchasing else { return }
             purchasing = true
             Task {
                 _ = await premium.purchase(product)

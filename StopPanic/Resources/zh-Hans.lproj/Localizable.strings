@@ -682,3 +682,10 @@
 "a11y.breath_tap_start" = "点击开始按钮来启动练习";
 "a11y.sos_started" = "紧急帮助已激活。请按照屏幕上的指示操作。";
 "a11y.session_complete" = "练习完成。做得好！";
+
+/* Paywall Legal Links */
+"paywall_terms" = "使用条款";
+"paywall_privacy" = "隐私政策";
+
+/* Intent Results */
+"intent.open_forecast" = "打开应用查看您的焦虑预测。";

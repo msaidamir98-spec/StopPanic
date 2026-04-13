@@ -682,3 +682,10 @@
 "a11y.breath_tap_start" = "開始ボタンを押してセッションを始めてください";
 "a11y.sos_started" = "緊急ヘルプが起動しました。画面の指示に従ってください。";
 "a11y.session_complete" = "セッション完了。お疲れ様でした！";
+
+/* Paywall Legal Links */
+"paywall_terms" = "利用規約";
+"paywall_privacy" = "プライバシーポリシー";
+
+/* Intent Results */
+"intent.open_forecast" = "アプリを開いて不安予測をご覧ください。";

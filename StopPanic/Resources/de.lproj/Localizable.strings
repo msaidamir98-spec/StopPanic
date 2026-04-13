@@ -682,3 +682,10 @@
 "a11y.breath_tap_start" = "Tippe auf Start, um die Sitzung zu beginnen";
 "a11y.sos_started" = "Nothilfe aktiviert. Folge den Anweisungen auf dem Bildschirm.";
 "a11y.session_complete" = "Sitzung abgeschlossen. Gut gemacht!";
+
+/* Paywall Legal Links */
+"paywall_terms" = "Nutzungsbedingungen";
+"paywall_privacy" = "Datenschutzrichtlinie";
+
+/* Intent Results */
+"intent.open_forecast" = "Öffne die App, um deine Angstprognose zu sehen.";
