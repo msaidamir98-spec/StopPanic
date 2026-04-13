@@ -36,6 +36,11 @@ final class DiaryService: ObservableObject {
 
     private let storageURL: URL
 
+    /// Public alias for background save
+    func forceSave() {
+        saveEpisodes()
+    }
+
     private func saveEpisodes() {
         do {
             let data = try JSONEncoder().encode(diaryEpisodes)

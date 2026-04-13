@@ -306,6 +306,8 @@
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_KEY_CFBundleDisplayName = "Stillō";
 				INFOPLIST_KEY_ITSAppUsesNonExemptEncryption = NO;
+						INFOPLIST_KEY_UIBackgroundModes = "fetch processing";
+						INFOPLIST_KEY_BGTaskSchedulerPermittedIdentifiers = "(com.stillo.breathingReminder)";
 				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.healthcare-fitness";
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
@@ -344,6 +346,8 @@
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_KEY_CFBundleDisplayName = "Stillō";
 				INFOPLIST_KEY_ITSAppUsesNonExemptEncryption = NO;
+						INFOPLIST_KEY_UIBackgroundModes = "fetch processing";
+						INFOPLIST_KEY_BGTaskSchedulerPermittedIdentifiers = "(com.stillo.breathingReminder)";
 				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.healthcare-fitness";
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
@@ -383,6 +387,8 @@
                         GENERATE_INFOPLIST_FILE = YES;
                         INFOPLIST_KEY_CFBundleDisplayName = "Stillō";
 				INFOPLIST_KEY_ITSAppUsesNonExemptEncryption = NO;
+						INFOPLIST_KEY_UIBackgroundModes = "fetch processing";
+						INFOPLIST_KEY_BGTaskSchedulerPermittedIdentifiers = "(com.stillo.breathingReminder)";
 				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.healthcare-fitness";
                         INFOPLIST_KEY_NSHealthShareUsageDescription = "Reading heart rate for panic attack analysis on your wrist.";
                         INFOPLIST_KEY_NSHealthUpdateUsageDescription = "Recording panic attack data.";
@@ -420,6 +426,8 @@
                         GENERATE_INFOPLIST_FILE = YES;
                         INFOPLIST_KEY_CFBundleDisplayName = "Stillō";
 				INFOPLIST_KEY_ITSAppUsesNonExemptEncryption = NO;
+						INFOPLIST_KEY_UIBackgroundModes = "fetch processing";
+						INFOPLIST_KEY_BGTaskSchedulerPermittedIdentifiers = "(com.stillo.breathingReminder)";
 				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.healthcare-fitness";
                         INFOPLIST_KEY_NSHealthShareUsageDescription = "Reading heart rate for panic attack analysis on your wrist.";
                         INFOPLIST_KEY_NSHealthUpdateUsageDescription = "Recording panic attack data.";

@@ -1,0 +1,81 @@
+"app.name" = "Stillō";
+"general.done" = "完了";
+"general.cancel" = "キャンセル";
+"general.save" = "保存";
+"general.next" = "次へ →";
+"general.skip" = "スキップ";
+"general.start" = "開始";
+"general.stop" = "停止";
+"general.close" = "閉じる";
+"general.important" = "重要";
+
+"tabs.home" = "ホーム";
+"tabs.tools" = "ツール";
+"tabs.heart" = "心拍";
+"tabs.journal" = "日記";
+"tabs.profile" = "プロフィール";
+
+"home.sos.button" = "SOS";
+"home.sos.subtitle" = "不安を感じたらタップ";
+"home.quickActions" = "クイックアクション";
+"home.breathe" = "呼吸";
+"home.grounding" = "グラウンディング";
+"home.heartCheck" = "心拍";
+
+"sos.title" = "SOS — つらいです";
+"sos.stepByStep" = "今すぐステップバイステップのサポート";
+"sos.breatheIn" = "吸う";
+"sos.hold" = "止める";
+"sos.breatheOut" = "吐く";
+"sos.youAreSafe" = "あなたは安全です";
+"sos.panicWillPass" = "不安は去ります。一時的なものです。";
+
+"breathing.ready" = "準備はいい？";
+"breathing.inhale" = "吸う";
+"breathing.hold" = "止める";
+"breathing.exhale" = "吐く";
+"breathing.pause" = "休憩";
+"breathing.complete" = "完了！";
+"breathing.excellent" = "素晴らしい！ 🎉";
+"breathing.cycles" = "サイクル";
+"breathing.time" = "時間";
+"breathing.throughNose" = "鼻から 🫁";
+"breathing.calmly" = "穏やかに 🧘";
+"breathing.throughMouth" = "口から 💨";
+"breathing.relax" = "リラックス";
+
+"journal.title" = "日記";
+"journal.entries" = "件";
+"journal.episodes" = "エピソード";
+"journal.mood" = "気分";
+"journal.insights" = "インサイト";
+"journal.empty.title" = "日記はまだ空です";
+"journal.empty.subtitle" = "エピソードを記録してパターンを見つけよう";
+"journal.perWeek" = "今週";
+"journal.avgIntensity" = "平均強度";
+"journal.trend" = "トレンド";
+
+"profile.member" = "Stillōメンバー";
+"profile.setName" = "名前を入力";
+"profile.entries" = "記録";
+"profile.sessions" = "セッション";
+"profile.breathingMin" = "分";
+"profile.awards" = "実績";
+"profile.sosContacts" = "SOS連絡先";
+"profile.settings" = "設定";
+"profile.notifications" = "通知";
+"profile.crisisLine" = "相談窓口";
+
+"onboarding.tagline" = "不安の中の\n静けさの一点";
+"onboarding.name" = "お名前は？";
+"onboarding.howOften" = "どのくらいの頻度で\n不安を感じますか？";
+"onboarding.whatGoals" = "何を達成したいですか？";
+"onboarding.allReady" = "準備完了";
+"onboarding.startUsing" = "使い始める";
+"onboarding.notAlone" = "もうひとりじゃない。";
+"onboarding.disclaimer" = "Stillōはサポートツールであり、医師の代わりではありません。心臓に問題がある場合は必ず救急に連絡してください。";
+
+"greeting.morning" = "おはようございます";
+"greeting.afternoon" = "こんにちは";
+"greeting.evening" = "こんばんは";
+"greeting.night" = "おやすみなさい";

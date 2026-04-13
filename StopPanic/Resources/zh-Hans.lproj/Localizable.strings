@@ -1,0 +1,81 @@
+"app.name" = "Stillō";
+"general.done" = "完成";
+"general.cancel" = "取消";
+"general.save" = "保存";
+"general.next" = "下一步 →";
+"general.skip" = "跳过";
+"general.start" = "开始";
+"general.stop" = "停止";
+"general.close" = "关闭";
+"general.important" = "重要";
+
+"tabs.home" = "首页";
+"tabs.tools" = "工具";
+"tabs.heart" = "心率";
+"tabs.journal" = "日记";
+"tabs.profile" = "个人";
+
+"home.sos.button" = "SOS";
+"home.sos.subtitle" = "焦虑时点击";
+"home.quickActions" = "快捷操作";
+"home.breathe" = "呼吸";
+"home.grounding" = "接地";
+"home.heartCheck" = "心率";
+
+"sos.title" = "SOS — 我感觉不好";
+"sos.stepByStep" = "现在逐步获取帮助";
+"sos.breatheIn" = "吸气";
+"sos.hold" = "屏息";
+"sos.breatheOut" = "呼气";
+"sos.youAreSafe" = "你是安全的";
+"sos.panicWillPass" = "焦虑会过去的。这只是暂时的。";
+
+"breathing.ready" = "准备好了吗？";
+"breathing.inhale" = "吸气";
+"breathing.hold" = "屏息";
+"breathing.exhale" = "呼气";
+"breathing.pause" = "暂停";
+"breathing.complete" = "完成！";
+"breathing.excellent" = "太棒了！ 🎉";
+"breathing.cycles" = "次循环";
+"breathing.time" = "时间";
+"breathing.throughNose" = "用鼻子 🫁";
+"breathing.calmly" = "平静地 🧘";
+"breathing.throughMouth" = "用嘴巴 💨";
+"breathing.relax" = "放松";
+
+"journal.title" = "日记";
+"journal.entries" = "条记录";
+"journal.episodes" = "发作";
+"journal.mood" = "心情";
+"journal.insights" = "洞察";
+"journal.empty.title" = "日记还是空的";
+"journal.empty.subtitle" = "记录发作以发现规律";
+"journal.perWeek" = "本周";
+"journal.avgIntensity" = "平均强度";
+"journal.trend" = "趋势";
+
+"profile.member" = "Stillō 会员";
+"profile.setName" = "输入姓名";
+"profile.entries" = "记录";
+"profile.sessions" = "练习";
+"profile.breathingMin" = "分钟";
+"profile.awards" = "成就";
+"profile.sosContacts" = "紧急联系人";
+"profile.settings" = "设置";
+"profile.notifications" = "通知";
+"profile.crisisLine" = "心理热线";
+
+"onboarding.tagline" = "焦虑时刻的\n一点平静";
+"onboarding.name" = "你叫什么名字？";
+"onboarding.howOften" = "你多久\n会感到焦虑？";
+"onboarding.whatGoals" = "你想达到什么目标？";
+"onboarding.allReady" = "一切就绪";
+"onboarding.startUsing" = "开始使用";
+"onboarding.notAlone" = "你不再孤单。";
+"onboarding.disclaimer" = "Stillō 是辅助工具，不能替代医生。如怀疑心脏问题，请立即拨打急救电话。";
+
+"greeting.morning" = "早上好";
+"greeting.afternoon" = "下午好";
+"greeting.evening" = "晚上好";
+"greeting.night" = "晚安";

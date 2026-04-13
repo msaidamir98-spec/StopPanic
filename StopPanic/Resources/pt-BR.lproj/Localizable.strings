@@ -1,0 +1,81 @@
+"app.name" = "Stillō";
+"general.done" = "Pronto";
+"general.cancel" = "Cancelar";
+"general.save" = "Salvar";
+"general.next" = "Próximo →";
+"general.skip" = "Pular";
+"general.start" = "Iniciar";
+"general.stop" = "Parar";
+"general.close" = "Fechar";
+"general.important" = "Importante";
+
+"tabs.home" = "Início";
+"tabs.tools" = "Ferramentas";
+"tabs.heart" = "Coração";
+"tabs.journal" = "Diário";
+"tabs.profile" = "Perfil";
+
+"home.sos.button" = "SOS";
+"home.sos.subtitle" = "Toque se sentir ansiedade";
+"home.quickActions" = "Ações rápidas";
+"home.breathe" = "Respirar";
+"home.grounding" = "Aterramento";
+"home.heartCheck" = "Pulso";
+
+"sos.title" = "SOS — Estou mal";
+"sos.stepByStep" = "Ajuda passo a passo agora";
+"sos.breatheIn" = "Inspire";
+"sos.hold" = "Segure";
+"sos.breatheOut" = "Expire";
+"sos.youAreSafe" = "Você está seguro";
+"sos.panicWillPass" = "A ansiedade vai passar. É temporário.";
+
+"breathing.ready" = "Pronto?";
+"breathing.inhale" = "Inspire";
+"breathing.hold" = "Segure";
+"breathing.exhale" = "Expire";
+"breathing.pause" = "Pausa";
+"breathing.complete" = "Feito!";
+"breathing.excellent" = "Excelente! 🎉";
+"breathing.cycles" = "ciclos";
+"breathing.time" = "tempo";
+"breathing.throughNose" = "pelo nariz 🫁";
+"breathing.calmly" = "calmamente 🧘";
+"breathing.throughMouth" = "pela boca 💨";
+"breathing.relax" = "relaxe";
+
+"journal.title" = "Diário";
+"journal.entries" = "registros";
+"journal.episodes" = "Episódios";
+"journal.mood" = "Humor";
+"journal.insights" = "Insights";
+"journal.empty.title" = "Diário vazio";
+"journal.empty.subtitle" = "Registre episódios para ver padrões";
+"journal.perWeek" = "esta semana";
+"journal.avgIntensity" = "intensidade média";
+"journal.trend" = "tendência";
+
+"profile.member" = "Membro Stillō";
+"profile.setName" = "Seu nome";
+"profile.entries" = "Registros";
+"profile.sessions" = "Sessões";
+"profile.breathingMin" = "min";
+"profile.awards" = "Conquistas";
+"profile.sosContacts" = "Contatos SOS";
+"profile.settings" = "Configurações";
+"profile.notifications" = "Notificações";
+"profile.crisisLine" = "Linha de crise";
+
+"onboarding.tagline" = "Um ponto de calma\nnum momento de ansiedade";
+"onboarding.name" = "Qual é o seu nome?";
+"onboarding.howOften" = "Com que frequência\nvocê sente ansiedade?";
+"onboarding.whatGoals" = "O que você quer alcançar?";
+"onboarding.allReady" = "Tudo pronto";
+"onboarding.startUsing" = "Começar a usar";
+"onboarding.notAlone" = "Você não está mais sozinho.";
+"onboarding.disclaimer" = "Stillō é um assistente, NÃO substitui o médico. Se suspeitar de problema cardíaco, sempre ligue para emergências.";
+
+"greeting.morning" = "Bom dia";
+"greeting.afternoon" = "Boa tarde";
+"greeting.evening" = "Boa tarde";
+"greeting.night" = "Boa noite";
