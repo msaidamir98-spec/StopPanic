@@ -254,12 +254,14 @@ struct ProfileHubView: View {
                     icon: "person.fill", title: "Подробный профиль", color: SP.Colors.warmth
                 )
             }
+            .buttonStyle(PremiumButtonStyle())
 
             NavigationLink {
                 MoodMapView(service: coordinator.moodMapService)
             } label: {
                 settingsRowLabel(icon: "map.fill", title: "Карта настроений", color: SP.Colors.calm)
             }
+            .buttonStyle(PremiumButtonStyle())
         }
         .opacity(appear ? 1 : 0)
         .offset(y: appear ? 0 : 15)
@@ -327,6 +329,7 @@ struct ProfileHubView: View {
                     .font(.system(size: 12))
                     .foregroundColor(SP.Colors.textTertiary)
             }
+            .contentShape(Rectangle())
             .spGlassCard(cornerRadius: SP.Layout.cornerSmall)
         }
         .buttonStyle(PremiumButtonStyle())
@@ -350,6 +353,7 @@ struct ProfileHubView: View {
                 .font(.system(size: 12))
                 .foregroundColor(SP.Colors.textTertiary)
         }
+        .contentShape(Rectangle())
         .spGlassCard(cornerRadius: SP.Layout.cornerSmall)
     }
 }
