@@ -219,9 +219,9 @@ struct MoodMapView: View {
                         .padding(14)
                         .background(
                             RoundedRectangle(cornerRadius: 14, style: .continuous)
-                                .fill(.ultraThinMaterial)
+                                .fill(SP.Colors.bgCard.opacity(0.8))
                         )
-                        .foregroundColor(.white)
+                        .foregroundColor(SP.Colors.textPrimary)
 
                     Spacer()
 

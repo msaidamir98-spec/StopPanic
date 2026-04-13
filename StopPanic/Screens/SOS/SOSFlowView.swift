@@ -134,7 +134,7 @@ struct SOSFlowView: View {
                 .foregroundColor(SP.Colors.textSecondary)
                 .padding(.horizontal, 16)
                 .padding(.vertical, 10)
-                .background(Capsule().fill(.ultraThinMaterial))
+                .background(Capsule().fill(.warmGlass))
                 .overlay(Capsule().stroke(Color.white.opacity(0.08), lineWidth: 0.5))
             }
 
@@ -251,7 +251,7 @@ struct SOSFlowView: View {
                 }
                 .padding(.horizontal, 16)
                 .padding(.vertical, 8)
-                .background(Capsule().fill(.ultraThinMaterial))
+                .background(Capsule().fill(.warmGlass))
             }
         }
     }

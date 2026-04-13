@@ -59,21 +59,23 @@ struct MainTabView: View {
         }
         .animation(SP.Anim.spring, value: coordinator.showSOSOverlay)
         .onAppear {
-            configureTabBarAppearance()
+            configureAppearance()
             coordinator.refreshPredictions()
         }
     }
 
     // MARK: Private
 
-    private func configureTabBarAppearance() {
+    private func configureAppearance() {
         let theme = coordinator.themeManager
-        let appearance = UITabBarAppearance()
-        appearance.configureWithOpaqueBackground()
-        appearance.backgroundColor = UIColor(theme.bgElevated)
 
-        // Add top border line
-        appearance.shadowColor = UIColor(white: 1, alpha: 0.06)
+        // MARK: Tab Bar
+        let tabAppearance = UITabBarAppearance()
+        tabAppearance.configureWithOpaqueBackground()
+        tabAppearance.backgroundColor = UIColor(theme.bgElevated)
+        tabAppearance.shadowColor = theme.isLight
+            ? UIColor(theme.textTertiary.opacity(0.1))
+            : UIColor(white: 1, alpha: 0.06)
 
         let itemAppearance = UITabBarItemAppearance()
         itemAppearance.normal.iconColor = UIColor(theme.textTertiary)
@@ -81,11 +83,24 @@ struct MainTabView: View {
         itemAppearance.selected.iconColor = UIColor(theme.accent)
         itemAppearance.selected.titleTextAttributes = [.foregroundColor: UIColor(theme.accent)]
 
-        appearance.stackedLayoutAppearance = itemAppearance
-        appearance.inlineLayoutAppearance = itemAppearance
-        appearance.compactInlineLayoutAppearance = itemAppearance
+        tabAppearance.stackedLayoutAppearance = itemAppearance
+        tabAppearance.inlineLayoutAppearance = itemAppearance
+        tabAppearance.compactInlineLayoutAppearance = itemAppearance
 
-        UITabBar.appearance().standardAppearance = appearance
-        UITabBar.appearance().scrollEdgeAppearance = appearance
+        UITabBar.appearance().standardAppearance = tabAppearance
+        UITabBar.appearance().scrollEdgeAppearance = tabAppearance
+
+        // MARK: Navigation Bar — тёплый фон вместо белого
+        let navAppearance = UINavigationBarAppearance()
+        navAppearance.configureWithOpaqueBackground()
+        navAppearance.backgroundColor = UIColor(theme.bg)
+        navAppearance.shadowColor = .clear // убираем серую полоску
+        navAppearance.titleTextAttributes = [.foregroundColor: UIColor(theme.textPrimary)]
+        navAppearance.largeTitleTextAttributes = [.foregroundColor: UIColor(theme.textPrimary)]
+
+        UINavigationBar.appearance().standardAppearance = navAppearance
+        UINavigationBar.appearance().scrollEdgeAppearance = navAppearance
+        UINavigationBar.appearance().compactAppearance = navAppearance
+        UINavigationBar.appearance().tintColor = UIColor(theme.accent)
     }
 }

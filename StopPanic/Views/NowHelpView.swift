@@ -180,7 +180,7 @@ struct NowHelpView: View {
                         .foregroundColor(SP.Colors.textSecondary)
                         .padding(.horizontal, 24)
                         .padding(.vertical, 14)
-                        .background(Capsule().fill(.ultraThinMaterial))
+                        .background(Capsule().fill(.warmGlass))
                     }
                 }
 

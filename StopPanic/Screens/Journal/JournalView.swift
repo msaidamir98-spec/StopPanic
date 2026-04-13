@@ -95,7 +95,7 @@ struct JournalView: View {
         .padding(4)
         .background(
             RoundedRectangle(cornerRadius: 12, style: .continuous)
-                .fill(.ultraThinMaterial)
+                .fill(.warmGlass)
                 .overlay(
                     RoundedRectangle(cornerRadius: 12, style: .continuous)
                         .stroke(Color.white.opacity(0.08), lineWidth: 0.5)
@@ -464,7 +464,7 @@ struct AddEpisodeSheet: View {
                                         .background(
                                             selectedTriggers.contains(trigger)
                                                 ? AnyShapeStyle(SP.Colors.heroGradient)
-                                                : AnyShapeStyle(.ultraThinMaterial)
+                                                : AnyShapeStyle(.warmGlass)
                                         )
                                         .clipShape(Capsule())
                                         .overlay(
@@ -492,9 +492,9 @@ struct AddEpisodeSheet: View {
                                 .padding(14)
                                 .background(
                                     RoundedRectangle(cornerRadius: 14, style: .continuous)
-                                        .fill(.ultraThinMaterial)
+                                        .fill(.warmGlass)
                                 )
-                                .foregroundColor(.white)
+                                .foregroundColor(SP.Colors.textPrimary)
                                 .frame(minHeight: 80)
                         }
 

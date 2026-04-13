@@ -4,63 +4,50 @@ import SwiftUI
 
 // Вдохновлено Calm, Headspace, Rootd — но уникально.
 // Тёплые тёмные тона + мягкий неон = безопасность + технология.
+//
+// ⚡️ Все цвета — ДИНАМИЧЕСКИЕ. Делегируют в ThemeManager.shared.
+// Это значит, что все 470+ ссылок SP.Colors.* во всех экранах
+// автоматически переключаются при смене темы — без единого изменения в UI-коде.
 
 enum SP {
-    // MARK: - Color Palette
+    // MARK: - Color Palette (dynamic → ThemeManager.shared)
 
+    @MainActor
     enum Colors {
         // Backgrounds
-        static let bg = Color(hex: "0A0E1A") // глубокий космос
-        static let bgSoft = Color(hex: "111827") // чуть светлее
-        static let bgCard = Color(hex: "1A1F35") // карточки
-        static let bgCardHover = Color(hex: "232847") // hover/pressed
-        static let bgElevated = Color(hex: "0F1326") // модальные окна
+        static var bg: Color { ThemeManager.shared.bg }
+        static var bgSoft: Color { ThemeManager.shared.bgSoft }
+        static var bgCard: Color { ThemeManager.shared.bgCard }
+        static var bgCardHover: Color { ThemeManager.shared.bgCardHover }
+        static var bgElevated: Color { ThemeManager.shared.bgElevated }
 
         // Accent
-        static let accent = Color(hex: "6C63FF") // фиолетовый — основной акцент
-        static let accentSoft = Color(hex: "8B83FF") // lighter variant
-        static let accentGlow = Color(hex: "6C63FF").opacity(0.3)
+        static var accent: Color { ThemeManager.shared.accent }
+        static var accentSoft: Color { ThemeManager.shared.accentSoft }
+        static var accentGlow: Color { ThemeManager.shared.accentGlow }
 
         // Semantic
-        static let calm = Color(hex: "4ECDC4") // мятный — спокойствие
-        static let calmSoft = Color(hex: "4ECDC4").opacity(0.15)
-        static let warmth = Color(hex: "FF9B71") // тёплый — поддержка
-        static let danger = Color(hex: "FF6B6B") // красный — SOS/опасность
-        static let dangerGlow = Color(hex: "FF6B6B").opacity(0.3)
-        static let success = Color(hex: "51CF66") // зелёный — успех
-        static let warning = Color(hex: "FFD43B") // жёлтый — осторожно
+        static var calm: Color { ThemeManager.shared.calm }
+        static var calmSoft: Color { ThemeManager.shared.calmSoft }
+        static var warmth: Color { ThemeManager.shared.warmth }
+        static var danger: Color { ThemeManager.shared.danger }
+        static var dangerGlow: Color { ThemeManager.shared.dangerGlow }
+        static var success: Color { ThemeManager.shared.success }
+        static var warning: Color { ThemeManager.shared.warning }
 
         // Text
-        static let textPrimary = Color.white
-        static let textSecondary = Color.white.opacity(0.7)
-        static let textTertiary = Color.white.opacity(0.45)
-        static let textOnAccent = Color.white
+        static var textPrimary: Color { ThemeManager.shared.textPrimary }
+        static var textSecondary: Color { ThemeManager.shared.textSecondary }
+        static var textTertiary: Color { ThemeManager.shared.textTertiary }
+        static var textOnAccent: Color { ThemeManager.shared.textOnAccent }
 
         /// Gradients
-        static let heroGradient = LinearGradient(
-            colors: [accent, Color(hex: "9B59B6")],
-            startPoint: .topLeading, endPoint: .bottomTrailing
-        )
-        static let sosGradient = LinearGradient(
-            colors: [danger, Color(hex: "FF4757")],
-            startPoint: .top, endPoint: .bottom
-        )
-        static let calmGradient = LinearGradient(
-            colors: [calm, Color(hex: "45B7AA")],
-            startPoint: .topLeading, endPoint: .bottomTrailing
-        )
-        static let warmGradient = LinearGradient(
-            colors: [warmth, Color(hex: "FF7043")],
-            startPoint: .topLeading, endPoint: .bottomTrailing
-        )
-        static let bgGradient = LinearGradient(
-            colors: [bg, bgSoft],
-            startPoint: .top, endPoint: .bottom
-        )
-        static let shimmerGradient = LinearGradient(
-            colors: [.clear, .white.opacity(0.08), .clear],
-            startPoint: .leading, endPoint: .trailing
-        )
+        static var heroGradient: LinearGradient { ThemeManager.shared.heroGradient }
+        static var sosGradient: LinearGradient { ThemeManager.shared.sosGradient }
+        static var calmGradient: LinearGradient { ThemeManager.shared.calmGradient }
+        static var warmGradient: LinearGradient { ThemeManager.shared.warmGradient }
+        static var bgGradient: LinearGradient { ThemeManager.shared.bgGradient }
+        static var shimmerGradient: LinearGradient { ThemeManager.shared.shimmerGradient }
     }
 
     // MARK: - Typography
@@ -105,14 +92,15 @@ enum SP {
         static let breathCircleSize: CGFloat = 220
     }
 
-    // MARK: - Shadows
+    // MARK: - Shadows (dynamic)
 
+    @MainActor
     enum Shadows {
-        static let soft = Color.black.opacity(0.25)
-        static let medium = Color.black.opacity(0.4)
-        static let glow = Colors.accent.opacity(0.4)
-        static let dangerGlow = Colors.danger.opacity(0.5)
-        static let calmGlow = Colors.calm.opacity(0.4)
+        static var soft: Color { ThemeManager.shared.shadowSoft }
+        static var medium: Color { ThemeManager.shared.shadowMedium }
+        static var glow: Color { Colors.accent.opacity(0.4) }
+        static var dangerGlow: Color { Colors.danger.opacity(0.5) }
+        static var calmGlow: Color { Colors.calm.opacity(0.4) }
     }
 
     // MARK: - Haptics
@@ -224,6 +212,8 @@ struct SPCard: ViewModifier {
 
 // MARK: - SPGlassCard
 
+/// Glass card — в light-режиме использует тёплую заливку вместо .material,
+/// чтобы избежать белого системного фона.
 struct SPGlassCard: ViewModifier {
     @Environment(AppCoordinator.self)
     var coordinator
@@ -235,13 +225,21 @@ struct SPGlassCard: ViewModifier {
         content
             .padding(SP.Layout.cardPadding)
             .background(
-                RoundedRectangle(cornerRadius: cornerRadius, style: .continuous)
-                    .fill(theme.glassMaterial)
-                    .overlay(
+                ZStack {
+                    if theme.isLight {
+                        // Тёплая полупрозрачная заливка — никакого белого!
                         RoundedRectangle(cornerRadius: cornerRadius, style: .continuous)
-                            .stroke(theme.glassBorder, lineWidth: 0.5)
-                    )
-                    .shadow(color: theme.shadowSoft, radius: 20, y: 10)
+                            .fill(Color(hex: "EDE5D8").opacity(0.75))
+                    } else {
+                        // Оригинальный glass для тёмной темы
+                        RoundedRectangle(cornerRadius: cornerRadius, style: .continuous)
+                            .fill(.ultraThinMaterial)
+                    }
+
+                    RoundedRectangle(cornerRadius: cornerRadius, style: .continuous)
+                        .stroke(theme.glassBorder, lineWidth: 0.5)
+                }
+                .shadow(color: theme.shadowSoft, radius: 20, y: 10)
             )
     }
 }
@@ -249,28 +247,36 @@ struct SPGlassCard: ViewModifier {
 // MARK: - SPPrimaryButton
 
 struct SPPrimaryButton: ViewModifier {
+    @Environment(AppCoordinator.self)
+    var coordinator
+
     func body(content: Content) -> some View {
+        let theme = coordinator.themeManager
         content
             .font(SP.Typography.headline)
             .foregroundColor(.white)
             .frame(maxWidth: .infinity)
             .padding(.vertical, 16)
-            .background(SP.Colors.heroGradient)
+            .background(theme.heroGradient)
             .clipShape(RoundedRectangle(cornerRadius: SP.Layout.cornerSmall))
-            .shadow(color: SP.Shadows.glow, radius: 12, y: 6)
+            .shadow(color: theme.accent.opacity(0.4), radius: 12, y: 6)
     }
 }
 
 // MARK: - SPSecondaryButton
 
 struct SPSecondaryButton: ViewModifier {
+    @Environment(AppCoordinator.self)
+    var coordinator
+
     func body(content: Content) -> some View {
+        let theme = coordinator.themeManager
         content
             .font(SP.Typography.headline)
-            .foregroundColor(SP.Colors.accent)
+            .foregroundColor(theme.accent)
             .frame(maxWidth: .infinity)
             .padding(.vertical, 16)
-            .background(SP.Colors.accent.opacity(0.12))
+            .background(theme.accent.opacity(0.12))
             .clipShape(RoundedRectangle(cornerRadius: SP.Layout.cornerSmall))
     }
 }
@@ -293,7 +299,7 @@ extension View {
     }
 
     func spBackground() -> some View {
-        background(SP.Colors.bg.ignoresSafeArea())
+        background(ThemeManager.shared.bg.ignoresSafeArea())
     }
 }
 
@@ -339,10 +345,8 @@ struct FloatingParticle: View {
 
     // MARK: Private
 
-    @State
-    private var offset: CGSize = .zero
-    @State
-    private var opacity: Double = 0
+    @State private var offset: CGSize = .zero
+    @State private var opacity: Double = 0
 }
 
 // MARK: - AmbientBackground
@@ -355,30 +359,42 @@ struct AmbientBackground: View {
     var coordinator
 
     let primaryColor: Color
-    var secondaryColor: Color = SP.Colors.accent
+    var secondaryColor: Color?
 
     var body: some View {
-        ZStack {
-            coordinator.themeManager.bg.ignoresSafeArea()
+        let theme = coordinator.themeManager
+        let secondary = secondaryColor ?? theme.accent
 
-            // Large primary orb
+        ZStack {
+            theme.bg.ignoresSafeArea()
+
+            // Large primary orb — ярче в light mode
             Circle()
-                .fill(primaryColor.opacity(coordinator.themeManager.ambientPrimaryOpacity))
+                .fill(primaryColor.opacity(theme.ambientPrimaryOpacity))
                 .frame(width: 350, height: 350)
                 .blur(radius: 100)
                 .offset(x: animate ? -60 : -100, y: animate ? -180 : -220)
 
             // Secondary orb
             Circle()
-                .fill(secondaryColor.opacity(coordinator.themeManager.ambientSecondaryOpacity))
+                .fill(secondary.opacity(theme.ambientSecondaryOpacity))
                 .frame(width: 250, height: 250)
                 .blur(radius: 80)
                 .offset(x: animate ? 140 : 100, y: animate ? 280 : 320)
 
+            // Третий тёплый орб для light mode — добавляет глубину
+            if theme.isLight {
+                Circle()
+                    .fill(theme.warmth.opacity(0.05))
+                    .frame(width: 300, height: 300)
+                    .blur(radius: 90)
+                    .offset(x: animate ? 80 : 40, y: animate ? 60 : 20)
+            }
+
             // Accent particles
             ForEach(0 ..< 6, id: \.self) { i in
                 FloatingParticle(
-                    color: i.isMultiple(of: 2) ? primaryColor : secondaryColor,
+                    color: i.isMultiple(of: 2) ? primaryColor : secondary,
                     size: CGFloat.random(in: 4 ... 12)
                 )
             }
@@ -392,8 +408,7 @@ struct AmbientBackground: View {
 
     // MARK: Private
 
-    @State
-    private var animate = false
+    @State private var animate = false
 }
 
 // MARK: - ShimmerEffect
@@ -421,8 +436,7 @@ struct ShimmerEffect: ViewModifier {
 
     // MARK: Private
 
-    @State
-    private var phase: CGFloat = 0
+    @State private var phase: CGFloat = 0
 }
 
 extension View {
@@ -457,8 +471,7 @@ struct AnimatedNumber: View {
 
     // MARK: Private
 
-    @State
-    private var displayValue: Int = 0
+    @State private var displayValue: Int = 0
 }
 
 // MARK: - PremiumButtonStyle
@@ -496,12 +509,30 @@ struct GlowPulse: ViewModifier {
 
     // MARK: Private
 
-    @State
-    private var glowing = false
+    @State private var glowing = false
 }
 
 extension View {
-    func glowPulse(color: Color = SP.Colors.accent, radius: CGFloat = 20) -> some View {
+    func glowPulse(color: Color = Color(hex: "6C63FF"), radius: CGFloat = 20) -> some View {
         modifier(GlowPulse(color: color, radius: radius))
     }
+}
+
+// MARK: - Theme-aware Material Helper
+
+/// В light-режиме .ultraThinMaterial показывает белый фон.
+/// Этот ShapeStyle автоматически заменяет его тёплым fill.
+@MainActor
+struct WarmGlass: ShapeStyle {
+    func resolve(in environment: EnvironmentValues) -> some ShapeStyle {
+        if ThemeManager.shared.isLight {
+            Color(hex: "EDE5D8").opacity(0.7)
+        } else {
+            Color(hex: "1A1F35").opacity(0.4)
+        }
+    }
+}
+
+extension ShapeStyle where Self == WarmGlass {
+    @MainActor static var warmGlass: WarmGlass { WarmGlass() }
 }

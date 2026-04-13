@@ -131,7 +131,7 @@ struct BreathingSessionView: View {
                     .font(.system(size: 14, weight: .semibold))
                     .foregroundColor(SP.Colors.textSecondary)
                     .frame(width: 36, height: 36)
-                    .background(Circle().fill(.ultraThinMaterial))
+                    .background(Circle().fill(.warmGlass))
                     .overlay(Circle().stroke(Color.white.opacity(0.1), lineWidth: 0.5))
             }
 
@@ -281,7 +281,7 @@ struct BreathingSessionView: View {
                 Group {
                     if isActive {
                         RoundedRectangle(cornerRadius: SP.Layout.cornerSmall)
-                            .fill(.ultraThinMaterial)
+                            .fill(.warmGlass)
                             .overlay(
                                 RoundedRectangle(cornerRadius: SP.Layout.cornerSmall)
                                     .fill(SP.Colors.danger.opacity(0.3))

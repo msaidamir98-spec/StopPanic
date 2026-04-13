@@ -367,9 +367,9 @@ struct AddContactSheet: View {
                             .padding(14)
                             .background(
                                 RoundedRectangle(cornerRadius: 12, style: .continuous)
-                                    .fill(.ultraThinMaterial)
+                                    .fill(.warmGlass)
                             )
-                            .foregroundColor(.white)
+                            .foregroundColor(SP.Colors.textPrimary)
                     }
 
                     VStack(alignment: .leading, spacing: 8) {
@@ -382,9 +382,9 @@ struct AddContactSheet: View {
                             .padding(14)
                             .background(
                                 RoundedRectangle(cornerRadius: 12, style: .continuous)
-                                    .fill(.ultraThinMaterial)
+                                    .fill(.warmGlass)
                             )
-                            .foregroundColor(.white)
+                            .foregroundColor(SP.Colors.textPrimary)
                     }
 
                     VStack(alignment: .leading, spacing: 8) {
@@ -396,9 +396,9 @@ struct AddContactSheet: View {
                             .padding(14)
                             .background(
                                 RoundedRectangle(cornerRadius: 12, style: .continuous)
-                                    .fill(.ultraThinMaterial)
+                                    .fill(.warmGlass)
                             )
-                            .foregroundColor(.white)
+                            .foregroundColor(SP.Colors.textPrimary)
                     }
 
                     Toggle(isOn: $notifyOnPanic) {

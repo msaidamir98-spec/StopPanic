@@ -84,7 +84,7 @@ struct GroundingExerciseView: View {
                         .font(.system(size: 14, weight: .bold))
                         .foregroundColor(SP.Colors.textSecondary)
                         .frame(width: 36, height: 36)
-                        .background(Circle().fill(.ultraThinMaterial))
+                        .background(Circle().fill(.warmGlass))
                         .overlay(Circle().stroke(Color.white.opacity(0.1), lineWidth: 0.5))
                 }
                 Spacer()
@@ -141,7 +141,7 @@ struct GroundingExerciseView: View {
                     .padding(.vertical, 10)
                     .background(
                         RoundedRectangle(cornerRadius: 12, style: .continuous)
-                            .fill(.ultraThinMaterial)
+                            .fill(.warmGlass)
                             .overlay(
                                 RoundedRectangle(cornerRadius: 12, style: .continuous)
                                     .stroke(step.color.opacity(0.2), lineWidth: 0.5)
@@ -167,7 +167,7 @@ struct GroundingExerciseView: View {
                         .padding(14)
                         .background(
                             RoundedRectangle(cornerRadius: 14, style: .continuous)
-                                .fill(.ultraThinMaterial)
+                                .fill(.warmGlass)
                         )
                         .foregroundColor(.white)
                         .focused($isFocused)
@@ -297,7 +297,7 @@ struct MuscleRelaxView: View {
                             .font(.system(size: 14, weight: .bold))
                             .foregroundColor(SP.Colors.textSecondary)
                             .frame(width: 36, height: 36)
-                            .background(Circle().fill(.ultraThinMaterial))
+                            .background(Circle().fill(.warmGlass))
                             .overlay(Circle().stroke(Color.white.opacity(0.1), lineWidth: 0.5))
                     }
                     Spacer()
@@ -469,7 +469,7 @@ struct CognitiveReframingView: View {
                                 .font(.system(size: 14, weight: .bold))
                                 .foregroundColor(SP.Colors.textSecondary)
                                 .frame(width: 36, height: 36)
-                                .background(Circle().fill(.ultraThinMaterial))
+                                .background(Circle().fill(.warmGlass))
                                 .overlay(Circle().stroke(Color.white.opacity(0.1), lineWidth: 0.5))
                         }
                         Spacer()
@@ -505,7 +505,7 @@ struct CognitiveReframingView: View {
                         .padding(14)
                         .background(
                             RoundedRectangle(cornerRadius: 14, style: .continuous)
-                                .fill(.ultraThinMaterial)
+                                .fill(.warmGlass)
                         )
                         .foregroundColor(.white)
                         .frame(minHeight: 60)
@@ -531,7 +531,7 @@ struct CognitiveReframingView: View {
                             .padding(14)
                             .background(
                                 RoundedRectangle(cornerRadius: 14, style: .continuous)
-                                    .fill(.ultraThinMaterial)
+                                    .fill(.warmGlass)
                             )
                             .foregroundColor(.white)
                             .frame(minHeight: 60)
@@ -570,7 +570,7 @@ struct CognitiveReframingView: View {
                             .padding(14)
                             .background(
                                 RoundedRectangle(cornerRadius: 14, style: .continuous)
-                                    .fill(.ultraThinMaterial)
+                                    .fill(.warmGlass)
                             )
                             .foregroundColor(.white)
                             .frame(minHeight: 60)

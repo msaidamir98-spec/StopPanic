@@ -38,7 +38,7 @@ struct ProfileView: View {
                                 .padding(12)
                                 .background(
                                     RoundedRectangle(cornerRadius: 12, style: .continuous)
-                                        .fill(.ultraThinMaterial)
+                                        .fill(.warmGlass)
                                 )
                                 .foregroundColor(.white)
                                 .padding(.horizontal, 60)

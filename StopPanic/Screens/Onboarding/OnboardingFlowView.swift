@@ -210,7 +210,7 @@ struct OnboardingFlowView: View {
                 .padding(16)
                 .background(
                     RoundedRectangle(cornerRadius: 16, style: .continuous)
-                        .fill(.ultraThinMaterial)
+                        .fill(.warmGlass)
                         .overlay(
                             RoundedRectangle(cornerRadius: 16, style: .continuous)
                                 .stroke(Color.white.opacity(0.12), lineWidth: 0.5)
@@ -272,7 +272,7 @@ struct OnboardingFlowView: View {
                                 .fill(
                                     selectedExperience == exp
                                         ? AnyShapeStyle(SP.Colors.heroGradient)
-                                        : AnyShapeStyle(.ultraThinMaterial)
+                                        : AnyShapeStyle(.warmGlass)
                                 )
                         )
                         .overlay(
@@ -491,7 +491,7 @@ struct OnboardingFlowView: View {
                 .fill(
                     isSelected
                         ? AnyShapeStyle(SP.Colors.heroGradient)
-                        : AnyShapeStyle(.ultraThinMaterial)
+                        : AnyShapeStyle(.warmGlass)
                 )
         )
         .overlay(

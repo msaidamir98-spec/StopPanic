@@ -84,7 +84,7 @@ struct ThemePickerView: View {
                             .padding(.vertical, 10)
                             .background(
                                 RoundedRectangle(cornerRadius: SP.Layout.cornerSmall, style: .continuous)
-                                    .fill(theme.isLight ? .thinMaterial : .ultraThinMaterial)
+                                    .fill(.warmGlass)
                             )
                         }
                     }

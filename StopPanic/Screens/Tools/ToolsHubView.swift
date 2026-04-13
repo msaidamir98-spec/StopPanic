@@ -133,7 +133,7 @@ struct ToolsHubView: View {
                                 Capsule().fill(
                                     selectedCategory == cat
                                         ? AnyShapeStyle(SP.Colors.heroGradient)
-                                        : AnyShapeStyle(.ultraThinMaterial)
+                                        : AnyShapeStyle(.warmGlass)
                                 )
                             )
                             .overlay(
