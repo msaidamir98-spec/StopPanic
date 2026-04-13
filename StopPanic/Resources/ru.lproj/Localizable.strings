@@ -1,4 +1,4 @@
-"app.name" = "StopPanic";
+"app.name" = "Stillō";
 "general.done" = "Готово";
 "general.cancel" = "Отмена";
 "general.save" = "Сохранить";
@@ -16,20 +16,19 @@
 "tabs.profile" = "Профиль";
 
 "home.sos.button" = "SOS";
-"home.sos.subtitle" = "Нажми, если паника";
+"home.sos.subtitle" = "Нажми, если тревога";
 "home.quickActions" = "Быстрые действия";
 "home.breathe" = "Дыхание";
 "home.grounding" = "Заземление";
-"home.aiTherapist" = "AI Терапевт";
 "home.heartCheck" = "Пульс";
 
-"sos.title" = "SOS — Я в панике";
+"sos.title" = "SOS — Мне плохо";
 "sos.stepByStep" = "Пошаговая помощь прямо сейчас";
 "sos.breatheIn" = "Вдох";
 "sos.hold" = "Задержка";
 "sos.breatheOut" = "Выдох";
 "sos.youAreSafe" = "Ты в безопасности";
-"sos.panicWillPass" = "Паника пройдёт. Это временно.";
+"sos.panicWillPass" = "Тревога пройдёт. Это временно.";
 
 "breathing.ready" = "Готов?";
 "breathing.inhale" = "Вдох";
@@ -56,7 +55,7 @@
 "journal.avgIntensity" = "средняя сила";
 "journal.trend" = "тренд";
 
-"profile.member" = "Участник StopPanic";
+"profile.member" = "Участник Stillō";
 "profile.setName" = "Укажи имя";
 "profile.entries" = "Записей";
 "profile.sessions" = "Сессий";
@@ -67,24 +66,14 @@
 "profile.notifications" = "Уведомления";
 "profile.crisisLine" = "Телефон доверия";
 
-"onboarding.tagline" = "Твой карманный щит\nпротив панических атак";
+"onboarding.tagline" = "Точка покоя\nв моменте тревоги";
 "onboarding.name" = "Как тебя зовут?";
-"onboarding.howOften" = "Как часто ты испытываешь\nпанические атаки?";
+"onboarding.howOften" = "Как часто ты испытываешь\nтревожные состояния?";
 "onboarding.whatGoals" = "Чего ты хочешь достичь?";
 "onboarding.allReady" = "Всё готово";
 "onboarding.startUsing" = "Начать использовать";
 "onboarding.notAlone" = "Ты больше не один.";
-"onboarding.disclaimer" = "StopPanic — помощник, НЕ замена врачу. При подозрении на сердечную проблему всегда вызывайте скорую.";
-
-"premium.title" = "StopPanic Pro";
-"premium.subtitle" = "Получи максимум от борьбы с тревогой";
-"premium.startTrial" = "Начать бесплатную неделю";
-"premium.restore" = "Восстановить покупки";
-"premium.month" = "Месяц";
-"premium.year" = "Год";
-"premium.lifetime" = "Навсегда";
-"premium.best" = "ЛУЧШЕЕ";
-"premium.welcome" = "Добро пожаловать\nв Pro! 🎉";
+"onboarding.disclaimer" = "Stillō — помощник, НЕ замена врачу. При подозрении на сердечную проблему всегда вызывайте скорую.";
 
 "greeting.morning" = "Доброе утро";
 "greeting.afternoon" = "Добрый день";
