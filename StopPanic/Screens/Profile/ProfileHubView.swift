@@ -232,20 +232,26 @@ struct ProfileHubView: View {
                 .font(SP.Typography.title3)
                 .foregroundColor(SP.Colors.textPrimary)
 
-            settingsRow(icon: "bell.fill", title: "Уведомления", color: SP.Colors.accent) {
-                coordinator.notificationService.requestAuthorization()
+            NavigationLink {
+                NotificationSettingsView()
+            } label: {
+                settingsRowLabel(icon: "bell.fill", title: "Уведомления", color: SP.Colors.accent)
             }
+            .buttonStyle(.plain)
 
-            settingsRow(icon: "heart.fill", title: "Apple Health", color: SP.Colors.danger) {
-                coordinator.healthManager.requestPermissions()
+            NavigationLink {
+                HealthKitSettingsView()
+            } label: {
+                settingsRowLabel(icon: "heart.fill", title: "Apple Health", color: SP.Colors.danger)
             }
+            .buttonStyle(.plain)
 
-            settingsRow(icon: "globe", title: "Телефон доверия", color: SP.Colors.success) {
-                let line = SOSService.getCrisisLine()
-                if let url = URL(string: "tel://\(line.replacingOccurrences(of: " ", with: ""))") {
-                    UIApplication.shared.open(url)
-                }
+            NavigationLink {
+                CrisisLineView()
+            } label: {
+                settingsRowLabel(icon: "globe", title: "Телефон доверия", color: SP.Colors.success)
             }
+            .buttonStyle(.plain)
 
             NavigationLink {
                 ProfileView(service: coordinator.profileService)
@@ -254,14 +260,14 @@ struct ProfileHubView: View {
                     icon: "person.fill", title: "Подробный профиль", color: SP.Colors.warmth
                 )
             }
-            .buttonStyle(PremiumButtonStyle())
+            .buttonStyle(.plain)
 
             NavigationLink {
                 MoodMapView(service: coordinator.moodMapService)
             } label: {
                 settingsRowLabel(icon: "map.fill", title: "Карта настроений", color: SP.Colors.calm)
             }
-            .buttonStyle(PremiumButtonStyle())
+            .buttonStyle(.plain)
         }
         .opacity(appear ? 1 : 0)
         .offset(y: appear ? 0 : 15)
@@ -308,33 +314,6 @@ struct ProfileHubView: View {
         .spGlassCard(cornerRadius: SP.Layout.cornerSmall)
     }
 
-    private func settingsRow(
-        icon: String, title: String, color: Color, action: @escaping () -> Void
-    ) -> some View {
-        Button(action: action) {
-            HStack(spacing: 12) {
-                ZStack {
-                    RoundedRectangle(cornerRadius: 8, style: .continuous)
-                        .fill(color.opacity(0.15))
-                        .frame(width: 32, height: 32)
-                    Image(systemName: icon)
-                        .font(.system(size: 14))
-                        .foregroundColor(color)
-                }
-                Text(title)
-                    .font(SP.Typography.callout)
-                    .foregroundColor(SP.Colors.textPrimary)
-                Spacer()
-                Image(systemName: "chevron.right")
-                    .font(.system(size: 12))
-                    .foregroundColor(SP.Colors.textTertiary)
-            }
-            .contentShape(Rectangle())
-            .spGlassCard(cornerRadius: SP.Layout.cornerSmall)
-        }
-        .buttonStyle(PremiumButtonStyle())
-    }
-
     private func settingsRowLabel(icon: String, title: String, color: Color) -> some View {
         HStack(spacing: 12) {
             ZStack {
@@ -353,8 +332,8 @@ struct ProfileHubView: View {
                 .font(.system(size: 12))
                 .foregroundColor(SP.Colors.textTertiary)
         }
-        .contentShape(Rectangle())
         .spGlassCard(cornerRadius: SP.Layout.cornerSmall)
+        .contentShape(Rectangle())
     }
 }
 
