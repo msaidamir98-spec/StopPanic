@@ -112,13 +112,13 @@ struct PaywallView: View {
                             .multilineTextAlignment(.center)
 
                         HStack(spacing: 16) {
-                            if let termsURL = URL(string: "https://msaidamir98-spec.github.io/Stillo/terms.html") {
+                            if let termsURL = URL(string: "https://msaidamir98-spec.github.io/StopPanic/terms.html") {
                                 Link(
                                     String(localized: "paywall_terms"),
                                     destination: termsURL
                                 )
                             }
-                            if let privacyURL = URL(string: "https://msaidamir98-spec.github.io/Stillo/privacy.html") {
+                            if let privacyURL = URL(string: "https://msaidamir98-spec.github.io/StopPanic/privacy.html") {
                                 Link(
                                     String(localized: "paywall_privacy"),
                                     destination: privacyURL

@@ -32,28 +32,10 @@
 "watch.sos_send" = "Envoyer SOS à l'iPhone";
 
 /* WatchDifferentialView */
-"watch.diff_title" = "Référence";
-"watch.diff_panic" = "Réponse anxieuse";
-"watch.diff_cardiac" = "Rythme inhabituel";
-"watch.diff_call_112" = "En cas de doute — appelez le 112 !";
-"watch.diff_pa_tab" = "Anxiété";
-"watch.diff_cardiac_tab" = "Cœur";
 
 /* Differential - Panic symptoms */
-"watch.diff_pa_hr" = "FC 100–150 BPM";
-"watch.diff_pa_rhythm" = "Rythme stable, régulier";
-"watch.diff_pa_peak" = "Pic 10–20 minutes";
-"watch.diff_pa_breathing" = "La respiration aide";
-"watch.diff_pa_tingling" = "Picotements dans les mains";
-"watch.diff_pa_unreality" = "Sensation d'irréalité";
 
 /* Differential - Heart-related symptoms */
-"watch.diff_card_pulse" = "Pouls irrégulier";
-"watch.diff_card_arrhythmia" = "Arythmie, battements irréguliers";
-"watch.diff_card_duration" = "Dure 20+ minutes";
-"watch.diff_card_jaw_arm" = "Douleur mâchoire / bras";
-"watch.diff_card_sweat" = "Sueurs froides";
-"watch.diff_card_chest" = "Douleur thoracique oppressive";
 
 /* WatchHeartService - Status */
 "watch.status_normal" = "Normal";
@@ -72,3 +54,14 @@
 "watch.diag_stress_detail" = "Rythme stable, FC élevée — réponse anxieuse typique. Essayez la respiration 4-7-8.";
 "watch.diag_irregular_detail" = "Irrégularité du rythme détectée. Nous recommandons de consulter un professionnel de santé.";
 "watch.diag_inconclusive_detail" = "Continuez la surveillance pour une analyse plus précise.";
+
+// MARK: - Stress Response Reference
+"watch.ref_nav_title" = "Référence";
+"watch.ref_title" = "Réaction de stress";
+"watch.ref_hr" = "FC peut monter à 100–150 BPM";
+"watch.ref_rhythm" = "Le rythme reste stable et régulier";
+"watch.ref_peak" = "Le pic dure généralement 10–20 min";
+"watch.ref_breathing" = "La respiration lente aide";
+"watch.ref_tingling" = "Picotements dans les mains, c'est normal";
+"watch.ref_unreality" = "Sensation d'irréalité possible";
+"watch.ref_disclaimer" = "À titre informatif uniquement — pas un avis médical";

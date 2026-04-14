@@ -32,28 +32,10 @@
 "watch.sos_send" = "SOS an iPhone senden";
 
 /* WatchDifferentialView */
-"watch.diff_title" = "Nachschlagewerk";
-"watch.diff_panic" = "Angstreaktion";
-"watch.diff_cardiac" = "Ungewöhnliches Rhythmusmuster";
-"watch.diff_call_112" = "Im Zweifel — 112 anrufen!";
-"watch.diff_pa_tab" = "Angst";
-"watch.diff_cardiac_tab" = "Herz";
 
 /* Differential - Panic symptoms */
-"watch.diff_pa_hr" = "HF 100–150 BPM";
-"watch.diff_pa_rhythm" = "Rhythmus gleichmäßig, regelmäßig";
-"watch.diff_pa_peak" = "Höhepunkt 10–20 Minuten";
-"watch.diff_pa_breathing" = "Atmung hilft";
-"watch.diff_pa_tingling" = "Kribbeln in den Händen";
-"watch.diff_pa_unreality" = "Gefühl der Unwirklichkeit";
 
 /* Differential - Heart-related symptoms */
-"watch.diff_card_pulse" = "Unregelmäßiger Puls";
-"watch.diff_card_arrhythmia" = "Arrhythmie, Aussetzer";
-"watch.diff_card_duration" = "Dauert 20+ Minuten";
-"watch.diff_card_jaw_arm" = "Kiefer-/Armschmerzen";
-"watch.diff_card_sweat" = "Kalter Schweiß";
-"watch.diff_card_chest" = "Drückender Brustschmerz";
 
 /* WatchHeartService - Status */
 "watch.status_normal" = "Normal";
@@ -72,3 +54,14 @@
 "watch.diag_stress_detail" = "Gleichmäßiger Rhythmus, erhöhte HF — typische Angstreaktion. Versuchen Sie 4-7-8-Atmung.";
 "watch.diag_irregular_detail" = "Rhythmus-Unregelmäßigkeit erkannt. Wir empfehlen, einen Arzt zu konsultieren.";
 "watch.diag_inconclusive_detail" = "Überwachung fortsetzen für genauere Analyse.";
+
+// MARK: - Stress Response Reference
+"watch.ref_nav_title" = "Nachschlagewerk";
+"watch.ref_title" = "Stressreaktion";
+"watch.ref_hr" = "HF kann auf 100–150 BPM steigen";
+"watch.ref_rhythm" = "Rhythmus bleibt gleichmäßig & regelmäßig";
+"watch.ref_peak" = "Höhepunkt meist in 10–20 Minuten";
+"watch.ref_breathing" = "Langsames Atmen hilft";
+"watch.ref_tingling" = "Kribbeln in den Händen ist normal";
+"watch.ref_unreality" = "Gefühl der Unwirklichkeit möglich";
+"watch.ref_disclaimer" = "Nur zur Information — keine medizinische Beratung";
