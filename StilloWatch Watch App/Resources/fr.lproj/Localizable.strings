@@ -31,11 +31,8 @@
 "watch.sos_emergency" = "Signal d'urgence";
 "watch.sos_send" = "Envoyer SOS à l'iPhone";
 
-/* WatchDifferentialView */
 
-/* Differential - Panic symptoms */
 
-/* Differential - Heart-related symptoms */
 
 /* WatchHeartService - Status */
 "watch.status_normal" = "Normal";

@@ -31,11 +31,8 @@
 "watch.sos_emergency" = "緊急シグナル";
 "watch.sos_send" = "iPhoneにSOSを送信";
 
-/* WatchDifferentialView */
 
-/* Differential - Panic symptoms */
 
-/* Differential - Heart-related symptoms */
 
 /* WatchHeartService - Status */
 "watch.status_normal" = "正常";
