@@ -15,8 +15,17 @@ final class PersistenceController {
 
         // CloudKit конфигурация
         guard let description = container.persistentStoreDescriptions.first else {
-            fatalError("No persistent store descriptions found")
+            Self.log.fault("No persistent store descriptions — falling back to in-memory store")
+            let fallback = NSPersistentStoreDescription()
+            fallback.type = NSInMemoryStoreType
+            container.persistentStoreDescriptions = [fallback]
+            container.loadPersistentStores { _, error in
+                if let error { Self.log.error("In-memory store failed: \(error.localizedDescription)") }
+            }
+            container.viewContext.automaticallyMergesChangesFromParent = true
+            return
         }
+
         description.cloudKitContainerOptions = NSPersistentCloudKitContainerOptions(
             containerIdentifier: "iCloud.MSK-PRODUKT.StopPanic"
         )
@@ -25,9 +34,11 @@ final class PersistenceController {
         description.setOption(true as NSNumber, forKey: NSPersistentHistoryTrackingKey)
         description.setOption(true as NSNumber, forKey: NSPersistentStoreRemoteChangeNotificationPostOptionKey)
 
-        container.loadPersistentStores { _, error in
+        container.loadPersistentStores { [weak self] _, error in
             if let error {
                 Self.log.error("Core Data failed to load: \(error.localizedDescription)")
+                // Помечаем как неработоспособный — save() будет no-op
+                Task { @MainActor in self?.storeLoadFailed = true }
             }
         }
 
@@ -39,11 +50,8 @@ final class PersistenceController {
             forName: .NSPersistentStoreRemoteChange,
             object: container.persistentStoreCoordinator,
             queue: .main
-        ) { [weak self] _ in
-            self?.container.viewContext.perform {
-                // Автоматический merge уже включен, но можно добавить логику обновления UI
-                Self.log.info("Received remote CloudKit change")
-            }
+        ) { _ in
+            Self.log.info("Received remote CloudKit change")
         }
     }
 
@@ -53,17 +61,28 @@ final class PersistenceController {
 
     let container: NSPersistentCloudKitContainer
 
+    /// Флаг: загрузка хранилища не удалась
+    private(set) var storeLoadFailed = false
+
     var viewContext: NSManagedObjectContext {
         container.viewContext
     }
 
-    func save() {
+    /// Безопасное сохранение с возвратом успешности
+    @discardableResult
+    func save() -> Bool {
+        guard !storeLoadFailed else {
+            Self.log.warning("Skipping save — store not loaded")
+            return false
+        }
         let ctx = viewContext
-        guard ctx.hasChanges else { return }
+        guard ctx.hasChanges else { return true }
         do {
             try ctx.save()
+            return true
         } catch {
             Self.log.error("Core Data save failed: \(error.localizedDescription)")
+            return false
         }
     }
 
@@ -75,7 +94,11 @@ final class PersistenceController {
         let key = "stillo_json_migrated_v1"
         guard !UserDefaults.standard.bool(forKey: key) else { return }
 
-        let docDir = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask).first!
+        guard let docDir = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask).first else {
+            Self.log.warning("Documents directory not found — skipping migration")
+            return
+        }
+
         var migrated = false
 
         // 1. Diary episodes
@@ -145,13 +168,19 @@ final class PersistenceController {
         }
 
         if migrated {
-            save()
-            // Удаляем старые JSON-файлы после успешной миграции
+            // Сохраняем СНАЧАЛА — если save не удался, НЕ удаляем JSON
+            guard save() else {
+                Self.log.error("Migration save failed — keeping JSON files for retry")
+                // Откатываем несохранённые изменения
+                viewContext.rollback()
+                return
+            }
+            // Только после успешного save удаляем старые файлы
             try? FileManager.default.removeItem(at: diaryURL)
             try? FileManager.default.removeItem(at: achieveURL)
             try? FileManager.default.removeItem(at: moodURL)
             try? FileManager.default.removeItem(at: sosURL)
-            Self.log.info("Old JSON files removed after migration")
+            Self.log.info("Old JSON files removed after successful migration")
         }
 
         UserDefaults.standard.set(true, forKey: key)

@@ -2,18 +2,18 @@ import Combine
 import Foundation
 import HealthKit
 
-// MARK: - Анализ сердечного ритма (информационный)
+// MARK: - Анализ паттернов пульса (wellness / информационный)
 
 //
-// Научная база:
-//  1. При тревоге — синусовая тахикардия: ритм РЕГУЛЯРНЫЙ, HRV снижен равномерно
-//  2. При сердечных проблемах — ритм НЕРЕГУЛЯРНЫЙ, HRV хаотичен
-//  3. Тревога отвечает на vagal maneuvers (дыхание 4-7-8), кардио — нет
-//  4. Тревога: ЧСС 100-150, пик за 1-3 мин, снижение за 10-20 мин
-//  5. Кардио: ЧСС может быть <60 (брадикардия) или >150, нет чёткого пика
+// Научная база (информационная, НЕ медицинская диагностика):
+//  1. При стрессе — синусовая тахикардия: ритм регулярный, HRV снижен равномерно
+//  2. При нерегулярном паттерне — ритм хаотичный, HRV непредсказуем
+//  3. Стресс отвечает на дыхательные техники, нерегулярный паттерн — нет
+//  4. Стресс: ЧСС 100-150, пик за 1-3 мин, снижение за 10-20 мин
+//  5. Нерегулярный паттерн: ЧСС может быть <60 или >150, нет чёткого пика
 //
 // ⚠️ DISCLAIMER: Это НЕ замена медицинской диагностики.
-//    Всегда рекомендуем обратиться к врачу при подозрении на сердечную проблему.
+//    Всегда рекомендуем обратиться к врачу при любых подозрениях.
 
 @MainActor
 final class HeartAnalysisService: ObservableObject {
@@ -35,15 +35,15 @@ final class HeartAnalysisService: ObservableObject {
     /// Начать мониторинг ЧСС в реальном времени
     func startMonitoring() {
         guard HKHealthStore.isHealthDataAvailable() else { return }
-
-        let hrType = HKQuantityType.quantityType(forIdentifier: .heartRate)!
-        let hrvType = HKQuantityType.quantityType(forIdentifier: .heartRateVariabilitySDNN)!
+        guard let hrType = HKQuantityType.quantityType(forIdentifier: .heartRate),
+              let hrvType = HKQuantityType.quantityType(forIdentifier: .heartRateVariabilitySDNN)
+        else { return }
 
         let readTypes: Set<HKObjectType> = [hrType, hrvType]
         healthStore.requestAuthorization(toShare: nil, read: readTypes) { [weak self] ok, _ in
-            guard ok, let self else { return }
-            Task { @MainActor in
-                self.beginLiveQuery()
+            guard ok else { return }
+            Task { @MainActor [weak self] in
+                self?.beginLiveQuery()
             }
         }
     }
@@ -55,22 +55,22 @@ final class HeartAnalysisService: ObservableObject {
         isMonitoring = false
     }
 
-    /// Запомнить ЧСС до начала дыхательной техники (для проверки vagal response)
+    /// Запомнить ЧСС до начала дыхательной техники
     func markPreBreathingHR() {
         preBreathingHR = sampleBuffer.last?.bpm
     }
 
-    /// Проверить, снизился ли пульс после дыхания (→ тревожная реакция)
+    /// Проверить, снизился ли пульс после дыхания
     func checkBreathingResponse() {
         guard let pre = preBreathingHR,
               let current = sampleBuffer.last?.bpm,
               pre > 0
         else { return }
         let drop = (pre - current) / pre
-        breathingResponseDetected = drop >= CardiacThresholds.breathingResponseThreshold
+        breathingResponseDetected = drop >= HeartRateThresholds.breathingResponseThreshold
     }
 
-    /// Одноразовый анализ по массиву данных (ручной или из дневника)
+    /// Одноразовый анализ по массиву данных
     func analyze(samples: [HeartRateSample]) -> HeartAnalysis {
         performAnalysis(samples)
     }
@@ -86,7 +86,7 @@ final class HeartAnalysisService: ObservableObject {
     // MARK: - Live query
 
     private func beginLiveQuery() {
-        let hrType = HKQuantityType.quantityType(forIdentifier: .heartRate)!
+        guard let hrType = HKQuantityType.quantityType(forIdentifier: .heartRate) else { return }
         let now = Date()
 
         let predicate = HKQuery.predicateForSamples(
@@ -99,18 +99,16 @@ final class HeartAnalysisService: ObservableObject {
             anchor: nil,
             limit: HKObjectQueryNoLimit
         ) { [weak self] _, added, _, _, _ in
-            guard let self else { return }
             let samples = added ?? []
-            Task { @MainActor in
-                self.processSamples(samples)
+            Task { @MainActor [weak self] in
+                self?.processSamples(samples)
             }
         }
 
         query.updateHandler = { [weak self] _, added, _, _, _ in
-            guard let self else { return }
             let samples = added ?? []
-            Task { @MainActor in
-                self.processSamples(samples)
+            Task { @MainActor [weak self] in
+                self?.processSamples(samples)
             }
         }
 
@@ -131,18 +129,16 @@ final class HeartAnalysisService: ObservableObject {
             )
         }
 
-        Task { @MainActor in
-            self.sampleBuffer.append(contentsOf: newPoints)
-            self.recentSamples = self.sampleBuffer
+        sampleBuffer.append(contentsOf: newPoints)
+        recentSamples = sampleBuffer
 
-            // Удаляем данные старше 5 минут
-            let cutoff = Date().addingTimeInterval(-300)
-            self.sampleBuffer.removeAll { $0.timestamp < cutoff }
+        // Удаляем данные старше 5 минут
+        let cutoff = Date().addingTimeInterval(-300)
+        sampleBuffer.removeAll { $0.timestamp < cutoff }
 
-            // Автоанализ при достаточном количестве данных
-            if self.sampleBuffer.count >= 10 {
-                self.currentAnalysis = self.performAnalysis(self.sampleBuffer)
-            }
+        // Автоанализ при достаточном количестве данных
+        if sampleBuffer.count >= 10 {
+            currentAnalysis = performAnalysis(sampleBuffer)
         }
     }
 
@@ -165,7 +161,7 @@ final class HeartAnalysisService: ObservableObject {
         let maxBPM = bpms.max() ?? 0
         let lastBPM = bpms.last ?? 0
 
-        // 1. Рассчитываем нерегулярность (RMSSD — стандартная метрика)
+        // 1. Рассчитываем нерегулярность (RMSSD)
         let irregularity = calculateIrregularity(bpms)
 
         // 2. Вариабельность ЧСС (HRV)
@@ -175,7 +171,7 @@ final class HeartAnalysisService: ObservableObject {
         let risePattern = detectRisePattern(bpms)
 
         // 4. Классификация
-        let (diagnosis, confidence, shouldCall) = classify(
+        let (diagnosis, confidence, shouldConsult) = classify(
             avgBPM: avgBPM, maxBPM: maxBPM, lastBPM: lastBPM,
             irregularity: irregularity, hrv: hrvEstimate,
             risePattern: risePattern
@@ -193,14 +189,13 @@ final class HeartAnalysisService: ObservableObject {
             heartRate: lastBPM, hrvMs: hrvEstimate,
             irregularity: irregularity, risePattern: risePattern,
             recommendation: recommendation,
-            suggestMedicalConsult: shouldCall
+            suggestMedicalConsult: shouldConsult
         )
     }
 
     // MARK: - Метрики
 
-    /// Нерегулярность ритма (0 = идеально ровный, 1 = хаотичный)
-    /// При тревоге — низкая (< 0.2), при аритмии — высокая (> 0.35)
+    /// Нерегулярность ритма (0 = ровный, 1 = хаотичный)
     private func calculateIrregularity(_ bpms: [Double]) -> Double {
         guard bpms.count >= 3 else { return 0 }
         var diffs: [Double] = []
@@ -216,7 +211,6 @@ final class HeartAnalysisService: ObservableObject {
     /// Оценка HRV на основе вариации RR-интервалов
     private func calculateHRVEstimate(_ bpms: [Double]) -> Double {
         guard bpms.count >= 3 else { return 0 }
-        // Переводим BPM → RR интервалы (мс)
         let rrIntervals = bpms.map { 60_000.0 / max($0, 1) }
         var squaredDiffs: [Double] = []
         for i in 1 ..< rrIntervals.count {
@@ -241,15 +235,15 @@ final class HeartAnalysisService: ObservableObject {
         if abs(change) < 5 {
             return .noChange
         } else if change > 15, irregularity < 0.2 {
-            return .suddenRegular // Типично для тревожной реакции
+            return .suddenRegular
         } else if change > 15, irregularity >= 0.2 {
-            return .suddenIrregular // Подозрение на кардио
+            return .suddenIrregular
         } else {
             return .gradual
         }
     }
 
-    // MARK: - Классификация
+    // MARK: - Классификация паттернов
 
     private func classify(
         avgBPM: Double,
@@ -261,32 +255,33 @@ final class HeartAnalysisService: ObservableObject {
     )
         -> (HeartAnalysis.Diagnosis, Double, Bool)
     {
-        // 🔴 КРИТЕРИИ КАРДИО-ТРЕВОГИ (звонить 103/112)
-        if irregularity > CardiacThresholds.irregularityThreshold,
-           maxBPM > CardiacThresholds.dangerousHR || lastBPM < 50
+        // 🔴 Нерегулярный + повышенный → рекомендовать врача
+        // FIX: explicit parentheses to avoid operator precedence ambiguity
+        if irregularity > HeartRateThresholds.irregularityThreshold,
+           maxBPM > HeartRateThresholds.elevatedHR || lastBPM < 50
         {
-            return (.likelyCardiac, 0.75, true)
+            return (.elevatedIrregular, 0.75, true)
         }
 
-        // 🟠 Аритмия
-        if irregularity > CardiacThresholds.irregularityThreshold,
-           hrv > CardiacThresholds.chaoticHRV
+        // 🟠 Нерегулярный паттерн
+        if irregularity > HeartRateThresholds.irregularityThreshold,
+           hrv > HeartRateThresholds.chaoticHRV
         {
-            return (.arrhythmia, 0.65, true)
+            return (.irregularPattern, 0.65, true)
         }
 
-        // 🟡 Тревожная реакция
+        // 🟡 Стрессовая реакция
         if risePattern == .suddenRegular,
            avgBPM >= 90, avgBPM <= 160,
-           irregularity < CardiacThresholds.irregularityThreshold,
-           hrv < CardiacThresholds.lowHRV
+           irregularity < HeartRateThresholds.irregularityThreshold,
+           hrv < HeartRateThresholds.lowHRV
         {
-            return (.panicAttack, 0.80, false)
+            return (.stressResponse, 0.80, false)
         }
 
-        // Тахикардия но нечёткий паттерн
+        // Повышенный но нечёткий паттерн
         if avgBPM > 100, irregularity < 0.25 {
-            return (.panicAttack, 0.55, false)
+            return (.stressResponse, 0.55, false)
         }
 
         // Нормальный ритм
@@ -307,17 +302,17 @@ final class HeartAnalysisService: ObservableObject {
     ) -> String {
         let bpm = Int(avgBPM)
         switch diagnosis {
-        case .panicAttack:
+        case .stressResponse:
             if breathingHelped {
-                return String(localized: "heart.rec_panic_breathing_helped")
+                return String(localized: "heart.rec_stress_breathing_helped")
             }
-            return String(localized: "heart.rec_panic \(bpm)")
+            return String(localized: "heart.rec_stress \(bpm)")
 
-        case .likelyCardiac:
-            return String(localized: "heart.rec_cardiac \(bpm)")
+        case .elevatedIrregular:
+            return String(localized: "heart.rec_irregular_elevated \(bpm)")
 
-        case .arrhythmia:
-            return String(localized: "heart.rec_arrhythmia")
+        case .irregularPattern:
+            return String(localized: "heart.rec_irregular_pattern")
 
         case .normal:
             return String(localized: "heart.rec_normal \(bpm)")

@@ -389,8 +389,8 @@
 "heart.disclaimer_body" = "このツールは情報提供のためのものであり、医療機器ではありません。診断は行いません。胸の痛み、息切れ、体調不良がある場合は、直ちに救急に電話してください（いのちの電話）。";
 "heart.waiting" = "待機中...";
 "heart.pulse_monitoring" = "心拍数モニタリング";
-"heart.call_emergency" = "⚠️ 医師への相談をご検討ください";
-"heart.emergency_numbers" = "このアプリは医療機器ではありません。心配な場合は医師にご連絡ください。";
+"heart.consult_doctor" = "⚠️ 医師への相談をご検討ください";
+"heart.consult_doctor_body" = "このアプリは医療機器ではありません。心配な場合は医師にご連絡ください。";
 "heart.breathing_test" = "呼吸テスト";
 "heart.breathing_test_body" = "4-7-8呼吸後に心拍数が下がれば、心臓の問題ではなく不安を間接的に示唆しています。";
 "heart.fix_pulse" = "📌 脈拍を記録";
@@ -405,17 +405,17 @@
 "heart.info_checks_breathing" = "呼吸への反応を確認します";
 "heart.algorithm_disclaimer" = "このアルゴリズムは、不安は規則的なリズム（洞性頻脈）を、心臓の問題は不規則なリズムを生み出すという事実に基づいています。これはECGや医師の代わりにはなりません。";
 "heart.confidence %lld" = "信頼度: %lld%%";
-"heart.anxiety_signs" = "不安の兆候（心臓の問題ではありません）：";
+"heart.stress_signs" = "不安の兆候（心臓の問題ではありません）：";
 "heart.regular_rhythm" = "規則的なリズム（洞性頻脈）";
 "heart.hr_typical %lld" = "心拍数 %lld BPM — 不安に典型的";
 "heart.pattern %@" = "パターン: %@";
 "heart.pulse_responds" = "脈拍が呼吸に反応しています ✓";
 "heart.try_breathing" = "確認のために呼吸を試してください";
-"heart.doctor_signs" = "異常なパターン — 専門家にご相談ください：";
+"heart.consult_signs" = "異常なパターン — 専門家にご相談ください：";
 "heart.irregular_rhythm %@" = "不規則なリズム（%@）";
 "heart.hrv_value %@" = "HRV: %@ ms";
 "heart.no_breathing_response" = "呼吸法に反応しません";
-"heart.recommend_emergency" = "胸の痛みや圧迫感がある場合は、医師にご相談ください";
+"heart.recommend_consult" = "胸の痛みや圧迫感がある場合は、医師にご相談ください";
 "heart.metric_hr" = "❤️ 心拍数";
 "heart.metric_hrv" = "📈 HRV";
 "heart.metric_regularity" = "🔀 規則性";
@@ -424,9 +424,9 @@
 "heart.recommendation" = "おすすめ";
 
 /* Heart Pattern Analysis */
-"diagnosis.anxiety" = "不安状態";
-"diagnosis.cardiac" = "異常なパターンを検出";
-"diagnosis.arrhythmia" = "不規則なリズム";
+"diagnosis.stress_response" = "不安状態";
+"diagnosis.elevated_irregular" = "異常なパターンを検出";
+"diagnosis.irregular_pattern" = "不規則なリズム";
 "diagnosis.normal" = "正常なリズム";
 "diagnosis.collecting" = "データ収集中...";
 
@@ -596,10 +596,10 @@
 
 /* HeartAnalysis Service Recommendations */
 "heart.rec_collecting" = "⚪ データが不足しています。30秒お待ちください。";
-"heart.rec_panic_breathing_helped" = "✅ 脈拍が呼吸に反応しています — これは不安に典型的です。4-7-8呼吸を続けてください。数分で楽になります。あなたは安全です。";
-"heart.rec_panic %lld" = "🟡 不安の兆候：規則的なリズム、心拍数 %lld BPM。4-7-8呼吸を試してください — 副交感神経系を活性化します。胸の痛みやしびれがある場合は医師に相談してください。";
-"heart.rec_cardiac %lld" = "🔴 警告：不規則なリズムを検出しました（%lld BPM）。医療的注意が必要な状態の可能性があります。救急（119）に電話してください。座って、動かず、衣服を緩めてください。";
-"heart.rec_arrhythmia" = "🟠 リズムの不規則性を検出しました。早めに循環器科の受診をお勧めします。胸の痛み、息切れ、めまいがある場合は救急に電話してください。";
+"heart.rec_stress_breathing_helped" = "✅ 脈拍が呼吸に反応しています — これは不安に典型的です。4-7-8呼吸を続けてください。数分で楽になります。あなたは安全です。";
+"heart.rec_stress %lld" = "🟡 不安の兆候：規則的なリズム、心拍数 %lld BPM。4-7-8呼吸を試してください — 副交感神経系を活性化します。胸の痛みやしびれがある場合は医師に相談してください。";
+"heart.rec_irregular_elevated %lld" = "🔴 警告：不規則なリズムを検出しました（%lld BPM）。医療的注意が必要な状態の可能性があります。救急（119）に電話してください。座って、動かず、衣服を緩めてください。";
+"heart.rec_irregular_pattern" = "🟠 リズムの不規則性を検出しました。早めに循環器科の受診をお勧めします。胸の痛み、息切れ、めまいがある場合は救急に電話してください。";
 "heart.rec_normal %lld" = "🟢 リズムは正常です：%lld BPM、規則的。不安を感じている場合 — 主観的な感覚かもしれません。呼吸法でリラックスできます。";
 
 /* Onboarding */

@@ -389,8 +389,8 @@
 "heart.disclaimer_body" = "This tool is an informational helper, NOT a medical device. It does NOT diagnose. If you have chest pain, shortness of breath, or feel unwell, IMMEDIATELY call emergency services (911 / 112).";
 "heart.waiting" = "Waiting...";
 "heart.pulse_monitoring" = "Heart Rate Monitoring";
-"heart.call_emergency" = "⚠️ Consider consulting a doctor";
-"heart.emergency_numbers" = "This app is NOT a medical device. If concerned, call your doctor.";
+"heart.consult_doctor" = "⚠️ Consider consulting a doctor";
+"heart.consult_doctor_body" = "This app is NOT a medical device. If you notice unusual patterns, we recommend consulting a healthcare professional.";
 "heart.breathing_test" = "Breathing Test";
 "heart.breathing_test_body" = "If your heart rate drops after 4-7-8 breathing — this indirectly suggests anxiety, not a heart problem.";
 "heart.fix_pulse" = "📌 Record pulse";
@@ -405,17 +405,17 @@
 "heart.info_checks_breathing" = "Checks response to breathing";
 "heart.algorithm_disclaimer" = "The algorithm is based on the fact that anxiety produces a regular rhythm (sinus tachycardia), while heart-related issues produce an irregular one. This is NOT a replacement for an ECG or a doctor.";
 "heart.confidence %lld" = "Confidence: %lld%%";
-"heart.anxiety_signs" = "Signs of anxiety (not a heart problem):";
+"heart.stress_signs" = "Signs of a stress response:";
 "heart.regular_rhythm" = "Regular rhythm (sinus tachycardia)";
 "heart.hr_typical %lld" = "HR %lld BPM — typical for anxiety";
 "heart.pattern %@" = "Pattern: %@";
 "heart.pulse_responds" = "Pulse responds to breathing ✓";
 "heart.try_breathing" = "Try breathing to check";
-"heart.doctor_signs" = "Unusual pattern — consult a professional:";
+"heart.consult_signs" = "Unusual pattern — consider consulting a professional:";
 "heart.irregular_rhythm %@" = "Irregular rhythm (%@)";
 "heart.hrv_value %@" = "HRV: %@ ms";
 "heart.no_breathing_response" = "Does not respond to breathing techniques";
-"heart.recommend_emergency" = "If you feel chest pain or pressure, contact a doctor";
+"heart.recommend_consult" = "If you notice anything unusual, consider talking to a healthcare professional";
 "heart.metric_hr" = "❤️ HR";
 "heart.metric_hrv" = "📈 HRV";
 "heart.metric_regularity" = "🔀 Regularity";
@@ -424,9 +424,9 @@
 "heart.recommendation" = "Recommendation";
 
 /* Heart Pattern Analysis */
-"diagnosis.anxiety" = "Anxiety state";
-"diagnosis.cardiac" = "Unusual pattern detected";
-"diagnosis.arrhythmia" = "Irregular rhythm";
+"diagnosis.stress_response" = "Stress response";
+"diagnosis.elevated_irregular" = "Unusual pattern";
+"diagnosis.irregular_pattern" = "Irregular rhythm pattern";
 "diagnosis.normal" = "Normal rhythm";
 "diagnosis.collecting" = "Collecting data...";
 
@@ -596,10 +596,10 @@
 
 /* HeartAnalysis Service Recommendations */
 "heart.rec_collecting" = "⚪ Not enough data. Please wait 30 seconds.";
-"heart.rec_panic_breathing_helped" = "✅ Your heart rate responds to breathing — this is typical for anxiety. Continue 4-7-8 breathing. You'll feel better in a few minutes. You are safe.";
-"heart.rec_panic %lld" = "🟡 Signs of anxiety: regular rhythm, HR %lld BPM. Try 4-7-8 breathing — it activates the parasympathetic system. If you feel chest pain or numbness — see a doctor.";
-"heart.rec_cardiac %lld" = "🔴 WARNING: Irregular rhythm detected (%lld BPM). This may indicate a condition requiring medical attention. Call emergency services (911). Sit down, stay still, loosen clothing.";
-"heart.rec_arrhythmia" = "🟠 Rhythm irregularity detected. We recommend seeing a cardiologist soon. If you have chest pain, shortness of breath, or dizziness — call emergency services.";
+"heart.rec_stress_breathing_helped" = "✅ Your heart rate responds to breathing — this is typical for a stress response. Continue 4-7-8 breathing. You'll feel better in a few minutes. You are safe.";
+"heart.rec_stress %lld" = "🟡 Stress response detected: regular rhythm, HR %lld BPM. Try 4-7-8 breathing to activate relaxation. If discomfort persists, consider consulting a healthcare professional.";
+"heart.rec_irregular_elevated %lld" = "🟠 Unusual rhythm pattern detected (%lld BPM). We recommend consulting a healthcare professional for a proper evaluation.";
+"heart.rec_irregular_pattern" = "🟠 Irregular rhythm pattern detected. We recommend scheduling a check-up with a healthcare professional.";
 "heart.rec_normal %lld" = "🟢 Rhythm is normal: %lld BPM, regular. If you feel anxious — it may be a subjective sensation. Breathing techniques will help you relax.";
 
 /* Onboarding */

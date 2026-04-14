@@ -389,8 +389,8 @@
 "heart.disclaimer_body" = "Cet outil est un assistant informatif, PAS un dispositif médical. Il ne pose PAS de diagnostic. En cas de douleur thoracique, essoufflement ou malaise, appelez IMMÉDIATEMENT les urgences (3114).";
 "heart.waiting" = "En attente...";
 "heart.pulse_monitoring" = "Surveillance de la Fréquence Cardiaque";
-"heart.call_emergency" = "⚠️ Envisagez de consulter un médecin";
-"heart.emergency_numbers" = "Cette app N'est PAS un dispositif médical. En cas de doute, appelez votre médecin.";
+"heart.consult_doctor" = "⚠️ Envisagez de consulter un médecin";
+"heart.consult_doctor_body" = "Cette app N'est PAS un dispositif médical. En cas de doute, appelez votre médecin.";
 "heart.breathing_test" = "Test de Respiration";
 "heart.breathing_test_body" = "Si ton pouls baisse après la respiration 4-7-8, cela suggère indirectement de l'anxiété, pas un problème cardiaque.";
 "heart.fix_pulse" = "📌 Enregistrer le pouls";
@@ -405,17 +405,17 @@
 "heart.info_checks_breathing" = "Vérifie la réponse à la respiration";
 "heart.algorithm_disclaimer" = "L'algorithme repose sur le fait que l'anxiété produit un rythme régulier (tachycardie sinusale), tandis que les problèmes cardiaques produisent un rythme irrégulier. Ceci ne remplace PAS un ECG ou un médecin.";
 "heart.confidence %lld" = "Fiabilité : %lld%%";
-"heart.anxiety_signs" = "Signes d'anxiété (pas un problème cardiaque) :";
+"heart.stress_signs" = "Signes d'anxiété (pas un problème cardiaque) :";
 "heart.regular_rhythm" = "Rythme régulier (tachycardie sinusale)";
 "heart.hr_typical %lld" = "FC %lld BPM — typique de l'anxiété";
 "heart.pattern %@" = "Profil : %@";
 "heart.pulse_responds" = "Le pouls répond à la respiration ✓";
 "heart.try_breathing" = "Essaie de respirer pour vérifier";
-"heart.doctor_signs" = "Schéma inhabituel — consultez un professionnel :";
+"heart.consult_signs" = "Schéma inhabituel — consultez un professionnel :";
 "heart.irregular_rhythm %@" = "Rythme irrégulier (%@)";
 "heart.hrv_value %@" = "VFC : %@ ms";
 "heart.no_breathing_response" = "Ne répond pas aux techniques de respiration";
-"heart.recommend_emergency" = "En cas de douleur ou pression thoracique, consultez un médecin";
+"heart.recommend_consult" = "En cas de douleur ou pression thoracique, consultez un médecin";
 "heart.metric_hr" = "❤️ FC";
 "heart.metric_hrv" = "📈 VFC";
 "heart.metric_regularity" = "🔀 Régularité";
@@ -424,9 +424,9 @@
 "heart.recommendation" = "Recommandation";
 
 /* Heart Pattern Analysis */
-"diagnosis.anxiety" = "État anxieux";
-"diagnosis.cardiac" = "Schéma inhabituel détecté";
-"diagnosis.arrhythmia" = "Rythme irrégulier";
+"diagnosis.stress_response" = "État anxieux";
+"diagnosis.elevated_irregular" = "Schéma inhabituel détecté";
+"diagnosis.irregular_pattern" = "Rythme irrégulier";
 "diagnosis.normal" = "Rythme normal";
 "diagnosis.collecting" = "Collecte des données...";
 
@@ -596,10 +596,10 @@
 
 /* HeartAnalysis Service Recommendations */
 "heart.rec_collecting" = "⚪ Pas assez de données. Patiente 30 secondes.";
-"heart.rec_panic_breathing_helped" = "✅ Ton pouls répond à la respiration — c'est typique de l'anxiété. Continue la respiration 4-7-8. Tu te sentiras mieux dans quelques minutes. Tu es en sécurité.";
-"heart.rec_panic %lld" = "🟡 Signes d'anxiété : rythme régulier, FC %lld BPM. Essaie la respiration 4-7-8 — elle active le système parasympathique. Si tu as des douleurs thoraciques ou des engourdissements — consulte un médecin.";
-"heart.rec_cardiac %lld" = "🔴 ATTENTION : Rythme irrégulier détecté (%lld BPM). Cela peut indiquer un état nécessitant une attention médicale. Appelle les urgences (3114). Assieds-toi, ne bouge pas, desserre les vêtements.";
-"heart.rec_arrhythmia" = "🟠 Irrégularité du rythme détectée. Nous recommandons de consulter un cardiologue bientôt. En cas de douleur thoracique, essoufflement ou vertiges — appelle les urgences.";
+"heart.rec_stress_breathing_helped" = "✅ Ton pouls répond à la respiration — c'est typique de l'anxiété. Continue la respiration 4-7-8. Tu te sentiras mieux dans quelques minutes. Tu es en sécurité.";
+"heart.rec_stress %lld" = "🟡 Signes d'anxiété : rythme régulier, FC %lld BPM. Essaie la respiration 4-7-8 — elle active le système parasympathique. Si tu as des douleurs thoraciques ou des engourdissements — consulte un médecin.";
+"heart.rec_irregular_elevated %lld" = "🔴 ATTENTION : Rythme irrégulier détecté (%lld BPM). Cela peut indiquer un état nécessitant une attention médicale. Appelle les urgences (3114). Assieds-toi, ne bouge pas, desserre les vêtements.";
+"heart.rec_irregular_pattern" = "🟠 Irrégularité du rythme détectée. Nous recommandons de consulter un cardiologue bientôt. En cas de douleur thoracique, essoufflement ou vertiges — appelle les urgences.";
 "heart.rec_normal %lld" = "🟢 Rythme normal : %lld BPM, régulier. Si tu te sens anxieux — c'est peut-être une sensation subjective. Les techniques de respiration t'aideront à te détendre.";
 
 /* Onboarding */

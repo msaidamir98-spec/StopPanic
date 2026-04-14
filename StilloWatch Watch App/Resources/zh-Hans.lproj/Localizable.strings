@@ -57,18 +57,18 @@
 
 /* WatchHeartService - Status */
 "watch.status_normal" = "正常";
-"watch.status_panic" = "心率偏高";
-"watch.status_cardiac" = "⚠️ 异常模式";
+"watch.status_stress" = "心率偏高";
+"watch.status_irregular" = "⚠️ 异常模式";
 "watch.status_analyzing" = "分析中…";
 
 /* WatchHeartService - Analysis titles */
 "watch.diag_normal_title" = "一切正常";
-"watch.diag_panic_title" = "焦虑反应";
-"watch.diag_cardiac_title" = "检测到异常节律";
+"watch.diag_stress_title" = "焦虑反应";
+"watch.diag_irregular_title" = "检测到异常节律";
 "watch.diag_inconclusive_title" = "数据不足";
 
 /* WatchHeartService - Analysis details */
 "watch.diag_normal_detail" = "您的心率正常。请继续监测。";
-"watch.diag_panic_detail" = "节奏稳定，心率偏高——典型的焦虑反应。请尝试4-7-8呼吸法。";
-"watch.diag_cardiac_detail" = "检测到心律不规则。建议咨询医疗专业人员。";
+"watch.diag_stress_detail" = "节奏稳定，心率偏高——典型的焦虑反应。请尝试4-7-8呼吸法。";
+"watch.diag_irregular_detail" = "检测到心律不规则。建议咨询医疗专业人员。";
 "watch.diag_inconclusive_detail" = "请继续监测以获得更准确的分析。";

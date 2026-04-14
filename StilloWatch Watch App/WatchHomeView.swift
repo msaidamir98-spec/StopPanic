@@ -169,8 +169,8 @@ struct WatchHomeView: View {
     private var hrColor: Color {
         switch heartService.diagnosis {
         case .normal: .green
-        case .panicAttack: .yellow
-        case .possibleCardiac: .red
+        case .stressResponse: .yellow
+        case .irregularPattern: .red
         case .inconclusive: .cyan
         }
     }

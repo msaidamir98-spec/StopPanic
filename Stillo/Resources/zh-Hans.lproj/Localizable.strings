@@ -389,8 +389,8 @@
 "heart.disclaimer_body" = "此工具是信息辅助工具，不是医疗设备。不进行诊断。如果你有胸痛、呼吸困难或感觉不适，请立即拨打急救电话（12320-5）。";
 "heart.waiting" = "等待中...";
 "heart.pulse_monitoring" = "心率监测";
-"heart.call_emergency" = "⚠️ 建议咨询医生";
-"heart.emergency_numbers" = "此应用不是医疗设备。如有疑虑，请联系医生。";
+"heart.consult_doctor" = "⚠️ 建议咨询医生";
+"heart.consult_doctor_body" = "此应用不是医疗设备。如有疑虑，请联系医生。";
 "heart.breathing_test" = "呼吸测试";
 "heart.breathing_test_body" = "如果4-7-8呼吸后心率下降，这间接提示是焦虑而非心脏问题。";
 "heart.fix_pulse" = "📌 记录脉搏";
@@ -405,17 +405,17 @@
 "heart.info_checks_breathing" = "检查对呼吸的反应";
 "heart.algorithm_disclaimer" = "该算法基于这样的事实：焦虑产生规律节律（窦性心动过速），而心脏问题产生不规律节律。这不能替代心电图或医生。";
 "heart.confidence %lld" = "置信度：%lld%%";
-"heart.anxiety_signs" = "焦虑的迹象（非心脏问题）：";
+"heart.stress_signs" = "焦虑的迹象（非心脏问题）：";
 "heart.regular_rhythm" = "规律节律（窦性心动过速）";
 "heart.hr_typical %lld" = "心率 %lld BPM — 焦虑的典型表现";
 "heart.pattern %@" = "模式：%@";
 "heart.pulse_responds" = "脉搏对呼吸有反应 ✓";
 "heart.try_breathing" = "尝试呼吸来检验";
-"heart.doctor_signs" = "异常模式 — 请咨询专业人士：";
+"heart.consult_signs" = "异常模式 — 请咨询专业人士：";
 "heart.irregular_rhythm %@" = "不规律节律（%@）";
 "heart.hrv_value %@" = "HRV：%@ ms";
 "heart.no_breathing_response" = "对呼吸技术无反应";
-"heart.recommend_emergency" = "如感到胸痛或胸闷，请联系医生";
+"heart.recommend_consult" = "如感到胸痛或胸闷，请联系医生";
 "heart.metric_hr" = "❤️ 心率";
 "heart.metric_hrv" = "📈 HRV";
 "heart.metric_regularity" = "🔀 规律性";
@@ -424,9 +424,9 @@
 "heart.recommendation" = "建议";
 
 /* Heart Pattern Analysis */
-"diagnosis.anxiety" = "焦虑状态";
-"diagnosis.cardiac" = "检测到异常模式";
-"diagnosis.arrhythmia" = "心律不齐";
+"diagnosis.stress_response" = "焦虑状态";
+"diagnosis.elevated_irregular" = "检测到异常模式";
+"diagnosis.irregular_pattern" = "心律不齐";
 "diagnosis.normal" = "正常节律";
 "diagnosis.collecting" = "正在收集数据...";
 
@@ -596,10 +596,10 @@
 
 /* HeartAnalysis Service Recommendations */
 "heart.rec_collecting" = "⚪ 数据不足。请等待30秒。";
-"heart.rec_panic_breathing_helped" = "✅ 你的脉搏对呼吸有反应——这是焦虑的典型表现。继续4-7-8呼吸。几分钟后你会感觉好些。你是安全的。";
-"heart.rec_panic %lld" = "�� 焦虑迹象：规律节律，心率 %lld BPM。试试4-7-8呼吸——它能激活副交感神经系统。如果你感到胸痛或麻木——请就医。";
-"heart.rec_cardiac %lld" = "🔴 警告：检测到不规律节律（%lld BPM）。这可能表明需要就医。请拨打急救电话（120）。坐下，不要动，松开衣物。";
-"heart.rec_arrhythmia" = "🟠 检测到节律不规律。建议尽快看心内科医生。如果你有胸痛、呼吸困难或头晕——请拨打急救电话。";
+"heart.rec_stress_breathing_helped" = "✅ 你的脉搏对呼吸有反应——这是焦虑的典型表现。继续4-7-8呼吸。几分钟后你会感觉好些。你是安全的。";
+"heart.rec_stress %lld" = "�� 焦虑迹象：规律节律，心率 %lld BPM。试试4-7-8呼吸——它能激活副交感神经系统。如果你感到胸痛或麻木——请就医。";
+"heart.rec_irregular_elevated %lld" = "🔴 警告：检测到不规律节律（%lld BPM）。这可能表明需要就医。请拨打急救电话（120）。坐下，不要动，松开衣物。";
+"heart.rec_irregular_pattern" = "🟠 检测到节律不规律。建议尽快看心内科医生。如果你有胸痛、呼吸困难或头晕——请拨打急救电话。";
 "heart.rec_normal %lld" = "🟢 节律正常：%lld BPM，规律。如果你感到焦虑——可能是主观感受。呼吸技巧可以帮助你放松。";
 
 /* Onboarding */

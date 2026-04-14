@@ -3,7 +3,7 @@ import SwiftUI
 // MARK: - HeartAnalysisView
 
 /// Экран мониторинга пульса — анализ паттернов.
-/// ⚠️ Информационный инструмент, НЕ медицинское устройство.
+/// ⚠️ Информационный wellness-инструмент, НЕ медицинское устройство.
 struct HeartAnalysisView: View {
     // MARK: Internal
 
@@ -19,7 +19,7 @@ struct HeartAnalysisView: View {
                         diagnosisCard(analysis)
                         metricsGrid(analysis)
                         recommendationCard(analysis.recommendation)
-                        if analysis.suggestMedicalConsult { emergencyBanner }
+                        if analysis.suggestMedicalConsult { consultBanner }
                     }
                     breathingTestSection
                     monitoringButton
@@ -40,9 +40,9 @@ struct HeartAnalysisView: View {
 
     private var diagnosisColor: Color {
         switch service.currentAnalysis?.diagnosis {
-        case .panicAttack: SP.Colors.warning
-        case .likelyCardiac: SP.Colors.danger
-        case .arrhythmia: .orange
+        case .stressResponse: SP.Colors.warning
+        case .elevatedIrregular: SP.Colors.danger
+        case .irregularPattern: .orange
         case .normal: SP.Colors.success
         default: SP.Colors.textTertiary
         }
@@ -78,11 +78,9 @@ struct HeartAnalysisView: View {
     private var statusCircle: some View {
         VStack(spacing: 14) {
             ZStack {
-                // Background ring
                 Circle()
                     .stroke(SP.Colors.bgCardHover, lineWidth: 12)
                     .frame(width: 180, height: 180)
-                // Progress ring
                 Circle()
                     .trim(from: 0, to: service.currentAnalysis?.confidence ?? 0)
                     .stroke(
@@ -116,16 +114,17 @@ struct HeartAnalysisView: View {
         .padding(.top, 8)
     }
 
-    // MARK: - Emergency
+    // MARK: - Consult Doctor Banner (NOT "Emergency")
 
-    private var emergencyBanner: some View {
+    private var consultBanner: some View {
         VStack(spacing: 10) {
-            Text(String(localized: "heart.call_emergency"))
+            Text(String(localized: "heart.consult_doctor"))
                 .font(SP.Typography.title3)
                 .foregroundColor(.white)
-            Text(String(localized: "heart.emergency_numbers"))
-                .font(SP.Typography.headline)
+            Text(String(localized: "heart.consult_doctor_body"))
+                .font(SP.Typography.caption)
                 .foregroundColor(.white.opacity(0.9))
+                .multilineTextAlignment(.center)
         }
         .frame(maxWidth: .infinity)
         .padding(20)
@@ -133,6 +132,8 @@ struct HeartAnalysisView: View {
             RoundedRectangle(cornerRadius: SP.Layout.cornerMedium, style: .continuous)
                 .fill(SP.Colors.danger)
         )
+        .accessibilityElement(children: .combine)
+        .accessibilityLabel(String(localized: "heart.consult_doctor"))
     }
 
     // MARK: - Breathing Test
@@ -282,9 +283,9 @@ struct HeartAnalysisView: View {
                 Spacer()
             }
 
-            if a.diagnosis == .panicAttack {
+            if a.diagnosis == .stressResponse {
                 differenceExplanation(
-                    title: String(localized: "heart.anxiety_signs"),
+                    title: String(localized: "heart.stress_signs"),
                     points: [
                         String(localized: "heart.regular_rhythm"),
                         String(localized: "heart.hr_typical \(Int(a.heartRate))"),
@@ -295,14 +296,14 @@ struct HeartAnalysisView: View {
                     ],
                     color: SP.Colors.warning
                 )
-            } else if a.diagnosis == .likelyCardiac || a.diagnosis == .arrhythmia {
+            } else if a.diagnosis == .elevatedIrregular || a.diagnosis == .irregularPattern {
                 differenceExplanation(
-                    title: String(localized: "heart.doctor_signs"),
+                    title: String(localized: "heart.consult_signs"),
                     points: [
                         String(localized: "heart.irregular_rhythm \(String(format: "%.0f%%", a.irregularity * 100))"),
                         String(localized: "heart.hrv_value \(String(format: "%.0f", a.hrvMs))"),
                         String(localized: "heart.no_breathing_response"),
-                        String(localized: "heart.recommend_emergency"),
+                        String(localized: "heart.recommend_consult"),
                     ],
                     color: SP.Colors.danger
                 )
@@ -382,9 +383,9 @@ struct HeartAnalysisView: View {
 
     private func diagnosisEmoji(_ d: HeartAnalysis.Diagnosis) -> String {
         switch d {
-        case .panicAttack: "😮‍💨"
-        case .likelyCardiac: "🚨"
-        case .arrhythmia: "⚠️"
+        case .stressResponse: "😮‍💨"
+        case .elevatedIrregular: "⚠️"
+        case .irregularPattern: "⚠️"
         case .normal: "💚"
         case .inconclusive: "📊"
         }

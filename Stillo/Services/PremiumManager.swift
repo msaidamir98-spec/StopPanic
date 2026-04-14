@@ -38,6 +38,12 @@ final class PremiumManager {
     /// Загрузка при старте
     private(set) var isLoading = false
 
+    /// Покупка в статусе Ask to Buy (ожидает одобрения)
+    private(set) var purchasePending = false
+
+    /// Ошибка загрузки продуктов (для UI)
+    private(set) var loadError: String?
+
     /// Текущий статус подписки
     private(set) var isPremium: Bool {
         didSet { UserDefaults.standard.set(isPremium, forKey: Self.premiumKey) }
@@ -58,17 +64,24 @@ final class PremiumManager {
     /// Загрузить продукты из App Store
     func loadProducts() async {
         isLoading = true
+        loadError = nil
         defer { isLoading = false }
 
         do {
             products = try await Product.products(for: [Self.monthlyID, Self.yearlyID])
+            if products.isEmpty {
+                loadError = "No products found"
+            }
         } catch {
+            loadError = error.localizedDescription
             print("[Premium] Failed to load products: \(error)")
         }
     }
 
     /// Купить подписку
     func purchase(_ product: Product) async -> Bool {
+        purchasePending = false
+
         do {
             let result = try await product.purchase()
 
@@ -83,6 +96,8 @@ final class PremiumManager {
                 return false
 
             case .pending:
+                // Ask to Buy — ожидаем одобрения родителем
+                purchasePending = true
                 return false
 
             @unknown default:
@@ -96,13 +111,18 @@ final class PremiumManager {
 
     /// Восстановить покупки
     func restorePurchases() async {
+        var foundActive = false
         for await result in Transaction.currentEntitlements {
             if let transaction = try? checkVerified(result) {
                 if transaction.productID == Self.monthlyID || transaction.productID == Self.yearlyID {
                     isPremium = true
-                    return
+                    foundActive = true
+                    break
                 }
             }
+        }
+        if !foundActive {
+            isPremium = false
         }
     }
 
@@ -110,13 +130,16 @@ final class PremiumManager {
     /// Ссылка на Task хранится, чтобы предотвратить сборку мусора.
     func listenForTransactions() {
         transactionListener?.cancel()
+        let monthlyID = Self.monthlyID
+        let yearlyID = Self.yearlyID
         transactionListener = Task.detached(priority: .utility) { [weak self] in
             for await result in Transaction.updates {
                 if let transaction = try? await self?.checkVerified(result) {
-                    let isActive = transaction.productID == Self.monthlyID ||
-                        transaction.productID == Self.yearlyID
+                    let isActive = transaction.productID == monthlyID ||
+                        transaction.productID == yearlyID
                     await MainActor.run {
                         self?.isPremium = isActive
+                        self?.purchasePending = false
                     }
                     await transaction.finish()
                 }

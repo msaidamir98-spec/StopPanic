@@ -57,18 +57,18 @@
 
 /* WatchHeartService - Status */
 "watch.status_normal" = "Норма";
-"watch.status_panic" = "Повышенный пульс";
-"watch.status_cardiac" = "⚠️ Необычный паттерн";
+"watch.status_stress" = "Повышенный пульс";
+"watch.status_irregular" = "⚠️ Необычный паттерн";
 "watch.status_analyzing" = "Анализирую...";
 
 /* WatchHeartService - Analysis titles */
 "watch.diag_normal_title" = "Всё в порядке";
-"watch.diag_panic_title" = "Тревожная реакция";
-"watch.diag_cardiac_title" = "Обнаружен необычный ритм";
+"watch.diag_stress_title" = "Тревожная реакция";
+"watch.diag_irregular_title" = "Обнаружен необычный ритм";
 "watch.diag_inconclusive_title" = "Недостаточно данных";
 
 /* WatchHeartService - Analysis details */
 "watch.diag_normal_detail" = "Ваш пульс в норме. Продолжайте мониторинг.";
-"watch.diag_panic_detail" = "Ритм ровный, ЧСС повышен — характерно для тревоги. Попробуйте дыхание 4-7-8.";
-"watch.diag_cardiac_detail" = "Обнаружена нерегулярность ритма. Рекомендуем проконсультироваться с врачом.";
+"watch.diag_stress_detail" = "Ритм ровный, ЧСС повышен — характерно для тревоги. Попробуйте дыхание 4-7-8.";
+"watch.diag_irregular_detail" = "Обнаружена нерегулярность ритма. Рекомендуем проконсультироваться с врачом.";
 "watch.diag_inconclusive_detail" = "Продолжайте мониторинг для более точного анализа.";

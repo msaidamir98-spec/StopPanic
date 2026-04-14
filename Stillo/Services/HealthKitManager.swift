@@ -8,12 +8,10 @@ import UserNotifications
 final class HealthKitManager: ObservableObject {
     // MARK: Internal
 
-    @Published
-    var heartRate: Double = 0
-    @Published
-    var isAuthorized: Bool = false
-    @Published
-    var isElevatedHR: Bool = false
+    @Published var heartRate: Double = 0
+    @Published var isAuthorized: Bool = false
+    @Published var isElevatedHR: Bool = false
+    @Published var authorizationDenied: Bool = false
 
     /// Порог ЧСС для уведомления о тревоге (покой)
     let elevatedHRThreshold: Double = 100
@@ -26,18 +24,25 @@ final class HealthKitManager: ObservableObject {
             return
         }
 
-        let readTypes: Set<HKObjectType> = [
-            HKQuantityType.quantityType(forIdentifier: .heartRate)!,
-            HKQuantityType.quantityType(forIdentifier: .heartRateVariabilitySDNN)!,
-        ]
+        guard let hrType = HKQuantityType.quantityType(forIdentifier: .heartRate),
+              let hrvType = HKQuantityType.quantityType(forIdentifier: .heartRateVariabilitySDNN)
+        else { return }
+
+        let readTypes: Set<HKObjectType> = [hrType, hrvType]
 
         healthStore.requestAuthorization(toShare: nil, read: readTypes) { [weak self] ok, _ in
-            let manager = self
-            Task { @MainActor in
-                manager?.isAuthorized = ok
-                if ok {
-                    manager?.startObservingHeartRate()
-                    manager?.enableBackgroundHeartRateDelivery()
+            Task { @MainActor [weak self] in
+                guard let self else { return }
+                // requestAuthorization returns true even if user denied — check actual status
+                let status = healthStore.authorizationStatus(for: hrType)
+                if ok, status != .sharingDenied {
+                    isAuthorized = true
+                    authorizationDenied = false
+                    startObservingHeartRate()
+                    enableBackgroundHeartRateDelivery()
+                } else {
+                    isAuthorized = false
+                    authorizationDenied = true
                 }
             }
         }
@@ -49,22 +54,21 @@ final class HealthKitManager: ObservableObject {
     private var lastHighHRNotification: Date?
 
     private func startObservingHeartRate() {
-        let hrType = HKQuantityType.quantityType(forIdentifier: .heartRate)!
+        guard let hrType = HKQuantityType.quantityType(forIdentifier: .heartRate) else { return }
+
         let query = HKAnchoredObjectQuery(
             type: hrType,
             predicate: HKQuery.predicateForSamples(withStart: Date(), end: nil, options: .strictStartDate),
             anchor: nil,
             limit: HKObjectQueryNoLimit
         ) { [weak self] _, added, _, _, _ in
-            let manager = self
-            Task { @MainActor in
-                manager?.processHR(samples: added ?? [])
+            Task { @MainActor [weak self] in
+                self?.processHR(samples: added ?? [])
             }
         }
         query.updateHandler = { [weak self] _, added, _, _, _ in
-            let manager = self
-            Task { @MainActor in
-                manager?.processHR(samples: added ?? [])
+            Task { @MainActor [weak self] in
+                self?.processHR(samples: added ?? [])
             }
         }
         healthStore.execute(query)
@@ -72,7 +76,7 @@ final class HealthKitManager: ObservableObject {
 
     /// Enable background delivery for heart rate → push notification on high HR
     private func enableBackgroundHeartRateDelivery() {
-        let hrType = HKQuantityType.quantityType(forIdentifier: .heartRate)!
+        guard let hrType = HKQuantityType.quantityType(forIdentifier: .heartRate) else { return }
 
         healthStore.enableBackgroundDelivery(for: hrType, frequency: .immediate) { success, error in
             if let error {
@@ -103,14 +107,14 @@ final class HealthKitManager: ObservableObject {
                 }
                 let bpm = sample.quantity.doubleValue(for: HKUnit.count().unitDivided(by: .minute()))
 
-                let manager = self
-                Task { @MainActor in
-                    manager?.heartRate = bpm
-                    if bpm >= (manager?.elevatedHRThreshold ?? 100) {
-                        manager?.isElevatedHR = true
-                        manager?.sendHighHeartRateNotification(bpm: bpm)
+                Task { @MainActor [weak self] in
+                    guard let self else { return }
+                    heartRate = bpm
+                    if bpm >= elevatedHRThreshold {
+                        isElevatedHR = true
+                        sendHighHeartRateNotification(bpm: bpm)
                     } else {
-                        manager?.isElevatedHR = false
+                        isElevatedHR = false
                     }
                 }
                 completionHandler()
@@ -123,14 +127,12 @@ final class HealthKitManager: ObservableObject {
     private func processHR(samples: [HKSample]) {
         guard let last = samples.last as? HKQuantitySample else { return }
         let bpm = last.quantity.doubleValue(for: HKUnit.count().unitDivided(by: .minute()))
-        Task { @MainActor in
-            self.heartRate = bpm
-            if bpm >= elevatedHRThreshold {
-                isElevatedHR = true
-                sendHighHeartRateNotification(bpm: bpm)
-            } else {
-                isElevatedHR = false
-            }
+        heartRate = bpm
+        if bpm >= elevatedHRThreshold {
+            isElevatedHR = true
+            sendHighHeartRateNotification(bpm: bpm)
+        } else {
+            isElevatedHR = false
         }
     }
 

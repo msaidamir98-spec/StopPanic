@@ -2,27 +2,27 @@ import Foundation
 
 // MARK: - HeartAnalysis
 
-/// Результат анализа сердечного ритма
+/// Результат анализа сердечного ритма (информационный, НЕ медицинский)
 struct HeartAnalysis: Codable, Identifiable {
-    /// Классификация состояния по паттерну ритма
+    /// Классификация паттерна пульса (wellness, НЕ диагностика)
     ///
-    /// ТРЕВОЖНАЯ РЕАКЦИЯ:
-    ///  • ЧСС ↑ резко, но ритм РЕГУЛЯРНЫЙ (синусовая тахикардия)
-    ///  • HRV (вариабельность) СНИЖАЕТСЯ, но паттерн стабильный
+    /// СТРЕСС / ТРЕВОГА:
+    ///  • ЧСС ↑ резко, но ритм РЕГУЛЯРНЫЙ
+    ///  • HRV (вариабельность) снижается равномерно
     ///  • Пик за 1–3 мин, плато, затем постепенное снижение
     ///  • ЧСС обычно 100–150 BPM
-    ///  • Реагирует на дыхательные техники (vagal maneuvers)
+    ///  • Реагирует на дыхательные техники
     ///
-    /// ИНФАРКТ / АРИТМИЯ:
-    ///  • Ритм НЕРЕГУЛЯРНЫЙ (аритмия, фибрилляция)
+    /// НЕРЕГУЛЯРНЫЙ ПАТТЕРН:
+    ///  • Ритм нерегулярный
     ///  • HRV хаотически скачет
-    ///  • Может быть брадикардия (<60) ИЛИ тахикардия (>150)
+    ///  • Может быть <60 или >150
     ///  • НЕ реагирует на дыхание
-    ///  • Может сопровождаться резким падением SpO2
+    ///  • Рекомендуется консультация врача
     enum Diagnosis: String, Codable {
-        case panicAttack = "anxiety"
-        case likelyCardiac = "cardiac"
-        case arrhythmia
+        case stressResponse = "anxiety"
+        case elevatedIrregular = "cardiac"
+        case irregularPattern = "arrhythmia" // backward-compatible raw values
         case normal
         case inconclusive = "collecting"
 
@@ -30,9 +30,9 @@ struct HeartAnalysis: Codable, Identifiable {
 
         var localizedTitle: String {
             switch self {
-            case .panicAttack: String(localized: "diagnosis.anxiety")
-            case .likelyCardiac: String(localized: "diagnosis.cardiac")
-            case .arrhythmia: String(localized: "diagnosis.arrhythmia")
+            case .stressResponse: String(localized: "diagnosis.stress_response")
+            case .elevatedIrregular: String(localized: "diagnosis.elevated_irregular")
+            case .irregularPattern: String(localized: "diagnosis.irregular_pattern")
             case .normal: String(localized: "diagnosis.normal")
             case .inconclusive: String(localized: "diagnosis.collecting")
             }
@@ -103,18 +103,18 @@ struct HeartRateSample: Codable, Identifiable {
     let source: Source
 }
 
-// MARK: - CardiacThresholds
+// MARK: - HeartRateThresholds
 
-/// Критерии различения (медицинские пороги)
-enum CardiacThresholds {
-    /// Если irregularity > 0.35 → подозрение на аритмию
+/// Пороги для паттернового анализа (wellness, не клинические)
+enum HeartRateThresholds {
+    /// Если irregularity > 0.35 → нерегулярный паттерн
     static let irregularityThreshold: Double = 0.35
-    /// ЧСС > 150 + нерегулярный ритм → кардио-тревога
-    static let dangerousHR: Double = 150
-    /// HRV < 20 мс при тахикардии → тревожная реакция (зажатый ритм)
+    /// ЧСС > 150 + нерегулярный ритм → рекомендация обратиться к врачу
+    static let elevatedHR: Double = 150
+    /// HRV < 20 мс при тахикардии → стрессовая реакция (зажатый ритм)
     static let lowHRV: Double = 20
-    /// HRV скачет > 50 мс между ударами → подозрение на аритмию
+    /// HRV скачет > 50 мс между ударами → нерегулярный паттерн
     static let chaoticHRV: Double = 50
-    /// Если дыхательная техника снизила ЧСС > 10% за 2 мин → тревога
+    /// Если дыхательная техника снизила ЧСС > 10% за 2 мин → стрессовая реакция
     static let breathingResponseThreshold: Double = 0.10
 }

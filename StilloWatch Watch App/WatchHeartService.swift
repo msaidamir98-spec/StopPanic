@@ -4,7 +4,7 @@ import HealthKit
 import SwiftUI
 
 /// Сервис мониторинга пульса на Apple Watch
-/// Мониторинг ЧСС в реальном времени — анализ паттернов пульса
+/// Мониторинг ЧСС в реальном времени — анализ паттернов пульса (wellness)
 @MainActor
 class WatchHeartService: ObservableObject {
     // MARK: Internal
@@ -13,8 +13,8 @@ class WatchHeartService: ObservableObject {
 
     enum DiagnosisResult {
         case normal
-        case panicAttack
-        case possibleCardiac
+        case stressResponse
+        case irregularPattern
         case inconclusive
     }
 
@@ -43,10 +43,10 @@ class WatchHeartService: ObservableObject {
         switch diagnosis {
         case .normal:
             HeartStatus(text: String(localized: "watch.status_normal"), color: .green)
-        case .panicAttack:
-            HeartStatus(text: String(localized: "watch.status_panic"), color: .yellow)
-        case .possibleCardiac:
-            HeartStatus(text: String(localized: "watch.status_cardiac"), color: .red)
+        case .stressResponse:
+            HeartStatus(text: String(localized: "watch.status_stress"), color: .yellow)
+        case .irregularPattern:
+            HeartStatus(text: String(localized: "watch.status_irregular"), color: .red)
         case .inconclusive:
             HeartStatus(text: String(localized: "watch.status_analyzing"), color: .orange)
         }
@@ -55,8 +55,8 @@ class WatchHeartService: ObservableObject {
     var diagnosisIcon: String {
         switch diagnosis {
         case .normal: "checkmark.heart.fill"
-        case .panicAttack: "brain.head.profile"
-        case .possibleCardiac: "heart.slash.fill"
+        case .stressResponse: "brain.head.profile"
+        case .irregularPattern: "exclamationmark.heart.fill"
         case .inconclusive: "questionmark.circle"
         }
     }
@@ -69,10 +69,10 @@ class WatchHeartService: ObservableObject {
         switch diagnosis {
         case .normal:
             String(localized: "watch.diag_normal_title")
-        case .panicAttack:
-            String(localized: "watch.diag_panic_title")
-        case .possibleCardiac:
-            String(localized: "watch.diag_cardiac_title")
+        case .stressResponse:
+            String(localized: "watch.diag_stress_title")
+        case .irregularPattern:
+            String(localized: "watch.diag_irregular_title")
         case .inconclusive:
             String(localized: "watch.diag_inconclusive_title")
         }
@@ -82,10 +82,10 @@ class WatchHeartService: ObservableObject {
         switch diagnosis {
         case .normal:
             String(localized: "watch.diag_normal_detail")
-        case .panicAttack:
-            String(localized: "watch.diag_panic_detail")
-        case .possibleCardiac:
-            String(localized: "watch.diag_cardiac_detail")
+        case .stressResponse:
+            String(localized: "watch.diag_stress_detail")
+        case .irregularPattern:
+            String(localized: "watch.diag_irregular_detail")
         case .inconclusive:
             String(localized: "watch.diag_inconclusive_detail")
         }
@@ -96,13 +96,14 @@ class WatchHeartService: ObservableObject {
     func startMonitoring() {
         guard HKHealthStore.isHealthDataAvailable() else { return }
 
-        let hrType = HKQuantityType.quantityType(forIdentifier: .heartRate)!
-        let hrvType = HKQuantityType.quantityType(forIdentifier: .heartRateVariabilitySDNN)!
+        guard let hrType = HKQuantityType.quantityType(forIdentifier: .heartRate),
+              let hrvType = HKQuantityType.quantityType(forIdentifier: .heartRateVariabilitySDNN)
+        else { return }
 
         healthStore.requestAuthorization(toShare: nil, read: [hrType, hrvType]) { [weak self] ok, _ in
-            guard ok, let self else { return }
-            Task { @MainActor in
-                self.startLiveQuery()
+            guard ok else { return }
+            Task { @MainActor [weak self] in
+                self?.startLiveQuery()
             }
         }
     }
@@ -123,16 +124,16 @@ class WatchHeartService: ObservableObject {
     private var anchoredQuery: HKAnchoredObjectQuery?
     private var sampleBuffer: [(bpm: Double, time: Date)] = []
 
-    // Пороговые значения
-    private let dangerousHR: Double = 150
-    private let panicMinHR: Double = 90
+    // Пороговые значения (wellness)
+    private let elevatedHR: Double = 150
+    private let stressMinHR: Double = 90
     private let irregularityThreshold: Double = 0.35
     private let lowHRV: Double = 20
 
     // MARK: - Live Query
 
     private func startLiveQuery() {
-        let hrType = HKQuantityType.quantityType(forIdentifier: .heartRate)!
+        guard let hrType = HKQuantityType.quantityType(forIdentifier: .heartRate) else { return }
         let predicate = HKQuery.predicateForSamples(
             withStart: Date(), end: nil, options: .strictStartDate
         )
@@ -143,18 +144,16 @@ class WatchHeartService: ObservableObject {
             anchor: nil,
             limit: HKObjectQueryNoLimit
         ) { [weak self] _, added, _, _, _ in
-            guard let self else { return }
             let samples = added ?? []
-            Task { @MainActor in
-                self.processHRSamples(samples)
+            Task { @MainActor [weak self] in
+                self?.processHRSamples(samples)
             }
         }
 
         query.updateHandler = { [weak self] _, added, _, _, _ in
-            guard let self else { return }
             let samples = added ?? []
-            Task { @MainActor in
-                self.processHRSamples(samples)
+            Task { @MainActor [weak self] in
+                self?.processHRSamples(samples)
             }
         }
 
@@ -190,43 +189,42 @@ class WatchHeartService: ObservableObject {
         }
     }
 
-    // MARK: - Differential Analysis
+    // MARK: - Pattern Analysis
 
     private func analyzePattern() {
         let bpms = sampleBuffer.map(\.bpm)
         let avgHR = bpms.reduce(0, +) / Double(bpms.count)
 
         // Рассчитать нерегулярность (RMSSD из RR-интервалов)
-        let rrIntervals = bpms.map { 60.0 / $0 }
+        let rrIntervals = bpms.map { 60.0 / max($0, 1) }
         var diffSquareSum: Double = 0
         for i in 1 ..< rrIntervals.count {
             let diff = rrIntervals[i] - rrIntervals[i - 1]
             diffSquareSum += diff * diff
         }
         let rmssd = sqrt(diffSquareSum / Double(max(rrIntervals.count - 1, 1)))
-        irregularity = min(rmssd / 0.2, 1.0) // Нормализация
+        irregularity = min(rmssd / 0.2, 1.0)
 
         // HRV (стандартное отклонение RR)
         let meanRR = rrIntervals.reduce(0, +) / Double(rrIntervals.count)
         let variance = rrIntervals.map { ($0 - meanRR) * ($0 - meanRR) }.reduce(0, +) / Double(rrIntervals.count)
         hrvValue = sqrt(variance) * 1_000 // мс
 
-        // Классификация
-        if avgHR < panicMinHR, irregularity < irregularityThreshold {
-            // Нормальный пульс, ровный ритм
+        // Классификация паттернов
+        if avgHR < stressMinHR, irregularity < irregularityThreshold {
             diagnosis = .normal
             suggestMedicalConsult = false
-        } else if irregularity >= irregularityThreshold, avgHR >= dangerousHR {
-            // Нерегулярный + высокий → возможно сердце
-            diagnosis = .possibleCardiac
+        } else if irregularity >= irregularityThreshold, avgHR >= elevatedHR {
+            // Нерегулярный + высокий → рекомендация к врачу
+            diagnosis = .irregularPattern
             suggestMedicalConsult = true
         } else if irregularity >= irregularityThreshold {
             // Нерегулярный но не критичный
-            diagnosis = .possibleCardiac
+            diagnosis = .irregularPattern
             suggestMedicalConsult = false
-        } else if avgHR >= panicMinHR, irregularity < irregularityThreshold {
-            // Повышенный но ровный ритм → тревожная реакция
-            diagnosis = .panicAttack
+        } else if avgHR >= stressMinHR, irregularity < irregularityThreshold {
+            // Повышенный но ровный ритм → стрессовая реакция
+            diagnosis = .stressResponse
             suggestMedicalConsult = false
         } else {
             diagnosis = .inconclusive

@@ -389,8 +389,8 @@
 "heart.disclaimer_body" = "Esta herramienta es un asistente informativo, NO un dispositivo médico. NO diagnostica. Si tienes dolor en el pecho, falta de aire o te sientes mal, llama INMEDIATAMENTE a emergencias (112).";
 "heart.waiting" = "Esperando...";
 "heart.pulse_monitoring" = "Monitoreo de Frecuencia Cardíaca";
-"heart.call_emergency" = "⚠️ Considere consultar a un médico";
-"heart.emergency_numbers" = "Esta app NO es un dispositivo médico. Si le preocupa, llame a su médico.";
+"heart.consult_doctor" = "⚠️ Considere consultar a un médico";
+"heart.consult_doctor_body" = "Esta app NO es un dispositivo médico. Si le preocupa, llame a su médico.";
 "heart.breathing_test" = "Prueba de Respiración";
 "heart.breathing_test_body" = "Si tu pulso baja después de la respiración 4-7-8, esto sugiere indirectamente ansiedad, no un problema cardíaco.";
 "heart.fix_pulse" = "📌 Registrar pulso";
@@ -405,17 +405,17 @@
 "heart.info_checks_breathing" = "Verifica respuesta a la respiración";
 "heart.algorithm_disclaimer" = "El algoritmo se basa en que la ansiedad produce un ritmo regular (taquicardia sinusal), mientras que los problemas cardíacos producen uno irregular. Esto NO reemplaza un ECG ni a un médico.";
 "heart.confidence %lld" = "Confianza: %lld%%";
-"heart.anxiety_signs" = "Señales de ansiedad (no un problema cardíaco):";
+"heart.stress_signs" = "Señales de ansiedad (no un problema cardíaco):";
 "heart.regular_rhythm" = "Ritmo regular (taquicardia sinusal)";
 "heart.hr_typical %lld" = "FC %lld BPM — típico de ansiedad";
 "heart.pattern %@" = "Patrón: %@";
 "heart.pulse_responds" = "El pulso responde a la respiración ✓";
 "heart.try_breathing" = "Prueba respirar para verificar";
-"heart.doctor_signs" = "Patrón inusual — consulte a un profesional:";
+"heart.consult_signs" = "Patrón inusual — consulte a un profesional:";
 "heart.irregular_rhythm %@" = "Ritmo irregular (%@)";
 "heart.hrv_value %@" = "VFC: %@ ms";
 "heart.no_breathing_response" = "No responde a técnicas de respiración";
-"heart.recommend_emergency" = "Si siente dolor o presión en el pecho, consulte a un médico";
+"heart.recommend_consult" = "Si siente dolor o presión en el pecho, consulte a un médico";
 "heart.metric_hr" = "❤️ FC";
 "heart.metric_hrv" = "📈 VFC";
 "heart.metric_regularity" = "🔀 Regularidad";
@@ -424,9 +424,9 @@
 "heart.recommendation" = "Recomendación";
 
 /* Heart Pattern Analysis */
-"diagnosis.anxiety" = "Estado de ansiedad";
-"diagnosis.cardiac" = "Patrón inusual detectado";
-"diagnosis.arrhythmia" = "Ritmo irregular";
+"diagnosis.stress_response" = "Estado de ansiedad";
+"diagnosis.elevated_irregular" = "Patrón inusual detectado";
+"diagnosis.irregular_pattern" = "Ritmo irregular";
 "diagnosis.normal" = "Ritmo normal";
 "diagnosis.collecting" = "Recopilando datos...";
 
@@ -596,10 +596,10 @@
 
 /* HeartAnalysis Service Recommendations */
 "heart.rec_collecting" = "⚪ No hay suficientes datos. Espera 30 segundos.";
-"heart.rec_panic_breathing_helped" = "✅ Tu pulso responde a la respiración — esto es típico de la ansiedad. Continúa con la respiración 4-7-8. Te sentirás mejor en unos minutos. Estás a salvo.";
-"heart.rec_panic %lld" = "🟡 Señales de ansiedad: ritmo regular, FC %lld BPM. Prueba la respiración 4-7-8 — activa el sistema parasimpático. Si sientes dolor en el pecho o entumecimiento — consulta a un médico.";
-"heart.rec_cardiac %lld" = "🔴 ADVERTENCIA: Ritmo irregular detectado (%lld BPM). Esto puede indicar una condición que requiere atención médica. Llama a emergencias (112). Siéntate, quédate quieto, afloja la ropa.";
-"heart.rec_arrhythmia" = "🟠 Irregularidad en el ritmo detectada. Recomendamos ver a un cardiólogo pronto. Si tienes dolor en el pecho, falta de aire o mareo — llama a emergencias.";
+"heart.rec_stress_breathing_helped" = "✅ Tu pulso responde a la respiración — esto es típico de la ansiedad. Continúa con la respiración 4-7-8. Te sentirás mejor en unos minutos. Estás a salvo.";
+"heart.rec_stress %lld" = "🟡 Señales de ansiedad: ritmo regular, FC %lld BPM. Prueba la respiración 4-7-8 — activa el sistema parasimpático. Si sientes dolor en el pecho o entumecimiento — consulta a un médico.";
+"heart.rec_irregular_elevated %lld" = "🔴 ADVERTENCIA: Ritmo irregular detectado (%lld BPM). Esto puede indicar una condición que requiere atención médica. Llama a emergencias (112). Siéntate, quédate quieto, afloja la ropa.";
+"heart.rec_irregular_pattern" = "🟠 Irregularidad en el ritmo detectada. Recomendamos ver a un cardiólogo pronto. Si tienes dolor en el pecho, falta de aire o mareo — llama a emergencias.";
 "heart.rec_normal %lld" = "�� Ritmo normal: %lld BPM, regular. Si te sientes ansioso — puede ser una sensación subjetiva. Las técnicas de respiración te ayudarán a relajarte.";
 
 /* Onboarding */

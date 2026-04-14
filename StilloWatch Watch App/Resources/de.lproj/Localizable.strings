@@ -57,18 +57,18 @@
 
 /* WatchHeartService - Status */
 "watch.status_normal" = "Normal";
-"watch.status_panic" = "Erhöhter Puls";
-"watch.status_cardiac" = "⚠️ Ungewöhnliches Muster";
+"watch.status_stress" = "Erhöhter Puls";
+"watch.status_irregular" = "⚠️ Ungewöhnliches Muster";
 "watch.status_analyzing" = "Analyse…";
 
 /* WatchHeartService - Analysis titles */
 "watch.diag_normal_title" = "Alles in Ordnung";
-"watch.diag_panic_title" = "Angstreaktion";
-"watch.diag_cardiac_title" = "Ungewöhnlicher Rhythmus erkannt";
+"watch.diag_stress_title" = "Angstreaktion";
+"watch.diag_irregular_title" = "Ungewöhnlicher Rhythmus erkannt";
 "watch.diag_inconclusive_title" = "Unzureichende Daten";
 
 /* WatchHeartService - Analysis details */
 "watch.diag_normal_detail" = "Ihre Herzfrequenz ist normal. Überwachung fortsetzen.";
-"watch.diag_panic_detail" = "Gleichmäßiger Rhythmus, erhöhte HF — typische Angstreaktion. Versuchen Sie 4-7-8-Atmung.";
-"watch.diag_cardiac_detail" = "Rhythmus-Unregelmäßigkeit erkannt. Wir empfehlen, einen Arzt zu konsultieren.";
+"watch.diag_stress_detail" = "Gleichmäßiger Rhythmus, erhöhte HF — typische Angstreaktion. Versuchen Sie 4-7-8-Atmung.";
+"watch.diag_irregular_detail" = "Rhythmus-Unregelmäßigkeit erkannt. Wir empfehlen, einen Arzt zu konsultieren.";
 "watch.diag_inconclusive_detail" = "Überwachung fortsetzen für genauere Analyse.";

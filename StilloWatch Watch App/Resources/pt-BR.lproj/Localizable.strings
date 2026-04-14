@@ -57,18 +57,18 @@
 
 /* WatchHeartService - Status */
 "watch.status_normal" = "Normal";
-"watch.status_panic" = "Pulso elevado";
-"watch.status_cardiac" = "⚠️ Padrão incomum";
+"watch.status_stress" = "Pulso elevado";
+"watch.status_irregular" = "⚠️ Padrão incomum";
 "watch.status_analyzing" = "Analisando…";
 
 /* WatchHeartService - Analysis titles */
 "watch.diag_normal_title" = "Tudo bem";
-"watch.diag_panic_title" = "Resposta de ansiedade";
-"watch.diag_cardiac_title" = "Ritmo incomum detectado";
+"watch.diag_stress_title" = "Resposta de ansiedade";
+"watch.diag_irregular_title" = "Ritmo incomum detectado";
 "watch.diag_inconclusive_title" = "Dados insuficientes";
 
 /* WatchHeartService - Analysis details */
 "watch.diag_normal_detail" = "Sua frequência cardíaca está normal. Continue monitorando.";
-"watch.diag_panic_detail" = "Ritmo estável, FC elevada — resposta típica de ansiedade. Tente respiração 4-7-8.";
-"watch.diag_cardiac_detail" = "Irregularidade no ritmo detectada. Recomendamos consultar um profissional de saúde.";
+"watch.diag_stress_detail" = "Ritmo estável, FC elevada — resposta típica de ansiedade. Tente respiração 4-7-8.";
+"watch.diag_irregular_detail" = "Irregularidade no ritmo detectada. Recomendamos consultar um profissional de saúde.";
 "watch.diag_inconclusive_detail" = "Continue monitorando para análise mais precisa.";

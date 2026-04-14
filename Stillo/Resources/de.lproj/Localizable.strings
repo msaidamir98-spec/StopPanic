@@ -389,8 +389,8 @@
 "heart.disclaimer_body" = "Dieses Tool ist ein Informationshelfer, KEIN medizinisches Gerät. Es stellt KEINE Diagnose. Bei Brustschmerzen, Atemnot oder Unwohlsein SOFORT den Notruf wählen (112).";
 "heart.waiting" = "Warte...";
 "heart.pulse_monitoring" = "Herzfrequenz-Überwachung";
-"heart.call_emergency" = "⚠️ Erwägen Sie einen Arztbesuch";
-"heart.emergency_numbers" = "Diese App ist KEIN medizinisches Gerät. Bei Bedenken kontaktieren Sie Ihren Arzt.";
+"heart.consult_doctor" = "⚠️ Erwägen Sie einen Arztbesuch";
+"heart.consult_doctor_body" = "Diese App ist KEIN medizinisches Gerät. Bei Bedenken kontaktieren Sie Ihren Arzt.";
 "heart.breathing_test" = "Atemtest";
 "heart.breathing_test_body" = "Wenn dein Puls nach der 4-7-8-Atmung sinkt, deutet das indirekt auf Angst und nicht auf ein Herzproblem hin.";
 "heart.fix_pulse" = "📌 Puls aufzeichnen";
@@ -405,17 +405,17 @@
 "heart.info_checks_breathing" = "Prüft Reaktion auf Atmung";
 "heart.algorithm_disclaimer" = "Der Algorithmus basiert darauf, dass Angst einen regelmäßigen Rhythmus erzeugt (Sinustachykardie), während Herzprobleme einen unregelmäßigen erzeugen. Dies ist KEIN Ersatz für ein EKG oder einen Arzt.";
 "heart.confidence %lld" = "Zuverlässigkeit: %lld%%";
-"heart.anxiety_signs" = "Anzeichen von Angst (kein Herzproblem):";
+"heart.stress_signs" = "Anzeichen von Angst (kein Herzproblem):";
 "heart.regular_rhythm" = "Regelmäßiger Rhythmus (Sinustachykardie)";
 "heart.hr_typical %lld" = "HF %lld BPM — typisch für Angst";
 "heart.pattern %@" = "Muster: %@";
 "heart.pulse_responds" = "Puls reagiert auf Atmung ✓";
 "heart.try_breathing" = "Probiere Atemübungen zur Prüfung";
-"heart.doctor_signs" = "Ungewöhnliches Muster — konsultieren Sie einen Fachmann:";
+"heart.consult_signs" = "Ungewöhnliches Muster — konsultieren Sie einen Fachmann:";
 "heart.irregular_rhythm %@" = "Unregelmäßiger Rhythmus (%@)";
 "heart.hrv_value %@" = "HRV: %@ ms";
 "heart.no_breathing_response" = "Reagiert nicht auf Atemtechniken";
-"heart.recommend_emergency" = "Bei Brustschmerzen oder Druck wenden Sie sich an einen Arzt";
+"heart.recommend_consult" = "Bei Brustschmerzen oder Druck wenden Sie sich an einen Arzt";
 "heart.metric_hr" = "❤️ HF";
 "heart.metric_hrv" = "📈 HRV";
 "heart.metric_regularity" = "🔀 Regelmäßigkeit";
@@ -424,9 +424,9 @@
 "heart.recommendation" = "Empfehlung";
 
 /* Heart Pattern Analysis */
-"diagnosis.anxiety" = "Angstzustand";
-"diagnosis.cardiac" = "Ungewöhnliches Muster erkannt";
-"diagnosis.arrhythmia" = "Unregelmäßiger Rhythmus";
+"diagnosis.stress_response" = "Angstzustand";
+"diagnosis.elevated_irregular" = "Ungewöhnliches Muster erkannt";
+"diagnosis.irregular_pattern" = "Unregelmäßiger Rhythmus";
 "diagnosis.normal" = "Normaler Rhythmus";
 "diagnosis.collecting" = "Daten werden erfasst...";
 
@@ -596,10 +596,10 @@
 
 /* HeartAnalysis Service Recommendations */
 "heart.rec_collecting" = "⚪ Nicht genug Daten. Bitte warte 30 Sekunden.";
-"heart.rec_panic_breathing_helped" = "✅ Dein Puls reagiert auf Atmung — das ist typisch für Angst. Mach weiter mit der 4-7-8-Atmung. Du wirst dich in wenigen Minuten besser fühlen. Du bist sicher.";
-"heart.rec_panic %lld" = "🟡 Anzeichen von Angst: regelmäßiger Rhythmus, HF %lld BPM. Probiere die 4-7-8-Atmung — sie aktiviert das parasympathische System. Bei Brustschmerzen oder Taubheit — zum Arzt gehen.";
-"heart.rec_cardiac %lld" = "🔴 WARNUNG: Unregelmäßiger Rhythmus erkannt (%lld BPM). Dies kann auf einen Zustand hinweisen, der ärztliche Aufmerksamkeit erfordert. Ruf den Notruf (112) an. Setz dich hin, bleib ruhig, lockere die Kleidung.";
-"heart.rec_arrhythmia" = "🟠 Rhythmusunregelmäßigkeit erkannt. Wir empfehlen einen baldigen Besuch beim Kardiologen. Bei Brustschmerzen, Atemnot oder Schwindel — ruf den Notruf an.";
+"heart.rec_stress_breathing_helped" = "✅ Dein Puls reagiert auf Atmung — das ist typisch für Angst. Mach weiter mit der 4-7-8-Atmung. Du wirst dich in wenigen Minuten besser fühlen. Du bist sicher.";
+"heart.rec_stress %lld" = "🟡 Anzeichen von Angst: regelmäßiger Rhythmus, HF %lld BPM. Probiere die 4-7-8-Atmung — sie aktiviert das parasympathische System. Bei Brustschmerzen oder Taubheit — zum Arzt gehen.";
+"heart.rec_irregular_elevated %lld" = "🔴 WARNUNG: Unregelmäßiger Rhythmus erkannt (%lld BPM). Dies kann auf einen Zustand hinweisen, der ärztliche Aufmerksamkeit erfordert. Ruf den Notruf (112) an. Setz dich hin, bleib ruhig, lockere die Kleidung.";
+"heart.rec_irregular_pattern" = "🟠 Rhythmusunregelmäßigkeit erkannt. Wir empfehlen einen baldigen Besuch beim Kardiologen. Bei Brustschmerzen, Atemnot oder Schwindel — ruf den Notruf an.";
 "heart.rec_normal %lld" = "🟢 Rhythmus ist normal: %lld BPM, regelmäßig. Wenn du dich ängstlich fühlst — es könnte ein subjektives Empfinden sein. Atemtechniken helfen dir, dich zu entspannen.";
 
 /* Onboarding */

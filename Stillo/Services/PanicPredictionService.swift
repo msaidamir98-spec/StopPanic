@@ -27,7 +27,7 @@ final class PanicPredictionService: ObservableObject {
         }
 
         let calendar = Calendar.current
-        let weekAgo = calendar.date(byAdding: .day, value: -7, to: Date())!
+        let weekAgo = calendar.date(byAdding: .day, value: -7, to: Date()) ?? Date()
         let recent = episodes.filter { $0.date >= weekAgo }
         let avgIntensity = recent.isEmpty ? 0 : recent.map(\.intensity).reduce(0, +) / recent.count
 

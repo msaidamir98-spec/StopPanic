@@ -57,18 +57,18 @@
 
 /* WatchHeartService - Status */
 "watch.status_normal" = "Normal";
-"watch.status_panic" = "Elevated HR";
-"watch.status_cardiac" = "⚠️ Unusual pattern";
+"watch.status_stress" = "Elevated HR";
+"watch.status_irregular" = "⚠️ Unusual pattern";
 "watch.status_analyzing" = "Analyzing…";
 
 /* WatchHeartService - Analysis titles */
 "watch.diag_normal_title" = "All good";
-"watch.diag_panic_title" = "Anxiety response";
-"watch.diag_cardiac_title" = "Unusual rhythm detected";
+"watch.diag_stress_title" = "Anxiety response";
+"watch.diag_irregular_title" = "Unusual rhythm detected";
 "watch.diag_inconclusive_title" = "Insufficient data";
 
 /* WatchHeartService - Analysis details */
 "watch.diag_normal_detail" = "Your heart rate is normal. Continue monitoring.";
-"watch.diag_panic_detail" = "Steady rhythm, elevated HR — typical anxiety response. Try 4-7-8 breathing.";
-"watch.diag_cardiac_detail" = "Rhythm irregularity detected. Consider consulting a healthcare professional.";
+"watch.diag_stress_detail" = "Steady rhythm, elevated HR — typical anxiety response. Try 4-7-8 breathing.";
+"watch.diag_irregular_detail" = "Rhythm irregularity detected. Consider consulting a healthcare professional.";
 "watch.diag_inconclusive_detail" = "Continue monitoring for a more accurate analysis.";

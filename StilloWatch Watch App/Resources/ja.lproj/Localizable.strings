@@ -57,18 +57,18 @@
 
 /* WatchHeartService - Status */
 "watch.status_normal" = "正常";
-"watch.status_panic" = "心拍数上昇";
-"watch.status_cardiac" = "⚠️ 異常なパターン";
+"watch.status_stress" = "心拍数上昇";
+"watch.status_irregular" = "⚠️ 異常なパターン";
 "watch.status_analyzing" = "分析中…";
 
 /* WatchHeartService - Analysis titles */
 "watch.diag_normal_title" = "問題なし";
-"watch.diag_panic_title" = "不安反応";
-"watch.diag_cardiac_title" = "異常なリズムを検出";
+"watch.diag_stress_title" = "不安反応";
+"watch.diag_irregular_title" = "異常なリズムを検出";
 "watch.diag_inconclusive_title" = "データ不足";
 
 /* WatchHeartService - Analysis details */
 "watch.diag_normal_detail" = "心拍数は正常です。引き続きモニタリングしてください。";
-"watch.diag_panic_detail" = "安定したリズムで心拍数上昇 — 典型的な不安反応です。4-7-8呼吸法をお試しください。";
-"watch.diag_cardiac_detail" = "リズムの不規則性が検出されました。医療専門家への相談をお勧めします。";
+"watch.diag_stress_detail" = "安定したリズムで心拍数上昇 — 典型的な不安反応です。4-7-8呼吸法をお試しください。";
+"watch.diag_irregular_detail" = "リズムの不規則性が検出されました。医療専門家への相談をお勧めします。";
 "watch.diag_inconclusive_detail" = "より正確な分析のためにモニタリングを続けてください。";
