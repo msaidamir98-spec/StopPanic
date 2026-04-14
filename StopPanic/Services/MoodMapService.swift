@@ -1,4 +1,5 @@
 import Combine
+import CoreData
 import Foundation
 import os.log
 
@@ -25,14 +26,13 @@ struct MoodPoint: Codable, Identifiable {
 
 // MARK: - MoodMapService
 
-/// Сервис карты настроения
+/// Сервис карты настроения (Core Data + CloudKit)
 @MainActor
 final class MoodMapService: ObservableObject {
     // MARK: Lifecycle
 
     init() {
-        let dir = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask).first!
-        storageURL = dir.appendingPathComponent("mood_points.json")
+        persistence = PersistenceController.shared
         loadPoints()
     }
 
@@ -44,31 +44,35 @@ final class MoodMapService: ObservableObject {
     func addPoint(mood: Int, note: String = "") {
         let point = MoodPoint(mood: mood, note: note)
         points.append(point)
-        savePoints()
+
+        let cd = CDMoodPoint(context: persistence.viewContext)
+        cd.id = point.id
+        cd.date = point.date
+        cd.mood = Int16(point.mood)
+        cd.note = point.note
+        persistence.save()
     }
 
     // MARK: Private
 
     private static let log = Logger(subsystem: "MSK-PRODUKT.StopPanic", category: "MoodMapService")
-
-    private let storageURL: URL
-
-    private func savePoints() {
-        do {
-            let data = try JSONEncoder().encode(points)
-            try data.write(to: storageURL, options: .atomic)
-        } catch {
-            Self.log.error("Failed to save mood points: \(error.localizedDescription)")
-        }
-    }
+    private let persistence: PersistenceController
 
     private func loadPoints() {
-        guard FileManager.default.fileExists(atPath: storageURL.path) else { return }
+        let request: NSFetchRequest<CDMoodPoint> = CDMoodPoint.fetchRequest()
+        request.sortDescriptors = [NSSortDescriptor(keyPath: \CDMoodPoint.date, ascending: true)]
         do {
-            let data = try Data(contentsOf: storageURL)
-            points = try JSONDecoder().decode([MoodPoint].self, from: data)
+            let results = try persistence.viewContext.fetch(request)
+            points = results.map {
+                MoodPoint(
+                    id: $0.id ?? UUID(),
+                    date: $0.date ?? Date(),
+                    mood: Int($0.mood),
+                    note: $0.note ?? ""
+                )
+            }
         } catch {
-            Self.log.error("Failed to load mood points: \(error.localizedDescription)")
+            Self.log.error("Failed to load mood points from Core Data: \(error.localizedDescription)")
         }
     }
 }

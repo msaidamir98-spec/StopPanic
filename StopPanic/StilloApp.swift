@@ -36,6 +36,8 @@ struct StilloApp: App {
                     }
                 }
                 .task {
+                    // Миграция JSON → Core Data (один раз)
+                    PersistenceController.shared.migrateJSONIfNeeded()
                     // Start listening for StoreKit transactions
                     coordinator.premiumManager.listenForTransactions()
                     await coordinator.premiumManager.loadProducts()

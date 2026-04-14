@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<model type="com.apple.IDECoreDataModeler.DataModel" documentVersion="1.0" lastSavedToolsVersion="23231" systemVersion="24F5061c" minimumToolsVersion="Automatic" sourceLanguage="Swift" usedWithCloudKit="YES" userDefinedModelVersionIdentifier="">
+    <entity name="CDDiaryEpisode" representedClassName="CDDiaryEpisode" syncable="YES" codeGenerationType="class">
+        <attribute name="date" optional="YES" attributeType="Date" usesScalarValueType="NO"/>
+        <attribute name="id" optional="YES" attributeType="UUID" usesScalarValueType="NO"/>
+        <attribute name="intensity" attributeType="Integer 16" defaultValueString="5" usesScalarValueType="YES"/>
+        <attribute name="notes" attributeType="String" defaultValueString=""/>
+    </entity>
+    <entity name="CDAchievement" representedClassName="CDAchievement" syncable="YES" codeGenerationType="class">
+        <attribute name="category" attributeType="String" defaultValueString="milestone"/>
+        <attribute name="currentProgress" attributeType="Integer 32" defaultValueString="0" usesScalarValueType="YES"/>
+        <attribute name="id" optional="YES" attributeType="String" defaultValueString=""/>
+        <attribute name="isUnlocked" attributeType="Boolean" defaultValueString="NO" usesScalarValueType="YES"/>
+        <attribute name="unlockedDate" optional="YES" attributeType="Date" usesScalarValueType="NO"/>
+    </entity>
+    <entity name="CDMoodPoint" representedClassName="CDMoodPoint" syncable="YES" codeGenerationType="class">
+        <attribute name="date" optional="YES" attributeType="Date" usesScalarValueType="NO"/>
+        <attribute name="id" optional="YES" attributeType="UUID" usesScalarValueType="NO"/>
+        <attribute name="mood" attributeType="Integer 16" defaultValueString="5" usesScalarValueType="YES"/>
+        <attribute name="note" attributeType="String" defaultValueString=""/>
+    </entity>
+    <entity name="CDSOSContact" representedClassName="CDSOSContact" syncable="YES" codeGenerationType="class">
+        <attribute name="id" optional="YES" attributeType="UUID" usesScalarValueType="NO"/>
+        <attribute name="name" attributeType="String" defaultValueString=""/>
+        <attribute name="notifyOnPanic" attributeType="Boolean" defaultValueString="YES" usesScalarValueType="YES"/>
+        <attribute name="phone" attributeType="String" defaultValueString=""/>
+        <attribute name="relationship" attributeType="String" defaultValueString=""/>
+    </entity>
+</model>

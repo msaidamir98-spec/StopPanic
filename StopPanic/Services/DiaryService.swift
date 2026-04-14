@@ -1,15 +1,15 @@
 import Combine
+import CoreData
 import Foundation
 import os.log
 
-/// Хранилище дневника тревожных эпизодов
+/// Хранилище дневника тревожных эпизодов (Core Data + CloudKit)
 @MainActor
 final class DiaryService: ObservableObject {
     // MARK: Lifecycle
 
     init() {
-        let dir = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask).first!
-        storageURL = dir.appendingPathComponent("diary_episodes.json")
+        persistence = PersistenceController.shared
         loadEpisodes()
     }
 
@@ -21,42 +21,52 @@ final class DiaryService: ObservableObject {
     func addDiaryEpisode(intensity: Int, notes: String) {
         let episode = DiaryEpisode(intensity: intensity, notes: notes)
         diaryEpisodes.append(episode)
-        saveEpisodes()
+
+        let cd = CDDiaryEpisode(context: persistence.viewContext)
+        cd.id = episode.id
+        cd.date = episode.date
+        cd.intensity = Int16(episode.intensity)
+        cd.notes = episode.notes
+        persistence.save()
     }
 
     func removeEpisode(at index: Int) {
         guard diaryEpisodes.indices.contains(index) else { return }
-        diaryEpisodes.remove(at: index)
-        saveEpisodes()
+        let episode = diaryEpisodes.remove(at: index)
+
+        let request: NSFetchRequest<CDDiaryEpisode> = CDDiaryEpisode.fetchRequest()
+        request.predicate = NSPredicate(format: "id == %@", episode.id as CVarArg)
+        if let results = try? persistence.viewContext.fetch(request), let obj = results.first {
+            persistence.viewContext.delete(obj)
+            persistence.save()
+        }
+    }
+
+    /// Публичный алиас для сохранения (background)
+    func forceSave() {
+        persistence.save()
     }
 
     // MARK: Private
 
     private static let log = Logger(subsystem: "MSK-PRODUKT.StopPanic", category: "DiaryService")
-
-    private let storageURL: URL
-
-    /// Public alias for background save
-    func forceSave() {
-        saveEpisodes()
-    }
-
-    private func saveEpisodes() {
-        do {
-            let data = try JSONEncoder().encode(diaryEpisodes)
-            try data.write(to: storageURL, options: .atomic)
-        } catch {
-            Self.log.error("Failed to save diary: \(error.localizedDescription)")
-        }
-    }
+    private let persistence: PersistenceController
 
     private func loadEpisodes() {
-        guard FileManager.default.fileExists(atPath: storageURL.path) else { return }
+        let request: NSFetchRequest<CDDiaryEpisode> = CDDiaryEpisode.fetchRequest()
+        request.sortDescriptors = [NSSortDescriptor(keyPath: \CDDiaryEpisode.date, ascending: true)]
         do {
-            let data = try Data(contentsOf: storageURL)
-            diaryEpisodes = try JSONDecoder().decode([DiaryEpisode].self, from: data)
+            let results = try persistence.viewContext.fetch(request)
+            diaryEpisodes = results.map {
+                DiaryEpisode(
+                    id: $0.id ?? UUID(),
+                    date: $0.date ?? Date(),
+                    intensity: Int($0.intensity),
+                    notes: $0.notes ?? ""
+                )
+            }
         } catch {
-            Self.log.error("Failed to load diary: \(error.localizedDescription)")
+            Self.log.error("Failed to load diary from Core Data: \(error.localizedDescription)")
         }
     }
 }

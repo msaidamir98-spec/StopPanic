@@ -1,16 +1,16 @@
 import Combine
+import CoreData
 import Foundation
 import os.log
 import UserNotifications
 
-/// SOS-сервис: экстренные контакты + телефоны доверия
+/// SOS-сервис: экстренные контакты + телефоны доверия (Core Data + CloudKit)
 @MainActor
 final class SOSService: ObservableObject {
     // MARK: Lifecycle
 
     init() {
-        let dir = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask).first!
-        storageURL = dir.appendingPathComponent("sos_contacts.json")
+        persistence = PersistenceController.shared
         loadContacts()
     }
 
@@ -40,8 +40,6 @@ final class SOSService: ObservableObject {
         lastSOSDate = Date()
         panicModeActive = true
 
-        // Ensure notification permissions
-        // NOTE: Using .default sound — .criticalAlert requires a special Apple entitlement
         UNUserNotificationCenter.current().requestAuthorization(options: [
             .alert, .sound, .badge,
         ]) { _, _ in }
@@ -56,7 +54,7 @@ final class SOSService: ObservableObject {
             let request = UNNotificationRequest(
                 identifier: "sos_\(contact.id.uuidString)",
                 content: content,
-                trigger: nil // immediate
+                trigger: nil
             )
             UNUserNotificationCenter.current().add(request)
         }
@@ -82,38 +80,59 @@ final class SOSService: ObservableObject {
 
     func addContact(_ contact: SOSContact) {
         contacts.append(contact)
-        saveContacts()
+
+        let cd = CDSOSContact(context: persistence.viewContext)
+        cd.id = contact.id
+        cd.name = contact.name
+        cd.phone = contact.phone
+        cd.relationship = contact.relationship
+        cd.notifyOnPanic = contact.notifyOnPanic
+        persistence.save()
     }
 
     func removeContact(at idx: Int) {
         guard contacts.indices.contains(idx) else { return }
-        contacts.remove(at: idx)
-        saveContacts()
+        let contact = contacts.remove(at: idx)
+
+        let request: NSFetchRequest<CDSOSContact> = CDSOSContact.fetchRequest()
+        request.predicate = NSPredicate(format: "id == %@", contact.id as CVarArg)
+        if let results = try? persistence.viewContext.fetch(request),
+           let obj = results.first
+        {
+            persistence.viewContext.delete(obj)
+            persistence.save()
+        }
     }
 
     // MARK: Private
 
-    private static let log = Logger(subsystem: "MSK-PRODUKT.StopPanic", category: "SOSService")
-
+    private static let log = Logger(
+        subsystem: "MSK-PRODUKT.StopPanic",
+        category: "SOSService"
+    )
     private var lastSOSDate: Date?
-    private let storageURL: URL
-
-    private func saveContacts() {
-        do {
-            let data = try JSONEncoder().encode(contacts)
-            try data.write(to: storageURL, options: .atomic)
-        } catch {
-            Self.log.error("Failed to save SOS contacts: \(error.localizedDescription)")
-        }
-    }
+    private let persistence: PersistenceController
 
     private func loadContacts() {
-        guard FileManager.default.fileExists(atPath: storageURL.path) else { return }
+        let request: NSFetchRequest<CDSOSContact> = CDSOSContact.fetchRequest()
+        request.sortDescriptors = [
+            NSSortDescriptor(keyPath: \CDSOSContact.name, ascending: true),
+        ]
         do {
-            let data = try Data(contentsOf: storageURL)
-            contacts = try JSONDecoder().decode([SOSContact].self, from: data)
+            let results = try persistence.viewContext.fetch(request)
+            contacts = results.map {
+                SOSContact(
+                    id: $0.id ?? UUID(),
+                    name: $0.name ?? "",
+                    phone: $0.phone ?? "",
+                    relationship: $0.relationship ?? "",
+                    notifyOnPanic: $0.notifyOnPanic
+                )
+            }
         } catch {
-            Self.log.error("Failed to load SOS contacts: \(error.localizedDescription)")
+            Self.log.error(
+                "Failed to load SOS contacts: \(error.localizedDescription)"
+            )
         }
     }
 }
