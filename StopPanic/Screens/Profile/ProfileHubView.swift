@@ -275,6 +275,26 @@ struct ProfileHubView: View {
                 settingsRowLabel(icon: "paintbrush.fill", title: String(localized: "profile.theme"), color: SP.Colors.accentSoft)
             }
             .buttonStyle(.plain)
+
+            // Тоггл голосового гида
+            HStack(spacing: 12) {
+                ZStack {
+                    RoundedRectangle(cornerRadius: 8, style: .continuous)
+                        .fill(SP.Colors.calm.opacity(0.15))
+                        .frame(width: 32, height: 32)
+                    Image(systemName: "speaker.wave.2.fill")
+                        .font(.system(size: 14))
+                        .foregroundColor(SP.Colors.calm)
+                }
+                Toggle(String(localized: "voice.toggle_label"), isOn: Binding(
+                        get: { coordinator.audioGuide.isVoiceEnabled },
+                        set: { coordinator.audioGuide.isVoiceEnabled = $0 }
+                    ))
+                    .font(SP.Typography.callout)
+                    .foregroundColor(SP.Colors.textPrimary)
+                    .tint(SP.Colors.accent)
+            }
+            .spGlassCard(cornerRadius: SP.Layout.cornerSmall)
         }
         .opacity(appear ? 1 : 0)
         .offset(y: appear ? 0 : 15)

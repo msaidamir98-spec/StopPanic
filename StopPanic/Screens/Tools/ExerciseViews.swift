@@ -38,6 +38,7 @@ struct GroundingExerciseView: View {
             withAnimation(.easeOut(duration: 0.5)) {
                 appear = true
             }
+            coordinator.audioGuide.speakGroundingStep(0)
         }
     }
 
@@ -189,9 +190,11 @@ struct GroundingExerciseView: View {
                     withAnimation(SP.Anim.spring) {
                         if currentStep < 4 {
                             currentStep += 1
+                            coordinator.audioGuide.speakGroundingStep(currentStep)
                         } else {
                             isComplete = true
                             coordinator.completedSession()
+                            coordinator.audioGuide.speakCompletion()
                         }
                     }
                 } label: {

@@ -394,6 +394,14 @@ struct BreathingSessionView: View {
         }
         SP.Haptic.soft()
 
+        // Аудио якорение — озвучка фазы дыхания
+        switch p {
+        case .inhale: coordinator.audioGuide.speakBreathPhase(.inhale)
+        case .hold, .holdAfter: coordinator.audioGuide.speakBreathPhase(.hold)
+        case .exhale: coordinator.audioGuide.speakBreathPhase(.exhale)
+        default: break
+        }
+
         withAnimation(.easeInOut(duration: duration)) {
             switch p {
             case .inhale:
@@ -420,9 +428,12 @@ struct BreathingSessionView: View {
         sessionTimer?.invalidate()
         sessionTimer = nil
 
+        coordinator.audioGuide.stop()
+
         if cycleCount > 0 {
             coordinator.totalBreathingMinutes += max(totalSeconds / 60, 1)
             coordinator.completedSession()
+            coordinator.audioGuide.speakCompletion()
         }
 
         withAnimation(SP.Anim.spring) {
