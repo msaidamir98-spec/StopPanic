@@ -2,7 +2,7 @@
 "watch.bpm" = "BPM";
 "watch.monitoring" = "Monitor";
 "watch.stop" = "Stopp";
-"watch.diagnosis" = "Diagnose";
+"watch.diagnosis" = "Pulsmonitor";
 "watch.iphone_connected" = "iPhone verbunden";
 "watch.irreg" = "Unreg.";
 "watch.hr_label" = "HF";
@@ -36,7 +36,7 @@
 "watch.diff_panic" = "Angstreaktion";
 "watch.diff_cardiac" = "Ungewöhnliches Rhythmusmuster";
 "watch.diff_call_112" = "Im Zweifel — 112 anrufen!";
-"watch.diff_pa_tab" = "PA";
+"watch.diff_pa_tab" = "Angst";
 "watch.diff_cardiac_tab" = "Herz";
 
 /* Differential - Panic symptoms */
@@ -47,7 +47,7 @@
 "watch.diff_pa_tingling" = "Kribbeln in den Händen";
 "watch.diff_pa_unreality" = "Gefühl der Unwirklichkeit";
 
-/* Differential - Cardiac symptoms */
+/* Differential - Heart-related symptoms */
 "watch.diff_card_pulse" = "Unregelmäßiger Puls";
 "watch.diff_card_arrhythmia" = "Arrhythmie, Aussetzer";
 "watch.diff_card_duration" = "Dauert 20+ Minuten";
@@ -57,17 +57,17 @@
 
 /* WatchHeartService - Status */
 "watch.status_normal" = "Normal";
-"watch.status_panic" = "Sieht nach PA aus";
+"watch.status_panic" = "Erhöhter Puls";
 "watch.status_cardiac" = "⚠️ Ungewöhnliches Muster";
 "watch.status_analyzing" = "Analyse…";
 
-/* WatchHeartService - Diagnosis titles */
+/* WatchHeartService - Analysis titles */
 "watch.diag_normal_title" = "Alles in Ordnung";
 "watch.diag_panic_title" = "Angstreaktion";
 "watch.diag_cardiac_title" = "Ungewöhnlicher Rhythmus erkannt";
 "watch.diag_inconclusive_title" = "Unzureichende Daten";
 
-/* WatchHeartService - Diagnosis details */
+/* WatchHeartService - Analysis details */
 "watch.diag_normal_detail" = "Ihre Herzfrequenz ist normal. Überwachung fortsetzen.";
 "watch.diag_panic_detail" = "Gleichmäßiger Rhythmus, erhöhte HF — typische Angstreaktion. Versuchen Sie 4-7-8-Atmung.";
 "watch.diag_cardiac_detail" = "Rhythmus-Unregelmäßigkeit erkannt. Wir empfehlen, einen Arzt zu konsultieren.";

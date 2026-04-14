@@ -2,7 +2,7 @@ import SwiftUI
 
 // MARK: - HeartAnalysisView
 
-/// Экран мониторинга пульса — ПА vs сердечная проблема.
+/// Экран мониторинга пульса — анализ паттернов.
 /// ⚠️ Информационный инструмент, НЕ медицинское устройство.
 struct HeartAnalysisView: View {
     // MARK: Internal

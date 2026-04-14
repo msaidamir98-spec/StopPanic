@@ -58,13 +58,13 @@
 "home_risk" = "riesgo";
 
 /* Daily Insights */
-"insight_1" = "Un ataque de pánico dura entre 10 y 20 minutos en promedio. Ningún ataque de pánico en la historia ha durado para siempre.";
+"insight_1" = "Un episodio de ansiedad dura entre 10 y 20 minutos en promedio. Ningún episodio de ansiedad en la historia ha durado para siempre.";
 "insight_2" = "Durante la ansiedad tu pulso sube, pero el ritmo se mantiene regular. La respiración 4-7-8 ayuda a reducirlo rápidamente.";
 "insight_3" = "La técnica 4-7-8 activa el nervio vago y reduce la frecuencia cardíaca en 2-3 minutos. Científicamente comprobado.";
-"insight_4" = "El 40% de las personas experimenta un ataque de pánico al menos una vez. No estás solo/a.";
+"insight_4" = "El 40% de las personas experimenta un episodio de ansiedad al menos una vez. No estás solo/a.";
 "insight_5" = "La respiración es la única función autónoma que puedes controlar conscientemente.";
 "insight_6" = "El anclaje 5-4-3-2-1 cambia tu cerebro de la amígdala a la corteza prefrontal.";
-"insight_7" = "Un ataque de pánico es una falsa alarma. Tu cuerpo reacciona ante un peligro inexistente.";
+"insight_7" = "Un episodio de ansiedad es una falsa alarma. Tu cuerpo reacciona ante un peligro inexistente.";
 
 /* Onboarding */
 "onb_tagline" = "Un punto de calma\nen un momento de ansiedad";
@@ -361,7 +361,7 @@
 "nowhelp.step3_title" = "Ánclate";
 "nowhelp.step3_instruction" = "Nombra en voz alta: 5 cosas que ves. 4 que oyes. 3 que puedes tocar.";
 "nowhelp.step4_title" = "Recuérdate";
-"nowhelp.step4_instruction" = "\"Esto es un ataque de pánico. Es temporal. NO me estoy muriendo. No estoy en peligro.\"";
+"nowhelp.step4_instruction" = "\"Esto es un episodio de ansiedad. Es temporal. NO me estoy muriendo. No estoy en peligro.\"";
 "nowhelp.step5_title" = "Relaja tu cuerpo";
 "nowhelp.step5_instruction" = "Aprieta los puños 5 segundos — suelta. Sube los hombros a las orejas — déjalos caer. Relaja la mandíbula.";
 "nowhelp.step_of %lld %lld" = "Paso %lld de %lld";
@@ -423,7 +423,7 @@
 "heart.ms" = "ms";
 "heart.recommendation" = "Recomendación";
 
-/* Diagnosis */
+/* Heart Pattern Analysis */
 "diagnosis.anxiety" = "Estado de ansiedad";
 "diagnosis.cardiac" = "Patrón inusual detectado";
 "diagnosis.arrhythmia" = "Ritmo irregular";
@@ -493,7 +493,7 @@
 "achievement.first_breath_title" = "Primera Respiración";
 "achievement.first_breath_desc" = "Completa tu primer ejercicio de respiración";
 "achievement.week_warrior_title" = "Guerrero Semanal";
-"achievement.week_warrior_desc" = "7 días seguidos sin ataque de pánico";
+"achievement.week_warrior_desc" = "7 días seguidos sin episodio de ansiedad";
 "achievement.diary_master_title" = "Maestro del Diario";
 "achievement.diary_master_desc" = "Escribe 30 entradas en el diario";
 "achievement.technique_explorer_title" = "Explorador";

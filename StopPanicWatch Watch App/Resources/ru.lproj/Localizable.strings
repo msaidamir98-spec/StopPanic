@@ -2,7 +2,7 @@
 "watch.bpm" = "уд/мин";
 "watch.monitoring" = "Мониторинг";
 "watch.stop" = "Остановить";
-"watch.diagnosis" = "Диагностика";
+"watch.diagnosis" = "Монитор пульса";
 "watch.iphone_connected" = "iPhone подключён";
 "watch.irreg" = "Нерег.";
 "watch.hr_label" = "ЧСС";
@@ -36,7 +36,7 @@
 "watch.diff_panic" = "Тревожная реакция";
 "watch.diff_cardiac" = "Необычный ритм";
 "watch.diff_call_112" = "При сомнениях — звоните 112!";
-"watch.diff_pa_tab" = "ПА";
+"watch.diff_pa_tab" = "Тревога";
 "watch.diff_cardiac_tab" = "Сердце";
 
 /* Differential - Panic symptoms */
@@ -47,7 +47,7 @@
 "watch.diff_pa_tingling" = "Покалывание в руках";
 "watch.diff_pa_unreality" = "Чувство нереальности";
 
-/* Differential - Cardiac symptoms */
+/* Differential - Heart-related symptoms */
 "watch.diff_card_pulse" = "Пульс нерегулярный";
 "watch.diff_card_arrhythmia" = "Аритмия, перебои";
 "watch.diff_card_duration" = "Не проходит 20+ мин";
@@ -57,17 +57,17 @@
 
 /* WatchHeartService - Status */
 "watch.status_normal" = "Норма";
-"watch.status_panic" = "Похоже на ПА";
+"watch.status_panic" = "Повышенный пульс";
 "watch.status_cardiac" = "⚠️ Необычный паттерн";
 "watch.status_analyzing" = "Анализирую...";
 
-/* WatchHeartService - Diagnosis titles */
+/* WatchHeartService - Analysis titles */
 "watch.diag_normal_title" = "Всё в порядке";
 "watch.diag_panic_title" = "Тревожная реакция";
 "watch.diag_cardiac_title" = "Обнаружен необычный ритм";
 "watch.diag_inconclusive_title" = "Недостаточно данных";
 
-/* WatchHeartService - Diagnosis details */
+/* WatchHeartService - Analysis details */
 "watch.diag_normal_detail" = "Ваш пульс в норме. Продолжайте мониторинг.";
 "watch.diag_panic_detail" = "Ритм ровный, ЧСС повышен — характерно для тревоги. Попробуйте дыхание 4-7-8.";
 "watch.diag_cardiac_detail" = "Обнаружена нерегулярность ритма. Рекомендуем проконсультироваться с врачом.";

@@ -216,7 +216,7 @@ struct WatchHomeView: View {
 
 // MARK: - Analysis Result View
 
-/// Результат дифференциальной диагностики — premium карточка
+/// Результат анализа паттернов пульса — premium карточка
 struct WatchAnalysisResultView: View {
     @ObservedObject var heartService: WatchHeartService
     @Environment(\.dismiss) private var dismiss

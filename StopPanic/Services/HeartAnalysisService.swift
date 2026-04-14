@@ -7,7 +7,7 @@ import HealthKit
 //
 // Научная база:
 //  1. При тревоге — синусовая тахикардия: ритм РЕГУЛЯРНЫЙ, HRV снижен равномерно
-//  2. При инфаркте/аритмии — ритм НЕРЕГУЛЯРНЫЙ, HRV хаотичен
+//  2. При сердечных проблемах — ритм НЕРЕГУЛЯРНЫЙ, HRV хаотичен
 //  3. Тревога отвечает на vagal maneuvers (дыхание 4-7-8), кардио — нет
 //  4. Тревога: ЧСС 100-150, пик за 1-3 мин, снижение за 10-20 мин
 //  5. Кардио: ЧСС может быть <60 (брадикардия) или >150, нет чёткого пика
@@ -60,7 +60,7 @@ final class HeartAnalysisService: ObservableObject {
         preBreathingHR = sampleBuffer.last?.bpm
     }
 
-    /// Проверить, снизился ли пульс после дыхания (→ вероятна ПА)
+    /// Проверить, снизился ли пульс после дыхания (→ тревожная реакция)
     func checkBreathingResponse() {
         guard let pre = preBreathingHR,
               let current = sampleBuffer.last?.bpm,
@@ -200,7 +200,7 @@ final class HeartAnalysisService: ObservableObject {
     // MARK: - Метрики
 
     /// Нерегулярность ритма (0 = идеально ровный, 1 = хаотичный)
-    /// При ПА — низкая (< 0.2), при аритмии — высокая (> 0.35)
+    /// При тревоге — низкая (< 0.2), при аритмии — высокая (> 0.35)
     private func calculateIrregularity(_ bpms: [Double]) -> Double {
         guard bpms.count >= 3 else { return 0 }
         var diffs: [Double] = []
@@ -241,7 +241,7 @@ final class HeartAnalysisService: ObservableObject {
         if abs(change) < 5 {
             return .noChange
         } else if change > 15, irregularity < 0.2 {
-            return .suddenRegular // Типично для ПА
+            return .suddenRegular // Типично для тревожной реакции
         } else if change > 15, irregularity >= 0.2 {
             return .suddenIrregular // Подозрение на кардио
         } else {
@@ -275,7 +275,7 @@ final class HeartAnalysisService: ObservableObject {
             return (.arrhythmia, 0.65, true)
         }
 
-        // 🟡 Паническая атака
+        // 🟡 Тревожная реакция
         if risePattern == .suddenRegular,
            avgBPM >= 90, avgBPM <= 160,
            irregularity < CardiacThresholds.irregularityThreshold,

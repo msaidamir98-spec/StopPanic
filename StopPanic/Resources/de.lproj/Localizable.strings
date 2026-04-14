@@ -58,13 +58,13 @@
 "home_risk" = "Risiko";
 
 /* Daily Insights */
-"insight_1" = "Eine Panikattacke dauert durchschnittlich 10–20 Minuten. Keine Panikattacke in der Geschichte hat ewig gedauert.";
+"insight_1" = "Eine Angstepisode dauert durchschnittlich 10–20 Minuten. Keine Angstepisode in der Geschichte hat ewig gedauert.";
 "insight_2" = "Bei Angst steigt dein Puls, aber der Rhythmus bleibt regelmäßig. Die 4-7-8-Atmung hilft, ihn schnell zu senken.";
 "insight_3" = "Die 4-7-8-Technik aktiviert den Vagusnerv und senkt die Herzfrequenz in 2–3 Minuten. Wissenschaftlich belegt.";
-"insight_4" = "40 % der Menschen erleben mindestens einmal eine Panikattacke. Du bist nicht allein.";
+"insight_4" = "40 % der Menschen erleben mindestens einmal eine Angstepisode. Du bist nicht allein.";
 "insight_5" = "Die Atmung ist die einzige autonome Funktion, die du bewusst steuern kannst.";
 "insight_6" = "Die 5-4-3-2-1-Erdung lenkt dein Gehirn von der Amygdala zum präfrontalen Kortex um.";
-"insight_7" = "Eine Panikattacke ist ein Fehlalarm. Dein Körper reagiert auf eine nicht vorhandene Gefahr.";
+"insight_7" = "Eine Angstepisode ist ein Fehlalarm. Dein Körper reagiert auf eine nicht vorhandene Gefahr.";
 
 /* Onboarding */
 "onb_tagline" = "Ein Punkt der Ruhe\nin einem Moment der Angst";
@@ -277,8 +277,8 @@
 "sos.breathe_with_me" = "Atme mit mir";
 "sos.affirmation_body" = "Angst ist ein Fehlalarm.\nDein Körper hat auf eine nicht existierende Gefahr reagiert.\nDu bist sicher.";
 "sos.notif_title %@" = "🆘 SOS — %@";
-"sos.notif_body %@" = "Panikattacke. Anrufen: %@";
-"sos.crisis_notif_title" = "🆘 Panikattacke";
+"sos.notif_body %@" = "Angstepisode. Anrufen: %@";
+"sos.crisis_notif_title" = "🆘 Angstepisode";
 "sos.crisis_notif_body %@" = "Krisentelefon: %@";
 "sos.diary_note %@ %lld" = "SOS-Sitzung, Dauer: %1$@, Zyklen: %2$lld";
 
@@ -361,7 +361,7 @@
 "nowhelp.step3_title" = "Erde dich";
 "nowhelp.step3_instruction" = "Nenne laut: 5 Dinge, die du siehst. 4, die du hörst. 3, die du berühren kannst.";
 "nowhelp.step4_title" = "Erinnere dich";
-"nowhelp.step4_instruction" = "\"Das ist eine Panikattacke. Sie ist vorübergehend. Ich sterbe NICHT. Ich bin nicht in Gefahr.\"";
+"nowhelp.step4_instruction" = "\"Das ist eine Angstepisode. Sie ist vorübergehend. Ich sterbe NICHT. Ich bin nicht in Gefahr.\"";
 "nowhelp.step5_title" = "Entspanne deinen Körper";
 "nowhelp.step5_instruction" = "Balle Fäuste für 5 Sekunden — loslassen. Schultern zu den Ohren — fallen lassen. Kiefer entspannen.";
 "nowhelp.step_of %lld %lld" = "Schritt %lld von %lld";
@@ -423,7 +423,7 @@
 "heart.ms" = "ms";
 "heart.recommendation" = "Empfehlung";
 
-/* Diagnosis */
+/* Heart Pattern Analysis */
 "diagnosis.anxiety" = "Angstzustand";
 "diagnosis.cardiac" = "Ungewöhnliches Muster erkannt";
 "diagnosis.arrhythmia" = "Unregelmäßiger Rhythmus";
@@ -493,7 +493,7 @@
 "achievement.first_breath_title" = "Erster Atemzug";
 "achievement.first_breath_desc" = "Schließe deine erste Atemübung ab";
 "achievement.week_warrior_title" = "Wochenkämpfer";
-"achievement.week_warrior_desc" = "7 Tage am Stück ohne Panikattacke";
+"achievement.week_warrior_desc" = "7 Tage am Stück ohne Angstepisode";
 "achievement.diary_master_title" = "Tagebuch-Meister";
 "achievement.diary_master_desc" = "Schreibe 30 Tagebucheinträge";
 "achievement.technique_explorer_title" = "Entdecker";

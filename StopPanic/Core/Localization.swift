@@ -107,7 +107,7 @@ enum L10n {
     enum Onboarding {
         static let tagline = String(localized: "onboarding.tagline", defaultValue: "Точка покоя\nв моменте тревоги")
         static let whatsYourName = String(localized: "onboarding.name", defaultValue: "Как тебя зовут?")
-        static let howOften = String(localized: "onboarding.howOften", defaultValue: "Как часто ты испытываешь\nпанические атаки?")
+        static let howOften = String(localized: "onboarding.howOften", defaultValue: "Как часто ты испытываешь\nтревожные эпизоды?")
         static let whatGoals = String(localized: "onboarding.whatGoals", defaultValue: "Чего ты хочешь достичь?")
         static let allReady = String(localized: "onboarding.allReady", defaultValue: "Всё готово")
         static let startUsing = String(localized: "onboarding.startUsing", defaultValue: "Начать использовать")

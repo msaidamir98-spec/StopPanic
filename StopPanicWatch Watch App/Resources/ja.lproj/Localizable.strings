@@ -2,7 +2,7 @@
 "watch.bpm" = "BPM";
 "watch.monitoring" = "モニタリング";
 "watch.stop" = "停止";
-"watch.diagnosis" = "診断";
+"watch.diagnosis" = "心拍モニター";
 "watch.iphone_connected" = "iPhone接続済み";
 "watch.irreg" = "不整";
 "watch.hr_label" = "心拍";
@@ -36,7 +36,7 @@
 "watch.diff_panic" = "不安反応";
 "watch.diff_cardiac" = "異常なリズムパターン";
 "watch.diff_call_112" = "疑わしい場合は119に電話！";
-"watch.diff_pa_tab" = "PA";
+"watch.diff_pa_tab" = "不安";
 "watch.diff_cardiac_tab" = "心臓";
 
 /* Differential - Panic symptoms */
@@ -47,7 +47,7 @@
 "watch.diff_pa_tingling" = "手のしびれ";
 "watch.diff_pa_unreality" = "非現実感";
 
-/* Differential - Cardiac symptoms */
+/* Differential - Heart-related symptoms */
 "watch.diff_card_pulse" = "不規則な脈拍";
 "watch.diff_card_arrhythmia" = "不整脈、不規則な心拍";
 "watch.diff_card_duration" = "20分以上持続";
@@ -57,17 +57,17 @@
 
 /* WatchHeartService - Status */
 "watch.status_normal" = "正常";
-"watch.status_panic" = "PA疑い";
+"watch.status_panic" = "心拍数上昇";
 "watch.status_cardiac" = "⚠️ 異常なパターン";
 "watch.status_analyzing" = "分析中…";
 
-/* WatchHeartService - Diagnosis titles */
+/* WatchHeartService - Analysis titles */
 "watch.diag_normal_title" = "問題なし";
 "watch.diag_panic_title" = "不安反応";
 "watch.diag_cardiac_title" = "異常なリズムを検出";
 "watch.diag_inconclusive_title" = "データ不足";
 
-/* WatchHeartService - Diagnosis details */
+/* WatchHeartService - Analysis details */
 "watch.diag_normal_detail" = "心拍数は正常です。引き続きモニタリングしてください。";
 "watch.diag_panic_detail" = "安定したリズムで心拍数上昇 — 典型的な不安反応です。4-7-8呼吸法をお試しください。";
 "watch.diag_cardiac_detail" = "リズムの不規則性が検出されました。医療専門家への相談をお勧めします。";

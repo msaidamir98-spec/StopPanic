@@ -58,13 +58,13 @@
 "home_risk" = "リスク";
 
 /* Daily Insights */
-"insight_1" = "パニック発作は平均10〜20分続きます。永遠に続いたパニック発作は歴史上ありません。";
+"insight_1" = "不安エピソードは平均10〜20分続きます。永遠に続いた不安エピソードは歴史上ありません。";
 "insight_2" = "不安時には脈拍が上がりますが、リズムは規則的です。4-7-8呼吸法で素早く下げることができます。";
 "insight_3" = "4-7-8テクニックは迷走神経を活性化し、2〜3分で心拍数を下げます。科学的に証明されています。";
-"insight_4" = "40%の人が少なくとも一度はパニック発作を経験します。あなたは一人ではありません。";
+"insight_4" = "40%の人が少なくとも一度は不安エピソードを経験します。あなたは一人ではありません。";
 "insight_5" = "呼吸は、意識的にコントロールできる唯一の自律機能です。";
 "insight_6" = "5-4-3-2-1グラウンディングは、脳を扁桃体から前頭前皮質に切り替えます。";
-"insight_7" = "パニック発作は誤報です。あなたの体は存在しない危険に反応しています。";
+"insight_7" = "不安エピソードは誤報です。あなたの体は存在しない危険に反応しています。";
 
 /* Onboarding */
 "onb_tagline" = "不安な瞬間に\n穏やかさのひとしずく";
@@ -277,8 +277,8 @@
 "sos.breathe_with_me" = "一緒に呼吸しましょう";
 "sos.affirmation_body" = "不安は誤報です。\nあなたの体は存在しない危険に反応しました。\nあなたは安全です。";
 "sos.notif_title %@" = "🆘 SOS — %@";
-"sos.notif_body %@" = "パニック発作。電話: %@";
-"sos.crisis_notif_title" = "🆘 パニック発作";
+"sos.notif_body %@" = "不安エピソード。電話: %@";
+"sos.crisis_notif_title" = "🆘 不安エピソード";
 "sos.crisis_notif_body %@" = "相談窓口: %@";
 "sos.diary_note %@ %lld" = "SOSセッション、所要時間: %1$@、サイクル: %2$lld";
 
@@ -361,7 +361,7 @@
 "nowhelp.step3_title" = "グラウンディング";
 "nowhelp.step3_instruction" = "声に出して言いましょう：見えるもの5つ。聞こえるもの4つ。触れるもの3つ。";
 "nowhelp.step4_title" = "自分に言い聞かせる";
-"nowhelp.step4_instruction" = "「これはパニック発作です。一時的なものです。死にません。危険ではありません。」";
+"nowhelp.step4_instruction" = "「これは不安エピソードです。一時的なものです。死にません。危険ではありません。」";
 "nowhelp.step5_title" = "体をリラックスさせる";
 "nowhelp.step5_instruction" = "5秒間拳を握る — 放す。肩を耳まで上げる — 下ろす。あごの力を抜く。";
 "nowhelp.step_of %lld %lld" = "ステップ %lld / %lld";
@@ -423,7 +423,7 @@
 "heart.ms" = "ms";
 "heart.recommendation" = "おすすめ";
 
-/* Diagnosis */
+/* Heart Pattern Analysis */
 "diagnosis.anxiety" = "不安状態";
 "diagnosis.cardiac" = "異常なパターンを検出";
 "diagnosis.arrhythmia" = "不規則なリズム";
@@ -493,7 +493,7 @@
 "achievement.first_breath_title" = "はじめての呼吸";
 "achievement.first_breath_desc" = "最初の呼吸エクササイズを完了する";
 "achievement.week_warrior_title" = "ウィークウォリアー";
-"achievement.week_warrior_desc" = "パニック発作なしで7日連続";
+"achievement.week_warrior_desc" = "不安エピソードなしで7日連続";
 "achievement.diary_master_title" = "日記マスター";
 "achievement.diary_master_desc" = "日記を30回書く";
 "achievement.technique_explorer_title" = "エクスプローラー";

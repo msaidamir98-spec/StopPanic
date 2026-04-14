@@ -2,7 +2,7 @@
 "watch.bpm" = "LPM";
 "watch.monitoring" = "Monitor";
 "watch.stop" = "Detener";
-"watch.diagnosis" = "Diagnóstico";
+"watch.diagnosis" = "Monitor de pulso";
 "watch.iphone_connected" = "iPhone conectado";
 "watch.irreg" = "Irreg.";
 "watch.hr_label" = "FC";
@@ -36,7 +36,7 @@
 "watch.diff_panic" = "Respuesta de ansiedad";
 "watch.diff_cardiac" = "Patrón de ritmo inusual";
 "watch.diff_call_112" = "En caso de duda — ¡llama al 112!";
-"watch.diff_pa_tab" = "AP";
+"watch.diff_pa_tab" = "Ansiedad";
 "watch.diff_cardiac_tab" = "Corazón";
 
 /* Differential - Panic symptoms */
@@ -47,7 +47,7 @@
 "watch.diff_pa_tingling" = "Hormigueo en las manos";
 "watch.diff_pa_unreality" = "Sensación de irrealidad";
 
-/* Differential - Cardiac symptoms */
+/* Differential - Heart-related symptoms */
 "watch.diff_card_pulse" = "Pulso irregular";
 "watch.diff_card_arrhythmia" = "Arritmia, latidos irregulares";
 "watch.diff_card_duration" = "Dura 20+ minutos";
@@ -57,17 +57,17 @@
 
 /* WatchHeartService - Status */
 "watch.status_normal" = "Normal";
-"watch.status_panic" = "Parece AP";
+"watch.status_panic" = "Pulso elevado";
 "watch.status_cardiac" = "⚠️ Patrón inusual";
 "watch.status_analyzing" = "Analizando…";
 
-/* WatchHeartService - Diagnosis titles */
+/* WatchHeartService - Analysis titles */
 "watch.diag_normal_title" = "Todo bien";
 "watch.diag_panic_title" = "Respuesta de ansiedad";
 "watch.diag_cardiac_title" = "Ritmo inusual detectado";
 "watch.diag_inconclusive_title" = "Datos insuficientes";
 
-/* WatchHeartService - Diagnosis details */
+/* WatchHeartService - Analysis details */
 "watch.diag_normal_detail" = "Tu frecuencia cardíaca es normal. Continúa monitoreando.";
 "watch.diag_panic_detail" = "Ritmo estable, FC elevada — respuesta típica de ansiedad. Prueba la respiración 4-7-8.";
 "watch.diag_cardiac_detail" = "Irregularidad del ritmo detectada. Recomendamos consultar a un profesional de salud.";

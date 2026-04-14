@@ -1,6 +1,6 @@
 import Foundation
 
-/// Предсказание панической атаки по паттернам
+/// Предсказание эпизода тревоги по паттернам
 struct PanicPrediction: Codable, Identifiable {
     enum RiskLevel: String, Codable, CaseIterable {
         case low, moderate, high, critical

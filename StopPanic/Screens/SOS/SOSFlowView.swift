@@ -3,7 +3,7 @@ import SwiftUI
 
 // MARK: - SOS Flow View — Premium Edition
 
-// Полноэкранный режим помощи при панической атаке.
+// Полноэкранный режим помощи при тревожном эпизоде.
 // Particles, glassmorphism, spring animations.
 
 struct SOSFlowView: View {

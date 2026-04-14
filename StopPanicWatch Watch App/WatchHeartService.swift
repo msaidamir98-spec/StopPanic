@@ -4,7 +4,7 @@ import HealthKit
 import Combine
 
 /// Сервис мониторинга пульса на Apple Watch
-/// Анализирует ЧСС в реальном времени и определяет ПА vs Инфаркт
+/// Мониторинг ЧСС в реальном времени — анализ паттернов пульса
 @MainActor
 class WatchHeartService: ObservableObject {
     
@@ -15,7 +15,7 @@ class WatchHeartService: ObservableObject {
     @Published var isMonitoring = false
     @Published var suggestMedicalConsult = false
     
-    // MARK: - Diagnosis
+    // MARK: - Pattern Analysis
     enum DiagnosisResult {
         case normal
         case panicAttack
@@ -215,7 +215,7 @@ class WatchHeartService: ObservableObject {
             diagnosis = .possibleCardiac
             suggestMedicalConsult = false
         } else if avgHR >= panicMinHR && irregularity < irregularityThreshold {
-            // Повышенный но ровный → ПА
+            // Повышенный но ровный ритм → тревожная реакция
             diagnosis = .panicAttack
             suggestMedicalConsult = false
         } else {

@@ -2,7 +2,7 @@ import SwiftUI
 
 // MARK: - JournalView
 
-// Дневник панических атак + карта настроений + инсайты.
+// Дневник тревожных эпизодов + карта настроений + инсайты.
 // ✨ Glass cards, staggered animations, animated numbers
 
 struct JournalView: View {

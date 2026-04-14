@@ -2,7 +2,7 @@
 "watch.bpm" = "BPM";
 "watch.monitoring" = "监测";
 "watch.stop" = "停止";
-"watch.diagnosis" = "诊断";
+"watch.diagnosis" = "心率监测";
 "watch.iphone_connected" = "iPhone已连接";
 "watch.irreg" = "不规则";
 "watch.hr_label" = "心率";
@@ -36,7 +36,7 @@
 "watch.diff_panic" = "焦虑反应";
 "watch.diff_cardiac" = "异常节律模式";
 "watch.diff_call_112" = "如有疑问——拨打120！";
-"watch.diff_pa_tab" = "恐慌";
+"watch.diff_pa_tab" = "焦虑";
 "watch.diff_cardiac_tab" = "心脏";
 
 /* Differential - Panic symptoms */
@@ -47,7 +47,7 @@
 "watch.diff_pa_tingling" = "手部刺痛";
 "watch.diff_pa_unreality" = "不真实感";
 
-/* Differential - Cardiac symptoms */
+/* Differential - Heart-related symptoms */
 "watch.diff_card_pulse" = "脉搏不规则";
 "watch.diff_card_arrhythmia" = "心律不齐、心跳不规则";
 "watch.diff_card_duration" = "持续20分钟以上";
@@ -57,17 +57,17 @@
 
 /* WatchHeartService - Status */
 "watch.status_normal" = "正常";
-"watch.status_panic" = "疑似恐慌";
+"watch.status_panic" = "心率偏高";
 "watch.status_cardiac" = "⚠️ 异常模式";
 "watch.status_analyzing" = "分析中…";
 
-/* WatchHeartService - Diagnosis titles */
+/* WatchHeartService - Analysis titles */
 "watch.diag_normal_title" = "一切正常";
 "watch.diag_panic_title" = "焦虑反应";
 "watch.diag_cardiac_title" = "检测到异常节律";
 "watch.diag_inconclusive_title" = "数据不足";
 
-/* WatchHeartService - Diagnosis details */
+/* WatchHeartService - Analysis details */
 "watch.diag_normal_detail" = "您的心率正常。请继续监测。";
 "watch.diag_panic_detail" = "节奏稳定，心率偏高——典型的焦虑反应。请尝试4-7-8呼吸法。";
 "watch.diag_cardiac_detail" = "检测到心律不规则。建议咨询医疗专业人员。";

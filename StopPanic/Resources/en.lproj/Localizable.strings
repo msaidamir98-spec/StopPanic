@@ -58,13 +58,13 @@
 "home_risk" = "risk";
 
 /* Daily Insights */
-"insight_1" = "A panic attack lasts 10-20 minutes on average. No panic attack in history has lasted forever.";
+"insight_1" = "An anxiety episode lasts 10-20 minutes on average. No anxiety episode in history has lasted forever.";
 "insight_2" = "During anxiety your pulse rises, but rhythm stays regular. 4-7-8 breathing helps lower it quickly.";
 "insight_3" = "The 4-7-8 technique activates the vagus nerve and lowers heart rate in 2-3 minutes. Scientifically proven.";
-"insight_4" = "40% of people experience a panic attack at least once. You are not alone.";
+"insight_4" = "40% of people experience an anxiety episode at least once. You are not alone.";
 "insight_5" = "Breathing is the only autonomic function you can consciously control.";
 "insight_6" = "5-4-3-2-1 grounding switches your brain from the amygdala to the prefrontal cortex.";
-"insight_7" = "A panic attack is a false alarm. Your body reacts to a non-existent danger.";
+"insight_7" = "An anxiety episode is a false alarm. Your body reacts to a non-existent danger.";
 
 /* Onboarding */
 "onb_tagline" = "A point of calm\nin a moment of anxiety";
@@ -277,8 +277,8 @@
 "sos.breathe_with_me" = "Breathe with me";
 "sos.affirmation_body" = "Anxiety is a false alarm.\nYour body reacted to a non-existent danger.\nYou are safe.";
 "sos.notif_title %@" = "🆘 SOS — %@";
-"sos.notif_body %@" = "Panic attack. Call: %@";
-"sos.crisis_notif_title" = "🆘 Panic Attack";
+"sos.notif_body %@" = "Anxiety episode. Call: %@";
+"sos.crisis_notif_title" = "🆘 Anxiety Episode";
 "sos.crisis_notif_body %@" = "Crisis hotline: %@";
 "sos.diary_note %@ %lld" = "SOS session, duration: %1$@, cycles: %2$lld";
 
@@ -361,7 +361,7 @@
 "nowhelp.step3_title" = "Ground yourself";
 "nowhelp.step3_instruction" = "Name out loud: 5 things you see. 4 you hear. 3 you can touch.";
 "nowhelp.step4_title" = "Remind yourself";
-"nowhelp.step4_instruction" = "\"This is a panic attack. It's temporary. I am NOT dying. I am not in danger.\"";
+"nowhelp.step4_instruction" = "\"This is an anxiety episode. It's temporary. I am NOT dying. I am not in danger.\"";
 "nowhelp.step5_title" = "Relax your body";
 "nowhelp.step5_instruction" = "Clench fists for 5 seconds — release. Raise shoulders to ears — drop. Relax your jaw.";
 "nowhelp.step_of %lld %lld" = "Step %lld of %lld";
@@ -401,9 +401,9 @@
 "heart.how_it_works" = "How it works";
 "heart.info_reads_pulse" = "Reads heart rate via Apple Health / Watch";
 "heart.info_analyzes_rhythm" = "Analyzes rhythm regularity";
-"heart.info_compares_patterns" = "Compares anxiety and cardiac patterns";
+"heart.info_compares_patterns" = "Compares anxiety and heart-related patterns";
 "heart.info_checks_breathing" = "Checks response to breathing";
-"heart.algorithm_disclaimer" = "The algorithm is based on the fact that anxiety produces a regular rhythm (sinus tachycardia), while cardiac issues produce an irregular one. This is NOT a replacement for an ECG or a doctor.";
+"heart.algorithm_disclaimer" = "The algorithm is based on the fact that anxiety produces a regular rhythm (sinus tachycardia), while heart-related issues produce an irregular one. This is NOT a replacement for an ECG or a doctor.";
 "heart.confidence %lld" = "Confidence: %lld%%";
 "heart.anxiety_signs" = "Signs of anxiety (not a heart problem):";
 "heart.regular_rhythm" = "Regular rhythm (sinus tachycardia)";
@@ -423,7 +423,7 @@
 "heart.ms" = "ms";
 "heart.recommendation" = "Recommendation";
 
-/* Diagnosis */
+/* Heart Pattern Analysis */
 "diagnosis.anxiety" = "Anxiety state";
 "diagnosis.cardiac" = "Unusual pattern detected";
 "diagnosis.arrhythmia" = "Irregular rhythm";
@@ -493,7 +493,7 @@
 "achievement.first_breath_title" = "First Breath";
 "achievement.first_breath_desc" = "Complete your first breathing exercise";
 "achievement.week_warrior_title" = "Week Warrior";
-"achievement.week_warrior_desc" = "7 days in a row without a panic attack";
+"achievement.week_warrior_desc" = "7 days in a row without an anxiety episode";
 "achievement.diary_master_title" = "Journal Master";
 "achievement.diary_master_desc" = "Write 30 journal entries";
 "achievement.technique_explorer_title" = "Explorer";

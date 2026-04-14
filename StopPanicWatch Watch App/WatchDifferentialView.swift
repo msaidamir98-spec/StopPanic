@@ -2,7 +2,7 @@ import SwiftUI
 
 // MARK: - Premium Watch Differential View
 
-/// Справочная карточка: ПА vs Инфаркт — premium дизайн для Apple Watch
+/// Справочная карточка: паттерны пульса — premium дизайн для Apple Watch
 struct WatchDifferentialView: View {
     @State private var selectedTab: DiffTab = .panic
     
@@ -79,7 +79,7 @@ struct WatchDifferentialView: View {
         .navigationTitle(String(localized: "watch.diff_title"))
     }
     
-    // MARK: - Panic Attack Card
+    // MARK: - Anxiety Pattern Card
     
     private var panicCard: some View {
         VStack(alignment: .leading, spacing: 8) {

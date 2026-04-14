@@ -2,7 +2,7 @@ import Combine
 import Foundation
 import os.log
 
-/// Хранилище дневника панических атак
+/// Хранилище дневника тревожных эпизодов
 @MainActor
 final class DiaryService: ObservableObject {
     // MARK: Lifecycle

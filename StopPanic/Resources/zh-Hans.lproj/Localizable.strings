@@ -58,13 +58,13 @@
 "home_risk" = "风险";
 
 /* Daily Insights */
-"insight_1" = "恐慌发作平均持续10-20分钟。历史上没有任何一次恐慌发作是永远持续的。";
+"insight_1" = "焦虑发作平均持续10-20分钟。历史上没有任何一次焦虑发作是永远持续的。";
 "insight_2" = "焦虑时脉搏会加快，但节奏保持规律。4-7-8呼吸法可以帮助你快速降低心率。";
 "insight_3" = "4-7-8技巧可以激活迷走神经，在2-3分钟内降低心率。这已被科学证实。";
-"insight_4" = "40%的人至少经历过一次恐慌发作。你并不孤单。";
+"insight_4" = "40%的人至少经历过一次焦虑发作。你并不孤单。";
 "insight_5" = "呼吸是你唯一可以有意识控制的自主神经功能。";
 "insight_6" = "5-4-3-2-1接地练习可以将大脑从杏仁核切换到前额叶皮层。";
-"insight_7" = "恐慌发作是一个假警报。你的身体正在对不存在的危险做出反应。";
+"insight_7" = "焦虑发作是一个假警报。你的身体正在对不存在的危险做出反应。";
 
 /* Onboarding */
 "onb_tagline" = "焦虑时刻的\n一滴宁静";
@@ -277,8 +277,8 @@
 "sos.breathe_with_me" = "跟我一起呼吸";
 "sos.affirmation_body" = "焦虑是一次误报。\n你的身体对不存在的危险做出了反应。\n你是安全的。";
 "sos.notif_title %@" = "🆘 SOS — %@";
-"sos.notif_body %@" = "恐慌发作。拨打：%@";
-"sos.crisis_notif_title" = "🆘 恐慌发作";
+"sos.notif_body %@" = "焦虑发作。拨打：%@";
+"sos.crisis_notif_title" = "🆘 焦虑发作";
 "sos.crisis_notif_body %@" = "危机热线：%@";
 "sos.diary_note %@ %lld" = "SOS会话，时长：%1$@，循环：%2$lld";
 
@@ -361,7 +361,7 @@
 "nowhelp.step3_title" = "接地";
 "nowhelp.step3_instruction" = "大声说出：你看到的5样东西。听到的4种声音。能触摸的3样东西。";
 "nowhelp.step4_title" = "提醒自己";
-"nowhelp.step4_instruction" = "「这是恐慌发作。是暂时的。我不会死。我没有危险。」";
+"nowhelp.step4_instruction" = "「这是焦虑发作。是暂时的。我不会死。我没有危险。」";
 "nowhelp.step5_title" = "放松身体";
 "nowhelp.step5_instruction" = "握紧拳头5秒——松开。肩膀提到耳朵——放下。放松下巴。";
 "nowhelp.step_of %lld %lld" = "第 %lld 步，共 %lld 步";
@@ -423,7 +423,7 @@
 "heart.ms" = "ms";
 "heart.recommendation" = "建议";
 
-/* Diagnosis */
+/* Heart Pattern Analysis */
 "diagnosis.anxiety" = "焦虑状态";
 "diagnosis.cardiac" = "检测到异常模式";
 "diagnosis.arrhythmia" = "心律不齐";
@@ -493,7 +493,7 @@
 "achievement.first_breath_title" = "第一次呼吸";
 "achievement.first_breath_desc" = "完成你的第一次呼吸练习";
 "achievement.week_warrior_title" = "一周勇士";
-"achievement.week_warrior_desc" = "连续7天没有恐慌发作";
+"achievement.week_warrior_desc" = "连续7天没有焦虑发作";
 "achievement.diary_master_title" = "日记大师";
 "achievement.diary_master_desc" = "写30篇日记";
 "achievement.technique_explorer_title" = "探索者";
