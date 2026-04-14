@@ -1,6 +1,6 @@
 import SwiftUI
 
-// MARK: - Main Tab View — Premium
+// MARK: - MainTabView
 
 // 5 tabs, Apple HIG. SOS overlay accessible from any tab.
 // Shake gesture → triggers SOS immediately.
@@ -84,6 +84,7 @@ struct MainTabView: View {
         let theme = coordinator.themeManager
 
         // MARK: Tab Bar
+
         let tabAppearance = UITabBarAppearance()
         tabAppearance.configureWithOpaqueBackground()
         tabAppearance.backgroundColor = UIColor(theme.bgElevated)
@@ -105,6 +106,7 @@ struct MainTabView: View {
         UITabBar.appearance().scrollEdgeAppearance = tabAppearance
 
         // MARK: Navigation Bar
+
         let navAppearance = UINavigationBarAppearance()
         navAppearance.configureWithOpaqueBackground()
         navAppearance.backgroundColor = UIColor(theme.bg)
@@ -135,7 +137,7 @@ struct MainTabView: View {
 
 /// Detects shake gesture and triggers SOS — hands-free crisis activation
 extension UIWindow {
-    override open func motionEnded(_ motion: UIEvent.EventSubtype, with event: UIEvent?) {
+    open override func motionEnded(_ motion: UIEvent.EventSubtype, with event: UIEvent?) {
         super.motionEnded(motion, with: event)
         if motion == .motionShake {
             NotificationCenter.default.post(name: .deviceShaken, object: nil)
@@ -146,6 +148,8 @@ extension UIWindow {
 extension Notification.Name {
     static let deviceShaken = Notification.Name("deviceShaken")
 }
+
+// MARK: - ShakeDetector
 
 struct ShakeDetector: ViewModifier {
     let action: () -> Void

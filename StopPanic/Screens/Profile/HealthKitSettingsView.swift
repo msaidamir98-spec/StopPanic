@@ -44,6 +44,22 @@ struct HealthKitSettingsView: View {
     @State
     private var isConnecting = false
 
+    private var statusTitle: String {
+        if !isAvailable {
+            return String(localized: "health.unavailable")
+        }
+        return isConnected ? String(localized: "health.connected") : String(localized: "health.not_connected")
+    }
+
+    private var statusSubtitle: String {
+        if !isAvailable {
+            return String(localized: "health.unavailable_body")
+        }
+        return isConnected
+            ? String(localized: "health.connected_body")
+            : String(localized: "health.not_connected_body")
+    }
+
     private var statusCard: some View {
         VStack(spacing: 14) {
             ZStack {
@@ -110,31 +126,25 @@ struct HealthKitSettingsView: View {
         .offset(y: appear ? 0 : 15)
     }
 
-    private var statusTitle: String {
-        if !isAvailable {
-            return String(localized: "health.unavailable")
-        }
-        return isConnected ? String(localized: "health.connected") : String(localized: "health.not_connected")
-    }
-
-    private var statusSubtitle: String {
-        if !isAvailable {
-            return String(localized: "health.unavailable_body")
-        }
-        return isConnected
-            ? String(localized: "health.connected_body")
-            : String(localized: "health.not_connected_body")
-    }
-
     private var dataExplanationCard: some View {
         VStack(alignment: .leading, spacing: 14) {
             Text(String(localized: "health.data_title"))
                 .font(SP.Typography.headline)
                 .foregroundColor(SP.Colors.textPrimary)
 
-            dataRow(icon: "heart.fill", title: String(localized: "health.data_pulse"), description: String(localized: "health.data_pulse_desc"), color: SP.Colors.danger)
+            dataRow(
+                icon: "heart.fill",
+                title: String(localized: "health.data_pulse"),
+                description: String(localized: "health.data_pulse_desc"),
+                color: SP.Colors.danger
+            )
 
-            dataRow(icon: "waveform.path.ecg", title: String(localized: "health.data_hrv"), description: String(localized: "health.data_hrv_desc"), color: SP.Colors.accent)
+            dataRow(
+                icon: "waveform.path.ecg",
+                title: String(localized: "health.data_hrv"),
+                description: String(localized: "health.data_hrv_desc"),
+                color: SP.Colors.accent
+            )
         }
         .frame(maxWidth: .infinity, alignment: .leading)
         .spGlassCard()

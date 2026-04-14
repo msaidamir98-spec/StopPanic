@@ -63,11 +63,41 @@ struct GroundingExerciseView: View {
     private var isFocused: Bool
 
     private let steps: [GroundingStep] = [
-        GroundingStep(emoji: "👁️", count: 5, sense: String(localized: "grounding.sense_see"), verb: String(localized: "grounding.verb_see"), color: SP.Colors.accent),
-        GroundingStep(emoji: "✋", count: 4, sense: String(localized: "grounding.sense_touch"), verb: String(localized: "grounding.verb_touch"), color: SP.Colors.calm),
-        GroundingStep(emoji: "👂", count: 3, sense: String(localized: "grounding.sense_hear"), verb: String(localized: "grounding.verb_hear"), color: SP.Colors.warmth),
-        GroundingStep(emoji: "👃", count: 2, sense: String(localized: "grounding.sense_smell"), verb: String(localized: "grounding.verb_smell"), color: SP.Colors.success),
-        GroundingStep(emoji: "👅", count: 1, sense: String(localized: "grounding.sense_taste"), verb: String(localized: "grounding.verb_taste"), color: SP.Colors.accent),
+        GroundingStep(
+            emoji: "👁️",
+            count: 5,
+            sense: String(localized: "grounding.sense_see"),
+            verb: String(localized: "grounding.verb_see"),
+            color: SP.Colors.accent
+        ),
+        GroundingStep(
+            emoji: "✋",
+            count: 4,
+            sense: String(localized: "grounding.sense_touch"),
+            verb: String(localized: "grounding.verb_touch"),
+            color: SP.Colors.calm
+        ),
+        GroundingStep(
+            emoji: "👂",
+            count: 3,
+            sense: String(localized: "grounding.sense_hear"),
+            verb: String(localized: "grounding.verb_hear"),
+            color: SP.Colors.warmth
+        ),
+        GroundingStep(
+            emoji: "👃",
+            count: 2,
+            sense: String(localized: "grounding.sense_smell"),
+            verb: String(localized: "grounding.verb_smell"),
+            color: SP.Colors.success
+        ),
+        GroundingStep(
+            emoji: "👅",
+            count: 1,
+            sense: String(localized: "grounding.sense_taste"),
+            verb: String(localized: "grounding.verb_taste"),
+            color: SP.Colors.accent
+        ),
     ]
 
     // MARK: - Exercise View
@@ -245,10 +275,10 @@ struct GroundingExerciseView: View {
                 .foregroundColor(SP.Colors.textPrimary)
 
             Text(String(localized: "grounding.done_body"))
-            .font(SP.Typography.body)
-            .foregroundColor(SP.Colors.textSecondary)
-            .multilineTextAlignment(.center)
-            .padding(.horizontal, 32)
+                .font(SP.Typography.body)
+                .foregroundColor(SP.Colors.textSecondary)
+                .multilineTextAlignment(.center)
+                .padding(.horizontal, 32)
 
             Spacer()
 
@@ -545,7 +575,10 @@ struct CognitiveReframingView: View {
                                 distortionChip(String(localized: "cognitive.catastrophizing"), String(localized: "cognitive.catastrophizing_desc"))
                                 distortionChip(String(localized: "cognitive.black_white"), String(localized: "cognitive.black_white_desc"))
                                 distortionChip(String(localized: "cognitive.mind_reading"), String(localized: "cognitive.mind_reading_desc"))
-                                distortionChip(String(localized: "cognitive.emotional_reasoning"), String(localized: "cognitive.emotional_reasoning_desc"))
+                                distortionChip(
+                                    String(localized: "cognitive.emotional_reasoning"),
+                                    String(localized: "cognitive.emotional_reasoning_desc")
+                                )
                             }
                         }
                         .spGlassCard(cornerRadius: SP.Layout.cornerMedium)
@@ -590,9 +623,9 @@ struct CognitiveReframingView: View {
                                 .font(SP.Typography.title2)
                                 .foregroundColor(SP.Colors.textPrimary)
                             Text(String(localized: "cognitive.done_body"))
-                            .font(SP.Typography.callout)
-                            .foregroundColor(SP.Colors.textSecondary)
-                            .multilineTextAlignment(.center)
+                                .font(SP.Typography.callout)
+                                .foregroundColor(SP.Colors.textSecondary)
+                                .multilineTextAlignment(.center)
 
                             Button {
                                 coordinator.completedSession()

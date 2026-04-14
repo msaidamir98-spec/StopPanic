@@ -508,7 +508,8 @@ struct AddEpisodeSheet: View {
                         // Save
                         Button {
                             let triggerText = selectedTriggers.joined(separator: ", ")
-                            let fullNotes = [notes, triggerText].filter { !$0.isEmpty }.joined(separator: " | \(String(localized: "journal.add_triggers_prefix"))")
+                            let fullNotes = [notes, triggerText].filter { !$0.isEmpty }
+                                .joined(separator: " | \(String(localized: "journal.add_triggers_prefix"))")
                             coordinator.diaryService.addDiaryEpisode(
                                 intensity: Int(intensity),
                                 notes: fullNotes
@@ -550,9 +551,13 @@ struct AddEpisodeSheet: View {
     private var selectedTriggers: Set<String> = []
 
     private let triggerOptions = [
-        "💼 \(String(localized: "trigger_opt_work"))", "🚇 \(String(localized: "trigger_opt_transport"))", "👥 \(String(localized: "trigger_opt_crowds"))", "🌙 \(String(localized: "trigger_opt_night"))",
-        "☕ \(String(localized: "trigger_opt_caffeine"))", "😴 \(String(localized: "trigger_opt_sleep"))", "💊 \(String(localized: "trigger_opt_meds"))", "🏥 \(String(localized: "trigger_opt_health"))",
-        "💰 \(String(localized: "trigger_opt_money"))", "👨‍👩‍👧 \(String(localized: "trigger_opt_family"))", "📱 \(String(localized: "trigger_opt_social"))", "❓ \(String(localized: "trigger_opt_none"))",
+        "💼 \(String(localized: "trigger_opt_work"))", "🚇 \(String(localized: "trigger_opt_transport"))",
+        "👥 \(String(localized: "trigger_opt_crowds"))",
+        "🌙 \(String(localized: "trigger_opt_night"))",
+        "☕ \(String(localized: "trigger_opt_caffeine"))", "😴 \(String(localized: "trigger_opt_sleep"))", "💊 \(String(localized: "trigger_opt_meds"))",
+        "🏥 \(String(localized: "trigger_opt_health"))",
+        "💰 \(String(localized: "trigger_opt_money"))", "👨‍👩‍👧 \(String(localized: "trigger_opt_family"))", "📱 \(String(localized: "trigger_opt_social"))",
+        "❓ \(String(localized: "trigger_opt_none"))",
     ]
 
     private var sliderColor: Color {
@@ -578,12 +583,11 @@ struct AddEpisodeSheet: View {
 // MARK: - FlowLayoutView
 
 struct FlowLayoutView<Item: Hashable, Content: View>: View {
+    // MARK: Internal
+
     let items: [Item]
     @ViewBuilder
     let content: (Item) -> Content
-
-    @State
-    private var totalHeight: CGFloat = 10
 
     var body: some View {
         var width = CGFloat.zero
@@ -626,10 +630,18 @@ struct FlowLayoutView<Item: Hashable, Content: View>: View {
         .onPreferenceChange(FlowHeightPreferenceKey.self) { totalHeight = $0 }
         .frame(height: totalHeight)
     }
+
+    // MARK: Private
+
+    @State
+    private var totalHeight: CGFloat = 10
 }
+
+// MARK: - FlowHeightPreferenceKey
 
 private struct FlowHeightPreferenceKey: PreferenceKey {
     static let defaultValue: CGFloat = 10
+
     static func reduce(value: inout CGFloat, nextValue: () -> CGFloat) {
         value = max(value, nextValue())
     }

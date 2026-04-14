@@ -41,6 +41,17 @@ struct CrisisLineView: View {
         Locale.current.language.region?.identifier ?? "US"
     }
 
+    // MARK: - Helpers
+
+    private var sortedLines: [(key: String, value: String)] {
+        SOSService.crisisLines.sorted { lhs, rhs in
+            // Current region first
+            if lhs.key == currentRegion { return true }
+            if rhs.key == currentRegion { return false }
+            return lhs.key < rhs.key
+        }
+    }
+
     private var heroSection: some View {
         VStack(spacing: 16) {
             ZStack {
@@ -165,17 +176,6 @@ struct CrisisLineView: View {
         .opacity(appear ? 1 : 0)
         .offset(y: appear ? 0 : 15)
         .animation(SP.Anim.spring.delay(0.2), value: appear)
-    }
-
-    // MARK: - Helpers
-
-    private var sortedLines: [(key: String, value: String)] {
-        SOSService.crisisLines.sorted { lhs, rhs in
-            // Current region first
-            if lhs.key == currentRegion { return true }
-            if rhs.key == currentRegion { return false }
-            return lhs.key < rhs.key
-        }
     }
 
     private func infoPoint(_ text: String) -> some View {

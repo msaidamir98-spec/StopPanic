@@ -8,9 +8,12 @@ import UserNotifications
 final class HealthKitManager: ObservableObject {
     // MARK: Internal
 
-    @Published var heartRate: Double = 0
-    @Published var isAuthorized: Bool = false
-    @Published var isElevatedHR: Bool = false
+    @Published
+    var heartRate: Double = 0
+    @Published
+    var isAuthorized: Bool = false
+    @Published
+    var isElevatedHR: Bool = false
 
     /// Порог ЧСС для уведомления о тревоге (покой)
     let elevatedHRThreshold: Double = 100
@@ -134,7 +137,7 @@ final class HealthKitManager: ObservableObject {
     /// Send local push if HR is elevated (throttled to once per 30 min)
     private func sendHighHeartRateNotification(bpm: Double) {
         // Throttle: max once per 30 minutes
-        if let last = lastHighHRNotification, Date().timeIntervalSince(last) < 1800 {
+        if let last = lastHighHRNotification, Date().timeIntervalSince(last) < 1_800 {
             return
         }
         lastHighHRNotification = Date()

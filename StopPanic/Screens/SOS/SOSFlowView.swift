@@ -18,6 +18,8 @@ struct SOSFlowView: View {
     enum SOSBreathPhase {
         case inhale, hold, exhale
 
+        // MARK: Internal
+
         var text: String {
             switch self {
             case .inhale: String(localized: "breath_inhale")
@@ -366,10 +368,10 @@ struct SOSFlowView: View {
                 .foregroundColor(SP.Colors.textPrimary)
 
             Text(String(localized: "sos.affirmation_body"))
-            .font(SP.Typography.body)
-            .foregroundColor(SP.Colors.textSecondary)
-            .multilineTextAlignment(.center)
-            .lineSpacing(4)
+                .font(SP.Typography.body)
+                .foregroundColor(SP.Colors.textSecondary)
+                .multilineTextAlignment(.center)
+                .lineSpacing(4)
 
             VStack(spacing: 12) {
                 HStack {

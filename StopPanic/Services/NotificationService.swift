@@ -5,7 +5,8 @@ import UserNotifications
 /// Smart notification service — breathing reminders, streak alerts, retention
 @MainActor
 final class NotificationService: ObservableObject {
-    @Published var isAuthorized: Bool = false
+    @Published
+    var isAuthorized: Bool = false
 
     func requestPermissions() {
         UNUserNotificationCenter.current().requestAuthorization(options: [.alert, .sound, .badge]) { [weak self] granted, _ in

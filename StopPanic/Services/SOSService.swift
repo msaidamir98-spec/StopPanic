@@ -40,9 +40,10 @@ final class SOSService: ObservableObject {
         lastSOSDate = Date()
         panicModeActive = true
 
-        UNUserNotificationCenter.current().requestAuthorization(options: [
-            .alert, .sound, .badge,
-        ]) { _, _ in }
+        // Отправляем уведомления без запроса авторизации —
+        // она уже запрашивается в onboarding/notifications settings.
+        // Если разрешения нет, уведомления просто не покажутся,
+        // но SOS-экран всё равно отработает (критичный UX).
 
         // Send local notification for each SOS contact
         for contact in contacts where contact.notifyOnPanic {
@@ -110,6 +111,7 @@ final class SOSService: ObservableObject {
         subsystem: "MSK-PRODUKT.StopPanic",
         category: "SOSService"
     )
+
     private var lastSOSDate: Date?
     private let persistence: PersistenceController
 

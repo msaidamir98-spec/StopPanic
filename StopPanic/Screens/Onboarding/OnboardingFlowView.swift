@@ -52,19 +52,30 @@ struct OnboardingFlowView: View {
 
     // MARK: Private
 
-    @State private var currentPage = 0
-    @State private var userName = ""
-    @State private var selectedExperience: String?
-    @State private var showContent = false
-    @State private var logoScale: CGFloat = 0.3
+    @State
+    private var currentPage = 0
+    @State
+    private var userName = ""
+    @State
+    private var selectedExperience: String?
+    @State
+    private var showContent = false
+    @State
+    private var logoScale: CGFloat = 0.3
 
-    // Mini breathing state
-    @State private var breathScale: CGFloat = 0.4
-    @State private var breathPhase = String(localized: "onb_tap_start")
-    @State private var isBreathing = false
-    @State private var breathCycles = 0
-    @State private var breathTimer: Timer?
-    @State private var miniBreathComplete = false
+    /// Mini breathing state
+    @State
+    private var breathScale: CGFloat = 0.4
+    @State
+    private var breathPhase = String(localized: "onb_tap_start")
+    @State
+    private var isBreathing = false
+    @State
+    private var breathCycles = 0
+    @State
+    private var breathTimer: Timer?
+    @State
+    private var miniBreathComplete = false
 
     private let experiences = [
         ("🌱", String(localized: "onb_exp_first")),

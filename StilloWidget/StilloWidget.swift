@@ -1,13 +1,13 @@
 import SwiftUI
 import WidgetKit
 
-// MARK: - SOS Widget Entry
+// MARK: - SOSWidgetEntry
 
 struct SOSWidgetEntry: TimelineEntry {
     let date: Date
 }
 
-// MARK: - SOS Widget Provider
+// MARK: - SOSWidgetProvider
 
 struct SOSWidgetProvider: TimelineProvider {
     func placeholder(in _: Context) -> SOSWidgetEntry {
@@ -25,10 +25,14 @@ struct SOSWidgetProvider: TimelineProvider {
     }
 }
 
-// MARK: - SOS Lock Screen Widget View
+// MARK: - SOSWidgetView
 
 struct SOSWidgetView: View {
-    @Environment(\.widgetFamily) var family
+    // MARK: Internal
+
+    @Environment(\.widgetFamily)
+    var family
+
     var entry: SOSWidgetEntry
 
     var body: some View {
@@ -43,6 +47,8 @@ struct SOSWidgetView: View {
             circularView
         }
     }
+
+    // MARK: Private
 
     private var circularView: some View {
         ZStack {
@@ -81,10 +87,12 @@ struct SOSWidgetView: View {
     }
 }
 
-// MARK: - Breathing Lock Screen Widget
+// MARK: - BreathWidgetView
 
 struct BreathWidgetView: View {
-    @Environment(\.widgetFamily) var family
+    @Environment(\.widgetFamily)
+    var family
+
     var entry: SOSWidgetEntry
 
     var body: some View {
@@ -117,7 +125,7 @@ struct BreathWidgetView: View {
     }
 }
 
-// MARK: - SOS Widget Configuration
+// MARK: - SOSWidget
 
 struct SOSWidget: Widget {
     let kind = "SOSWidget"
@@ -132,7 +140,7 @@ struct SOSWidget: Widget {
     }
 }
 
-// MARK: - Breathing Widget Configuration
+// MARK: - BreathWidget
 
 struct BreathWidget: Widget {
     let kind = "BreathWidget"
@@ -147,7 +155,7 @@ struct BreathWidget: Widget {
     }
 }
 
-// MARK: - Widget Bundle
+// MARK: - StilloWidgetBundle
 
 @main
 struct StilloWidgetBundle: WidgetBundle {

@@ -287,12 +287,12 @@ struct ProfileHubView: View {
                         .foregroundColor(SP.Colors.calm)
                 }
                 Toggle(String(localized: "voice.toggle_label"), isOn: Binding(
-                        get: { coordinator.audioGuide.isVoiceEnabled },
-                        set: { coordinator.audioGuide.isVoiceEnabled = $0 }
-                    ))
-                    .font(SP.Typography.callout)
-                    .foregroundColor(SP.Colors.textPrimary)
-                    .tint(SP.Colors.accent)
+                    get: { coordinator.audioGuide.isVoiceEnabled },
+                    set: { coordinator.audioGuide.isVoiceEnabled = $0 }
+                ))
+                .font(SP.Typography.callout)
+                .foregroundColor(SP.Colors.textPrimary)
+                .tint(SP.Colors.accent)
             }
             .spGlassCard(cornerRadius: SP.Layout.cornerSmall)
         }
@@ -312,10 +312,10 @@ struct ProfileHubView: View {
                 .font(SP.Typography.caption)
                 .foregroundColor(SP.Colors.textTertiary)
             Text(String(localized: "profile.disclaimer"))
-            .font(SP.Typography.caption2)
-            .foregroundColor(SP.Colors.textTertiary)
-            .multilineTextAlignment(.center)
-            .padding(.top, 4)
+                .font(SP.Typography.caption2)
+                .foregroundColor(SP.Colors.textTertiary)
+                .multilineTextAlignment(.center)
+                .padding(.top, 4)
         }
         .frame(maxWidth: .infinity)
         .padding(.top, 12)

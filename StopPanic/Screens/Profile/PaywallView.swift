@@ -56,7 +56,11 @@ struct PaywallView: View {
                     // Features
                     VStack(spacing: 12) {
                         premiumFeature(icon: "lungs.fill", title: String(localized: "paywall_feature_breathing"), color: SP.Colors.calm)
-                        premiumFeature(icon: "chart.line.uptrend.xyaxis", title: String(localized: "paywall_feature_analytics"), color: SP.Colors.accent)
+                        premiumFeature(
+                            icon: "chart.line.uptrend.xyaxis",
+                            title: String(localized: "paywall_feature_analytics"),
+                            color: SP.Colors.accent
+                        )
                         premiumFeature(icon: "book.fill", title: String(localized: "paywall_feature_diary"), color: SP.Colors.warmth)
                         premiumFeature(icon: "paintpalette.fill", title: String(localized: "paywall_feature_themes"), color: SP.Colors.success)
                         premiumFeature(icon: "heart.text.square.fill", title: String(localized: "paywall_feature_heart"), color: SP.Colors.danger)
@@ -84,7 +88,7 @@ struct PaywallView: View {
                         }
 
                         // Fallback if products not loaded
-                        if premium.products.isEmpty && !premium.isLoading {
+                        if premium.products.isEmpty, !premium.isLoading {
                             Text(String(localized: "paywall_loading_error"))
                                 .font(SP.Typography.caption)
                                 .foregroundColor(SP.Colors.textTertiary)
@@ -108,10 +112,14 @@ struct PaywallView: View {
                             .multilineTextAlignment(.center)
 
                         HStack(spacing: 16) {
-                            Link(String(localized: "paywall_terms"),
-                                 destination: URL(string: "https://msaidamir98-spec.github.io/StopPanic/terms.html")!)
-                            Link(String(localized: "paywall_privacy"),
-                                 destination: URL(string: "https://msaidamir98-spec.github.io/StopPanic/privacy.html")!)
+                            Link(
+                                String(localized: "paywall_terms"),
+                                destination: URL(string: "https://msaidamir98-spec.github.io/StopPanic/terms.html")!
+                            )
+                            Link(
+                                String(localized: "paywall_privacy"),
+                                destination: URL(string: "https://msaidamir98-spec.github.io/StopPanic/privacy.html")!
+                            )
                         }
                         .font(SP.Typography.caption2)
                         .foregroundColor(SP.Colors.accent.opacity(0.8))
@@ -128,9 +136,10 @@ struct PaywallView: View {
 
     // MARK: Private
 
-    private let premium = PremiumManager.shared
+    @State
+    private var purchasing = false
 
-    @State private var purchasing = false
+    private let premium = PremiumManager.shared
 
     private func premiumFeature(icon: String, title: String, color: Color) -> some View {
         HStack(spacing: 14) {
@@ -203,7 +212,10 @@ struct PaywallView: View {
                     .fill(isPopular ? AnyShapeStyle(SP.Colors.accent.opacity(0.08)) : AnyShapeStyle(.warmGlass))
                     .overlay(
                         RoundedRectangle(cornerRadius: 18, style: .continuous)
-                            .stroke(isPopular ? SP.Colors.accent.opacity(0.4) : SP.Colors.textTertiary.opacity(0.15), lineWidth: isPopular ? 1.5 : 0.5)
+                            .stroke(
+                                isPopular ? SP.Colors.accent.opacity(0.4) : SP.Colors.textTertiary.opacity(0.15),
+                                lineWidth: isPopular ? 1.5 : 0.5
+                            )
                     )
             )
         }

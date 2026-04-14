@@ -62,9 +62,9 @@ struct HeartAnalysisView: View {
                 Spacer()
             }
             Text(String(localized: "heart.disclaimer_body"))
-            .font(SP.Typography.caption)
-            .foregroundColor(SP.Colors.textSecondary)
-            .lineSpacing(3)
+                .font(SP.Typography.caption)
+                .foregroundColor(SP.Colors.textSecondary)
+                .lineSpacing(3)
         }
         .spGlassCard(cornerRadius: SP.Layout.cornerMedium)
         .overlay(
@@ -150,9 +150,9 @@ struct HeartAnalysisView: View {
                     }
 
                     Text(String(localized: "heart.breathing_test_body"))
-                    .font(SP.Typography.caption)
-                    .foregroundColor(SP.Colors.textSecondary)
-                    .lineSpacing(3)
+                        .font(SP.Typography.caption)
+                        .foregroundColor(SP.Colors.textSecondary)
+                        .lineSpacing(3)
 
                     HStack(spacing: 12) {
                         Button {
@@ -245,9 +245,9 @@ struct HeartAnalysisView: View {
             }
 
             Text(String(localized: "heart.algorithm_disclaimer"))
-            .font(SP.Typography.caption2)
-            .foregroundColor(SP.Colors.textTertiary)
-            .lineSpacing(3)
+                .font(SP.Typography.caption2)
+                .foregroundColor(SP.Colors.textTertiary)
+                .lineSpacing(3)
         }
         .spGlassCard(cornerRadius: SP.Layout.cornerMedium)
     }

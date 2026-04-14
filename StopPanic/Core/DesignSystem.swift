@@ -14,40 +14,110 @@ enum SP {
 
     @MainActor
     enum Colors {
-        // Backgrounds
-        static var bg: Color { ThemeManager.shared.bg }
-        static var bgSoft: Color { ThemeManager.shared.bgSoft }
-        static var bgCard: Color { ThemeManager.shared.bgCard }
-        static var bgCardHover: Color { ThemeManager.shared.bgCardHover }
-        static var bgElevated: Color { ThemeManager.shared.bgElevated }
+        /// Backgrounds
+        static var bg: Color {
+            ThemeManager.shared.bg
+        }
 
-        // Accent
-        static var accent: Color { ThemeManager.shared.accent }
-        static var accentSoft: Color { ThemeManager.shared.accentSoft }
-        static var accentGlow: Color { ThemeManager.shared.accentGlow }
+        static var bgSoft: Color {
+            ThemeManager.shared.bgSoft
+        }
 
-        // Semantic
-        static var calm: Color { ThemeManager.shared.calm }
-        static var calmSoft: Color { ThemeManager.shared.calmSoft }
-        static var warmth: Color { ThemeManager.shared.warmth }
-        static var danger: Color { ThemeManager.shared.danger }
-        static var dangerGlow: Color { ThemeManager.shared.dangerGlow }
-        static var success: Color { ThemeManager.shared.success }
-        static var warning: Color { ThemeManager.shared.warning }
+        static var bgCard: Color {
+            ThemeManager.shared.bgCard
+        }
 
-        // Text
-        static var textPrimary: Color { ThemeManager.shared.textPrimary }
-        static var textSecondary: Color { ThemeManager.shared.textSecondary }
-        static var textTertiary: Color { ThemeManager.shared.textTertiary }
-        static var textOnAccent: Color { ThemeManager.shared.textOnAccent }
+        static var bgCardHover: Color {
+            ThemeManager.shared.bgCardHover
+        }
+
+        static var bgElevated: Color {
+            ThemeManager.shared.bgElevated
+        }
+
+        /// Accent
+        static var accent: Color {
+            ThemeManager.shared.accent
+        }
+
+        static var accentSoft: Color {
+            ThemeManager.shared.accentSoft
+        }
+
+        static var accentGlow: Color {
+            ThemeManager.shared.accentGlow
+        }
+
+        /// Semantic
+        static var calm: Color {
+            ThemeManager.shared.calm
+        }
+
+        static var calmSoft: Color {
+            ThemeManager.shared.calmSoft
+        }
+
+        static var warmth: Color {
+            ThemeManager.shared.warmth
+        }
+
+        static var danger: Color {
+            ThemeManager.shared.danger
+        }
+
+        static var dangerGlow: Color {
+            ThemeManager.shared.dangerGlow
+        }
+
+        static var success: Color {
+            ThemeManager.shared.success
+        }
+
+        static var warning: Color {
+            ThemeManager.shared.warning
+        }
+
+        /// Text
+        static var textPrimary: Color {
+            ThemeManager.shared.textPrimary
+        }
+
+        static var textSecondary: Color {
+            ThemeManager.shared.textSecondary
+        }
+
+        static var textTertiary: Color {
+            ThemeManager.shared.textTertiary
+        }
+
+        static var textOnAccent: Color {
+            ThemeManager.shared.textOnAccent
+        }
 
         /// Gradients
-        static var heroGradient: LinearGradient { ThemeManager.shared.heroGradient }
-        static var sosGradient: LinearGradient { ThemeManager.shared.sosGradient }
-        static var calmGradient: LinearGradient { ThemeManager.shared.calmGradient }
-        static var warmGradient: LinearGradient { ThemeManager.shared.warmGradient }
-        static var bgGradient: LinearGradient { ThemeManager.shared.bgGradient }
-        static var shimmerGradient: LinearGradient { ThemeManager.shared.shimmerGradient }
+        static var heroGradient: LinearGradient {
+            ThemeManager.shared.heroGradient
+        }
+
+        static var sosGradient: LinearGradient {
+            ThemeManager.shared.sosGradient
+        }
+
+        static var calmGradient: LinearGradient {
+            ThemeManager.shared.calmGradient
+        }
+
+        static var warmGradient: LinearGradient {
+            ThemeManager.shared.warmGradient
+        }
+
+        static var bgGradient: LinearGradient {
+            ThemeManager.shared.bgGradient
+        }
+
+        static var shimmerGradient: LinearGradient {
+            ThemeManager.shared.shimmerGradient
+        }
     }
 
     // MARK: - Typography
@@ -96,11 +166,25 @@ enum SP {
 
     @MainActor
     enum Shadows {
-        static var soft: Color { ThemeManager.shared.shadowSoft }
-        static var medium: Color { ThemeManager.shared.shadowMedium }
-        static var glow: Color { Colors.accent.opacity(0.4) }
-        static var dangerGlow: Color { Colors.danger.opacity(0.5) }
-        static var calmGlow: Color { Colors.calm.opacity(0.4) }
+        static var soft: Color {
+            ThemeManager.shared.shadowSoft
+        }
+
+        static var medium: Color {
+            ThemeManager.shared.shadowMedium
+        }
+
+        static var glow: Color {
+            Colors.accent.opacity(0.4)
+        }
+
+        static var dangerGlow: Color {
+            Colors.danger.opacity(0.5)
+        }
+
+        static var calmGlow: Color {
+            Colors.calm.opacity(0.4)
+        }
     }
 
     // MARK: - Haptics
@@ -345,8 +429,10 @@ struct FloatingParticle: View {
 
     // MARK: Private
 
-    @State private var offset: CGSize = .zero
-    @State private var opacity: Double = 0
+    @State
+    private var offset: CGSize = .zero
+    @State
+    private var opacity: Double = 0
 }
 
 // MARK: - AmbientBackground
@@ -408,7 +494,8 @@ struct AmbientBackground: View {
 
     // MARK: Private
 
-    @State private var animate = false
+    @State
+    private var animate = false
 }
 
 // MARK: - ShimmerEffect
@@ -436,7 +523,8 @@ struct ShimmerEffect: ViewModifier {
 
     // MARK: Private
 
-    @State private var phase: CGFloat = 0
+    @State
+    private var phase: CGFloat = 0
 }
 
 extension View {
@@ -471,7 +559,8 @@ struct AnimatedNumber: View {
 
     // MARK: Private
 
-    @State private var displayValue: Int = 0
+    @State
+    private var displayValue: Int = 0
 }
 
 // MARK: - PremiumButtonStyle
@@ -509,7 +598,8 @@ struct GlowPulse: ViewModifier {
 
     // MARK: Private
 
-    @State private var glowing = false
+    @State
+    private var glowing = false
 }
 
 extension View {
@@ -518,7 +608,7 @@ extension View {
     }
 }
 
-// MARK: - Theme-aware Material Helper
+// MARK: - WarmGlass
 
 /// В light-режиме .ultraThinMaterial показывает белый фон.
 /// Этот ShapeStyle автоматически заменяет его тёплым fill.
@@ -534,5 +624,8 @@ struct WarmGlass: ShapeStyle {
 }
 
 extension ShapeStyle where Self == WarmGlass {
-    @MainActor static var warmGlass: WarmGlass { WarmGlass() }
+    @MainActor
+    static var warmGlass: WarmGlass {
+        WarmGlass()
+    }
 }

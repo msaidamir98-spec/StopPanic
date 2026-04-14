@@ -11,8 +11,10 @@ final class PanicPredictionService: ObservableObject {
         let episodeCount: Int
     }
 
-    @Published var currentRisk: PanicPrediction?
-    @Published var weeklyPattern: [DayRisk] = []
+    @Published
+    var currentRisk: PanicPrediction?
+    @Published
+    var weeklyPattern: [DayRisk] = []
 
     func analyzePatterns(episodes: [DiaryEpisode]) {
         guard !episodes.isEmpty else {

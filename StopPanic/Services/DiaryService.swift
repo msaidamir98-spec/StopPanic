@@ -50,6 +50,7 @@ final class DiaryService: ObservableObject {
     // MARK: Private
 
     private static let log = Logger(subsystem: "MSK-PRODUKT.StopPanic", category: "DiaryService")
+
     private let persistence: PersistenceController
 
     private func loadEpisodes() {

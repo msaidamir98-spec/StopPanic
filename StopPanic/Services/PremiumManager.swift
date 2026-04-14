@@ -24,17 +24,6 @@ final class PremiumManager {
     static let monthlyID = "com.stillo.premium.monthly"
     static let yearlyID = "com.stillo.premium.yearly"
 
-    /// Текущий статус подписки
-    private(set) var isPremium: Bool {
-        didSet { UserDefaults.standard.set(isPremium, forKey: Self.premiumKey) }
-    }
-
-    /// Продукты из App Store
-    private(set) var products: [Product] = []
-
-    /// Загрузка при старте
-    private(set) var isLoading = false
-
     // MARK: - Free Tier Limits
 
     /// Максимум записей дневника для Free
@@ -42,6 +31,17 @@ final class PremiumManager {
 
     /// Бесплатная техника — только 4-7-8
     static let freeTechniqueID = "fourSevenEight"
+
+    /// Продукты из App Store
+    private(set) var products: [Product] = []
+
+    /// Загрузка при старте
+    private(set) var isLoading = false
+
+    /// Текущий статус подписки
+    private(set) var isPremium: Bool {
+        didSet { UserDefaults.standard.set(isPremium, forKey: Self.premiumKey) }
+    }
 
     /// Проверка доступа к технике
     func canAccessTechnique(_ id: String) -> Bool {
@@ -106,13 +106,18 @@ final class PremiumManager {
         }
     }
 
-    /// Слушать обновления транзакций (вызывать при старте)
+    /// Слушать обновления транзакций (вызывать при старте).
+    /// Ссылка на Task хранится, чтобы предотвратить сборку мусора.
     func listenForTransactions() {
-        Task {
+        transactionListener?.cancel()
+        transactionListener = Task.detached(priority: .utility) { [weak self] in
             for await result in Transaction.updates {
-                if let transaction = try? checkVerified(result) {
-                    isPremium = transaction.productID == Self.monthlyID ||
+                if let transaction = try? await self?.checkVerified(result) {
+                    let isActive = transaction.productID == Self.monthlyID ||
                         transaction.productID == Self.yearlyID
+                    await MainActor.run {
+                        self?.isPremium = isActive
+                    }
                     await transaction.finish()
                 }
             }
@@ -136,6 +141,10 @@ final class PremiumManager {
     // MARK: Private
 
     private static let premiumKey = "stillo_is_premium"
+
+    /// Хранимая ссылка на Task для предотвращения GC
+    @ObservationIgnored
+    private var transactionListener: Task<Void, Never>?
 
     private func checkVerified<T>(_ result: VerificationResult<T>) throws -> T {
         switch result {

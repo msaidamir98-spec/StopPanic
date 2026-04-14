@@ -2,15 +2,15 @@ import SwiftUI
 
 // MARK: - Medical Disclaimer View
 
-/// Принудительный полноэкранный дисклеймер при первом запуске.
-/// Показывается ДО онбординга. Пользователь ОБЯЗАН принять, чтобы продолжить.
-/// Guideline 1.4.1 (Physical Harm) + 1.4.3 (Health Services)
+// Принудительный полноэкранный дисклеймер при первом запуске.
+// Показывается ДО онбординга. Пользователь ОБЯЗАН принять, чтобы продолжить.
+// Guideline 1.4.1 (Physical Harm) + 1.4.3 (Health Services)
 
 struct MedicalDisclaimerView: View {
-    @Environment(AppCoordinator.self) var coordinator
-    @State private var appeared = false
-    @State private var scrolledToBottom = false
-    @State private var accepted = false
+    // MARK: Internal
+
+    @Environment(AppCoordinator.self)
+    var coordinator
 
     var body: some View {
         ZStack {
@@ -110,6 +110,15 @@ struct MedicalDisclaimerView: View {
             withAnimation(.easeOut(duration: 0.8)) { appeared = true }
         }
     }
+
+    // MARK: Private
+
+    @State
+    private var appeared = false
+    @State
+    private var scrolledToBottom = false
+    @State
+    private var accepted = false
 
     // MARK: - Disclaimer Block
 

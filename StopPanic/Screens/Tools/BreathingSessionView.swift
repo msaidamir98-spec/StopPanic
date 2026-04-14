@@ -10,12 +10,14 @@ struct BreathingSessionView: View {
     // MARK: Internal
 
     enum BreathPhase: String {
-        case ready = "ready"
-        case inhale = "inhale"
-        case hold = "hold"
-        case exhale = "exhale"
-        case holdAfter = "holdAfter"
-        case complete = "complete"
+        case ready
+        case inhale
+        case hold
+        case exhale
+        case holdAfter
+        case complete
+
+        // MARK: Internal
 
         var text: String {
             switch self {
@@ -92,7 +94,7 @@ struct BreathingSessionView: View {
     @State
     private var phase: BreathPhase = .ready
     @State
-    private var phaseText: String = String(localized: "breathing.ready")
+    private var phaseText: String = .init(localized: "breathing.ready")
     @State
     private var cycleCount = 0
     @State

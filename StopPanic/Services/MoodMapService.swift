@@ -56,6 +56,7 @@ final class MoodMapService: ObservableObject {
     // MARK: Private
 
     private static let log = Logger(subsystem: "MSK-PRODUKT.StopPanic", category: "MoodMapService")
+
     private let persistence: PersistenceController
 
     private func loadPoints() {

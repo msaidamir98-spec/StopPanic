@@ -5,13 +5,15 @@ import SwiftUI
 
 /// Доступные темы приложения
 enum AppTheme: String, CaseIterable, Identifiable {
-    case system = "system"
-    case dark = "dark"
-    case light = "light"
+    case system
+    case dark
+    case light
 
     // MARK: Internal
 
-    var id: String { rawValue }
+    var id: String {
+        rawValue
+    }
 
     var displayName: String {
         switch self {
@@ -91,6 +93,7 @@ final class ThemeManager {
     }
 
     // MARK: - Backgrounds
+
     // Light: Calm-стиль тёплый ivory → мягкий cream
     // Dark: глубокий космос (оригинал)
 
@@ -115,6 +118,7 @@ final class ThemeManager {
     }
 
     // MARK: - Accent
+
     // Light: чуть теплее и мягче — лавандовый с тёплым подтоном
     // Dark: оригинальный фиолетовый неон
 
@@ -161,6 +165,7 @@ final class ThemeManager {
     }
 
     // MARK: - Text
+
     // Light: тёплый тёмно-коричневый — НЕ чистый чёрный
     // Dark: белый (оригинал)
 
@@ -176,7 +181,9 @@ final class ThemeManager {
         isLight ? Color(hex: "8A7560") : .white.opacity(0.45)
     }
 
-    var textOnAccent: Color { .white }
+    var textOnAccent: Color {
+        .white
+    }
 
     // MARK: - Gradients
 
@@ -233,6 +240,7 @@ final class ThemeManager {
     }
 
     // MARK: - Shadows
+
     // Light: тёплые коричневатые тени — не холодный чёрный
     // Dark: чёрные (оригинал)
 
@@ -245,6 +253,7 @@ final class ThemeManager {
     }
 
     // MARK: - Glass Card
+
     // Light: тёплый полупрозрачный ivory — НЕ системный material (он белый!)
     // Dark: .ultraThinMaterial (оригинал)
 

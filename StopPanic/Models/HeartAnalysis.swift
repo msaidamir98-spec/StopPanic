@@ -22,9 +22,11 @@ struct HeartAnalysis: Codable, Identifiable {
     enum Diagnosis: String, Codable {
         case panicAttack = "anxiety"
         case likelyCardiac = "cardiac"
-        case arrhythmia = "arrhythmia"
-        case normal = "normal"
+        case arrhythmia
+        case normal
         case inconclusive = "collecting"
+
+        // MARK: Internal
 
         var localizedTitle: String {
             switch self {
@@ -41,8 +43,10 @@ struct HeartAnalysis: Codable, Identifiable {
     enum RisePattern: String, Codable {
         case suddenRegular = "sudden_regular"
         case suddenIrregular = "sudden_irregular"
-        case gradual = "gradual"
+        case gradual
         case noChange = "no_change"
+
+        // MARK: Internal
 
         var localizedTitle: String {
             switch self {

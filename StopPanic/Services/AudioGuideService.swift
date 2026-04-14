@@ -4,26 +4,23 @@ import SwiftUI
 
 // MARK: - AudioGuideService
 
-/// Голосовое сопровождение дыхания и заземления через AVSpeechSynthesizer.
-/// Работает с выключенным экраном через AVAudioSession.playback.
-/// Пользователь с закрытыми от страха глазами может следовать только по звуку и вибрации.
+// Голосовое сопровождение дыхания и заземления через AVSpeechSynthesizer.
+// Работает с выключенным экраном через AVAudioSession.playback.
+// Пользователь с закрытыми от страха глазами может следовать только по звуку и вибрации.
+//
+// Аудио-сессия активируется ЛЕНИВО — только при первом вызове speak(),
+// чтобы не захватывать аудиофокус без необходимости (Apple Review).
 
 @Observable
 @MainActor
 final class AudioGuideService {
-    // MARK: Lifecycle
-
-    init() {
-        configureAudioSession()
-    }
-
     // MARK: Internal
 
-    /// Включено ли голосовое сопровождение (UserDefaults)
-    @ObservationIgnored
-    private var _isVoiceEnabled: Bool = UserDefaults.standard.object(forKey: "voiceGuideEnabled") != nil
-        ? UserDefaults.standard.bool(forKey: "voiceGuideEnabled")
-        : true // по умолчанию включено
+    // MARK: - Breath Voice Phase
+
+    enum BreathVoicePhase {
+        case inhale, hold, exhale
+    }
 
     var isVoiceEnabled: Bool {
         get {
@@ -34,6 +31,10 @@ final class AudioGuideService {
             withMutation(keyPath: \.isVoiceEnabled) {
                 _isVoiceEnabled = newValue
                 UserDefaults.standard.set(newValue, forKey: "voiceGuideEnabled")
+                // Деактивируем сессию если голос выключен
+                if !newValue {
+                    deactivateAudioSession()
+                }
             }
         }
     }
@@ -41,14 +42,13 @@ final class AudioGuideService {
     /// Говорит фазу дыхания: "Вдох", "Задержка", "Выдох"
     func speakBreathPhase(_ phase: BreathVoicePhase) {
         guard isVoiceEnabled else { return }
-        let text: String
-        switch phase {
+        let text = switch phase {
         case .inhale:
-            text = String(localized: "voice.inhale")
+            String(localized: "voice.inhale")
         case .hold:
-            text = String(localized: "voice.hold")
+            String(localized: "voice.hold")
         case .exhale:
-            text = String(localized: "voice.exhale")
+            String(localized: "voice.exhale")
         }
         speak(text, rate: 0.4, pitch: 1.0)
     }
@@ -79,34 +79,56 @@ final class AudioGuideService {
         speak(String(localized: "voice.you_are_safe"), rate: 0.38, pitch: 0.9)
     }
 
-    /// Останавливает текущую речь
+    /// Останавливает текущую речь и деактивирует аудио-сессию
     func stop() {
         synthesizer.stopSpeaking(at: .immediate)
-    }
-
-    // MARK: - Breath Voice Phase
-
-    enum BreathVoicePhase {
-        case inhale, hold, exhale
+        deactivateAudioSession()
     }
 
     // MARK: Private
 
-    nonisolated(unsafe) private let synthesizer = AVSpeechSynthesizer()
     nonisolated(unsafe) private static let log = Logger(subsystem: "MSK-PRODUKT.StopPanic", category: "AudioGuide")
 
-    /// Настраиваем AVAudioSession для работы с выключенным экраном
-    private func configureAudioSession() {
+    /// Включено ли голосовое сопровождение (UserDefaults)
+    @ObservationIgnored
+    private var _isVoiceEnabled: Bool = UserDefaults.standard.object(forKey: "voiceGuideEnabled") != nil
+        ? UserDefaults.standard.bool(forKey: "voiceGuideEnabled")
+        : true // по умолчанию включено
+
+    nonisolated(unsafe) private let synthesizer = AVSpeechSynthesizer()
+
+    /// Флаг — сессия уже активирована
+    private var isSessionActive = false
+
+    /// Активируем AVAudioSession лениво — только когда реально нужен звук
+    private func ensureAudioSession() {
+        guard !isSessionActive else { return }
         do {
             let session = AVAudioSession.sharedInstance()
             try session.setCategory(.playback, mode: .spokenAudio, options: [.duckOthers])
             try session.setActive(true)
+            isSessionActive = true
         } catch {
             Self.log.error("Failed to configure audio session: \(error.localizedDescription)")
         }
     }
 
+    /// Деактивируем аудио-сессию — возвращаем фокус другим приложениям
+    private func deactivateAudioSession() {
+        guard isSessionActive else { return }
+        do {
+            let session = AVAudioSession.sharedInstance()
+            try session.setActive(false, options: .notifyOthersOnDeactivation)
+            isSessionActive = false
+        } catch {
+            Self.log.error("Failed to deactivate audio session: \(error.localizedDescription)")
+        }
+    }
+
     private func speak(_ text: String, rate: Float = 0.45, pitch: Float = 1.0) {
+        // Активируем сессию лениво
+        ensureAudioSession()
+
         // Останавливаем предыдущее
         if synthesizer.isSpeaking {
             synthesizer.stopSpeaking(at: .immediate)

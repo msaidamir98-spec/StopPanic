@@ -6,23 +6,16 @@ import WatchKit
 /// Дыхательная техника 4-7-8 для Apple Watch
 /// Premium: анимированный круг с градиентом, haptic feedback, cycle dots
 struct WatchBreathingView: View {
-    @ObservedObject var connectivity: WatchConnectionManager
-    @State private var phase: BreathPhase = .idle
-    @State private var breathScale: CGFloat = 0.4
-    @State private var countdown: Int = 0
-    @State private var cycleCount: Int = 0
-    @State private var isRunning = false
-    @State private var ringProgress: CGFloat = 0
-    @State private var glowIntensity: Double = 0.2
-    
-    private let totalCycles = 4
-    
+    // MARK: Internal
+
     enum BreathPhase: String {
-        case idle = "idle"
-        case inhale = "inhale"
-        case hold = "hold"
-        case exhale = "exhale"
-        case done = "done"
+        case idle
+        case inhale
+        case hold
+        case exhale
+        case done
+
+        // MARK: Internal
 
         var text: String {
             switch self {
@@ -34,17 +27,10 @@ struct WatchBreathingView: View {
             }
         }
     }
-    
-    private var phaseColor: Color {
-        switch phase {
-        case .idle: return .cyan
-        case .inhale: return .blue
-        case .hold: return .indigo
-        case .exhale: return .purple
-        case .done: return .green
-        }
-    }
-    
+
+    @ObservedObject
+    var connectivity: WatchConnectionManager
+
     var body: some View {
         VStack(spacing: 6) {
             // Phase label
@@ -52,10 +38,11 @@ struct WatchBreathingView: View {
                 .font(.system(.caption, design: .rounded, weight: .semibold))
                 .foregroundStyle(phaseColor)
                 .animation(.easeInOut(duration: 0.3), value: phase)
-            
+
             Spacer(minLength: 2)
-            
+
             // MARK: - Breathing Circle
+
             ZStack {
                 // Outer ring glow
                 Circle()
@@ -68,7 +55,7 @@ struct WatchBreathingView: View {
                         )
                     )
                     .frame(width: 130, height: 130)
-                
+
                 // Progress ring
                 Circle()
                     .trim(from: 0, to: ringProgress)
@@ -81,12 +68,12 @@ struct WatchBreathingView: View {
                     )
                     .frame(width: 108, height: 108)
                     .rotationEffect(.degrees(-90))
-                
+
                 // Background ring
                 Circle()
                     .stroke(phaseColor.opacity(0.1), lineWidth: 3)
                     .frame(width: 108, height: 108)
-                
+
                 // Breathing blob
                 Circle()
                     .fill(
@@ -94,7 +81,7 @@ struct WatchBreathingView: View {
                             colors: [
                                 phaseColor.opacity(0.5),
                                 phaseColor.opacity(0.2),
-                                phaseColor.opacity(0.05)
+                                phaseColor.opacity(0.05),
                             ],
                             center: .center,
                             startRadius: 5,
@@ -103,14 +90,14 @@ struct WatchBreathingView: View {
                     )
                     .frame(width: 90, height: 90)
                     .scaleEffect(breathScale)
-                
+
                 // Inner glass
                 Circle()
                     .fill(.ultraThinMaterial)
                     .frame(width: 60, height: 60)
                     .scaleEffect(breathScale)
                     .opacity(0.5)
-                
+
                 // Content
                 if phase == .done {
                     Image(systemName: "checkmark")
@@ -128,13 +115,14 @@ struct WatchBreathingView: View {
                         .foregroundStyle(phaseColor.opacity(0.7))
                 }
             }
-            
+
             Spacer(minLength: 2)
-            
+
             // MARK: - Cycle Dots
+
             if isRunning || phase == .done {
                 HStack(spacing: 6) {
-                    ForEach(0..<totalCycles, id: \.self) { i in
+                    ForEach(0 ..< totalCycles, id: \.self) { i in
                         Circle()
                             .fill(i < cycleCount ? phaseColor : Color.white.opacity(0.15))
                             .frame(width: 6, height: 6)
@@ -143,8 +131,9 @@ struct WatchBreathingView: View {
                     }
                 }
             }
-            
+
             // MARK: - Button
+
             Button {
                 WKInterfaceDevice.current().play(.click)
                 if isRunning {
@@ -167,24 +156,53 @@ struct WatchBreathingView: View {
         .padding(.vertical, 4)
         .navigationTitle(String(localized: "watch.breath_title"))
     }
-    
-    private var buttonLabel: String {
+
+    // MARK: Private
+
+    @State
+    private var phase: BreathPhase = .idle
+    @State
+    private var breathScale: CGFloat = 0.4
+    @State
+    private var countdown: Int = 0
+    @State
+    private var cycleCount: Int = 0
+    @State
+    private var isRunning = false
+    @State
+    private var ringProgress: CGFloat = 0
+    @State
+    private var glowIntensity: Double = 0.2
+
+    private let totalCycles = 4
+
+    private var phaseColor: Color {
         switch phase {
-        case .done: return String(localized: "watch.breath_again")
-        case .idle: return String(localized: "watch.breath_start")
-        default: return String(localized: "watch.breath_stop")
+        case .idle: .cyan
+        case .inhale: .blue
+        case .hold: .indigo
+        case .exhale: .purple
+        case .done: .green
         }
     }
-    
+
+    private var buttonLabel: String {
+        switch phase {
+        case .done: String(localized: "watch.breath_again")
+        case .idle: String(localized: "watch.breath_start")
+        default: String(localized: "watch.breath_stop")
+        }
+    }
+
     // MARK: - Breathing Logic
-    
+
     private func startBreathing() {
         isRunning = true
         cycleCount = 0
         phase = .idle
         runCycle()
     }
-    
+
     private func stopBreathing() {
         isRunning = false
         phase = .idle
@@ -194,51 +212,51 @@ struct WatchBreathingView: View {
             glowIntensity = 0.2
         }
     }
-    
+
     private func runCycle() {
         guard isRunning, cycleCount < totalCycles else {
             finishSession()
             return
         }
-        
+
         // === ВДОХ 4 сек ===
         phase = .inhale
         countdown = 4
         WKInterfaceDevice.current().play(.start)
-        
+
         withAnimation(.easeInOut(duration: 4)) {
             breathScale = 1.0
             glowIntensity = 1.0
         }
         animateRingProgress(duration: 4)
-        
+
         countDown(from: 4) { [self] in
             guard isRunning else { return }
-            
+
             // === ЗАДЕРЖКА 7 сек ===
             phase = .hold
             countdown = 7
             WKInterfaceDevice.current().play(.click)
-            
+
             withAnimation(.easeInOut(duration: 0.5)) {
                 glowIntensity = 0.6
             }
             animateRingProgress(duration: 7)
-            
+
             countDown(from: 7) { [self] in
                 guard isRunning else { return }
-                
+
                 // === ВЫДОХ 8 сек ===
                 phase = .exhale
                 countdown = 8
                 WKInterfaceDevice.current().play(.directionDown)
-                
+
                 withAnimation(.easeInOut(duration: 8)) {
                     breathScale = 0.4
                     glowIntensity = 0.2
                 }
                 animateRingProgress(duration: 8)
-                
+
                 countDown(from: 8) { [self] in
                     cycleCount += 1
                     WKInterfaceDevice.current().play(.click)
@@ -247,23 +265,23 @@ struct WatchBreathingView: View {
             }
         }
     }
-    
+
     private func finishSession() {
         phase = .done
         isRunning = false
         WKInterfaceDevice.current().play(.success)
-        
+
         withAnimation(.spring(duration: 0.6)) {
             breathScale = 0.7
             ringProgress = 1.0
             glowIntensity = 0.5
         }
-        
+
         connectivity.notifySessionCompleted()
     }
-    
+
     // MARK: - Helpers
-    
+
     private func countDown(from value: Int, completion: @escaping () -> Void) {
         countdown = value
         guard value > 0, isRunning else {
@@ -275,7 +293,7 @@ struct WatchBreathingView: View {
             countDown(from: value - 1, completion: completion)
         }
     }
-    
+
     private func animateRingProgress(duration: Double) {
         withAnimation(.linear(duration: 0.1)) {
             ringProgress = 0

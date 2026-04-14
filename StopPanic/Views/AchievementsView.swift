@@ -26,9 +26,13 @@ struct AchievementsView: View {
                             font: SP.Typography.heroTitle,
                             color: SP.Colors.warning
                         )
-                        Text(String(localized: "achievements.unlocked_count \(service.achievements.filter(\.isUnlocked).count) \(service.achievements.count)"))
-                            .font(SP.Typography.subheadline)
-                            .foregroundColor(SP.Colors.textSecondary)
+                        Text(
+                            String(
+                                localized: "achievements.unlocked_count \(service.achievements.filter(\.isUnlocked).count) \(service.achievements.count)"
+                            )
+                        )
+                        .font(SP.Typography.subheadline)
+                        .foregroundColor(SP.Colors.textSecondary)
                     }
                     .padding(.top, 12)
                     .opacity(appear ? 1 : 0)

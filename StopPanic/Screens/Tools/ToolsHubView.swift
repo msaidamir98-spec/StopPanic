@@ -11,6 +11,8 @@ struct ToolsHubView: View {
     enum ToolCategory: String, CaseIterable {
         case emergency, breathing, techniques
 
+        // MARK: Internal
+
         var title: String {
             switch self {
             case .emergency: "🆘 " + String(localized: "tools_cat_emergency")
@@ -69,10 +71,14 @@ struct ToolsHubView: View {
 
     // MARK: Private
 
-    @State private var selectedCategory: ToolCategory = .emergency
-    @State private var appear = false
+    @State
+    private var selectedCategory: ToolCategory = .emergency
+    @State
+    private var appear = false
 
-    private var isPremium: Bool { coordinator.premiumManager.isPremium }
+    private var isPremium: Bool {
+        coordinator.premiumManager.isPremium
+    }
 
     // MARK: - Data
 
@@ -313,14 +319,18 @@ struct ToolsHubView: View {
                 }
             } else {
                 // Locked premium items
-                premiumLockedCard(icon: "figure.strengthtraining.traditional",
+                premiumLockedCard(
+                    icon: "figure.strengthtraining.traditional",
                     title: String(localized: "tools_muscle_title"),
                     subtitle: String(localized: "tools_muscle_sub"),
-                    color: SP.Colors.warmth)
-                premiumLockedCard(icon: "brain.head.profile",
+                    color: SP.Colors.warmth
+                )
+                premiumLockedCard(
+                    icon: "brain.head.profile",
                     title: String(localized: "tools_cognitive_title"),
                     subtitle: String(localized: "tools_cognitive_sub"),
-                    color: SP.Colors.accent)
+                    color: SP.Colors.accent
+                )
             }
 
             NavigationLink {
@@ -334,6 +344,41 @@ struct ToolsHubView: View {
                 )
             }
         }
+    }
+
+    // MARK: - Crisis
+
+    private var crisisLineCard: some View {
+        VStack(alignment: .leading, spacing: 10) {
+            HStack {
+                Image(systemName: "phone.fill")
+                    .foregroundColor(SP.Colors.success)
+                Text(String(localized: "tools_crisis_title"))
+                    .font(SP.Typography.headline)
+                    .foregroundColor(SP.Colors.textPrimary)
+            }
+
+            let line = SOSService.getCrisisLine()
+            Button {
+                if let url = URL(string: "tel://\(line.replacingOccurrences(of: " ", with: "").replacingOccurrences(of: "-", with: ""))") {
+                    UIApplication.shared.open(url)
+                }
+            } label: {
+                HStack {
+                    Text("📞 \(line)")
+                        .font(SP.Typography.title3)
+                        .foregroundColor(SP.Colors.success)
+                    Spacer()
+                    Text(String(localized: "tools_crisis_call"))
+                        .font(SP.Typography.caption)
+                        .foregroundColor(SP.Colors.success)
+                        .padding(.horizontal, 12)
+                        .padding(.vertical, 6)
+                        .background(Capsule().fill(SP.Colors.success.opacity(0.15)))
+                }
+            }
+        }
+        .spGlassCard(cornerRadius: SP.Layout.cornerMedium)
     }
 
     private func premiumLockedCard(icon: String, title: String, subtitle: String, color: Color) -> some View {
@@ -370,41 +415,6 @@ struct ToolsHubView: View {
             .spGlassCard(cornerRadius: SP.Layout.cornerMedium)
         }
         .buttonStyle(PremiumButtonStyle())
-    }
-
-    // MARK: - Crisis
-
-    private var crisisLineCard: some View {
-        VStack(alignment: .leading, spacing: 10) {
-            HStack {
-                Image(systemName: "phone.fill")
-                    .foregroundColor(SP.Colors.success)
-                Text(String(localized: "tools_crisis_title"))
-                    .font(SP.Typography.headline)
-                    .foregroundColor(SP.Colors.textPrimary)
-            }
-
-            let line = SOSService.getCrisisLine()
-            Button {
-                if let url = URL(string: "tel://\(line.replacingOccurrences(of: " ", with: "").replacingOccurrences(of: "-", with: ""))") {
-                    UIApplication.shared.open(url)
-                }
-            } label: {
-                HStack {
-                    Text("📞 \(line)")
-                        .font(SP.Typography.title3)
-                        .foregroundColor(SP.Colors.success)
-                    Spacer()
-                    Text(String(localized: "tools_crisis_call"))
-                        .font(SP.Typography.caption)
-                        .foregroundColor(SP.Colors.success)
-                        .padding(.horizontal, 12)
-                        .padding(.vertical, 6)
-                        .background(Capsule().fill(SP.Colors.success.opacity(0.15)))
-                }
-            }
-        }
-        .spGlassCard(cornerRadius: SP.Layout.cornerMedium)
     }
 }
 

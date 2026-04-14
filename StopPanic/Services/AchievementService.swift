@@ -41,6 +41,7 @@ final class AchievementService: ObservableObject {
     // MARK: Private
 
     private static let log = Logger(subsystem: "MSK-PRODUKT.StopPanic", category: "AchievementService")
+
     private let persistence: PersistenceController
 
     private func saveAchievement(_ achievement: Achievement) {

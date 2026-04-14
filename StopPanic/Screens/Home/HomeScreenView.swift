@@ -270,7 +270,8 @@ struct HomeScreenView: View {
                     gradient: SP.Colors.sosGradient
                 ) { coordinator.selectedTab = .heart }
                 QuickActionCard(
-                    icon: "figure.strengthtraining.traditional", title: String(localized: "home_relax"), subtitle: String(localized: "home_relax_sub"),
+                    icon: "figure.strengthtraining.traditional", title: String(localized: "home_relax"),
+                    subtitle: String(localized: "home_relax_sub"),
                     color: SP.Colors.warmth, gradient: SP.Colors.warmGradient
                 ) { coordinator.selectedTab = .tools }
             }

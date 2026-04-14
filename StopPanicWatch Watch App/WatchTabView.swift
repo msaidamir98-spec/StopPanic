@@ -2,9 +2,11 @@ import SwiftUI
 
 /// Главный TabView для Apple Watch — vertical page navigation
 struct WatchTabView: View {
-    @ObservedObject var heartService: WatchHeartService
-    @ObservedObject var connectivity: WatchConnectionManager
-    
+    @ObservedObject
+    var heartService: WatchHeartService
+    @ObservedObject
+    var connectivity: WatchConnectionManager
+
     var body: some View {
         TabView {
             WatchHomeView(heartService: heartService, connectivity: connectivity)

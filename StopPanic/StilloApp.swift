@@ -81,7 +81,7 @@ struct StilloApp: App {
 
     private func scheduleAppRefresh() {
         let request = BGAppRefreshTaskRequest(identifier: "com.stillo.breathingReminder")
-        request.earliestBeginDate = Date(timeIntervalSinceNow: 4 * 3600)
+        request.earliestBeginDate = Date(timeIntervalSinceNow: 4 * 3_600)
         do {
             try BGTaskScheduler.shared.submit(request)
         } catch {

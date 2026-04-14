@@ -3,11 +3,13 @@ import Foundation
 /// Достижения и геймификация
 struct Achievement: Codable, Identifiable {
     enum Category: String, Codable, CaseIterable {
-        case streak = "streak"
-        case breathing = "breathing"
-        case diary = "diary"
-        case techniques = "techniques"
-        case milestone = "milestone"
+        case streak
+        case breathing
+        case diary
+        case techniques
+        case milestone
+
+        // MARK: Internal
 
         var localizedTitle: String {
             switch self {
