@@ -114,11 +114,11 @@ struct PaywallView: View {
                         HStack(spacing: 16) {
                             Link(
                                 String(localized: "paywall_terms"),
-                                destination: URL(string: "https://msaidamir98-spec.github.io/StopPanic/terms.html")!
+                                destination: URL(string: "https://msaidamir98-spec.github.io/Stillo/terms.html")!
                             )
                             Link(
                                 String(localized: "paywall_privacy"),
-                                destination: URL(string: "https://msaidamir98-spec.github.io/StopPanic/privacy.html")!
+                                destination: URL(string: "https://msaidamir98-spec.github.io/Stillo/privacy.html")!
                             )
                         }
                         .font(SP.Typography.caption2)

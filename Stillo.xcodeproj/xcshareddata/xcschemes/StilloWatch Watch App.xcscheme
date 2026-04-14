@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <Scheme
    LastUpgradeVersion = "2640"
-   version = "1.8">
+   version = "1.7">
    <BuildAction
       parallelizeBuildables = "YES"
       buildImplicitDependencies = "YES"
@@ -15,10 +15,10 @@
             buildForAnalyzing = "YES">
             <BuildableReference
                BuildableIdentifier = "primary"
-               BlueprintIdentifier = "6647ADFE2EFC144600A1E680"
+               BlueprintIdentifier = "AA10000000000003WATCHTGT"
                BuildableName = "Stillo&#x304;.app"
-               BlueprintName = "StopPanic"
-               ReferencedContainer = "container:StopPanic.xcodeproj">
+               BlueprintName = "StilloWatch Watch App"
+               ReferencedContainer = "container:Stillo.xcodeproj">
             </BuildableReference>
          </BuildActionEntry>
       </BuildActionEntries>
@@ -28,8 +28,7 @@
       selectedDebuggerIdentifier = "Xcode.DebuggerFoundation.Debugger.LLDB"
       selectedLauncherIdentifier = "Xcode.DebuggerFoundation.Launcher.LLDB"
       shouldUseLaunchSchemeArgsEnv = "YES"
-      shouldAutocreateTestPlan = "YES"
-      storeKitConfiguration = "StopPanic/Products.storekit">
+      shouldAutocreateTestPlan = "YES">
    </TestAction>
    <LaunchAction
       buildConfiguration = "Debug"
@@ -40,16 +39,15 @@
       ignoresPersistentStateOnLaunch = "NO"
       debugDocumentVersioning = "YES"
       debugServiceExtension = "internal"
-      allowLocationSimulation = "YES"
-      storeKitConfiguration = "StopPanic/Products.storekit">
+      allowLocationSimulation = "YES">
       <BuildableProductRunnable
          runnableDebuggingMode = "0">
          <BuildableReference
             BuildableIdentifier = "primary"
-            BlueprintIdentifier = "6647ADFE2EFC144600A1E680"
+            BlueprintIdentifier = "AA10000000000003WATCHTGT"
             BuildableName = "Stillo&#x304;.app"
-            BlueprintName = "StopPanic"
-            ReferencedContainer = "container:StopPanic.xcodeproj">
+            BlueprintName = "StilloWatch Watch App"
+            ReferencedContainer = "container:Stillo.xcodeproj">
          </BuildableReference>
       </BuildableProductRunnable>
    </LaunchAction>
@@ -63,10 +61,10 @@
          runnableDebuggingMode = "0">
          <BuildableReference
             BuildableIdentifier = "primary"
-            BlueprintIdentifier = "6647ADFE2EFC144600A1E680"
+            BlueprintIdentifier = "AA10000000000003WATCHTGT"
             BuildableName = "Stillo&#x304;.app"
-            BlueprintName = "StopPanic"
-            ReferencedContainer = "container:StopPanic.xcodeproj">
+            BlueprintName = "StilloWatch Watch App"
+            ReferencedContainer = "container:Stillo.xcodeproj">
          </BuildableReference>
       </BuildableProductRunnable>
    </ProfileAction>

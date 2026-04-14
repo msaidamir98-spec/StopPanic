@@ -35,20 +35,20 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
-		6647ADFF2EFC144600A1E680 /* StopPanic.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; name = StopPanic.app; path = "Stillō.app"; sourceTree = BUILT_PRODUCTS_DIR; };
+		6647ADFF2EFC144600A1E680 /* Stillo.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; name = Stillo.app; path = "Stillō.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		66BA421D2F8ED77700C0F6D0 /* Stillō.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Stillō.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		BB10000000000001WIDGTAPP /* StilloWidgetExtension.appex */ = {isa = PBXFileReference; explicitFileType = "wrapper.app-extension"; includeInIndex = 0; path = StilloWidgetExtension.appex; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
 
 /* Begin PBXFileSystemSynchronizedRootGroup section */
-		6647AE012EFC144600A1E680 /* StopPanic */ = {
+		6647AE012EFC144600A1E680 /* Stillo */ = {
 			isa = PBXFileSystemSynchronizedRootGroup;
-			path = StopPanic;
+			path = Stillo;
 			sourceTree = "<group>";
 		};
-		AA10000000000010WATCHGRP /* StopPanicWatch Watch App */ = {
+		AA10000000000010WATCHGRP /* StilloWatch Watch App */ = {
 			isa = PBXFileSystemSynchronizedRootGroup;
-			path = "StopPanicWatch Watch App";
+			path = "StilloWatch Watch App";
 			sourceTree = "<group>";
 		};
 		BB10000000000010WIDGTGRP /* StilloWidget */ = {
@@ -86,7 +86,7 @@
 		6647ADF62EFC144600A1E680 = {
 			isa = PBXGroup;
 			children = (
-				6647AE012EFC144600A1E680 /* StopPanic */,
+				6647AE012EFC144600A1E680 /* Stillo */,
 				BB10000000000010WIDGTGRP /* StilloWidget */,
 				6647AE002EFC144600A1E680 /* Products */,
 				66BA421C2F8ED77700C0F6D0 /* Recovered References */,
@@ -96,7 +96,7 @@
 		6647AE002EFC144600A1E680 /* Products */ = {
 			isa = PBXGroup;
 			children = (
-				6647ADFF2EFC144600A1E680 /* StopPanic.app */,
+				6647ADFF2EFC144600A1E680 /* Stillo.app */,
 				BB10000000000001WIDGTAPP /* StilloWidgetExtension.appex */,
 				66BA421D2F8ED77700C0F6D0 /* Stillō.app */,
 			);
@@ -106,7 +106,7 @@
 		66BA421C2F8ED77700C0F6D0 /* Recovered References */ = {
 			isa = PBXGroup;
 			children = (
-				AA10000000000010WATCHGRP /* StopPanicWatch Watch App */,
+				AA10000000000010WATCHGRP /* StilloWatch Watch App */,
 			);
 			name = "Recovered References";
 			sourceTree = "<group>";
@@ -114,9 +114,9 @@
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
-		6647ADFE2EFC144600A1E680 /* StopPanic */ = {
+		6647ADFE2EFC144600A1E680 /* Stillo */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = 6647AE0A2EFC144800A1E680 /* Build configuration list for PBXNativeTarget "StopPanic" */;
+			buildConfigurationList = 6647AE0A2EFC144800A1E680 /* Build configuration list for PBXNativeTarget "Stillo" */;
 			buildPhases = (
 				6647ADFB2EFC144600A1E680 /* Sources */,
 				6647ADFC2EFC144600A1E680 /* Frameworks */,
@@ -129,18 +129,18 @@
 				BB10000000000021WIDGTDEP /* PBXTargetDependency */,
 			);
 			fileSystemSynchronizedGroups = (
-				6647AE012EFC144600A1E680 /* StopPanic */,
+				6647AE012EFC144600A1E680 /* Stillo */,
 			);
-			name = StopPanic;
+			name = Stillo;
 			packageProductDependencies = (
 			);
 			productName = "Stillō";
-			productReference = 6647ADFF2EFC144600A1E680 /* StopPanic.app */;
+			productReference = 6647ADFF2EFC144600A1E680 /* Stillo.app */;
 			productType = "com.apple.product-type.application";
 		};
-		AA10000000000003WATCHTGT /* StopPanicWatch Watch App */ = {
+		AA10000000000003WATCHTGT /* StilloWatch Watch App */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = AA10000000000009WATCHCFL /* Build configuration list for PBXNativeTarget "StopPanicWatch Watch App" */;
+			buildConfigurationList = AA10000000000009WATCHCFL /* Build configuration list for PBXNativeTarget "StilloWatch Watch App" */;
 			buildPhases = (
 				AA10000000000004WATCHSRC /* Sources */,
 				AA10000000000002WATCHFWK /* Frameworks */,
@@ -151,9 +151,9 @@
 			dependencies = (
 			);
 			fileSystemSynchronizedGroups = (
-				AA10000000000010WATCHGRP /* StopPanicWatch Watch App */,
+				AA10000000000010WATCHGRP /* StilloWatch Watch App */,
 			);
-			name = "StopPanicWatch Watch App";
+			name = "StilloWatch Watch App";
 			productName = "Stillō Watch";
 			productReference = 66BA421D2F8ED77700C0F6D0 /* Stillō.app */;
 			productType = "com.apple.product-type.application";
@@ -195,7 +195,7 @@
 					};
 				};
 			};
-			buildConfigurationList = 6647ADFA2EFC144600A1E680 /* Build configuration list for PBXProject "StopPanic" */;
+			buildConfigurationList = 6647ADFA2EFC144600A1E680 /* Build configuration list for PBXProject "Stillo" */;
 			developmentRegion = en;
 			hasScannedForEncodings = 0;
 			knownRegions = (
@@ -216,8 +216,8 @@
 			projectDirPath = "";
 			projectRoot = "";
 			targets = (
-				6647ADFE2EFC144600A1E680 /* StopPanic */,
-				AA10000000000003WATCHTGT /* StopPanicWatch Watch App */,
+				6647ADFE2EFC144600A1E680 /* Stillo */,
+				AA10000000000003WATCHTGT /* StilloWatch Watch App */,
 				BB10000000000003WIDGTTGT /* StilloWidgetExtension */,
 			);
 		};
@@ -406,7 +406,7 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
-				CODE_SIGN_ENTITLEMENTS = StopPanic/StopPanic.entitlements;
+				CODE_SIGN_ENTITLEMENTS = Stillo/Stillo.entitlements;
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_TEAM = 6K26HD4XFR;
@@ -446,7 +446,7 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
-				CODE_SIGN_ENTITLEMENTS = StopPanic/StopPanic.entitlements;
+				CODE_SIGN_ENTITLEMENTS = Stillo/Stillo.entitlements;
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_TEAM = 6K26HD4XFR;
@@ -486,7 +486,7 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
-				CODE_SIGN_ENTITLEMENTS = "StopPanicWatch Watch App/StopPanicWatch.entitlements";
+				CODE_SIGN_ENTITLEMENTS = "StilloWatch Watch App/StilloWatch.entitlements";
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_ASSET_PATHS = "";
@@ -525,7 +525,7 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
-				CODE_SIGN_ENTITLEMENTS = "StopPanicWatch Watch App/StopPanicWatch.entitlements";
+				CODE_SIGN_ENTITLEMENTS = "StilloWatch Watch App/StilloWatch.entitlements";
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_ASSET_PATHS = "";
@@ -567,9 +567,9 @@
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_TEAM = 6K26HD4XFR;
 				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = StilloWidgetInfo.plist;
 				INFOPLIST_KEY_CFBundleDisplayName = "Stillo Widget";
 				INFOPLIST_KEY_NSHumanReadableCopyright = "";
-						INFOPLIST_FILE = StilloWidgetInfo.plist;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -595,9 +595,9 @@
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_TEAM = 6K26HD4XFR;
 				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = StilloWidgetInfo.plist;
 				INFOPLIST_KEY_CFBundleDisplayName = "Stillo Widget";
 				INFOPLIST_KEY_NSHumanReadableCopyright = "";
-						INFOPLIST_FILE = StilloWidgetInfo.plist;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -618,7 +618,7 @@
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
-		6647ADFA2EFC144600A1E680 /* Build configuration list for PBXProject "StopPanic" */ = {
+		6647ADFA2EFC144600A1E680 /* Build configuration list for PBXProject "Stillo" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				6647AE082EFC144800A1E680 /* Debug */,
@@ -627,7 +627,7 @@
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
-		6647AE0A2EFC144800A1E680 /* Build configuration list for PBXNativeTarget "StopPanic" */ = {
+		6647AE0A2EFC144800A1E680 /* Build configuration list for PBXNativeTarget "Stillo" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				6647AE0B2EFC144800A1E680 /* Debug */,
@@ -636,7 +636,7 @@
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
-		AA10000000000009WATCHCFL /* Build configuration list for PBXNativeTarget "StopPanicWatch Watch App" */ = {
+		AA10000000000009WATCHCFL /* Build configuration list for PBXNativeTarget "StilloWatch Watch App" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				AA10000000000006WATCHDBG /* Debug */,
