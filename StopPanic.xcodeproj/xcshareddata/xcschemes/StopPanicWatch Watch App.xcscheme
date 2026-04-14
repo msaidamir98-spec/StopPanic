@@ -16,7 +16,7 @@
             <BuildableReference
                BuildableIdentifier = "primary"
                BlueprintIdentifier = "AA10000000000003WATCHTGT"
-               BuildableName = "StopPanicWatch Watch App.app"
+               BuildableName = "Stillo&#x304;.app"
                BlueprintName = "StopPanicWatch Watch App"
                ReferencedContainer = "container:StopPanic.xcodeproj">
             </BuildableReference>
@@ -45,7 +45,7 @@
          <BuildableReference
             BuildableIdentifier = "primary"
             BlueprintIdentifier = "AA10000000000003WATCHTGT"
-            BuildableName = "StopPanicWatch Watch App.app"
+            BuildableName = "Stillo&#x304;.app"
             BlueprintName = "StopPanicWatch Watch App"
             ReferencedContainer = "container:StopPanic.xcodeproj">
          </BuildableReference>
@@ -62,7 +62,7 @@
          <BuildableReference
             BuildableIdentifier = "primary"
             BlueprintIdentifier = "AA10000000000003WATCHTGT"
-            BuildableName = "StopPanicWatch Watch App.app"
+            BuildableName = "Stillo&#x304;.app"
             BlueprintName = "StopPanicWatch Watch App"
             ReferencedContainer = "container:StopPanic.xcodeproj">
          </BuildableReference>

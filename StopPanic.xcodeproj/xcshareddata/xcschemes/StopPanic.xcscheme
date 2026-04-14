@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <Scheme
    LastUpgradeVersion = "2640"
-   version = "1.7">
+   version = "1.8">
    <BuildAction
       parallelizeBuildables = "YES"
       buildImplicitDependencies = "YES"
@@ -16,7 +16,7 @@
             <BuildableReference
                BuildableIdentifier = "primary"
                BlueprintIdentifier = "6647ADFE2EFC144600A1E680"
-               BuildableName = "StopPanic.app"
+               BuildableName = "Stillo&#x304;.app"
                BlueprintName = "StopPanic"
                ReferencedContainer = "container:StopPanic.xcodeproj">
             </BuildableReference>
@@ -47,7 +47,7 @@
          <BuildableReference
             BuildableIdentifier = "primary"
             BlueprintIdentifier = "6647ADFE2EFC144600A1E680"
-            BuildableName = "StopPanic.app"
+            BuildableName = "Stillo&#x304;.app"
             BlueprintName = "StopPanic"
             ReferencedContainer = "container:StopPanic.xcodeproj">
          </BuildableReference>
@@ -64,7 +64,7 @@
          <BuildableReference
             BuildableIdentifier = "primary"
             BlueprintIdentifier = "6647ADFE2EFC144600A1E680"
-            BuildableName = "StopPanic.app"
+            BuildableName = "Stillo&#x304;.app"
             BlueprintName = "StopPanic"
             ReferencedContainer = "container:StopPanic.xcodeproj">
          </BuildableReference>
