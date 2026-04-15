@@ -4,26 +4,34 @@ import SwiftUI
 
 // MARK: - AudioGuideService
 
-// Голосовое сопровождение дыхания и заземления.
-// Приоритет: OpenAI TTS (если настроен) → AVSpeechSynthesizer (fallback).
-// Работает с выключенным экраном через AVAudioSession.playback.
-//
-// Аудио-сессия активируется ЛЕНИВО — только при первом вызове speak(),
-// чтобы не захватывать аудиофокус без необходимости (Apple Review).
+/// Голосовое сопровождение дыхательных упражнений и заземления.
+///
+/// Трёхуровневая система голоса:
+///   1. 🥇 VoiceBankService — предзаписанные MP3 из бандла (мгновенно, оффлайн)
+///   2. 🥈 OpenAITTSService — через API OpenAI (если пользователь ввёл ключ)
+///   3. 🥉 AVSpeechSynthesizer — системный голос iOS (всегда доступен)
+///
+/// Аудио-сессия активируется лениво — только при speak(), не захватывает фокус
+/// без необходимости (Apple Review friendly).
 
 @Observable
 @MainActor
 final class AudioGuideService {
-    // MARK: Internal
-
-    // MARK: - Breath Voice Phase
+    // MARK: - Breath Phase
 
     enum BreathVoicePhase {
         case inhale, hold, exhale
     }
 
-    /// Reference to OpenAI TTS service (set by AppCoordinator)
+    // MARK: - Dependencies (injected by AppCoordinator)
+
+    /// Предзаписанные фразы — основной источник
+    var voiceBank: VoiceBankService?
+
+    /// OpenAI TTS — опциональный премиум-голос
     var ttsService: OpenAITTSService?
+
+    // MARK: - State
 
     var isVoiceEnabled: Bool {
         get {
@@ -35,29 +43,57 @@ final class AudioGuideService {
                 _isVoiceEnabled = newValue
                 UserDefaults.standard.set(newValue, forKey: "voiceGuideEnabled")
                 if !newValue {
-                    deactivateAudioSession()
+                    stop()
                 }
             }
         }
     }
 
-    /// Говорит фазу дыхания: "Вдох", "Задержка", "Выдох"
-    func speakBreathPhase(_ phase: BreathVoicePhase) {
-        guard isVoiceEnabled else { return }
-        let text = switch phase {
-        case .inhale:
-            String(localized: "voice.inhale")
-        case .hold:
-            String(localized: "voice.hold")
-        case .exhale:
-            String(localized: "voice.exhale")
-        }
-        smartSpeak(text, rate: 0.35, pitch: 0.95)
+    /// Какой источник голоса сейчас используется
+    enum VoiceSource: String {
+        case voiceBank = "Pre-recorded"
+        case openAI = "OpenAI TTS"
+        case system = "System Voice"
     }
 
-    /// Говорит шаг заземления
+    /// Текущий активный источник (для отображения в UI)
+    var activeSource: VoiceSource {
+        if let vb = voiceBank, vb.isEnabled, vb.availablePhraseCount > 0 {
+            return .voiceBank
+        }
+        if let tts = ttsService, tts.isReady {
+            return .openAI
+        }
+        return .system
+    }
+
+    // MARK: - Public API: Breathing
+
+    func speakBreathPhase(_ phase: BreathVoicePhase) {
+        guard isVoiceEnabled else { return }
+        let phrase: VoiceBankService.Phrase
+        let text: String
+        switch phase {
+        case .inhale:
+            phrase = .breatheIn
+            text = String(localized: "voice.inhale")
+        case .hold:
+            phrase = .hold
+            text = String(localized: "voice.hold")
+        case .exhale:
+            phrase = .breatheOut
+            text = String(localized: "voice.exhale")
+        }
+        smartSpeak(phrase: phrase, fallbackText: text, rate: 0.35, pitch: 0.95)
+    }
+
+    // MARK: - Public API: Grounding 5-4-3-2-1
+
     func speakGroundingStep(_ step: Int) {
         guard isVoiceEnabled else { return }
+        let phrases: [VoiceBankService.Phrase] = [
+            .groundSee, .groundTouch, .groundHear, .groundSmell, .groundTaste
+        ]
         let texts = [
             String(localized: "voice.ground_see"),
             String(localized: "voice.ground_touch"),
@@ -65,66 +101,79 @@ final class AudioGuideService {
             String(localized: "voice.ground_smell"),
             String(localized: "voice.ground_taste"),
         ]
-        let index = min(step, texts.count - 1)
-        smartSpeak(texts[index], rate: 0.36, pitch: 0.92)
+        let index = min(step, phrases.count - 1)
+        smartSpeak(phrase: phrases[index], fallbackText: texts[index], rate: 0.36, pitch: 0.92)
     }
 
-    /// Говорит аффирмацию завершения
+    // MARK: - Public API: Completion & Safety
+
     func speakCompletion() {
         guard isVoiceEnabled else { return }
-        smartSpeak(String(localized: "voice.you_did_it"), rate: 0.35, pitch: 0.98)
+        smartSpeak(phrase: .youDidIt, fallbackText: String(localized: "voice.you_did_it"), rate: 0.35, pitch: 0.98)
     }
 
-    /// Говорит "Ты в безопасности"
     func speakSafe() {
         guard isVoiceEnabled else { return }
-        smartSpeak(String(localized: "voice.you_are_safe"), rate: 0.32, pitch: 0.88)
+        smartSpeak(phrase: .youAreSafe, fallbackText: String(localized: "voice.you_are_safe"), rate: 0.32, pitch: 0.88)
     }
 
-    /// Останавливает текущую речь и деактивирует аудио-сессию
+    // MARK: - Public API: Session & SOS
+
+    func speakWelcome() {
+        guard isVoiceEnabled else { return }
+        smartSpeak(phrase: .welcome, fallbackText: String(localized: "voice.inhale"), rate: 0.34, pitch: 0.9)
+    }
+
+    func speakSessionStart() {
+        guard isVoiceEnabled else { return }
+        smartSpeak(phrase: .sessionStart, fallbackText: "", rate: 0.34, pitch: 0.9)
+    }
+
+    func speakPanicIntro() {
+        guard isVoiceEnabled else { return }
+        smartSpeak(phrase: .panicIntro, fallbackText: String(localized: "voice.you_are_safe"), rate: 0.30, pitch: 0.85)
+    }
+
+    func speakSOSCalm() {
+        guard isVoiceEnabled else { return }
+        smartSpeak(phrase: .sosCalmDown, fallbackText: String(localized: "voice.you_are_safe"), rate: 0.30, pitch: 0.85)
+    }
+
+    func speakEncouragement() {
+        guard isVoiceEnabled else { return }
+        smartSpeak(phrase: .greatJob, fallbackText: "", rate: 0.34, pitch: 0.92)
+    }
+
+    func speakAlmostDone() {
+        guard isVoiceEnabled else { return }
+        smartSpeak(phrase: .almostDone, fallbackText: "", rate: 0.34, pitch: 0.9)
+    }
+
+    func speakRelaxShoulders() {
+        guard isVoiceEnabled else { return }
+        smartSpeak(phrase: .relaxShoulders, fallbackText: "", rate: 0.32, pitch: 0.88)
+    }
+
+    func speakCloseEyes() {
+        guard isVoiceEnabled else { return }
+        smartSpeak(phrase: .closeEyes, fallbackText: "", rate: 0.32, pitch: 0.88)
+    }
+
+    func speakFocusBreath() {
+        guard isVoiceEnabled else { return }
+        smartSpeak(phrase: .focusBreath, fallbackText: "", rate: 0.32, pitch: 0.88)
+    }
+
+    /// Останавливает всё воспроизведение
     func stop() {
-        synthesizer.stopSpeaking(at: .immediate)
+        voiceBank?.stop()
         ttsService?.stop()
+        synthesizer.stopSpeaking(at: .immediate)
         deactivateAudioSession()
     }
 
-    // MARK: Private
+    // MARK: - Voice Selection (for AVSpeech fallback)
 
-    nonisolated(unsafe) private static let log = Logger(subsystem: "MSK-PRODUKT.StopPanic", category: "AudioGuide")
-
-    @ObservationIgnored
-    private var _isVoiceEnabled: Bool = UserDefaults.standard.object(forKey: "voiceGuideEnabled") != nil
-        ? UserDefaults.standard.bool(forKey: "voiceGuideEnabled")
-        : true
-
-    nonisolated(unsafe) private let synthesizer = AVSpeechSynthesizer()
-
-    private var isSessionActive = false
-
-    private func ensureAudioSession() {
-        guard !isSessionActive else { return }
-        do {
-            let session = AVAudioSession.sharedInstance()
-            try session.setCategory(.playback, mode: .spokenAudio, options: [.duckOthers])
-            try session.setActive(true)
-            isSessionActive = true
-        } catch {
-            Self.log.error("Failed to configure audio session: \(error.localizedDescription)")
-        }
-    }
-
-    private func deactivateAudioSession() {
-        guard isSessionActive else { return }
-        do {
-            let session = AVAudioSession.sharedInstance()
-            try session.setActive(false, options: .notifyOthersOnDeactivation)
-            isSessionActive = false
-        } catch {
-            Self.log.error("Failed to deactivate audio session: \(error.localizedDescription)")
-        }
-    }
-
-    /// Preferred voice identifier saved by user (nil = auto best)
     var selectedVoiceId: String? {
         get {
             access(keyPath: \.selectedVoiceId)
@@ -142,7 +191,6 @@ final class AudioGuideService {
         }
     }
 
-    /// Returns ALL voices for the current language, sorted by quality (best first)
     var availableVoices: [AVSpeechSynthesisVoice] {
         let lang = currentLanguageTag
         return AVSpeechSynthesisVoice.speechVoices()
@@ -169,24 +217,58 @@ final class AudioGuideService {
         voice.quality.rawValue >= AVSpeechSynthesisVoiceQuality.enhanced.rawValue
     }
 
-    private var currentLanguageTag: String {
-        let langCode = Locale.current.language.languageCode?.identifier ?? "en"
-        return voiceLanguage(for: langCode)
-    }
+    // MARK: - Private
+
+    nonisolated(unsafe) private static let log = Logger(
+        subsystem: "MSK-PRODUKT.StopPanic",
+        category: "AudioGuide"
+    )
+
+    @ObservationIgnored
+    private var _isVoiceEnabled: Bool = {
+        if UserDefaults.standard.object(forKey: "voiceGuideEnabled") != nil {
+            return UserDefaults.standard.bool(forKey: "voiceGuideEnabled")
+        }
+        return true
+    }()
 
     @ObservationIgnored
     private var _selectedVoiceId: String? = UserDefaults.standard.string(forKey: "selectedVoiceId")
 
-    /// Smart speak: use OpenAI TTS if available, otherwise AVSpeech fallback
-    private func smartSpeak(_ text: String, rate: Float = 0.45, pitch: Float = 1.0) {
-        if let tts = ttsService, tts.isReady {
-            tts.speak(text, speed: Double(rate) * 2.5) // map 0.35 → ~0.87
-        } else {
-            speakLocal(text, rate: rate, pitch: pitch)
+    nonisolated(unsafe) private let synthesizer = AVSpeechSynthesizer()
+
+    private var isSessionActive = false
+
+    // MARK: - Smart Speak (Three-tier cascade)
+
+    private func smartSpeak(
+        phrase: VoiceBankService.Phrase,
+        fallbackText: String,
+        rate: Float = 0.45,
+        pitch: Float = 1.0
+    ) {
+        // 🥇 Tier 1: Pre-recorded voice bank (instant, offline)
+        if let vb = voiceBank, vb.play(phrase) {
+            Self.log.info("Played from VoiceBank: \(phrase.rawValue)")
+            return
+        }
+
+        // 🥈 Tier 2: OpenAI TTS (premium, requires API key + internet)
+        if let tts = ttsService, tts.isReady, !fallbackText.isEmpty {
+            Self.log.info("Playing via OpenAI TTS: \(phrase.rawValue)")
+            tts.speak(fallbackText, speed: Double(rate) * 2.5)
+            return
+        }
+
+        // 🥉 Tier 3: System voice (always available)
+        if !fallbackText.isEmpty {
+            Self.log.info("Falling back to AVSpeech: \(phrase.rawValue)")
+            speakLocal(fallbackText, rate: rate, pitch: pitch)
         }
     }
 
-    /// Local AVSpeechSynthesizer fallback
+    // MARK: - AVSpeech Fallback
+
     private func speakLocal(_ text: String, rate: Float = 0.45, pitch: Float = 1.0) {
         ensureAudioSession()
 
@@ -200,20 +282,17 @@ final class AudioGuideService {
         utterance.volume = 0.85
         utterance.preUtteranceDelay = 0.2
         utterance.postUtteranceDelay = 0.5
-
         utterance.voice = resolveVoice()
 
         synthesizer.speak(utterance)
     }
 
-    /// Resolves the best voice: user selection → premium → enhanced → fallback
     private func resolveVoice() -> AVSpeechSynthesisVoice? {
         let lang = currentLanguageTag
 
         if let id = _selectedVoiceId,
            let voice = AVSpeechSynthesisVoice(identifier: id)
         {
-            Self.log.info("Using user-selected voice: \(voice.name) [\(voice.quality.rawValue)]")
             return voice
         }
 
@@ -221,22 +300,46 @@ final class AudioGuideService {
             .filter { $0.language == lang }
 
         if let premium = allVoices.first(where: { $0.quality == .premium }) {
-            Self.log.info("Using premium voice: \(premium.name)")
             return premium
         }
-
         if let enhanced = allVoices.first(where: { $0.quality == .enhanced }) {
-            Self.log.info("Using enhanced voice: \(enhanced.name)")
             return enhanced
         }
+        return allVoices.first ?? AVSpeechSynthesisVoice(language: lang)
+    }
 
-        if let any = allVoices.first {
-            Self.log.info("Using default voice: \(any.name)")
-            return any
+    // MARK: - Audio Session
+
+    private func ensureAudioSession() {
+        guard !isSessionActive else { return }
+        do {
+            let session = AVAudioSession.sharedInstance()
+            try session.setCategory(.playback, mode: .spokenAudio, options: [.duckOthers])
+            try session.setActive(true)
+            isSessionActive = true
+        } catch {
+            Self.log.error("Audio session error: \(error.localizedDescription)")
         }
+    }
 
-        Self.log.warning("No voice found for \(lang), using system fallback")
-        return AVSpeechSynthesisVoice(language: lang)
+    private func deactivateAudioSession() {
+        guard isSessionActive else { return }
+        do {
+            try AVAudioSession.sharedInstance().setActive(
+                false,
+                options: .notifyOthersOnDeactivation
+            )
+            isSessionActive = false
+        } catch {
+            Self.log.error("Session deactivation error: \(error.localizedDescription)")
+        }
+    }
+
+    // MARK: - Language Mapping
+
+    private var currentLanguageTag: String {
+        let code = Locale.current.language.languageCode?.identifier ?? "en"
+        return voiceLanguage(for: code)
     }
 
     private func voiceLanguage(for code: String) -> String {

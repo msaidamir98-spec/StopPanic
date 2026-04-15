@@ -24,6 +24,7 @@ final class AppCoordinator {
     let premiumManager = PremiumManager.shared
     let streakService = StreakService()
     let reviewService = ReviewService.shared
+    let voiceBank = VoiceBankService()
     let audioGuide = AudioGuideService()
     let ttsService = OpenAITTSService()
     let ambientSound = AmbientSoundService()
@@ -35,8 +36,10 @@ final class AppCoordinator {
     var showBreathingSheet: Bool = false
     var showPaywall: Bool = false
 
-    // Wire up TTS → AudioGuide on first access
+    // Wire up dependencies: VoiceBank + TTS → AudioGuide
     func bootstrap() {
+        voiceBank.warmUp()
+        audioGuide.voiceBank = voiceBank
         audioGuide.ttsService = ttsService
     }
 

@@ -801,3 +801,12 @@
 "insight.trend_attention" = "More episodes this week — be gentle with yourself";
 "journal.mood_trend" = "Mood Trend";
 "journal.edit_mood_title" = "Edit Mood";
+
+/* Voice Bank Settings */
+"settings.voice_bank_ready" = "Premium voice ready";
+"settings.voice_phrases" = "phrases";
+"settings.voice_volume" = "Voice Volume";
+"settings.test_voice" = "Test Voice";
+"settings.voice_source_bank" = "Premium pre-recorded voice";
+"settings.voice_source_openai" = "OpenAI neural voice (online)";
+"settings.voice_source_system" = "System voice (offline fallback)";

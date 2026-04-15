@@ -3,7 +3,7 @@ import SwiftUI
 // MARK: - SettingsView
 
 /// Полноценный экран настроек приложения.
-/// Собирает все опции: голос, звуки, тема, уведомления, здоровье, OpenAI, экспорт.
+/// Собирает все опции: голос, звуки, тема, уведомления, здоровье, экспорт.
 
 struct SettingsView: View {
     // MARK: Internal
@@ -42,7 +42,7 @@ struct SettingsView: View {
     @State private var appear = false
     @State private var showAPIKeyField = false
 
-    // MARK: - Voice Guide (Legacy AVSpeech)
+    // MARK: - Voice Guide Section
 
     private var voiceSection: some View {
         VStack(alignment: .leading, spacing: 12) {
@@ -56,10 +56,74 @@ struct SettingsView: View {
             .foregroundColor(SP.Colors.textPrimary)
             .tint(SP.Colors.accent)
 
-            if coordinator.audioGuide.isVoiceEnabled && !coordinator.ttsService.isReady {
-                Text(String(localized: "settings.voice_fallback_hint"))
-                    .font(SP.Typography.caption2)
-                    .foregroundColor(SP.Colors.textTertiary)
+            if coordinator.audioGuide.isVoiceEnabled {
+                // Show current voice source
+                let source = coordinator.audioGuide.activeSource
+                HStack(spacing: 8) {
+                    Circle()
+                        .fill(source == .voiceBank ? SP.Colors.success : source == .openAI ? SP.Colors.accent : SP.Colors.textTertiary)
+                        .frame(width: 8, height: 8)
+                    Text(voiceSourceLabel(source))
+                        .font(SP.Typography.caption2)
+                        .foregroundColor(SP.Colors.textSecondary)
+                    Spacer()
+                }
+
+                // Voice bank info
+                if coordinator.voiceBank.availablePhraseCount > 0 {
+                    HStack(spacing: 6) {
+                        Image(systemName: "checkmark.seal.fill")
+                            .foregroundColor(SP.Colors.success)
+                            .font(.system(size: 14))
+                        Text(String(localized: "settings.voice_bank_ready"))
+                            .font(SP.Typography.caption2)
+                            .foregroundColor(SP.Colors.success)
+                        Spacer()
+                        Text("\(coordinator.voiceBank.availablePhraseCount) " + String(localized: "settings.voice_phrases"))
+                            .font(SP.Typography.caption2)
+                            .foregroundColor(SP.Colors.textTertiary)
+                    }
+                }
+
+                // Volume slider
+                VStack(alignment: .leading, spacing: 4) {
+                    Text(String(localized: "settings.voice_volume"))
+                        .font(SP.Typography.caption2)
+                        .foregroundColor(SP.Colors.textTertiary)
+                    HStack(spacing: 10) {
+                        Image(systemName: "speaker.fill")
+                            .font(.system(size: 10))
+                            .foregroundColor(SP.Colors.textTertiary)
+                        Slider(
+                            value: Binding(
+                                get: { Double(coordinator.voiceBank.volume) },
+                                set: { coordinator.voiceBank.volume = Float($0) }
+                            ),
+                            in: 0.1...1.0
+                        )
+                        .tint(SP.Colors.accent)
+                        Image(systemName: "speaker.wave.3.fill")
+                            .font(.system(size: 10))
+                            .foregroundColor(SP.Colors.textTertiary)
+                    }
+                }
+
+                // Test button
+                Button {
+                    SP.Haptic.light()
+                    coordinator.audioGuide.speakSafe()
+                } label: {
+                    HStack {
+                        Image(systemName: "play.circle.fill")
+                        Text(String(localized: "settings.test_voice"))
+                    }
+                    .font(SP.Typography.subheadline)
+                    .foregroundColor(.white)
+                    .frame(maxWidth: .infinity)
+                    .padding(.vertical, 10)
+                    .background(SP.Colors.heroGradient)
+                    .clipShape(RoundedRectangle(cornerRadius: SP.Layout.cornerSmall))
+                }
             }
         }
         .spGlassCard(cornerRadius: SP.Layout.cornerMedium)
@@ -67,11 +131,11 @@ struct SettingsView: View {
         .animation(SP.Anim.spring.delay(0.05), value: appear)
     }
 
-    // MARK: - OpenAI TTS
+    // MARK: - OpenAI TTS (Optional Premium)
 
     private var openAISection: some View {
         VStack(alignment: .leading, spacing: 12) {
-            sectionHeader(icon: "waveform.circle.fill", title: String(localized: "settings.openai_tts"), color: SP.Colors.accent)
+            sectionHeader(icon: "waveform.circle.fill", title: "OpenAI TTS", color: SP.Colors.accent)
 
             Text(String(localized: "settings.openai_description"))
                 .font(SP.Typography.caption)
@@ -342,6 +406,14 @@ struct SettingsView: View {
     }
 
     // MARK: - Helpers
+
+    private func voiceSourceLabel(_ source: AudioGuideService.VoiceSource) -> String {
+        switch source {
+        case .voiceBank: String(localized: "settings.voice_source_bank")
+        case .openAI: String(localized: "settings.voice_source_openai")
+        case .system: String(localized: "settings.voice_source_system")
+        }
+    }
 
     private func sectionHeader(icon: String, title: String, color: Color) -> some View {
         HStack(spacing: 10) {
