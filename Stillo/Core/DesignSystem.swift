@@ -485,6 +485,7 @@ struct AmbientBackground: View {
                 )
             }
         }
+        .allowsHitTesting(false)
         .onAppear {
             withAnimation(SP.Anim.float) {
                 animate = true

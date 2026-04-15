@@ -185,9 +185,9 @@ final class AmbientSoundService {
         guard let track = selectedMusic else { return }
         stopMusic(fade: false)
 
-        guard let url = Bundle.main.url(forResource: track.fileName, withExtension: "mp3") else {
+        guard let url = Self.audioURL(for: track.fileName) else {
             Self.log.warning("Music file not found: \(track.fileName).mp3")
-            isMusicPlaying = true // UI stays on — file just missing
+            isMusicPlaying = false
             return
         }
 
@@ -231,9 +231,8 @@ final class AmbientSoundService {
 
     /// Play a nature sound
     func playNatureSound(_ sound: NatureSound) {
-        guard let url = Bundle.main.url(forResource: sound.fileName, withExtension: "mp3") else {
+        guard let url = Self.audioURL(for: sound.fileName) else {
             Self.log.warning("Nature sound not found: \(sound.fileName).mp3")
-            activeNatureSounds.insert(sound) // UI stays on
             return
         }
 
@@ -333,6 +332,30 @@ final class AmbientSoundService {
 
     @ObservationIgnored
     private var sessionActive = false
+
+    /// Find audio file in bundle — checks subdirectories too
+    private static func audioURL(for name: String) -> URL? {
+        // Try direct bundle lookup
+        if let url = Bundle.main.url(forResource: name, withExtension: "mp3") {
+            return url
+        }
+        // Try Resources/Audio subdirectory
+        if let url = Bundle.main.url(forResource: name, withExtension: "mp3", subdirectory: "Audio") {
+            return url
+        }
+        // Search recursively
+        if let resourcePath = Bundle.main.resourcePath {
+            let fm = FileManager.default
+            if let enumerator = fm.enumerator(atPath: resourcePath) {
+                while let file = enumerator.nextObject() as? String {
+                    if file.hasSuffix("/\(name).mp3") || file == "\(name).mp3" {
+                        return URL(fileURLWithPath: resourcePath).appendingPathComponent(file)
+                    }
+                }
+            }
+        }
+        return nil
+    }
 
     private func ensureSession() {
         guard !sessionActive else { return }

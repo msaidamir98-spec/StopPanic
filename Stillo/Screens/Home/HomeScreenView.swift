@@ -421,29 +421,46 @@ struct ScaleButtonStyle: ButtonStyle {
 
 /// Disables rubber-band bounce on any ScrollView ancestor.
 /// SwiftUI has no native API for this — must drop to UIKit.
+/// Uses repeated attempts because SwiftUI view hierarchy may not be ready immediately.
 struct ScrollBounceDisabler: UIViewRepresentable {
     func makeUIView(context _: Context) -> UIView {
-        let view = UIView()
-        DispatchQueue.main.async {
-            if let scrollView = Self.findScrollView(in: view) {
-                scrollView.bounces = false
-                scrollView.alwaysBounceVertical = false
+        let view = UIView(frame: .zero)
+        view.backgroundColor = .clear
+        view.isUserInteractionEnabled = false
+        // Try multiple times — SwiftUI hierarchy may assemble asynchronously
+        for delay in [0.0, 0.05, 0.15, 0.3, 0.6] {
+            DispatchQueue.main.asyncAfter(deadline: .now() + delay) {
+                Self.disableBounce(from: view)
             }
         }
         return view
     }
 
-    func updateUIView(_: UIView, context _: Context) {}
+    func updateUIView(_ uiView: UIView, context _: Context) {
+        DispatchQueue.main.async {
+            Self.disableBounce(from: uiView)
+        }
+    }
 
-    private static func findScrollView(in view: UIView) -> UIScrollView? {
-        if let scrollView = view as? UIScrollView { return scrollView }
-        for sub in view.superview?.subviews ?? [] {
-            if let sv = sub as? UIScrollView { return sv }
+    private static func disableBounce(from view: UIView) {
+        var current: UIView? = view
+        while let v = current {
+            if let sv = v as? UIScrollView {
+                sv.bounces = false
+                sv.alwaysBounceVertical = false
+                sv.alwaysBounceHorizontal = false
+                return
+            }
+            // Also check siblings
+            for sub in v.superview?.subviews ?? [] {
+                if let sv = sub as? UIScrollView {
+                    sv.bounces = false
+                    sv.alwaysBounceVertical = false
+                    sv.alwaysBounceHorizontal = false
+                    return
+                }
+            }
+            current = v.superview
         }
-        // Walk up the view hierarchy
-        if let parent = view.superview {
-            return findScrollView(in: parent)
-        }
-        return nil
     }
 }
