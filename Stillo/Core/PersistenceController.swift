@@ -11,9 +11,19 @@ final class PersistenceController {
     // MARK: Lifecycle
 
     private init() {
-        container = NSPersistentCloudKitContainer(name: "Stillo")
+        // Check at runtime whether the iCloud entitlement is present.
+        // NSPersistentCloudKitContainer crashes immediately without it,
+        // so we fall back to a plain NSPersistentContainer for local-only builds.
+        let hasCloudEntitlement = Self.iCloudEntitlementAvailable()
 
-        // CloudKit конфигурация
+        if hasCloudEntitlement {
+            container = NSPersistentCloudKitContainer(name: "Stillo")
+        } else {
+            Self.log.info("iCloud entitlement not found — using local-only Core Data")
+            container = NSPersistentContainer(name: "Stillo")
+        }
+
+        // Store description
         guard let description = container.persistentStoreDescriptions.first else {
             Self.log.fault("No persistent store descriptions — falling back to in-memory store")
             let fallback = NSPersistentStoreDescription()
@@ -26,18 +36,19 @@ final class PersistenceController {
             return
         }
 
-        description.cloudKitContainerOptions = NSPersistentCloudKitContainerOptions(
-            containerIdentifier: "iCloud.MSK-PRODUKT.StopPanic"
-        )
+        if hasCloudEntitlement {
+            description.cloudKitContainerOptions = NSPersistentCloudKitContainerOptions(
+                containerIdentifier: "iCloud.MSK-PRODUKT.StopPanic"
+            )
+        }
 
-        // Включаем автоматический merge из CloudKit
+        // History tracking (needed for CloudKit sync, harmless without it)
         description.setOption(true as NSNumber, forKey: NSPersistentHistoryTrackingKey)
         description.setOption(true as NSNumber, forKey: NSPersistentStoreRemoteChangeNotificationPostOptionKey)
 
         container.loadPersistentStores { [weak self] _, error in
             if let error {
                 Self.log.error("Core Data failed to load: \(error.localizedDescription)")
-                // Помечаем как неработоспособный — save() будет no-op
                 Task { @MainActor in self?.storeLoadFailed = true }
             }
         }
@@ -45,13 +56,14 @@ final class PersistenceController {
         container.viewContext.automaticallyMergesChangesFromParent = true
         container.viewContext.mergePolicy = NSMergeByPropertyObjectTrumpMergePolicy
 
-        // Подписка на удалённые изменения
-        NotificationCenter.default.addObserver(
-            forName: .NSPersistentStoreRemoteChange,
-            object: container.persistentStoreCoordinator,
-            queue: .main
-        ) { _ in
-            Self.log.info("Received remote CloudKit change")
+        if hasCloudEntitlement {
+            NotificationCenter.default.addObserver(
+                forName: .NSPersistentStoreRemoteChange,
+                object: container.persistentStoreCoordinator,
+                queue: .main
+            ) { _ in
+                Self.log.info("Received remote CloudKit change")
+            }
         }
     }
 
@@ -59,7 +71,7 @@ final class PersistenceController {
 
     static let shared = PersistenceController()
 
-    let container: NSPersistentCloudKitContainer
+    let container: NSPersistentContainer
 
     /// Флаг: загрузка хранилища не удалась
     private(set) var storeLoadFailed = false
@@ -168,14 +180,11 @@ final class PersistenceController {
         }
 
         if migrated {
-            // Сохраняем СНАЧАЛА — если save не удался, НЕ удаляем JSON
             guard save() else {
                 Self.log.error("Migration save failed — keeping JSON files for retry")
-                // Откатываем несохранённые изменения
                 viewContext.rollback()
                 return
             }
-            // Только после успешного save удаляем старые файлы
             try? FileManager.default.removeItem(at: diaryURL)
             try? FileManager.default.removeItem(at: achieveURL)
             try? FileManager.default.removeItem(at: moodURL)
@@ -190,4 +199,13 @@ final class PersistenceController {
     // MARK: Private
 
     private static let log = Logger(subsystem: "MSK-PRODUKT.StopPanic", category: "Persistence")
+
+    /// Checks whether the running binary has the iCloud entitlement.
+    /// On device without the entitlement (e.g. Personal team), returns false
+    /// so we avoid instantiating NSPersistentCloudKitContainer which would crash.
+    private static func iCloudEntitlementAvailable() -> Bool {
+        // If we can get a ubiquity container URL, the entitlement is present
+        // This call returns nil instantly (no network) when entitlement is missing
+        return FileManager.default.url(forUbiquityContainerIdentifier: nil) != nil
+    }
 }
