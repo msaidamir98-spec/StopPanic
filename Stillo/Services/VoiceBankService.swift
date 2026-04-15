@@ -141,7 +141,7 @@ final class VoiceBankService {
 
     // MARK: - Private
 
-    nonisolated(unsafe) private static let log = Logger(
+    private static let log = Logger(
         subsystem: "MSK-PRODUKT.StopPanic",
         category: "VoiceBank"
     )
