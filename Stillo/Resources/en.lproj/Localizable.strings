@@ -822,3 +822,24 @@
 "settings.voice_openai_need_key" = "Requires API key";
 "settings.voice_no_phrases" = "No pre-recorded phrases available";
 "voice.configure_in_settings" = "Configure voice in Settings";
+
+// CBT & Grounding voice phrases (medically grounded)
+"voice.body_relax" = "Relax your body. Let the tension flow out with each breath.";
+"voice.feet_on_floor" = "Feel your feet on the floor. You are grounded. You are here.";
+"voice.safe_place" = "Picture a safe place. You are protected. Nothing can hurt you.";
+"voice.not_in_danger" = "You are not in danger. Your body is reacting, but you are safe.";
+"voice.this_will_pass" = "This will pass. It always does. Just breathe.";
+"voice.slow_down" = "Slow down. There is no rush. Take your time.";
+"voice.name_objects" = "Name 3 objects around you. Describe their color and shape.";
+"voice.cold_water" = "Hold something cold — a glass, ice, cold water. Focus on the sensation.";
+"voice.tense_fists" = "Make a fist, squeeze tight, hold for 5 seconds, then release.";
+"voice.count_backward" = "Count backward from ten. Ten, nine, eight…";
+"voice.affirm_strong" = "You are stronger than you think. You have survived this before.";
+"voice.affirm_control" = "You are in control. Your mind is clear. Your body is calm.";
+"voice.progressive_relax" = "Tense your shoulders, hold for 5 seconds, then release. Feel the warmth.";
+"voice.mindful_notice" = "Notice your thoughts without judging them. Let them pass like clouds.";
+"voice.gratitude_one" = "Think of one thing you are grateful for right now.";
+
+// OpenAI TTS status
+"settings.openai_status_ready" = "Connected — voice ready";
+"settings.openai_status_no_key" = "API key not configured";

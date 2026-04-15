@@ -132,14 +132,18 @@ final class OpenAITTSService {
 
     /// Is API key configured and service enabled?
     var isReady: Bool {
-        isEnabled && !apiKey.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty
+        isEnabled && !resolvedAPIKey.isEmpty
     }
+
+    /// Ссылка на ambient — для восстановления сессии после голоса
+    var ambientSound: AmbientSoundService?
 
     // MARK: - Public API
 
     /// Speak text through OpenAI TTS with caching
     func speak(_ text: String, speed: Double = 0.85) {
         guard isReady else { return }
+        let key = resolvedAPIKey
         let cacheKey = "\(selectedVoice.rawValue)_\(selectedModel.rawValue)_\(text.hashValue)"
         Task {
             isLoading = true
@@ -151,7 +155,7 @@ final class OpenAITTSService {
                     audioURL = cached
                 } else {
                     Self.log.info("Fetched and cached TTS: \(cacheKey)")
-                    audioURL = try await fetchAndCache(text: text, speed: speed, cacheKey: cacheKey)
+                    audioURL = try await fetchAndCache(text: text, speed: speed, cacheKey: cacheKey, apiKey: key)
                 }
                 try await playAudio(url: audioURL)
             } catch {
@@ -169,7 +173,7 @@ final class OpenAITTSService {
     func stop() {
         player?.stop()
         isSpeaking = false
-        deactivateSession()
+        ambientSound?.recoverSession()
     }
 
     /// Clear all cached audio files
@@ -197,37 +201,52 @@ final class OpenAITTSService {
     @ObservationIgnored
     private var _isLoading = false
     @ObservationIgnored
-    nonisolated(unsafe) private var player: AVAudioPlayer?
-    @ObservationIgnored
-    private var sessionActive = false
+    private var player: AVAudioPlayer?
 
     // MARK: - Audio Session
 
     private func ensureSession() {
-        guard !sessionActive else { return }
         do {
             let session = AVAudioSession.sharedInstance()
             try session.setCategory(.playback, mode: .spokenAudio, options: [.duckOthers])
             try session.setActive(true)
-            sessionActive = true
         } catch {
             Self.log.error("Audio session setup failed: \(error.localizedDescription)")
         }
     }
 
-    private func deactivateSession() {
-        guard sessionActive else { return }
-        do {
-            try AVAudioSession.sharedInstance().setActive(false, options: .notifyOthersOnDeactivation)
-            sessionActive = false
-        } catch {
-            Self.log.error("Audio session deactivation failed: \(error.localizedDescription)")
+    // MARK: - Resolved API Key (embedded or user-provided)
+
+    /// Ключ, который реально используется для запросов.
+    /// Приоритет: 1) Embedded key (разработчик зашил), 2) Keychain (пользователь ввёл).
+    private var resolvedAPIKey: String {
+        // 1. Embedded key from developer (see OPENAI_API_KEY_SETUP.md)
+        if let embedded = Self.embeddedAPIKey, !embedded.isEmpty {
+            return embedded
         }
+        // 2. User-provided key from Keychain
+        return _apiKey.trimmingCharacters(in: .whitespacesAndNewlines)
     }
+
+    /// Embedded API key. Developer sets this in OpenAITTSConfig.swift
+    /// (file NOT tracked in Git — added to .gitignore).
+    /// See OPENAI_API_KEY_SETUP.md for instructions.
+    private static let embeddedAPIKey: String? = {
+        // Try to read from OpenAITTSConfig if available
+        // Developer creates OpenAITTSConfig.swift with:
+        //   enum OpenAITTSConfig { static let apiKey = "sk-..." }
+        #if canImport(Foundation)
+        if let key = (NSClassFromString("Stillo.OpenAITTSConfig") as? NSObject.Type)?
+            .value(forKey: "apiKey") as? String {
+            return key
+        }
+        #endif
+        return nil
+    }()
 
     // MARK: - Network
 
-    private func fetchAndCache(text: String, speed: Double, cacheKey: String) async throws -> URL {
+    private func fetchAndCache(text: String, speed: Double, cacheKey: String, apiKey: String) async throws -> URL {
         let trimmedKey = apiKey.trimmingCharacters(in: .whitespacesAndNewlines)
         guard !trimmedKey.isEmpty else {
             throw TTSError.noAPIKey
@@ -278,7 +297,8 @@ final class OpenAITTSService {
             try await Task.sleep(for: .milliseconds(100))
         }
         isSpeaking = false
-        deactivateSession()
+        // Восстанавливаем ambient вместо деактивации
+        ambientSound?.recoverSession()
     }
 
     // MARK: - Cache

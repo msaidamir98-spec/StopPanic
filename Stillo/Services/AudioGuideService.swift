@@ -31,6 +31,9 @@ final class AudioGuideService {
     /// OpenAI TTS — опциональный премиум-голос
     var ttsService: OpenAITTSService?
 
+    /// Ссылка на ambient — для восстановления сессии после голоса
+    var ambientSound: AmbientSoundService?
+
     // MARK: - State
 
     var isVoiceEnabled: Bool {
@@ -188,12 +191,90 @@ final class AudioGuideService {
         smartSpeak(phrase: .focusBreath, fallbackText: "", rate: 0.32, pitch: 0.88)
     }
 
+    // MARK: - CBT & Grounding (new medically-grounded phrases)
+
+    func speakBodyRelax() {
+        guard isVoiceEnabled else { return }
+        smartSpeak(phrase: .bodyRelax, fallbackText: String(localized: "voice.body_relax"), rate: 0.30, pitch: 0.85)
+    }
+
+    func speakFeetOnFloor() {
+        guard isVoiceEnabled else { return }
+        smartSpeak(phrase: .feetOnFloor, fallbackText: String(localized: "voice.feet_on_floor"), rate: 0.32, pitch: 0.88)
+    }
+
+    func speakSafePlace() {
+        guard isVoiceEnabled else { return }
+        smartSpeak(phrase: .safePlace, fallbackText: String(localized: "voice.safe_place"), rate: 0.30, pitch: 0.85)
+    }
+
+    func speakNotInDanger() {
+        guard isVoiceEnabled else { return }
+        smartSpeak(phrase: .notInDanger, fallbackText: String(localized: "voice.not_in_danger"), rate: 0.30, pitch: 0.85)
+    }
+
+    func speakThisWillPass() {
+        guard isVoiceEnabled else { return }
+        smartSpeak(phrase: .thisWillPass, fallbackText: String(localized: "voice.this_will_pass"), rate: 0.30, pitch: 0.85)
+    }
+
+    func speakSlowDown() {
+        guard isVoiceEnabled else { return }
+        smartSpeak(phrase: .slowDown, fallbackText: String(localized: "voice.slow_down"), rate: 0.28, pitch: 0.82)
+    }
+
+    func speakNameObjects() {
+        guard isVoiceEnabled else { return }
+        smartSpeak(phrase: .nameObjects, fallbackText: String(localized: "voice.name_objects"), rate: 0.32, pitch: 0.88)
+    }
+
+    func speakColdWater() {
+        guard isVoiceEnabled else { return }
+        smartSpeak(phrase: .coldWater, fallbackText: String(localized: "voice.cold_water"), rate: 0.32, pitch: 0.88)
+    }
+
+    func speakTenseFists() {
+        guard isVoiceEnabled else { return }
+        smartSpeak(phrase: .tenseFists, fallbackText: String(localized: "voice.tense_fists"), rate: 0.32, pitch: 0.88)
+    }
+
+    func speakCountBackward() {
+        guard isVoiceEnabled else { return }
+        smartSpeak(phrase: .countBackward, fallbackText: String(localized: "voice.count_backward"), rate: 0.32, pitch: 0.88)
+    }
+
+    func speakAffirmStrong() {
+        guard isVoiceEnabled else { return }
+        smartSpeak(phrase: .affirmStrong, fallbackText: String(localized: "voice.affirm_strong"), rate: 0.30, pitch: 0.88)
+    }
+
+    func speakAffirmControl() {
+        guard isVoiceEnabled else { return }
+        smartSpeak(phrase: .affirmControl, fallbackText: String(localized: "voice.affirm_control"), rate: 0.30, pitch: 0.88)
+    }
+
+    func speakProgressiveRelax() {
+        guard isVoiceEnabled else { return }
+        smartSpeak(phrase: .progressiveRelax, fallbackText: String(localized: "voice.progressive_relax"), rate: 0.30, pitch: 0.85)
+    }
+
+    func speakMindfulNotice() {
+        guard isVoiceEnabled else { return }
+        smartSpeak(phrase: .mindfulNotice, fallbackText: String(localized: "voice.mindful_notice"), rate: 0.30, pitch: 0.85)
+    }
+
+    func speakGratitudeOne() {
+        guard isVoiceEnabled else { return }
+        smartSpeak(phrase: .gratitudeOne, fallbackText: String(localized: "voice.gratitude_one"), rate: 0.30, pitch: 0.88)
+    }
+
     /// Останавливает всё воспроизведение
     func stop() {
         voiceBank?.stop()
         ttsService?.stop()
         synthesizer.stopSpeaking(at: .immediate)
-        deactivateAudioSession()
+        // Восстанавливаем ambient вместо деактивации общей сессии
+        ambientSound?.recoverSession()
     }
 
     // MARK: - Voice Selection (for AVSpeech fallback)
@@ -269,8 +350,6 @@ final class AudioGuideService {
     private var _selectedVoiceId: String? = UserDefaults.standard.string(forKey: "selectedVoiceId")
 
     nonisolated(unsafe) private let synthesizer = AVSpeechSynthesizer()
-
-    private var isSessionActive = false
 
     // MARK: - Smart Speak (Three-tier cascade respecting preferredSource)
 
@@ -364,27 +443,12 @@ final class AudioGuideService {
     // MARK: - Audio Session
 
     private func ensureAudioSession() {
-        guard !isSessionActive else { return }
         do {
             let session = AVAudioSession.sharedInstance()
             try session.setCategory(.playback, mode: .spokenAudio, options: [.duckOthers])
             try session.setActive(true)
-            isSessionActive = true
         } catch {
             Self.log.error("Audio session error: \(error.localizedDescription)")
-        }
-    }
-
-    private func deactivateAudioSession() {
-        guard isSessionActive else { return }
-        do {
-            try AVAudioSession.sharedInstance().setActive(
-                false,
-                options: .notifyOthersOnDeactivation
-            )
-            isSessionActive = false
-        } catch {
-            Self.log.error("Session deactivation error: \(error.localizedDescription)")
         }
     }
 

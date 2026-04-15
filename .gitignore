@@ -72,3 +72,6 @@ playground.xcworkspace
 *.gcda
 *.gcno
 Stillo/Stillo.entitlements.full
+
+## OpenAI API Key (NEVER commit)
+Stillo/Services/OpenAITTSConfig.swift

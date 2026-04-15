@@ -78,6 +78,36 @@ struct BreathingSessionView: View {
             stopSession()
         }
         .navigationBarHidden(true)
+        .offset(y: dragOffset)
+        .opacity(dragOffset > 0 ? Double(1.0 - dragOffset / 400.0) : 1.0)
+        .gesture(
+            DragGesture(minimumDistance: 20, coordinateSpace: .local)
+                .onChanged { value in
+                    // Только свайп вниз
+                    if value.translation.height > 0 {
+                        isDragging = true
+                        dragOffset = value.translation.height * 0.6
+                    }
+                }
+                .onEnded { value in
+                    if value.translation.height > 120 || value.predictedEndTranslation.height > 200 {
+                        // Dismiss
+                        withAnimation(.easeOut(duration: 0.25)) {
+                            dragOffset = UIScreen.main.bounds.height
+                        }
+                        DispatchQueue.main.asyncAfter(deadline: .now() + 0.25) {
+                            stopSession()
+                            dismiss()
+                        }
+                    } else {
+                        // Snap back
+                        withAnimation(.spring(response: 0.3, dampingFraction: 0.7)) {
+                            dragOffset = 0
+                        }
+                    }
+                    isDragging = false
+                }
+        )
     }
 
     // MARK: Private
@@ -109,6 +139,10 @@ struct BreathingSessionView: View {
     private var appear = false
     @State
     private var particleRotation: Double = 0
+    @State
+    private var dragOffset: CGFloat = 0
+    @State
+    private var isDragging: Bool = false
 
     /// Pre-computed random particle sizes to avoid recalculation during render
     private let particleSizes: [(w: CGFloat, h: CGFloat)] = (0 ..< 16).map { _ in

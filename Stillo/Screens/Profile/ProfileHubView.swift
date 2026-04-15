@@ -233,7 +233,7 @@ struct ProfileHubView: View {
                 .font(SP.Typography.title3)
                 .foregroundColor(SP.Colors.textPrimary)
 
-            // Main Settings screen
+            // Main Settings screen (all options inside)
             NavigationLink {
                 SettingsView()
                     .environment(coordinator)
@@ -242,7 +242,7 @@ struct ProfileHubView: View {
             }
             .buttonStyle(.plain)
 
-            // Soundscape quick access
+            // Soundscape quick access (useful to toggle sounds fast)
             NavigationLink {
                 SoundscapeView()
                     .environment(coordinator)
@@ -274,51 +274,7 @@ struct ProfileHubView: View {
             }
             .buttonStyle(.plain)
 
-            NavigationLink {
-                NotificationSettingsView()
-            } label: {
-                settingsRowLabel(icon: "bell.fill", title: String(localized: "profile.notifications"), color: SP.Colors.accent)
-            }
-            .buttonStyle(.plain)
-
-            NavigationLink {
-                HealthKitSettingsView()
-            } label: {
-                settingsRowLabel(icon: "heart.fill", title: "Apple Health", color: SP.Colors.danger)
-            }
-            .buttonStyle(.plain)
-
-            NavigationLink {
-                CrisisLineView()
-            } label: {
-                settingsRowLabel(icon: "globe", title: String(localized: "profile.crisisLine"), color: SP.Colors.success)
-            }
-            .buttonStyle(.plain)
-
-            NavigationLink {
-                ProfileView(service: coordinator.profileService)
-            } label: {
-                settingsRowLabel(
-                    icon: "person.fill", title: String(localized: "profile.detailed"), color: SP.Colors.warmth
-                )
-            }
-            .buttonStyle(.plain)
-
-            NavigationLink {
-                MoodMapView(service: coordinator.moodMapService)
-            } label: {
-                settingsRowLabel(icon: "map.fill", title: String(localized: "profile.moodMap"), color: SP.Colors.calm)
-            }
-            .buttonStyle(.plain)
-
-            NavigationLink {
-                ThemePickerView()
-            } label: {
-                settingsRowLabel(icon: "paintbrush.fill", title: String(localized: "profile.theme"), color: SP.Colors.accentSoft)
-            }
-            .buttonStyle(.plain)
-
-            // Тоггл голосового гида
+            // Voice toggle — quick access
             HStack(spacing: 12) {
                 ZStack {
                     RoundedRectangle(cornerRadius: 8, style: .continuous)
@@ -337,37 +293,6 @@ struct ProfileHubView: View {
                 .tint(SP.Colors.accent)
             }
             .spGlassCard(cornerRadius: SP.Layout.cornerSmall)
-
-            // Voice source quick info + link to Settings
-            if coordinator.audioGuide.isVoiceEnabled {
-                VStack(alignment: .leading, spacing: 8) {
-                    HStack(spacing: 8) {
-                        let source = coordinator.audioGuide.activeSource
-                        Circle()
-                            .fill(source == .voiceBank ? SP.Colors.success : source == .openAI ? SP.Colors.accent : SP.Colors.calm)
-                            .frame(width: 8, height: 8)
-                        Text(voiceSourceText(source))
-                            .font(SP.Typography.caption)
-                            .foregroundColor(SP.Colors.textSecondary)
-                        Spacer()
-                    }
-                    NavigationLink {
-                        SettingsView()
-                            .environment(coordinator)
-                    } label: {
-                        HStack(spacing: 8) {
-                            Image(systemName: "gearshape.fill")
-                                .font(.system(size: 14))
-                            Text(String(localized: "voice.configure_in_settings"))
-                                .font(SP.Typography.caption)
-                        }
-                        .foregroundColor(SP.Colors.accent)
-                    }
-                    .buttonStyle(.plain)
-                }
-                .spGlassCard(cornerRadius: SP.Layout.cornerSmall)
-                .transition(.opacity.combined(with: .move(edge: .top)))
-            }
         }
         .opacity(appear ? 1 : 0)
         .offset(y: appear ? 0 : 15)

@@ -13,6 +13,9 @@ import SwiftUI
 /// - Каждый трек — отдельный AVAudioPlayer с независимой громкостью
 /// - Плавные fade-in/fade-out при включении/выключении (0.8s)
 /// - Аудио-сессия .playback + .mixWithOthers — не глушит голос/OpenAI TTS
+/// - НИКОГДА не вызывает setActive(false) — сессия живёт пока приложение активно
+/// - Другие сервисы (VoiceBankService, AudioGuideService) НЕ деактивируют
+///   общую сессию, а только переключают категорию; ambient продолжает играть.
 
 @Observable
 @MainActor
@@ -123,7 +126,7 @@ final class AmbientSoundService {
             withMutation(keyPath: \.musicVolume) {
                 _musicVolume = newValue
                 UserDefaults.standard.set(newValue, forKey: "ambient_music_volume")
-                musicPlayer?.volume = newValue
+                musicPlayer?.volume = newValue * _masterVolume
             }
         }
     }
@@ -196,13 +199,19 @@ final class AmbientSoundService {
         }
 
         do {
-            ensureSession()
+            activateSession()
             let p = try AVAudioPlayer(contentsOf: url)
             p.numberOfLoops = -1 // infinite loop
             p.volume = 0
             p.prepareToPlay()
             let started = p.play()
             Self.log.info("Music play started=\(started) file=\(url.lastPathComponent) duration=\(p.duration)")
+            if !started {
+                // Retry: re-activate session and try once more
+                Self.log.warning("Music play returned false, retrying…")
+                activateSession(force: true)
+                p.play()
+            }
             p.setVolume(musicVolume * masterVolume, fadeDuration: fadeDuration)
             musicPlayer = p
             isMusicPlaying = true
@@ -236,6 +245,10 @@ final class AmbientSoundService {
 
     /// Play a nature sound
     func playNatureSound(_ sound: NatureSound) {
+        // Stop existing player for this sound if any
+        naturePlayers[sound]?.stop()
+        naturePlayers.removeValue(forKey: sound)
+
         guard let url = Self.audioURL(for: sound.fileName) else {
             Self.log.error("Nature sound not found: \(sound.fileName).mp3")
             Self.debugBundleAudio()
@@ -243,7 +256,7 @@ final class AmbientSoundService {
         }
 
         do {
-            ensureSession()
+            activateSession()
             let p = try AVAudioPlayer(contentsOf: url)
             p.numberOfLoops = -1
             p.volume = 0
@@ -251,6 +264,11 @@ final class AmbientSoundService {
             let started = p.play()
             let vol = (natureVolumes[sound] ?? 0.5) * masterVolume
             Self.log.info("Nature play started=\(started) file=\(url.lastPathComponent) vol=\(vol)")
+            if !started {
+                Self.log.warning("Nature play returned false, retrying…")
+                activateSession(force: true)
+                p.play()
+            }
             p.setVolume(vol, fadeDuration: fadeDuration)
             naturePlayers[sound] = p
             activeNatureSounds.insert(sound)
@@ -287,7 +305,27 @@ final class AmbientSoundService {
         for sound in activeNatureSounds {
             stopNatureSound(sound)
         }
-        deactivateSession()
+    }
+
+    /// Восстанавливает сессию после того, как VoiceBankService/AudioGuide
+    /// переключили категорию на .spokenAudio + .duckOthers.
+    /// Вызывается из VoiceBankService.deactivateSession() и AudioGuideService.
+    func recoverSession() {
+        guard isAnythingPlaying else { return }
+        Self.log.info("Recovering ambient session after voice playback ended")
+        activateSession(force: true)
+        // Resume players that may have been interrupted
+        if let mp = musicPlayer, !mp.isPlaying, isMusicPlaying {
+            mp.play()
+            mp.setVolume(musicVolume * masterVolume, fadeDuration: 0.3)
+        }
+        for (sound, player) in naturePlayers {
+            if !player.isPlaying {
+                player.play()
+                let vol = (natureVolumes[sound] ?? 0.5) * masterVolume
+                player.setVolume(vol, fadeDuration: 0.3)
+            }
+        }
     }
 
     // MARK: - Private
@@ -332,16 +370,13 @@ final class AmbientSoundService {
     }()
 
     @ObservationIgnored
-    nonisolated(unsafe) private var musicPlayer: AVAudioPlayer?
+    private var musicPlayer: AVAudioPlayer?
 
     @ObservationIgnored
-    nonisolated(unsafe) private var naturePlayers: [NatureSound: AVAudioPlayer] = [:]
-
-    @ObservationIgnored
-    private var sessionActive = false
+    private var naturePlayers: [NatureSound: AVAudioPlayer] = [:]
 
     /// Find audio file in bundle — checks subdirectories too
-    private static func audioURL(for name: String) -> URL? {
+    static func audioURL(for name: String) -> URL? {
         // Try direct bundle lookup
         if let url = Bundle.main.url(forResource: name, withExtension: "mp3") {
             return url
@@ -364,28 +399,17 @@ final class AmbientSoundService {
         return nil
     }
 
-    private func ensureSession() {
-        guard !sessionActive else { return }
+    /// Активирует аудиосессию для фоновых звуков.
+    /// force=true — всегда переконфигурирует (после чужого setCategory).
+    /// НИКОГДА не вызывает setActive(false) — звуки не должны прерываться.
+    private func activateSession(force: Bool = false) {
         do {
             let session = AVAudioSession.sharedInstance()
-            // Use .ambient + .mixWithOthers so ambient sounds don't conflict
-            // with voice playback (.playback + .duckOthers)
             try session.setCategory(.playback, mode: .default, options: [.mixWithOthers])
             try session.setActive(true)
-            sessionActive = true
-            Self.log.info("Audio session activated for ambient sounds")
+            Self.log.info("Audio session activated for ambient sounds (force=\(force))")
         } catch {
             Self.log.error("Audio session error: \(error.localizedDescription)")
-        }
-    }
-
-    private func deactivateSession() {
-        guard sessionActive else { return }
-        do {
-            try AVAudioSession.sharedInstance().setActive(false, options: .notifyOthersOnDeactivation)
-            sessionActive = false
-        } catch {
-            Self.log.error("Audio session deactivation error: \(error.localizedDescription)")
         }
     }
 
@@ -398,7 +422,7 @@ final class AmbientSoundService {
     }
 
     /// Debug: list all mp3 files found in bundle
-    private static func debugBundleAudio() {
+    static func debugBundleAudio() {
         guard let resourcePath = Bundle.main.resourcePath else {
             log.error("No bundle resourcePath")
             return

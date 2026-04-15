@@ -41,7 +41,6 @@ struct SettingsView: View {
     // MARK: Private
 
     @State private var appear = false
-    @State private var showAPIKeyField = false
 
     // MARK: - Voice Guide Section
 
@@ -264,43 +263,17 @@ struct SettingsView: View {
             .tint(SP.Colors.accent)
 
             if coordinator.ttsService.isEnabled {
-                // API Key
-                VStack(alignment: .leading, spacing: 6) {
-                    Text("API Key")
-                        .font(SP.Typography.caption)
-                        .foregroundColor(SP.Colors.textTertiary)
-
-                    HStack {
-                        if showAPIKeyField {
-                            TextField("sk-...", text: Binding(
-                                get: { coordinator.ttsService.apiKey },
-                                set: { coordinator.ttsService.apiKey = $0 }
-                            ))
-                            .textFieldStyle(.plain)
-                            .font(.system(.caption, design: .monospaced))
-                            .foregroundColor(SP.Colors.textPrimary)
-                            .autocorrectionDisabled()
-                            .textInputAutocapitalization(.never)
-                        } else {
-                            Text(coordinator.ttsService.apiKey.isEmpty
-                                ? String(localized: "settings.openai_no_key")
-                                : "sk-••••••••\(coordinator.ttsService.apiKey.suffix(4))")
-                                .font(SP.Typography.caption)
-                                .foregroundColor(SP.Colors.textSecondary)
-                        }
-                        Spacer()
-                        Button {
-                            withAnimation { showAPIKeyField.toggle() }
-                        } label: {
-                            Image(systemName: showAPIKeyField ? "checkmark.circle" : "pencil.circle")
-                                .foregroundColor(SP.Colors.accent)
-                        }
-                    }
-                    .padding(10)
-                    .background(
-                        RoundedRectangle(cornerRadius: 10, style: .continuous)
-                            .fill(.warmGlass)
-                    )
+                // Status indicator
+                HStack(spacing: 8) {
+                    Circle()
+                        .fill(coordinator.ttsService.isReady ? SP.Colors.success : SP.Colors.warning)
+                        .frame(width: 8, height: 8)
+                    Text(coordinator.ttsService.isReady
+                        ? String(localized: "settings.openai_status_ready")
+                        : String(localized: "settings.openai_status_no_key"))
+                        .font(SP.Typography.caption2)
+                        .foregroundColor(SP.Colors.textSecondary)
+                    Spacer()
                 }
 
                 // Voice selection
@@ -352,8 +325,8 @@ struct SettingsView: View {
                     .background(SP.Colors.heroGradient)
                     .clipShape(RoundedRectangle(cornerRadius: SP.Layout.cornerSmall))
                 }
-                .disabled(coordinator.ttsService.apiKey.isEmpty)
-                .opacity(coordinator.ttsService.apiKey.isEmpty ? 0.5 : 1)
+                .disabled(!coordinator.ttsService.isReady)
+                .opacity(!coordinator.ttsService.isReady ? 0.5 : 1)
 
                 // Model picker
                 Picker(String(localized: "settings.openai_model"), selection: Binding(

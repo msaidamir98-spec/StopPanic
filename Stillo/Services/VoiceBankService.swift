@@ -11,6 +11,9 @@ import os.log
 ///   1. Точное совпадение (ru → ru/)
 ///   2. Английский фолбэк (en/)
 ///   3. nil → AudioGuideService уйдёт в AVSpeech
+///
+/// Аудиосессия: НЕ деактивируется после каждой фразы.
+/// Вместо setActive(false) восстанавливаем ambient-сессию через recoverSession().
 
 @MainActor
 @Observable
@@ -46,7 +49,29 @@ final class VoiceBankService {
         // SOS
         case panicIntro     = "panic_intro"
         case sosCalmDown    = "sos_calm"
+
+        // CBT & Grounding (new — medically grounded)
+        case bodyRelax      = "body_relax"
+        case feetOnFloor    = "feet_on_floor"
+        case safePlace      = "safe_place"
+        case notInDanger    = "not_in_danger"
+        case thisWillPass   = "this_will_pass"
+        case slowDown       = "slow_down"
+        case nameObjects    = "name_objects"
+        case coldWater      = "cold_water"
+        case tenseFists     = "tense_fists"
+        case countBackward  = "count_backward"
+        case affirmStrong   = "affirm_strong"
+        case affirmControl  = "affirm_control"
+        case progressiveRelax = "progressive_relax"
+        case mindfulNotice  = "mindful_notice"
+        case gratitudeOne   = "gratitude_one"
     }
+
+    // MARK: - Dependency (for session recovery)
+
+    /// Ссылка на AmbientSoundService для восстановления сессии после фразы
+    var ambientSound: AmbientSoundService?
 
     // MARK: - State
 
@@ -113,7 +138,6 @@ final class VoiceBankService {
     func stop() {
         player?.stop()
         isPlaying = false
-        deactivateSession()
     }
 
     /// Проверяет, доступна ли фраза в бандле для текущего языка
@@ -164,10 +188,7 @@ final class VoiceBankService {
     }()
 
     @ObservationIgnored
-    nonisolated(unsafe) private var player: AVAudioPlayer?
-
-    @ObservationIgnored
-    private var sessionActive = false
+    private var player: AVAudioPlayer?
 
     /// Cache: "en_breathe_in" → URL
     @ObservationIgnored
@@ -264,14 +285,15 @@ final class VoiceBankService {
             // Soft fade-in (0.25s)
             p.setVolume(_volume, fadeDuration: 0.25)
 
-            // Monitor completion on a background task
+            // Monitor completion — restore ambient session when done
             Task { [weak self] in
                 while p.isPlaying {
                     try? await Task.sleep(for: .milliseconds(80))
                 }
                 await MainActor.run {
                     self?.isPlaying = false
-                    self?.deactivateSession()
+                    // Восстанавливаем ambient-сессию вместо деактивации
+                    self?.ambientSound?.recoverSession()
                 }
             }
 
@@ -287,9 +309,8 @@ final class VoiceBankService {
 
     /// Категория .playback + .spokenAudio + duckOthers
     /// — приглушает музыку, но не останавливает
-    /// — не требует Background Audio capability (только foreground)
+    /// — НЕ вызывает setActive(false) после — чтобы не убивать ambient
     private func ensureSession() {
-        guard !sessionActive else { return }
         do {
             let session = AVAudioSession.sharedInstance()
             try session.setCategory(
@@ -298,22 +319,8 @@ final class VoiceBankService {
                 options: [.duckOthers]
             )
             try session.setActive(true)
-            sessionActive = true
         } catch {
             Self.log.error("Audio session error: \(error.localizedDescription)")
-        }
-    }
-
-    private func deactivateSession() {
-        guard sessionActive else { return }
-        do {
-            try AVAudioSession.sharedInstance().setActive(
-                false,
-                options: .notifyOthersOnDeactivation
-            )
-            sessionActive = false
-        } catch {
-            Self.log.error("Session deactivation error: \(error.localizedDescription)")
         }
     }
 }

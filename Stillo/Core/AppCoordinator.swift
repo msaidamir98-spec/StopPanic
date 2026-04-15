@@ -36,11 +36,14 @@ final class AppCoordinator {
     var showBreathingSheet: Bool = false
     var showPaywall: Bool = false
 
-    // Wire up dependencies: VoiceBank + TTS → AudioGuide
+    // Wire up dependencies: VoiceBank + TTS → AudioGuide, Ambient → all voice services
     func bootstrap() {
         voiceBank.warmUp()
+        voiceBank.ambientSound = ambientSound
         audioGuide.voiceBank = voiceBank
         audioGuide.ttsService = ttsService
+        audioGuide.ambientSound = ambientSound
+        ttsService.ambientSound = ambientSound
     }
 
     // MARK: - User State (persisted via UserDefaults)
