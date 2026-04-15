@@ -42,6 +42,10 @@ struct JournalView: View {
                 EditEpisodeSheet(episode: episode)
                     .environment(coordinator)
             }
+            .sheet(item: $editingMoodPoint) { point in
+                EditMoodSheet(point: point)
+                    .environment(coordinator)
+            }
             .navigationBarHidden(true)
             .onAppear {
                 withAnimation(.easeOut(duration: 0.5)) {
@@ -61,6 +65,8 @@ struct JournalView: View {
     private var appear = false
     @State
     private var editingEpisode: DiaryEpisode?
+    @State
+    private var editingMoodPoint: MoodPoint?
 
     // MARK: - Header
 
@@ -240,33 +246,75 @@ struct JournalView: View {
                     subtitle: String(localized: "journal.mood_empty_subtitle")
                 )
             } else {
+                // Mini chart
+                moodMiniChart
+
+                // Mood entries list with swipe actions
                 ForEach(coordinator.moodMapService.points.sorted(by: { $0.date > $1.date })) { point in
-                    HStack {
-                        VStack(alignment: .leading, spacing: 4) {
-                            HStack {
-                                Text(moodEmoji(point.mood))
-                                    .font(.title2)
-                                Text("\(point.mood)/10")
-                                    .font(SP.Typography.headline)
-                                    .foregroundColor(intensityColor(point.mood))
-                            }
-                            if !point.note.isEmpty {
-                                Text(point.note)
-                                    .font(SP.Typography.callout)
-                                    .foregroundColor(SP.Colors.textSecondary)
-                            }
-                            Text(point.date.formatted(.dateTime.day().month().hour().minute()))
-                                .font(SP.Typography.caption2)
-                                .foregroundColor(SP.Colors.textTertiary)
+                    MoodPointCard(point: point)
+                        .onTapGesture {
+                            SP.Haptic.light()
+                            editingMoodPoint = point
                         }
-                        Spacer()
-                    }
-                    .spGlassCard(cornerRadius: SP.Layout.cornerSmall)
+                        .contextMenu {
+                            Button {
+                                editingMoodPoint = point
+                            } label: {
+                                Label(String(localized: "journal.edit"), systemImage: "pencil")
+                            }
+                            Button(role: .destructive) {
+                                withAnimation {
+                                    coordinator.moodMapService.removePointById(point.id)
+                                }
+                            } label: {
+                                Label(String(localized: "journal.delete"), systemImage: "trash")
+                            }
+                        }
                 }
             }
         }
         .padding(.horizontal, SP.Layout.padding)
         .padding(.bottom, 40)
+    }
+
+    private var moodMiniChart: some View {
+        let recent = Array(coordinator.moodMapService.points.suffix(14))
+        let avg = recent.isEmpty ? 0.0 : Double(recent.map(\.mood).reduce(0, +)) / Double(recent.count)
+
+        return VStack(alignment: .leading, spacing: 10) {
+            HStack {
+                Text(String(localized: "journal.mood_trend"))
+                    .font(SP.Typography.headline)
+                    .foregroundColor(SP.Colors.textPrimary)
+                Spacer()
+                Text(String(format: "Ø %.1f", avg))
+                    .font(SP.Typography.caption)
+                    .foregroundColor(SP.Colors.accent)
+            }
+
+            HStack(alignment: .bottom, spacing: 4) {
+                ForEach(recent) { point in
+                    VStack(spacing: 2) {
+                        Text(moodEmoji(point.mood))
+                            .font(.system(size: 10))
+                        RoundedRectangle(cornerRadius: 3)
+                            .fill(moodBarColor(point.mood))
+                            .frame(width: 16, height: CGFloat(point.mood) * 6 + 4)
+                    }
+                }
+            }
+            .frame(maxWidth: .infinity, alignment: .center)
+        }
+        .spGlassCard(cornerRadius: SP.Layout.cornerMedium)
+    }
+
+    private func moodBarColor(_ mood: Int) -> Color {
+        switch mood {
+        case 1...3: SP.Colors.calm
+        case 4...6: SP.Colors.accent
+        case 7...8: SP.Colors.success
+        default: SP.Colors.success
+        }
     }
 
     // MARK: - Insights Content
@@ -295,12 +343,148 @@ struct JournalView: View {
                 )
             }
 
+            // Time-of-day analysis
             if !coordinator.diaryService.diaryEpisodes.isEmpty {
+                timeOfDayCard
+                weeklyProgressCard
                 triggersCard
             }
         }
         .padding(.horizontal, SP.Layout.padding)
         .padding(.bottom, 40)
+    }
+
+    // MARK: - Time of Day Analysis
+
+    private var timeOfDayCard: some View {
+        let episodes = coordinator.diaryService.diaryEpisodes
+        let cal = Calendar.current
+
+        let morning = episodes.filter { (5..<12).contains(cal.component(.hour, from: $0.date)) }
+        let afternoon = episodes.filter { (12..<17).contains(cal.component(.hour, from: $0.date)) }
+        let evening = episodes.filter { (17..<22).contains(cal.component(.hour, from: $0.date)) }
+        let night = episodes.filter {
+            let h = cal.component(.hour, from: $0.date)
+            return h >= 22 || h < 5
+        }
+
+        let data: [(String, String, Int, Color)] = [
+            ("🌅", String(localized: "insight.morning"), morning.count, SP.Colors.warmth),
+            ("☀️", String(localized: "insight.afternoon"), afternoon.count, SP.Colors.warning),
+            ("🌆", String(localized: "insight.evening"), evening.count, SP.Colors.accent),
+            ("🌙", String(localized: "insight.night"), night.count, SP.Colors.calm),
+        ]
+        let maxCount = max(1, data.map(\.2).max() ?? 1)
+
+        return VStack(alignment: .leading, spacing: 12) {
+            HStack {
+                Image(systemName: "clock.fill")
+                    .foregroundColor(SP.Colors.accent)
+                Text(String(localized: "insight.time_of_day"))
+                    .font(SP.Typography.headline)
+                    .foregroundColor(SP.Colors.textPrimary)
+            }
+
+            Text(String(localized: "insight.time_description"))
+                .font(SP.Typography.caption2)
+                .foregroundColor(SP.Colors.textTertiary)
+
+            ForEach(data, id: \.1) { emoji, label, count, color in
+                HStack(spacing: 10) {
+                    Text(emoji)
+                    Text(label)
+                        .font(SP.Typography.caption)
+                        .foregroundColor(SP.Colors.textSecondary)
+                        .frame(width: 60, alignment: .leading)
+                    GeometryReader { geo in
+                        RoundedRectangle(cornerRadius: 4)
+                            .fill(color.opacity(0.7))
+                            .frame(width: geo.size.width * CGFloat(count) / CGFloat(maxCount))
+                    }
+                    .frame(height: 16)
+                    Text("\(count)")
+                        .font(SP.Typography.caption)
+                        .foregroundColor(SP.Colors.textTertiary)
+                        .frame(width: 28, alignment: .trailing)
+                }
+            }
+        }
+        .spGlassCard(cornerRadius: SP.Layout.cornerMedium)
+    }
+
+    // MARK: - Weekly Progress Card
+
+    private var weeklyProgressCard: some View {
+        let cal = Calendar.current
+        let episodes = coordinator.diaryService.diaryEpisodes
+
+        // Last 4 weeks comparison
+        var weeks: [(String, Int, Int)] = [] // label, count, avgIntensity
+        for w in 0..<4 {
+            let end = cal.date(byAdding: .day, value: -(w * 7), to: Date())!
+            let start = cal.date(byAdding: .day, value: -7, to: end)!
+            let weekEps = episodes.filter { $0.date >= start && $0.date < end }
+            let avg = weekEps.isEmpty ? 0 : weekEps.map(\.intensity).reduce(0, +) / weekEps.count
+            let label = w == 0 ? String(localized: "insight.this_week")
+                      : w == 1 ? String(localized: "insight.last_week")
+                      : "\(w) " + String(localized: "insight.weeks_ago")
+            weeks.append((label, weekEps.count, avg))
+        }
+        weeks.reverse()
+
+        return VStack(alignment: .leading, spacing: 12) {
+            HStack {
+                Image(systemName: "chart.bar.fill")
+                    .foregroundColor(SP.Colors.success)
+                Text(String(localized: "insight.weekly_progress"))
+                    .font(SP.Typography.headline)
+                    .foregroundColor(SP.Colors.textPrimary)
+            }
+
+            ForEach(Array(weeks.enumerated()), id: \.offset) { _, week in
+                HStack {
+                    Text(week.0)
+                        .font(SP.Typography.caption)
+                        .foregroundColor(SP.Colors.textSecondary)
+                        .frame(width: 80, alignment: .leading)
+                    HStack(spacing: 4) {
+                        ForEach(0..<max(1, week.1), id: \.self) { _ in
+                            Circle()
+                                .fill(intensityColor(week.2))
+                                .frame(width: 8, height: 8)
+                        }
+                    }
+                    Spacer()
+                    Text("\(week.1)")
+                        .font(SP.Typography.caption)
+                        .foregroundColor(SP.Colors.textTertiary)
+                }
+            }
+
+            // Trend message
+            let current = weeks.last?.1 ?? 0
+            let previous = weeks.dropLast().last?.1 ?? 0
+            if current < previous {
+                HStack(spacing: 6) {
+                    Image(systemName: "arrow.down.right")
+                        .foregroundColor(SP.Colors.success)
+                    Text(String(localized: "insight.trend_improving"))
+                        .font(SP.Typography.caption)
+                        .foregroundColor(SP.Colors.success)
+                }
+                .padding(.top, 4)
+            } else if current > previous {
+                HStack(spacing: 6) {
+                    Image(systemName: "arrow.up.right")
+                        .foregroundColor(SP.Colors.warning)
+                    Text(String(localized: "insight.trend_attention"))
+                        .font(SP.Typography.caption)
+                        .foregroundColor(SP.Colors.warning)
+                }
+                .padding(.top, 4)
+            }
+        }
+        .spGlassCard(cornerRadius: SP.Layout.cornerMedium)
     }
 
     private var triggersCard: some View {
@@ -757,6 +941,182 @@ struct EditEpisodeSheet: View {
         case 4 ... 6: SP.Colors.warning
         case 7 ... 8: .orange
         default: SP.Colors.danger
+        }
+    }
+}
+
+// MARK: - MoodPointCard
+
+struct MoodPointCard: View {
+    let point: MoodPoint
+
+    var body: some View {
+        HStack(spacing: 12) {
+            Text(moodEmoji(point.mood))
+                .font(.title2)
+
+            VStack(alignment: .leading, spacing: 4) {
+                HStack {
+                    Text("\(point.mood)/10")
+                        .font(SP.Typography.headline)
+                        .foregroundColor(moodColor)
+                    Spacer()
+                    Text(point.date.formatted(.dateTime.day().month().hour().minute()))
+                        .font(SP.Typography.caption2)
+                        .foregroundColor(SP.Colors.textTertiary)
+                }
+                if !point.note.isEmpty {
+                    Text(point.note)
+                        .font(SP.Typography.callout)
+                        .foregroundColor(SP.Colors.textSecondary)
+                        .lineLimit(2)
+                }
+            }
+        }
+        .spGlassCard(cornerRadius: SP.Layout.cornerSmall)
+    }
+
+    private func moodEmoji(_ mood: Int) -> String {
+        switch mood {
+        case 1...2: "😰"
+        case 3...4: "😟"
+        case 5...6: "😐"
+        case 7...8: "🙂"
+        default: "😊"
+        }
+    }
+
+    private var moodColor: Color {
+        switch point.mood {
+        case 1...3: SP.Colors.calm
+        case 4...6: SP.Colors.accent
+        case 7...8: SP.Colors.success
+        default: SP.Colors.success
+        }
+    }
+}
+
+// MARK: - EditMoodSheet
+
+struct EditMoodSheet: View {
+    let point: MoodPoint
+
+    @Environment(AppCoordinator.self) var coordinator
+    @Environment(\.dismiss) private var dismiss
+
+    @State private var mood: Double = 5
+    @State private var note = ""
+
+    var body: some View {
+        NavigationStack {
+            ZStack {
+                coordinator.themeManager.bg.ignoresSafeArea()
+
+                ScrollView {
+                    VStack(spacing: 24) {
+                        // Mood emoji
+                        Text(moodEmoji(Int(mood)))
+                            .font(.system(size: 64))
+                            .contentTransition(.symbolEffect(.replace))
+
+                        // Mood slider
+                        VStack(spacing: 12) {
+                            HStack {
+                                Text(String(localized: "mood.how_feel"))
+                                    .font(SP.Typography.headline)
+                                    .foregroundColor(SP.Colors.textPrimary)
+                                Spacer()
+                                Text("\(Int(mood))/10")
+                                    .font(SP.Typography.title2)
+                                    .foregroundColor(sliderColor)
+                                    .contentTransition(.numericText())
+                            }
+
+                            Slider(value: $mood, in: 1...10, step: 1)
+                                .tint(sliderColor)
+                        }
+                        .spGlassCard(cornerRadius: SP.Layout.cornerMedium)
+
+                        // Note
+                        VStack(alignment: .leading, spacing: 10) {
+                            Text(String(localized: "journal.add_notes"))
+                                .font(SP.Typography.headline)
+                                .foregroundColor(SP.Colors.textPrimary)
+
+                            TextField(String(localized: "mood.note_optional"), text: $note, axis: .vertical)
+                                .textFieldStyle(.plain)
+                                .padding(14)
+                                .background(
+                                    RoundedRectangle(cornerRadius: 14, style: .continuous)
+                                        .fill(.warmGlass)
+                                )
+                                .foregroundColor(SP.Colors.textPrimary)
+                                .frame(minHeight: 80)
+                        }
+
+                        // Save
+                        Button {
+                            coordinator.moodMapService.updatePoint(id: point.id, mood: Int(mood), note: note)
+                            SP.Haptic.success()
+                            dismiss()
+                        } label: {
+                            Text(String(localized: "journal.add_save"))
+                                .spPrimaryButton()
+                        }
+
+                        // Delete
+                        Button(role: .destructive) {
+                            coordinator.moodMapService.removePointById(point.id)
+                            SP.Haptic.warning()
+                            dismiss()
+                        } label: {
+                            HStack {
+                                Image(systemName: "trash")
+                                Text(String(localized: "journal.delete"))
+                            }
+                            .font(SP.Typography.headline)
+                            .foregroundColor(SP.Colors.danger)
+                            .frame(maxWidth: .infinity)
+                            .padding(.vertical, 16)
+                            .background(SP.Colors.danger.opacity(0.12))
+                            .clipShape(RoundedRectangle(cornerRadius: SP.Layout.cornerSmall))
+                        }
+                    }
+                    .padding(.horizontal, SP.Layout.padding)
+                    .padding(.vertical, 20)
+                }
+            }
+            .navigationTitle(String(localized: "journal.edit_mood_title"))
+            .navigationBarTitleDisplayMode(.inline)
+            .toolbar {
+                ToolbarItem(placement: .cancellationAction) {
+                    Button(String(localized: "general.cancel")) { dismiss() }
+                        .foregroundColor(SP.Colors.textSecondary)
+                }
+            }
+        }
+        .onAppear {
+            mood = Double(point.mood)
+            note = point.note
+        }
+    }
+
+    private func moodEmoji(_ mood: Int) -> String {
+        switch mood {
+        case 1...2: "😰"
+        case 3...4: "😟"
+        case 5...6: "😐"
+        case 7...8: "🙂"
+        default: "😊"
+        }
+    }
+
+    private var sliderColor: Color {
+        switch Int(mood) {
+        case 1...3: SP.Colors.calm
+        case 4...6: SP.Colors.accent
+        case 7...8: SP.Colors.success
+        default: SP.Colors.success
         }
     }
 }

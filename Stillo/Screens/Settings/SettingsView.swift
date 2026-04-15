@@ -1,0 +1,365 @@
+import SwiftUI
+
+// MARK: - SettingsView
+
+/// Полноценный экран настроек приложения.
+/// Собирает все опции: голос, звуки, тема, уведомления, здоровье, OpenAI, экспорт.
+
+struct SettingsView: View {
+    // MARK: Internal
+
+    @Environment(AppCoordinator.self) var coordinator
+
+    var body: some View {
+        ZStack {
+            AmbientBackground(primaryColor: SP.Colors.bgSoft, secondaryColor: SP.Colors.accent)
+
+            ScrollView(.vertical, showsIndicators: false) {
+                VStack(spacing: 16) {
+                    voiceSection
+                    openAISection
+                    soundscapeSection
+                    appearanceSection
+                    notificationsSection
+                    healthSection
+                    dataSection
+                    Spacer(minLength: 40)
+                }
+                .padding(.horizontal, SP.Layout.padding)
+                .padding(.top, 12)
+            }
+            .background(ScrollBounceDisabler())
+        }
+        .navigationTitle(String(localized: "settings.title"))
+        .navigationBarTitleDisplayMode(.large)
+        .onAppear {
+            withAnimation(.easeOut(duration: 0.4)) { appear = true }
+        }
+    }
+
+    // MARK: Private
+
+    @State private var appear = false
+    @State private var showAPIKeyField = false
+
+    // MARK: - Voice Guide (Legacy AVSpeech)
+
+    private var voiceSection: some View {
+        VStack(alignment: .leading, spacing: 12) {
+            sectionHeader(icon: "speaker.wave.2.fill", title: String(localized: "settings.voice_guide"), color: SP.Colors.calm)
+
+            Toggle(String(localized: "settings.voice_enabled"), isOn: Binding(
+                get: { coordinator.audioGuide.isVoiceEnabled },
+                set: { coordinator.audioGuide.isVoiceEnabled = $0 }
+            ))
+            .font(SP.Typography.callout)
+            .foregroundColor(SP.Colors.textPrimary)
+            .tint(SP.Colors.accent)
+
+            if coordinator.audioGuide.isVoiceEnabled && !coordinator.ttsService.isReady {
+                Text(String(localized: "settings.voice_fallback_hint"))
+                    .font(SP.Typography.caption2)
+                    .foregroundColor(SP.Colors.textTertiary)
+            }
+        }
+        .spGlassCard(cornerRadius: SP.Layout.cornerMedium)
+        .opacity(appear ? 1 : 0)
+        .animation(SP.Anim.spring.delay(0.05), value: appear)
+    }
+
+    // MARK: - OpenAI TTS
+
+    private var openAISection: some View {
+        VStack(alignment: .leading, spacing: 12) {
+            sectionHeader(icon: "waveform.circle.fill", title: String(localized: "settings.openai_tts"), color: SP.Colors.accent)
+
+            Text(String(localized: "settings.openai_description"))
+                .font(SP.Typography.caption)
+                .foregroundColor(SP.Colors.textSecondary)
+
+            Toggle(String(localized: "settings.openai_enabled"), isOn: Binding(
+                get: { coordinator.ttsService.isEnabled },
+                set: { coordinator.ttsService.isEnabled = $0 }
+            ))
+            .font(SP.Typography.callout)
+            .foregroundColor(SP.Colors.textPrimary)
+            .tint(SP.Colors.accent)
+
+            if coordinator.ttsService.isEnabled {
+                // API Key
+                VStack(alignment: .leading, spacing: 6) {
+                    Text("API Key")
+                        .font(SP.Typography.caption)
+                        .foregroundColor(SP.Colors.textTertiary)
+
+                    HStack {
+                        if showAPIKeyField {
+                            TextField("sk-...", text: Binding(
+                                get: { coordinator.ttsService.apiKey },
+                                set: { coordinator.ttsService.apiKey = $0 }
+                            ))
+                            .textFieldStyle(.plain)
+                            .font(.system(.caption, design: .monospaced))
+                            .foregroundColor(SP.Colors.textPrimary)
+                            .autocorrectionDisabled()
+                            .textInputAutocapitalization(.never)
+                        } else {
+                            Text(coordinator.ttsService.apiKey.isEmpty
+                                ? String(localized: "settings.openai_no_key")
+                                : "sk-••••••••\(coordinator.ttsService.apiKey.suffix(4))")
+                                .font(SP.Typography.caption)
+                                .foregroundColor(SP.Colors.textSecondary)
+                        }
+                        Spacer()
+                        Button {
+                            withAnimation { showAPIKeyField.toggle() }
+                        } label: {
+                            Image(systemName: showAPIKeyField ? "checkmark.circle" : "pencil.circle")
+                                .foregroundColor(SP.Colors.accent)
+                        }
+                    }
+                    .padding(10)
+                    .background(
+                        RoundedRectangle(cornerRadius: 10, style: .continuous)
+                            .fill(.warmGlass)
+                    )
+                }
+
+                // Voice selection
+                VStack(alignment: .leading, spacing: 6) {
+                    Text(String(localized: "settings.openai_voice"))
+                        .font(SP.Typography.caption)
+                        .foregroundColor(SP.Colors.textTertiary)
+
+                    ForEach(OpenAITTSService.TTSVoice.allCases) { voice in
+                        Button {
+                            SP.Haptic.selectionChanged()
+                            coordinator.ttsService.selectedVoice = voice
+                        } label: {
+                            HStack(spacing: 10) {
+                                Text(voice.emoji)
+                                Text(voice.displayName)
+                                    .font(SP.Typography.subheadline)
+                                    .foregroundColor(SP.Colors.textPrimary)
+                                Spacer()
+                                if coordinator.ttsService.selectedVoice == voice {
+                                    Image(systemName: "checkmark.circle.fill")
+                                        .foregroundStyle(SP.Colors.heroGradient)
+                                }
+                            }
+                            .padding(.vertical, 4)
+                        }
+                        .buttonStyle(.plain)
+                    }
+                }
+
+                // Test button
+                Button {
+                    SP.Haptic.light()
+                    coordinator.ttsService.speak(String(localized: "voice.you_are_safe"))
+                } label: {
+                    HStack {
+                        if coordinator.ttsService.isLoading {
+                            ProgressView()
+                                .scaleEffect(0.8)
+                        } else {
+                            Image(systemName: "play.circle.fill")
+                        }
+                        Text(String(localized: "settings.openai_test"))
+                    }
+                    .font(SP.Typography.subheadline)
+                    .foregroundColor(.white)
+                    .frame(maxWidth: .infinity)
+                    .padding(.vertical, 12)
+                    .background(SP.Colors.heroGradient)
+                    .clipShape(RoundedRectangle(cornerRadius: SP.Layout.cornerSmall))
+                }
+                .disabled(coordinator.ttsService.apiKey.isEmpty)
+                .opacity(coordinator.ttsService.apiKey.isEmpty ? 0.5 : 1)
+
+                // Model picker
+                Picker(String(localized: "settings.openai_model"), selection: Binding(
+                    get: { coordinator.ttsService.selectedModel },
+                    set: { coordinator.ttsService.selectedModel = $0 }
+                )) {
+                    ForEach(OpenAITTSService.TTSModel.allCases, id: \.rawValue) { model in
+                        Text(model.displayName).tag(model)
+                    }
+                }
+                .pickerStyle(.segmented)
+            }
+        }
+        .spGlassCard(cornerRadius: SP.Layout.cornerMedium)
+        .opacity(appear ? 1 : 0)
+        .animation(SP.Anim.spring.delay(0.1), value: appear)
+    }
+
+    // MARK: - Soundscape
+
+    private var soundscapeSection: some View {
+        NavigationLink {
+            SoundscapeView()
+                .environment(coordinator)
+        } label: {
+            HStack(spacing: 12) {
+                sectionIcon(icon: "music.note.list", color: SP.Colors.warmth)
+                VStack(alignment: .leading, spacing: 2) {
+                    Text(String(localized: "settings.soundscape"))
+                        .font(SP.Typography.callout)
+                        .foregroundColor(SP.Colors.textPrimary)
+                    Text(String(localized: "settings.soundscape_sub"))
+                        .font(SP.Typography.caption2)
+                        .foregroundColor(SP.Colors.textTertiary)
+                }
+                Spacer()
+                if coordinator.ambientSound.isAnythingPlaying {
+                    Circle()
+                        .fill(SP.Colors.success)
+                        .frame(width: 8, height: 8)
+                }
+                Image(systemName: "chevron.right")
+                    .font(.system(size: 12))
+                    .foregroundColor(SP.Colors.textTertiary)
+            }
+            .spGlassCard(cornerRadius: SP.Layout.cornerSmall)
+        }
+        .buttonStyle(.plain)
+        .opacity(appear ? 1 : 0)
+        .animation(SP.Anim.spring.delay(0.15), value: appear)
+    }
+
+    // MARK: - Appearance
+
+    private var appearanceSection: some View {
+        NavigationLink {
+            ThemePickerView()
+                .environment(coordinator)
+        } label: {
+            HStack(spacing: 12) {
+                sectionIcon(icon: "paintbrush.fill", color: SP.Colors.accentSoft)
+                Text(String(localized: "settings.appearance"))
+                    .font(SP.Typography.callout)
+                    .foregroundColor(SP.Colors.textPrimary)
+                Spacer()
+                Image(systemName: "chevron.right")
+                    .font(.system(size: 12))
+                    .foregroundColor(SP.Colors.textTertiary)
+            }
+            .spGlassCard(cornerRadius: SP.Layout.cornerSmall)
+        }
+        .buttonStyle(.plain)
+        .opacity(appear ? 1 : 0)
+        .animation(SP.Anim.spring.delay(0.2), value: appear)
+    }
+
+    // MARK: - Notifications
+
+    private var notificationsSection: some View {
+        NavigationLink {
+            NotificationSettingsView()
+        } label: {
+            HStack(spacing: 12) {
+                sectionIcon(icon: "bell.fill", color: SP.Colors.accent)
+                Text(String(localized: "settings.notifications"))
+                    .font(SP.Typography.callout)
+                    .foregroundColor(SP.Colors.textPrimary)
+                Spacer()
+                Image(systemName: "chevron.right")
+                    .font(.system(size: 12))
+                    .foregroundColor(SP.Colors.textTertiary)
+            }
+            .spGlassCard(cornerRadius: SP.Layout.cornerSmall)
+        }
+        .buttonStyle(.plain)
+        .opacity(appear ? 1 : 0)
+        .animation(SP.Anim.spring.delay(0.25), value: appear)
+    }
+
+    // MARK: - Health
+
+    private var healthSection: some View {
+        NavigationLink {
+            HealthKitSettingsView()
+        } label: {
+            HStack(spacing: 12) {
+                sectionIcon(icon: "heart.fill", color: SP.Colors.danger)
+                Text("Apple Health")
+                    .font(SP.Typography.callout)
+                    .foregroundColor(SP.Colors.textPrimary)
+                Spacer()
+                Image(systemName: "chevron.right")
+                    .font(.system(size: 12))
+                    .foregroundColor(SP.Colors.textTertiary)
+            }
+            .spGlassCard(cornerRadius: SP.Layout.cornerSmall)
+        }
+        .buttonStyle(.plain)
+        .opacity(appear ? 1 : 0)
+        .animation(SP.Anim.spring.delay(0.3), value: appear)
+    }
+
+    // MARK: - Data
+
+    private var dataSection: some View {
+        VStack(alignment: .leading, spacing: 12) {
+            sectionHeader(icon: "externaldrive.fill", title: String(localized: "settings.data"), color: SP.Colors.textSecondary)
+
+            Button {
+                coordinator.ttsService.clearCache()
+                SP.Haptic.success()
+            } label: {
+                HStack(spacing: 10) {
+                    Image(systemName: "trash.circle")
+                        .foregroundColor(SP.Colors.warning)
+                    Text(String(localized: "settings.clear_tts_cache"))
+                        .font(SP.Typography.subheadline)
+                        .foregroundColor(SP.Colors.textPrimary)
+                    Spacer()
+                }
+            }
+            .buttonStyle(.plain)
+
+            NavigationLink {
+                CrisisLineView()
+            } label: {
+                HStack(spacing: 10) {
+                    Image(systemName: "phone.fill")
+                        .foregroundColor(SP.Colors.success)
+                    Text(String(localized: "settings.crisis_lines"))
+                        .font(SP.Typography.subheadline)
+                        .foregroundColor(SP.Colors.textPrimary)
+                    Spacer()
+                    Image(systemName: "chevron.right")
+                        .font(.system(size: 12))
+                        .foregroundColor(SP.Colors.textTertiary)
+                }
+            }
+            .buttonStyle(.plain)
+        }
+        .spGlassCard(cornerRadius: SP.Layout.cornerMedium)
+        .opacity(appear ? 1 : 0)
+        .animation(SP.Anim.spring.delay(0.35), value: appear)
+    }
+
+    // MARK: - Helpers
+
+    private func sectionHeader(icon: String, title: String, color: Color) -> some View {
+        HStack(spacing: 10) {
+            sectionIcon(icon: icon, color: color)
+            Text(title)
+                .font(SP.Typography.headline)
+                .foregroundColor(SP.Colors.textPrimary)
+        }
+    }
+
+    private func sectionIcon(icon: String, color: Color) -> some View {
+        ZStack {
+            RoundedRectangle(cornerRadius: 8, style: .continuous)
+                .fill(color.opacity(0.15))
+                .frame(width: 32, height: 32)
+            Image(systemName: icon)
+                .font(.system(size: 14))
+                .foregroundColor(color)
+        }
+    }
+}

@@ -233,6 +233,47 @@ struct ProfileHubView: View {
                 .font(SP.Typography.title3)
                 .foregroundColor(SP.Colors.textPrimary)
 
+            // Main Settings screen
+            NavigationLink {
+                SettingsView()
+                    .environment(coordinator)
+            } label: {
+                settingsRowLabel(icon: "gearshape.fill", title: String(localized: "settings.title"), color: SP.Colors.accent)
+            }
+            .buttonStyle(.plain)
+
+            // Soundscape quick access
+            NavigationLink {
+                SoundscapeView()
+                    .environment(coordinator)
+            } label: {
+                HStack(spacing: 12) {
+                    ZStack {
+                        RoundedRectangle(cornerRadius: 8, style: .continuous)
+                            .fill(SP.Colors.warmth.opacity(0.15))
+                            .frame(width: 32, height: 32)
+                        Image(systemName: "music.note.list")
+                            .font(.system(size: 14))
+                            .foregroundColor(SP.Colors.warmth)
+                    }
+                    Text(String(localized: "soundscape.title"))
+                        .font(SP.Typography.callout)
+                        .foregroundColor(SP.Colors.textPrimary)
+                    Spacer()
+                    if coordinator.ambientSound.isAnythingPlaying {
+                        Circle()
+                            .fill(SP.Colors.success)
+                            .frame(width: 8, height: 8)
+                    }
+                    Image(systemName: "chevron.right")
+                        .font(.system(size: 12))
+                        .foregroundColor(SP.Colors.textTertiary)
+                }
+                .spGlassCard(cornerRadius: SP.Layout.cornerSmall)
+                .contentShape(Rectangle())
+            }
+            .buttonStyle(.plain)
+
             NavigationLink {
                 NotificationSettingsView()
             } label: {

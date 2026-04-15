@@ -753,3 +753,57 @@
 "voice.download_hint" = "Скачайте голоса в Настройках для мягкого звучания";
 "voice.auto_best" = "Авто (лучший доступный)";
 "voice.download_voices" = "Скачать голоса в Настройках…";
+
+// MARK: - Settings
+"settings.title" = "Настройки";
+"settings.voice_guide" = "Голосовой помощник";
+"settings.voice_enabled" = "Голосовое сопровождение";
+"settings.voice_fallback_hint" = "Используются голоса устройства. Добавьте ключ OpenAI для премиум-качества.";
+"settings.openai_tts" = "Голос OpenAI (Премиум)";
+"settings.openai_description" = "Естественные, человечные голоса от OpenAI. Намного мягче системных.";
+"settings.openai_enabled" = "Использовать OpenAI";
+"settings.openai_no_key" = "API-ключ не задан";
+"settings.openai_voice" = "Голос";
+"settings.openai_test" = "Тест голоса";
+"settings.openai_model" = "Качество";
+"settings.soundscape" = "Звуковой фон";
+"settings.soundscape_sub" = "Музыка и звуки природы";
+"settings.appearance" = "Оформление";
+"settings.notifications" = "Уведомления";
+"settings.data" = "Данные и хранилище";
+"settings.clear_tts_cache" = "Очистить кэш голоса";
+"settings.crisis_lines" = "Экстренные линии";
+
+// MARK: - Soundscape
+"soundscape.title" = "Звуки";
+"soundscape.subtitle" = "Успокаивающие фоновые звуки для расслабления";
+"soundscape.master_volume" = "Общая громкость";
+"soundscape.music" = "Фоновая музыка";
+"soundscape.nature" = "Звуки природы";
+"soundscape.nature_hint" = "Смешивайте несколько звуков вместе";
+"ambient.music_piano" = "Спокойное пианино";
+"ambient.music_ambient" = "Мягкий эмбиент";
+"ambient.music_guitar" = "Нежная гитара";
+"ambient.nature_rain" = "Дождь";
+"ambient.nature_forest" = "Лес";
+"ambient.nature_ocean" = "Океан";
+"ambient.nature_fireplace" = "Камин";
+"ambient.nature_birds" = "Ночные птицы";
+
+// MARK: - Insights
+"insight.time_of_day" = "Время суток";
+"insight.time_description" = "Когда эпизоды случаются чаще?";
+"insight.morning" = "Утро";
+"insight.afternoon" = "День";
+"insight.evening" = "Вечер";
+"insight.night" = "Ночь";
+"insight.weekly_progress" = "Недельный прогресс";
+"insight.this_week" = "Эта неделя";
+"insight.last_week" = "Прошлая";
+"insight.weeks_ago" = "нед. назад";
+"insight.trend_improving" = "Меньше эпизодов, чем на прошлой неделе — отличный прогресс!";
+"insight.trend_attention" = "Больше эпизодов на этой неделе — будь мягче к себе";
+
+// MARK: - Journal extras
+"journal.mood_trend" = "Динамика настроения";
+"journal.edit_mood_title" = "Редактировать настроение";

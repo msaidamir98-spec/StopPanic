@@ -4,9 +4,9 @@ import SwiftUI
 
 // MARK: - AudioGuideService
 
-// Голосовое сопровождение дыхания и заземления через AVSpeechSynthesizer.
+// Голосовое сопровождение дыхания и заземления.
+// Приоритет: OpenAI TTS (если настроен) → AVSpeechSynthesizer (fallback).
 // Работает с выключенным экраном через AVAudioSession.playback.
-// Пользователь с закрытыми от страха глазами может следовать только по звуку и вибрации.
 //
 // Аудио-сессия активируется ЛЕНИВО — только при первом вызове speak(),
 // чтобы не захватывать аудиофокус без необходимости (Apple Review).
@@ -22,6 +22,9 @@ final class AudioGuideService {
         case inhale, hold, exhale
     }
 
+    /// Reference to OpenAI TTS service (set by AppCoordinator)
+    var ttsService: OpenAITTSService?
+
     var isVoiceEnabled: Bool {
         get {
             access(keyPath: \.isVoiceEnabled)
@@ -31,7 +34,6 @@ final class AudioGuideService {
             withMutation(keyPath: \.isVoiceEnabled) {
                 _isVoiceEnabled = newValue
                 UserDefaults.standard.set(newValue, forKey: "voiceGuideEnabled")
-                // Деактивируем сессию если голос выключен
                 if !newValue {
                     deactivateAudioSession()
                 }
@@ -50,10 +52,10 @@ final class AudioGuideService {
         case .exhale:
             String(localized: "voice.exhale")
         }
-        speak(text, rate: 0.35, pitch: 0.95)
+        smartSpeak(text, rate: 0.35, pitch: 0.95)
     }
 
-    /// Говорит шаг заземления: "Назови 5 вещей которые ты видишь"
+    /// Говорит шаг заземления
     func speakGroundingStep(_ step: Int) {
         guard isVoiceEnabled else { return }
         let texts = [
@@ -64,24 +66,25 @@ final class AudioGuideService {
             String(localized: "voice.ground_taste"),
         ]
         let index = min(step, texts.count - 1)
-        speak(texts[index], rate: 0.36, pitch: 0.92)
+        smartSpeak(texts[index], rate: 0.36, pitch: 0.92)
     }
 
     /// Говорит аффирмацию завершения
     func speakCompletion() {
         guard isVoiceEnabled else { return }
-        speak(String(localized: "voice.you_did_it"), rate: 0.35, pitch: 0.98)
+        smartSpeak(String(localized: "voice.you_did_it"), rate: 0.35, pitch: 0.98)
     }
 
     /// Говорит "Ты в безопасности"
     func speakSafe() {
         guard isVoiceEnabled else { return }
-        speak(String(localized: "voice.you_are_safe"), rate: 0.32, pitch: 0.88)
+        smartSpeak(String(localized: "voice.you_are_safe"), rate: 0.32, pitch: 0.88)
     }
 
     /// Останавливает текущую речь и деактивирует аудио-сессию
     func stop() {
         synthesizer.stopSpeaking(at: .immediate)
+        ttsService?.stop()
         deactivateAudioSession()
     }
 
@@ -89,18 +92,15 @@ final class AudioGuideService {
 
     nonisolated(unsafe) private static let log = Logger(subsystem: "MSK-PRODUKT.StopPanic", category: "AudioGuide")
 
-    /// Включено ли голосовое сопровождение (UserDefaults)
     @ObservationIgnored
     private var _isVoiceEnabled: Bool = UserDefaults.standard.object(forKey: "voiceGuideEnabled") != nil
         ? UserDefaults.standard.bool(forKey: "voiceGuideEnabled")
-        : true // по умолчанию включено
+        : true
 
     nonisolated(unsafe) private let synthesizer = AVSpeechSynthesizer()
 
-    /// Флаг — сессия уже активирована
     private var isSessionActive = false
 
-    /// Активируем AVAudioSession лениво — только когда реально нужен звук
     private func ensureAudioSession() {
         guard !isSessionActive else { return }
         do {
@@ -113,7 +113,6 @@ final class AudioGuideService {
         }
     }
 
-    /// Деактивируем аудио-сессию — возвращаем фокус другим приложениям
     private func deactivateAudioSession() {
         guard isSessionActive else { return }
         do {
@@ -149,7 +148,6 @@ final class AudioGuideService {
         return AVSpeechSynthesisVoice.speechVoices()
             .filter { $0.language == lang }
             .sorted { lhs, rhs in
-                // Premium > Enhanced > Default
                 if lhs.quality != rhs.quality {
                     return lhs.quality.rawValue > rhs.quality.rawValue
                 }
@@ -157,7 +155,6 @@ final class AudioGuideService {
             }
     }
 
-    /// Human-readable display name for a voice (e.g. "Milena (Улучшенный)")
     func voiceDisplayName(_ voice: AVSpeechSynthesisVoice) -> String {
         let badge: String
         switch voice.quality {
@@ -168,12 +165,10 @@ final class AudioGuideService {
         return "\(voice.name) — \(badge)"
     }
 
-    /// Checks if a voice is premium or enhanced (not the default compact voice)
     func isHighQualityVoice(_ voice: AVSpeechSynthesisVoice) -> Bool {
         voice.quality.rawValue >= AVSpeechSynthesisVoiceQuality.enhanced.rawValue
     }
 
-    /// Current BCP-47 language tag for voice matching
     private var currentLanguageTag: String {
         let langCode = Locale.current.language.languageCode?.identifier ?? "en"
         return voiceLanguage(for: langCode)
@@ -182,24 +177,30 @@ final class AudioGuideService {
     @ObservationIgnored
     private var _selectedVoiceId: String? = UserDefaults.standard.string(forKey: "selectedVoiceId")
 
-    private func speak(_ text: String, rate: Float = 0.45, pitch: Float = 1.0) {
-        // Активируем сессию лениво
+    /// Smart speak: use OpenAI TTS if available, otherwise AVSpeech fallback
+    private func smartSpeak(_ text: String, rate: Float = 0.45, pitch: Float = 1.0) {
+        if let tts = ttsService, tts.isReady {
+            tts.speak(text, speed: Double(rate) * 2.5) // map 0.35 → ~0.87
+        } else {
+            speakLocal(text, rate: rate, pitch: pitch)
+        }
+    }
+
+    /// Local AVSpeechSynthesizer fallback
+    private func speakLocal(_ text: String, rate: Float = 0.45, pitch: Float = 1.0) {
         ensureAudioSession()
 
-        // Останавливаем предыдущее
         if synthesizer.isSpeaking {
             synthesizer.stopSpeaking(at: .immediate)
         }
 
         let utterance = AVSpeechUtterance(string: text)
-        // Soft, slow, calming voice — not robotic
-        utterance.rate = min(rate, 0.38)            // slower = calmer
-        utterance.pitchMultiplier = pitch * 0.92    // slightly lower = warmer
-        utterance.volume = 0.85                     // not too loud
+        utterance.rate = min(rate, 0.38)
+        utterance.pitchMultiplier = pitch * 0.92
+        utterance.volume = 0.85
         utterance.preUtteranceDelay = 0.2
         utterance.postUtteranceDelay = 0.5
 
-        // Use user-selected voice, or pick the best available
         utterance.voice = resolveVoice()
 
         synthesizer.speak(utterance)
@@ -209,7 +210,6 @@ final class AudioGuideService {
     private func resolveVoice() -> AVSpeechSynthesisVoice? {
         let lang = currentLanguageTag
 
-        // 1. User explicitly selected a voice
         if let id = _selectedVoiceId,
            let voice = AVSpeechSynthesisVoice(identifier: id)
         {
@@ -217,7 +217,6 @@ final class AudioGuideService {
             return voice
         }
 
-        // 2. Try to find premium voice for current language
         let allVoices = AVSpeechSynthesisVoice.speechVoices()
             .filter { $0.language == lang }
 
@@ -226,19 +225,16 @@ final class AudioGuideService {
             return premium
         }
 
-        // 3. Try enhanced voice
         if let enhanced = allVoices.first(where: { $0.quality == .enhanced }) {
             Self.log.info("Using enhanced voice: \(enhanced.name)")
             return enhanced
         }
 
-        // 4. Any voice for exact language match
         if let any = allVoices.first {
             Self.log.info("Using default voice: \(any.name)")
             return any
         }
 
-        // 5. System fallback
         Self.log.warning("No voice found for \(lang), using system fallback")
         return AVSpeechSynthesisVoice(language: lang)
     }

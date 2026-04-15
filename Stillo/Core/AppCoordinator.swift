@@ -25,6 +25,8 @@ final class AppCoordinator {
     let streakService = StreakService()
     let reviewService = ReviewService.shared
     let audioGuide = AudioGuideService()
+    let ttsService = OpenAITTSService()
+    let ambientSound = AmbientSoundService()
 
     // MARK: - Navigation State
 
@@ -32,6 +34,11 @@ final class AppCoordinator {
     var showSOSOverlay: Bool = false
     var showBreathingSheet: Bool = false
     var showPaywall: Bool = false
+
+    // Wire up TTS → AudioGuide on first access
+    func bootstrap() {
+        audioGuide.ttsService = ttsService
+    }
 
     // MARK: - User State (persisted via UserDefaults)
 

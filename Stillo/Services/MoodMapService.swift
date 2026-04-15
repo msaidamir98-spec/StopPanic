@@ -52,6 +52,31 @@ final class MoodMapService {
         persistence.save()
     }
 
+    func removePointById(_ id: UUID) {
+        points.removeAll { $0.id == id }
+        let request: NSFetchRequest<CDMoodPoint> = CDMoodPoint.fetchRequest()
+        request.predicate = NSPredicate(format: "id == %@", id as CVarArg)
+        if let results = try? persistence.viewContext.fetch(request), let obj = results.first {
+            persistence.viewContext.delete(obj)
+            persistence.save()
+        }
+    }
+
+    func updatePoint(id: UUID, mood: Int, note: String) {
+        if let index = points.firstIndex(where: { $0.id == id }) {
+            let old = points[index]
+            points[index] = MoodPoint(id: old.id, date: old.date, mood: mood, note: note)
+
+            let request: NSFetchRequest<CDMoodPoint> = CDMoodPoint.fetchRequest()
+            request.predicate = NSPredicate(format: "id == %@", id as CVarArg)
+            if let results = try? persistence.viewContext.fetch(request), let obj = results.first {
+                obj.mood = Int16(mood)
+                obj.note = note
+                persistence.save()
+            }
+        }
+    }
+
     // MARK: Private
 
     private static let log = Logger(subsystem: "MSK-PRODUKT.StopPanic", category: "MoodMapService")
