@@ -738,3 +738,13 @@
 "voice.you_did_it" = "Du hast es geschafft. Du bist sicher.";
 "voice.you_are_safe" = "Du bist sicher. Ich bin bei dir.";
 "voice.toggle_label" = "Sprachführung";
+
+// MARK: - Edit/Delete + Voice Selection
+"journal.edit" = "Bearbeiten";
+"journal.delete" = "Löschen";
+"journal.edit_title" = "Eintrag bearbeiten";
+"voice.select_voice" = "Stimmauswahl";
+"voice.no_voices" = "Keine Stimmen für Ihre Sprache verfügbar";
+"voice.quality_premium" = "Premium-Qualität";
+"voice.quality_enhanced" = "Verbesserte Qualität";
+"voice.quality_default" = "Standard";

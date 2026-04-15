@@ -738,3 +738,13 @@
 "voice.you_did_it" = "你做到了。你是安全的。";
 "voice.you_are_safe" = "你是安全的。我在这里陪着你。";
 "voice.toggle_label" = "语音引导";
+
+// MARK: - Edit/Delete + Voice Selection
+"journal.edit" = "编辑";
+"journal.delete" = "删除";
+"journal.edit_title" = "编辑条目";
+"voice.select_voice" = "语音选择";
+"voice.no_voices" = "没有可用的语音";
+"voice.quality_premium" = "高级品质";
+"voice.quality_enhanced" = "增强品质";
+"voice.quality_default" = "标准";

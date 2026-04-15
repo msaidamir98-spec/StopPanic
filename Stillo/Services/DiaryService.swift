@@ -42,6 +42,31 @@ final class DiaryService: ObservableObject {
         }
     }
 
+    func removeEpisodeById(_ id: UUID) {
+        diaryEpisodes.removeAll { $0.id == id }
+        let request: NSFetchRequest<CDDiaryEpisode> = CDDiaryEpisode.fetchRequest()
+        request.predicate = NSPredicate(format: "id == %@", id as CVarArg)
+        if let results = try? persistence.viewContext.fetch(request), let obj = results.first {
+            persistence.viewContext.delete(obj)
+            persistence.save()
+        }
+    }
+
+    func updateEpisode(id: UUID, intensity: Int, notes: String) {
+        if let index = diaryEpisodes.firstIndex(where: { $0.id == id }) {
+            let old = diaryEpisodes[index]
+            diaryEpisodes[index] = DiaryEpisode(id: old.id, date: old.date, intensity: intensity, notes: notes)
+
+            let request: NSFetchRequest<CDDiaryEpisode> = CDDiaryEpisode.fetchRequest()
+            request.predicate = NSPredicate(format: "id == %@", id as CVarArg)
+            if let results = try? persistence.viewContext.fetch(request), let obj = results.first {
+                obj.intensity = Int16(intensity)
+                obj.notes = notes
+                persistence.save()
+            }
+        }
+    }
+
     /// Публичный алиас для сохранения (background)
     func forceSave() {
         persistence.save()

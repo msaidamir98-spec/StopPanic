@@ -738,3 +738,13 @@
 "voice.you_did_it" = "У тебя получилось. Ты в безопасности.";
 "voice.you_are_safe" = "Ты в безопасности. Я с тобой.";
 "voice.toggle_label" = "Голосовой помощник";
+
+// MARK: - Edit/Delete + Voice Selection
+"journal.edit" = "Изменить";
+"journal.delete" = "Удалить";
+"journal.edit_title" = "Редактирование";
+"voice.select_voice" = "Выбор голоса";
+"voice.no_voices" = "Нет голосов для вашего языка";
+"voice.quality_premium" = "Премиум качество";
+"voice.quality_enhanced" = "Улучшенное качество";
+"voice.quality_default" = "Стандартный";

@@ -125,6 +125,42 @@ final class AudioGuideService {
         }
     }
 
+    /// Preferred voice identifier saved by user (nil = auto best)
+    var selectedVoiceId: String? {
+        get {
+            access(keyPath: \.selectedVoiceId)
+            return _selectedVoiceId
+        }
+        set {
+            withMutation(keyPath: \.selectedVoiceId) {
+                _selectedVoiceId = newValue
+                if let id = newValue {
+                    UserDefaults.standard.set(id, forKey: "selectedVoiceId")
+                } else {
+                    UserDefaults.standard.removeObject(forKey: "selectedVoiceId")
+                }
+            }
+        }
+    }
+
+    /// Returns available voices for the current language, sorted by quality
+    var availableVoices: [AVSpeechSynthesisVoice] {
+        let langCode = Locale.current.language.languageCode?.identifier ?? "en"
+        let lang = voiceLanguage(for: langCode)
+        return AVSpeechSynthesisVoice.speechVoices()
+            .filter { $0.language.hasPrefix(lang.prefix(2)) }
+            .sorted { lhs, rhs in
+                // Premium/enhanced voices first
+                if lhs.quality != rhs.quality {
+                    return lhs.quality.rawValue > rhs.quality.rawValue
+                }
+                return lhs.name < rhs.name
+            }
+    }
+
+    @ObservationIgnored
+    private var _selectedVoiceId: String? = UserDefaults.standard.string(forKey: "selectedVoiceId")
+
     private func speak(_ text: String, rate: Float = 0.45, pitch: Float = 1.0) {
         // Активируем сессию лениво
         ensureAudioSession()
@@ -138,14 +174,38 @@ final class AudioGuideService {
         utterance.rate = rate
         utterance.pitchMultiplier = pitch
         utterance.volume = 0.9
-        utterance.preUtteranceDelay = 0.1
-        utterance.postUtteranceDelay = 0.3
+        utterance.preUtteranceDelay = 0.15
+        utterance.postUtteranceDelay = 0.4
 
-        // Определяем язык из текущей локали
-        let langCode = Locale.current.language.languageCode?.identifier ?? "en"
-        utterance.voice = AVSpeechSynthesisVoice(language: voiceLanguage(for: langCode))
+        // Use user-selected voice, or pick the best available
+        utterance.voice = resolveVoice()
 
         synthesizer.speak(utterance)
+    }
+
+    /// Resolves the best voice: user selection → premium → default
+    private func resolveVoice() -> AVSpeechSynthesisVoice? {
+        // 1. User selected voice
+        if let id = _selectedVoiceId,
+           let voice = AVSpeechSynthesisVoice(identifier: id)
+        {
+            return voice
+        }
+
+        // 2. Find best quality voice for current language
+        let langCode = Locale.current.language.languageCode?.identifier ?? "en"
+        let lang = voiceLanguage(for: langCode)
+        let voices = AVSpeechSynthesisVoice.speechVoices()
+            .filter { $0.language.hasPrefix(lang.prefix(2)) }
+            .sorted { $0.quality.rawValue > $1.quality.rawValue }
+
+        // Prefer premium/enhanced voices (quality >= .enhanced)
+        if let premium = voices.first(where: { $0.quality.rawValue >= AVSpeechSynthesisVoiceQuality.enhanced.rawValue }) {
+            return premium
+        }
+
+        // 3. Fallback to any voice for this language
+        return AVSpeechSynthesisVoice(language: lang)
     }
 
     private func voiceLanguage(for code: String) -> String {

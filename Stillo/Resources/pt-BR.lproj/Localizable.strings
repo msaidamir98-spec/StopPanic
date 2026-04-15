@@ -738,3 +738,13 @@
 "voice.you_did_it" = "Você conseguiu. Está seguro.";
 "voice.you_are_safe" = "Você está seguro. Estou aqui.";
 "voice.toggle_label" = "Guia de voz";
+
+// MARK: - Edit/Delete + Voice Selection
+"journal.edit" = "Editar";
+"journal.delete" = "Excluir";
+"journal.edit_title" = "Editar entrada";
+"voice.select_voice" = "Seleção de voz";
+"voice.no_voices" = "Nenhuma voz disponível para seu idioma";
+"voice.quality_premium" = "Qualidade premium";
+"voice.quality_enhanced" = "Qualidade aprimorada";
+"voice.quality_default" = "Padrão";

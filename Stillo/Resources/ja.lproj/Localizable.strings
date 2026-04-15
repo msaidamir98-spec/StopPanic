@@ -738,3 +738,13 @@
 "voice.you_did_it" = "やりました。安全です。";
 "voice.you_are_safe" = "安全です。一緒にいますよ。";
 "voice.toggle_label" = "音声ガイド";
+
+// MARK: - Edit/Delete + Voice Selection
+"journal.edit" = "編集";
+"journal.delete" = "削除";
+"journal.edit_title" = "エントリーを編集";
+"voice.select_voice" = "音声の選択";
+"voice.no_voices" = "お使いの言語の音声がありません";
+"voice.quality_premium" = "プレミアム品質";
+"voice.quality_enhanced" = "高品質";
+"voice.quality_default" = "標準";

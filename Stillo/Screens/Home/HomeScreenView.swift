@@ -50,6 +50,7 @@ struct HomeScreenView: View {
                     }
                     .padding(.horizontal, SP.Layout.padding)
                 }
+                .scrollBounceBehavior(.basedOnSize)
             }
             .navigationBarHidden(true)
         }

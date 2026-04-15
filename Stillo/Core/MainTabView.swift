@@ -68,6 +68,10 @@ struct MainTabView: View {
             configureAppearance()
             coordinator.refreshPredictions()
         }
+        .onChange(of: coordinator.themeManager.currentTheme) { _, _ in
+            configureAppearance()
+            refreshAllBarAppearances()
+        }
         .onOpenURL { url in
             handleDeepLink(url)
         }
@@ -118,6 +122,23 @@ struct MainTabView: View {
         UINavigationBar.appearance().scrollEdgeAppearance = navAppearance
         UINavigationBar.appearance().compactAppearance = navAppearance
         UINavigationBar.appearance().tintColor = UIColor(theme.accent)
+    }
+
+    /// Force all windows to re-layout after theme change
+    /// This fixes SafeArea / NavigationBar color staying stale.
+    private func refreshAllBarAppearances() {
+        DispatchQueue.main.asyncAfter(deadline: .now() + 0.05) {
+            for scene in UIApplication.shared.connectedScenes {
+                guard let windowScene = scene as? UIWindowScene else { continue }
+                for window in windowScene.windows {
+                    let currentRootVC = window.rootViewController
+                    window.rootViewController = nil
+                    window.rootViewController = currentRootVC
+                    window.setNeedsLayout()
+                    window.layoutIfNeeded()
+                }
+            }
+        }
     }
 
     /// Handle deep links: stillo://sos, stillo://breathing

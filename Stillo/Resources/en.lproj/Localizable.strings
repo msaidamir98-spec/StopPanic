@@ -738,3 +738,13 @@
 "voice.you_did_it" = "You did it. You are safe.";
 "voice.you_are_safe" = "You are safe. I am here with you.";
 "voice.toggle_label" = "Voice Guide";
+
+// MARK: - Edit/Delete + Voice Selection
+"journal.edit" = "Edit";
+"journal.delete" = "Delete";
+"journal.edit_title" = "Edit Entry";
+"voice.select_voice" = "Voice Selection";
+"voice.no_voices" = "No voices available for your language";
+"voice.quality_premium" = "Premium quality";
+"voice.quality_enhanced" = "Enhanced quality";
+"voice.quality_default" = "Standard";

@@ -1,3 +1,4 @@
+import AVFoundation
 import SwiftUI
 
 // MARK: - ProfileHubView
@@ -295,10 +296,73 @@ struct ProfileHubView: View {
                 .tint(SP.Colors.accent)
             }
             .spGlassCard(cornerRadius: SP.Layout.cornerSmall)
+
+            // Voice selection
+            if coordinator.audioGuide.isVoiceEnabled {
+                VStack(alignment: .leading, spacing: 10) {
+                    HStack(spacing: 12) {
+                        ZStack {
+                            RoundedRectangle(cornerRadius: 8, style: .continuous)
+                                .fill(SP.Colors.accent.opacity(0.15))
+                                .frame(width: 32, height: 32)
+                            Image(systemName: "waveform")
+                                .font(.system(size: 14))
+                                .foregroundColor(SP.Colors.accent)
+                        }
+                        Text(String(localized: "voice.select_voice"))
+                            .font(SP.Typography.callout)
+                            .foregroundColor(SP.Colors.textPrimary)
+                    }
+
+                    let voices = coordinator.audioGuide.availableVoices
+                    if voices.isEmpty {
+                        Text(String(localized: "voice.no_voices"))
+                            .font(SP.Typography.caption)
+                            .foregroundColor(SP.Colors.textTertiary)
+                    } else {
+                        ForEach(voices, id: \.identifier) { voice in
+                            Button {
+                                SP.Haptic.selectionChanged()
+                                coordinator.audioGuide.selectedVoiceId = voice.identifier
+                                // Preview the voice
+                                coordinator.audioGuide.speakSafe()
+                            } label: {
+                                HStack {
+                                    VStack(alignment: .leading, spacing: 2) {
+                                        Text(voice.name)
+                                            .font(SP.Typography.subheadline)
+                                            .foregroundColor(SP.Colors.textPrimary)
+                                        Text(voiceQualityLabel(voice.quality))
+                                            .font(SP.Typography.caption2)
+                                            .foregroundColor(SP.Colors.textTertiary)
+                                    }
+                                    Spacer()
+                                    if coordinator.audioGuide.selectedVoiceId == voice.identifier {
+                                        Image(systemName: "checkmark.circle.fill")
+                                            .foregroundStyle(SP.Colors.heroGradient)
+                                    }
+                                }
+                                .padding(.vertical, 4)
+                            }
+                            .buttonStyle(.plain)
+                        }
+                    }
+                }
+                .spGlassCard(cornerRadius: SP.Layout.cornerSmall)
+                .transition(.opacity.combined(with: .move(edge: .top)))
+            }
         }
         .opacity(appear ? 1 : 0)
         .offset(y: appear ? 0 : 15)
         .animation(SP.Anim.spring.delay(0.35), value: appear)
+    }
+
+    private func voiceQualityLabel(_ quality: AVSpeechSynthesisVoiceQuality) -> String {
+        switch quality {
+        case .premium: String(localized: "voice.quality_premium")
+        case .enhanced: String(localized: "voice.quality_enhanced")
+        default: String(localized: "voice.quality_default")
+        }
     }
 
     // MARK: - About

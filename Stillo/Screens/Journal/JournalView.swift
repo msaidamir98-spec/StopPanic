@@ -29,10 +29,15 @@ struct JournalView: View {
                             insightsContent
                         }
                     }
+                    .scrollBounceBehavior(.basedOnSize)
                 }
             }
             .sheet(isPresented: $showAddSheet) {
                 AddEpisodeSheet()
+                    .environment(coordinator)
+            }
+            .sheet(item: $editingEpisode) { episode in
+                EditEpisodeSheet(episode: episode)
                     .environment(coordinator)
             }
             .navigationBarHidden(true)
@@ -52,6 +57,8 @@ struct JournalView: View {
     private var selectedSegment = 0
     @State
     private var appear = false
+    @State
+    private var editingEpisode: DiaryEpisode?
 
     // MARK: - Header
 
@@ -127,6 +134,24 @@ struct JournalView: View {
                         .opacity(appear ? 1 : 0)
                         .offset(y: appear ? 0 : 15)
                         .animation(SP.Anim.spring.delay(Double(index) * 0.04), value: appear)
+                        .onTapGesture {
+                            SP.Haptic.light()
+                            editingEpisode = episode
+                        }
+                        .contextMenu {
+                            Button {
+                                editingEpisode = episode
+                            } label: {
+                                Label(String(localized: "journal.edit"), systemImage: "pencil")
+                            }
+                            Button(role: .destructive) {
+                                withAnimation(SP.Anim.spring) {
+                                    coordinator.diaryService.removeEpisodeById(episode.id)
+                                }
+                            } label: {
+                                Label(String(localized: "journal.delete"), systemImage: "trash")
+                            }
+                        }
                 }
             }
         }
@@ -514,6 +539,9 @@ struct AddEpisodeSheet: View {
                                 intensity: Int(intensity),
                                 notes: fullNotes
                             )
+                            // Auto-sync mood map: inverse intensity → mood (10 = great, 1 = awful)
+                            let moodValue = max(1, 11 - Int(intensity))
+                            coordinator.moodMapService.addPoint(mood: moodValue, note: fullNotes)
                             coordinator.achievementService.updateProgress(id: "diary_master")
                             coordinator.refreshPredictions()
                             SP.Haptic.success()
@@ -576,6 +604,131 @@ struct AddEpisodeSheet: View {
         case 5 ... 6: String(localized: "journal.intensity_3")
         case 7 ... 8: String(localized: "journal.intensity_4")
         default: String(localized: "journal.intensity_5")
+        }
+    }
+}
+
+// MARK: - EditEpisodeSheet
+
+struct EditEpisodeSheet: View {
+    // MARK: Internal
+
+    let episode: DiaryEpisode
+
+    @Environment(AppCoordinator.self)
+    var coordinator
+
+    var body: some View {
+        NavigationStack {
+            ZStack {
+                coordinator.themeManager.bg.ignoresSafeArea()
+
+                ScrollView {
+                    VStack(spacing: 24) {
+                        // Intensity
+                        VStack(spacing: 12) {
+                            HStack {
+                                Text(String(localized: "journal.add_intensity"))
+                                    .font(SP.Typography.headline)
+                                    .foregroundColor(SP.Colors.textPrimary)
+                                Spacer()
+                                Text("\(Int(intensity))/10")
+                                    .font(SP.Typography.title2)
+                                    .foregroundColor(sliderColor)
+                                    .contentTransition(.numericText())
+                            }
+
+                            Slider(value: $intensity, in: 1 ... 10, step: 1)
+                                .tint(sliderColor)
+                        }
+                        .spGlassCard(cornerRadius: SP.Layout.cornerMedium)
+
+                        // Notes
+                        VStack(alignment: .leading, spacing: 10) {
+                            Text(String(localized: "journal.add_notes"))
+                                .font(SP.Typography.headline)
+                                .foregroundColor(SP.Colors.textPrimary)
+
+                            TextField(String(localized: "journal.add_notes_placeholder"), text: $notes, axis: .vertical)
+                                .textFieldStyle(.plain)
+                                .padding(14)
+                                .background(
+                                    RoundedRectangle(cornerRadius: 14, style: .continuous)
+                                        .fill(.warmGlass)
+                                )
+                                .foregroundColor(SP.Colors.textPrimary)
+                                .frame(minHeight: 80)
+                        }
+
+                        // Save
+                        Button {
+                            coordinator.diaryService.updateEpisode(
+                                id: episode.id,
+                                intensity: Int(intensity),
+                                notes: notes
+                            )
+                            coordinator.refreshPredictions()
+                            SP.Haptic.success()
+                            dismiss()
+                        } label: {
+                            Text(String(localized: "journal.add_save"))
+                                .spPrimaryButton()
+                        }
+
+                        // Delete
+                        Button(role: .destructive) {
+                            coordinator.diaryService.removeEpisodeById(episode.id)
+                            coordinator.refreshPredictions()
+                            SP.Haptic.warning()
+                            dismiss()
+                        } label: {
+                            HStack {
+                                Image(systemName: "trash")
+                                Text(String(localized: "journal.delete"))
+                            }
+                            .font(SP.Typography.headline)
+                            .foregroundColor(SP.Colors.danger)
+                            .frame(maxWidth: .infinity)
+                            .padding(.vertical, 16)
+                            .background(SP.Colors.danger.opacity(0.12))
+                            .clipShape(RoundedRectangle(cornerRadius: SP.Layout.cornerSmall))
+                        }
+                    }
+                    .padding(.horizontal, SP.Layout.padding)
+                    .padding(.vertical, 20)
+                }
+            }
+            .navigationTitle(String(localized: "journal.edit_title"))
+            .navigationBarTitleDisplayMode(.inline)
+            .toolbar {
+                ToolbarItem(placement: .cancellationAction) {
+                    Button(String(localized: "general.cancel")) { dismiss() }
+                        .foregroundColor(SP.Colors.textSecondary)
+                }
+            }
+        }
+        .onAppear {
+            intensity = Double(episode.intensity)
+            notes = episode.notes
+        }
+    }
+
+    // MARK: Private
+
+    @Environment(\.dismiss)
+    private var dismiss
+
+    @State
+    private var intensity: Double = 5
+    @State
+    private var notes = ""
+
+    private var sliderColor: Color {
+        switch Int(intensity) {
+        case 1 ... 3: SP.Colors.success
+        case 4 ... 6: SP.Colors.warning
+        case 7 ... 8: .orange
+        default: SP.Colors.danger
         }
     }
 }
