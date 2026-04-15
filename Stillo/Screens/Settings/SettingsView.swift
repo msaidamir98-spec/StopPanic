@@ -1,3 +1,4 @@
+import AVFoundation
 import SwiftUI
 
 // MARK: - SettingsView
@@ -57,11 +58,46 @@ struct SettingsView: View {
             .tint(SP.Colors.accent)
 
             if coordinator.audioGuide.isVoiceEnabled {
-                // Show current voice source
+                // Voice source picker
+                VStack(alignment: .leading, spacing: 8) {
+                    Text(String(localized: "settings.voice_source"))
+                        .font(SP.Typography.caption)
+                        .foregroundColor(SP.Colors.textTertiary)
+
+                    // Pre-recorded
+                    voiceSourceRow(
+                        source: .voiceBank,
+                        icon: "waveform.badge.magnifyingglass",
+                        title: String(localized: "settings.voice_source_bank"),
+                        subtitle: coordinator.voiceBank.availablePhraseCount > 0
+                            ? "\(coordinator.voiceBank.availablePhraseCount) " + String(localized: "settings.voice_phrases")
+                            : String(localized: "settings.voice_no_phrases")
+                    )
+
+                    // System voice (AVSpeech)
+                    voiceSourceRow(
+                        source: .system,
+                        icon: "person.wave.2.fill",
+                        title: String(localized: "settings.voice_source_system"),
+                        subtitle: String(localized: "settings.voice_system_hint")
+                    )
+
+                    // OpenAI TTS
+                    voiceSourceRow(
+                        source: .openAI,
+                        icon: "waveform.circle.fill",
+                        title: String(localized: "settings.voice_source_openai"),
+                        subtitle: coordinator.ttsService.isReady
+                            ? String(localized: "settings.voice_openai_ready")
+                            : String(localized: "settings.voice_openai_need_key")
+                    )
+                }
+
+                // Show current active source
                 let source = coordinator.audioGuide.activeSource
                 HStack(spacing: 8) {
                     Circle()
-                        .fill(source == .voiceBank ? SP.Colors.success : source == .openAI ? SP.Colors.accent : SP.Colors.textTertiary)
+                        .fill(source == .voiceBank ? SP.Colors.success : source == .openAI ? SP.Colors.accent : SP.Colors.calm)
                         .frame(width: 8, height: 8)
                     Text(voiceSourceLabel(source))
                         .font(SP.Typography.caption2)
@@ -70,7 +106,7 @@ struct SettingsView: View {
                 }
 
                 // Voice bank info
-                if coordinator.voiceBank.availablePhraseCount > 0 {
+                if coordinator.voiceBank.availablePhraseCount > 0 && coordinator.audioGuide.preferredSource == .voiceBank {
                     HStack(spacing: 6) {
                         Image(systemName: "checkmark.seal.fill")
                             .foregroundColor(SP.Colors.success)
@@ -79,10 +115,12 @@ struct SettingsView: View {
                             .font(SP.Typography.caption2)
                             .foregroundColor(SP.Colors.success)
                         Spacer()
-                        Text("\(coordinator.voiceBank.availablePhraseCount) " + String(localized: "settings.voice_phrases"))
-                            .font(SP.Typography.caption2)
-                            .foregroundColor(SP.Colors.textTertiary)
                     }
+                }
+
+                // System voice picker (only when system source is selected)
+                if coordinator.audioGuide.preferredSource == .system {
+                    systemVoicePicker
                 }
 
                 // Volume slider
@@ -129,6 +167,82 @@ struct SettingsView: View {
         .spGlassCard(cornerRadius: SP.Layout.cornerMedium)
         .opacity(appear ? 1 : 0)
         .animation(SP.Anim.spring.delay(0.05), value: appear)
+    }
+
+    private func voiceSourceRow(source: AudioGuideService.VoiceSource, icon: String, title: String, subtitle: String) -> some View {
+        Button {
+            SP.Haptic.selectionChanged()
+            withAnimation(SP.Anim.springSnappy) {
+                coordinator.audioGuide.preferredSource = source
+            }
+        } label: {
+            HStack(spacing: 10) {
+                Image(systemName: icon)
+                    .font(.system(size: 16))
+                    .foregroundColor(coordinator.audioGuide.preferredSource == source ? SP.Colors.accent : SP.Colors.textTertiary)
+                    .frame(width: 24)
+                VStack(alignment: .leading, spacing: 2) {
+                    Text(title)
+                        .font(SP.Typography.subheadline)
+                        .foregroundColor(SP.Colors.textPrimary)
+                    Text(subtitle)
+                        .font(SP.Typography.caption2)
+                        .foregroundColor(SP.Colors.textTertiary)
+                }
+                Spacer()
+                if coordinator.audioGuide.preferredSource == source {
+                    Image(systemName: "checkmark.circle.fill")
+                        .foregroundStyle(SP.Colors.heroGradient)
+                } else {
+                    Circle()
+                        .stroke(SP.Colors.textTertiary.opacity(0.3), lineWidth: 1.5)
+                        .frame(width: 22, height: 22)
+                }
+            }
+            .padding(.vertical, 4)
+        }
+        .buttonStyle(.plain)
+    }
+
+    private var systemVoicePicker: some View {
+        VStack(alignment: .leading, spacing: 6) {
+            Text(String(localized: "voice.select_voice"))
+                .font(SP.Typography.caption)
+                .foregroundColor(SP.Colors.textTertiary)
+
+            let voices = coordinator.audioGuide.availableVoices
+            let selectedId = Binding<String>(
+                get: { coordinator.audioGuide.selectedVoiceId ?? "__auto__" },
+                set: { newValue in
+                    if newValue == "__auto__" {
+                        coordinator.audioGuide.selectedVoiceId = nil
+                    } else {
+                        coordinator.audioGuide.selectedVoiceId = newValue
+                    }
+                    SP.Haptic.selectionChanged()
+                }
+            )
+
+            Picker(String(localized: "voice.select_voice"), selection: selectedId) {
+                Text(String(localized: "voice.auto_best"))
+                    .tag("__auto__")
+
+                ForEach(voices, id: \.identifier) { voice in
+                    HStack {
+                        Text(voice.name)
+                        if voice.quality == .premium {
+                            Text("★")
+                        } else if voice.quality == .enhanced {
+                            Text("✦")
+                        }
+                    }
+                    .tag(voice.identifier)
+                }
+            }
+            .pickerStyle(.inline)
+            .frame(maxHeight: 200)
+            .tint(SP.Colors.accent)
+        }
     }
 
     // MARK: - OpenAI TTS (Optional Premium)

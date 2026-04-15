@@ -338,99 +338,30 @@ struct ProfileHubView: View {
             }
             .spGlassCard(cornerRadius: SP.Layout.cornerSmall)
 
-            // Voice selection
+            // Voice source quick info + link to Settings
             if coordinator.audioGuide.isVoiceEnabled {
-                VStack(alignment: .leading, spacing: 10) {
-                    HStack(spacing: 12) {
-                        ZStack {
-                            RoundedRectangle(cornerRadius: 8, style: .continuous)
-                                .fill(SP.Colors.accent.opacity(0.15))
-                                .frame(width: 32, height: 32)
-                            Image(systemName: "waveform")
-                                .font(.system(size: 14))
-                                .foregroundColor(SP.Colors.accent)
-                        }
-                        VStack(alignment: .leading, spacing: 2) {
-                            Text(String(localized: "voice.select_voice"))
-                                .font(SP.Typography.callout)
-                                .foregroundColor(SP.Colors.textPrimary)
-                            Text(String(localized: "voice.download_hint"))
-                                .font(SP.Typography.caption2)
-                                .foregroundColor(SP.Colors.textTertiary)
-                        }
-                    }
-
-                    // Picker: Auto (best) + all available voices
-                    let voices = coordinator.audioGuide.availableVoices
-                    let selectedId = Binding<String>(
-                        get: { coordinator.audioGuide.selectedVoiceId ?? "__auto__" },
-                        set: { newValue in
-                            if newValue == "__auto__" {
-                                coordinator.audioGuide.selectedVoiceId = nil
-                            } else {
-                                coordinator.audioGuide.selectedVoiceId = newValue
-                            }
-                            SP.Haptic.selectionChanged()
-                            coordinator.audioGuide.speakSafe()
-                        }
-                    )
-
-                    Picker(String(localized: "voice.select_voice"), selection: selectedId) {
-                        Text(String(localized: "voice.auto_best"))
-                            .tag("__auto__")
-
-                        if !voices.isEmpty {
-                            Divider()
-                            ForEach(voices, id: \.identifier) { voice in
-                                HStack {
-                                    Text(voice.name)
-                                    if voice.quality == .premium {
-                                        Text("★").foregroundColor(.yellow)
-                                    } else if voice.quality == .enhanced {
-                                        Text("✦").foregroundColor(.blue)
-                                    }
-                                }
-                                .tag(voice.identifier)
-                            }
-                        }
-                    }
-                    .pickerStyle(.inline)
-                    .tint(SP.Colors.accent)
-
-                    if voices.isEmpty {
-                        Text(String(localized: "voice.no_voices"))
+                VStack(alignment: .leading, spacing: 8) {
+                    HStack(spacing: 8) {
+                        let source = coordinator.audioGuide.activeSource
+                        Circle()
+                            .fill(source == .voiceBank ? SP.Colors.success : source == .openAI ? SP.Colors.accent : SP.Colors.calm)
+                            .frame(width: 8, height: 8)
+                        Text(voiceSourceText(source))
                             .font(SP.Typography.caption)
-                            .foregroundColor(SP.Colors.textTertiary)
+                            .foregroundColor(SP.Colors.textSecondary)
+                        Spacer()
                     }
-
-                    // Currently active voice info
-                    if let activeId = coordinator.audioGuide.selectedVoiceId,
-                       let active = voices.first(where: { $0.identifier == activeId }) {
-                        HStack(spacing: 6) {
-                            Image(systemName: "speaker.wave.2.circle.fill")
-                                .foregroundColor(SP.Colors.accent)
-                            Text(coordinator.audioGuide.voiceDisplayName(active))
-                                .font(SP.Typography.caption)
-                                .foregroundColor(SP.Colors.textSecondary)
-                        }
-                        .padding(.top, 2)
-                    }
-
-                    // Settings link for downloading better voices
-                    Button {
-                        if let url = URL(string: "App-prefs:ACCESSIBILITY&path=SPEECH_TITLE") {
-                            UIApplication.shared.open(url)
-                        }
+                    NavigationLink {
+                        SettingsView()
+                            .environment(coordinator)
                     } label: {
                         HStack(spacing: 8) {
-                            Image(systemName: "arrow.down.circle")
+                            Image(systemName: "gearshape.fill")
                                 .font(.system(size: 14))
-                            Text(String(localized: "voice.download_voices"))
+                            Text(String(localized: "voice.configure_in_settings"))
                                 .font(SP.Typography.caption)
                         }
                         .foregroundColor(SP.Colors.accent)
-                        .frame(maxWidth: .infinity, alignment: .leading)
-                        .padding(.top, 4)
                     }
                     .buttonStyle(.plain)
                 }
@@ -501,6 +432,14 @@ struct ProfileHubView: View {
         }
         .spGlassCard(cornerRadius: SP.Layout.cornerSmall)
         .contentShape(Rectangle())
+    }
+
+    private func voiceSourceText(_ source: AudioGuideService.VoiceSource) -> String {
+        switch source {
+        case .voiceBank: String(localized: "settings.voice_source_bank")
+        case .openAI: String(localized: "settings.voice_source_openai")
+        case .system: String(localized: "settings.voice_source_system")
+        }
     }
 }
 

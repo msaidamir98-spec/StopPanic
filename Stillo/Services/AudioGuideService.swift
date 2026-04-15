@@ -50,21 +50,45 @@ final class AudioGuideService {
     }
 
     /// Какой источник голоса сейчас используется
-    enum VoiceSource: String {
+    enum VoiceSource: String, CaseIterable {
         case voiceBank = "Pre-recorded"
         case openAI = "OpenAI TTS"
         case system = "System Voice"
     }
 
+    /// Режим голоса, выбранный пользователем
+    /// .voiceBank = предзаписанные (по умолчанию)
+    /// .system = системный AVSpeech (выбор голоса работает)
+    /// .openAI = OpenAI TTS (если есть ключ)
+    var preferredSource: VoiceSource {
+        get {
+            access(keyPath: \.preferredSource)
+            return _preferredSource
+        }
+        set {
+            withMutation(keyPath: \.preferredSource) {
+                _preferredSource = newValue
+                UserDefaults.standard.set(newValue.rawValue, forKey: "preferredVoiceSource")
+            }
+        }
+    }
+
     /// Текущий активный источник (для отображения в UI)
     var activeSource: VoiceSource {
-        if let vb = voiceBank, vb.isEnabled, vb.availablePhraseCount > 0 {
-            return .voiceBank
+        switch _preferredSource {
+        case .voiceBank:
+            if let vb = voiceBank, vb.isEnabled, vb.availablePhraseCount > 0 {
+                return .voiceBank
+            }
+            // fallback
+            if let tts = ttsService, tts.isReady { return .openAI }
+            return .system
+        case .openAI:
+            if let tts = ttsService, tts.isReady { return .openAI }
+            return .system
+        case .system:
+            return .system
         }
-        if let tts = ttsService, tts.isReady {
-            return .openAI
-        }
-        return .system
     }
 
     // MARK: - Public API: Breathing
@@ -233,13 +257,22 @@ final class AudioGuideService {
     }()
 
     @ObservationIgnored
+    private var _preferredSource: VoiceSource = {
+        if let raw = UserDefaults.standard.string(forKey: "preferredVoiceSource"),
+           let source = VoiceSource(rawValue: raw) {
+            return source
+        }
+        return .voiceBank
+    }()
+
+    @ObservationIgnored
     private var _selectedVoiceId: String? = UserDefaults.standard.string(forKey: "selectedVoiceId")
 
     nonisolated(unsafe) private let synthesizer = AVSpeechSynthesizer()
 
     private var isSessionActive = false
 
-    // MARK: - Smart Speak (Three-tier cascade)
+    // MARK: - Smart Speak (Three-tier cascade respecting preferredSource)
 
     private func smartSpeak(
         phrase: VoiceBankService.Phrase,
@@ -247,23 +280,43 @@ final class AudioGuideService {
         rate: Float = 0.45,
         pitch: Float = 1.0
     ) {
-        // 🥇 Tier 1: Pre-recorded voice bank (instant, offline)
-        if let vb = voiceBank, vb.play(phrase) {
-            Self.log.info("Played from VoiceBank: \(phrase.rawValue)")
-            return
-        }
+        switch _preferredSource {
+        case .voiceBank:
+            // 🥇 Tier 1: Pre-recorded voice bank (instant, offline)
+            if let vb = voiceBank, vb.play(phrase) {
+                Self.log.info("Played from VoiceBank: \(phrase.rawValue)")
+                return
+            }
+            // fallback → OpenAI → AVSpeech
+            if let tts = ttsService, tts.isReady, !fallbackText.isEmpty {
+                Self.log.info("VoiceBank miss, fallback OpenAI: \(phrase.rawValue)")
+                tts.speak(fallbackText, speed: Double(rate) * 2.5)
+                return
+            }
+            if !fallbackText.isEmpty {
+                Self.log.info("VoiceBank miss, fallback AVSpeech: \(phrase.rawValue)")
+                speakLocal(fallbackText, rate: rate, pitch: pitch)
+            }
 
-        // 🥈 Tier 2: OpenAI TTS (premium, requires API key + internet)
-        if let tts = ttsService, tts.isReady, !fallbackText.isEmpty {
-            Self.log.info("Playing via OpenAI TTS: \(phrase.rawValue)")
-            tts.speak(fallbackText, speed: Double(rate) * 2.5)
-            return
-        }
+        case .openAI:
+            // 🥈 OpenAI TTS first
+            if let tts = ttsService, tts.isReady, !fallbackText.isEmpty {
+                Self.log.info("Playing via OpenAI TTS: \(phrase.rawValue)")
+                tts.speak(fallbackText, speed: Double(rate) * 2.5)
+                return
+            }
+            // fallback → AVSpeech
+            if !fallbackText.isEmpty {
+                Self.log.info("OpenAI unavailable, fallback AVSpeech: \(phrase.rawValue)")
+                speakLocal(fallbackText, rate: rate, pitch: pitch)
+            }
 
-        // 🥉 Tier 3: System voice (always available)
-        if !fallbackText.isEmpty {
-            Self.log.info("Falling back to AVSpeech: \(phrase.rawValue)")
-            speakLocal(fallbackText, rate: rate, pitch: pitch)
+        case .system:
+            // 🥉 System voice directly (user picked specific voice)
+            if !fallbackText.isEmpty {
+                Self.log.info("System voice (user choice): \(phrase.rawValue)")
+                speakLocal(fallbackText, rate: rate, pitch: pitch)
+            }
         }
     }
 

@@ -182,11 +182,15 @@ final class AmbientSoundService {
 
     /// Play selected music track
     func playMusic() {
-        guard let track = selectedMusic else { return }
+        guard let track = selectedMusic else {
+            Self.log.warning("playMusic called but no track selected")
+            return
+        }
         stopMusic(fade: false)
 
         guard let url = Self.audioURL(for: track.fileName) else {
-            Self.log.warning("Music file not found: \(track.fileName).mp3")
+            Self.log.error("Music file not found: \(track.fileName).mp3 — checking bundle contents")
+            Self.debugBundleAudio()
             isMusicPlaying = false
             return
         }
@@ -197,7 +201,8 @@ final class AmbientSoundService {
             p.numberOfLoops = -1 // infinite loop
             p.volume = 0
             p.prepareToPlay()
-            p.play()
+            let started = p.play()
+            Self.log.info("Music play started=\(started) file=\(url.lastPathComponent) duration=\(p.duration)")
             p.setVolume(musicVolume * masterVolume, fadeDuration: fadeDuration)
             musicPlayer = p
             isMusicPlaying = true
@@ -232,7 +237,8 @@ final class AmbientSoundService {
     /// Play a nature sound
     func playNatureSound(_ sound: NatureSound) {
         guard let url = Self.audioURL(for: sound.fileName) else {
-            Self.log.warning("Nature sound not found: \(sound.fileName).mp3")
+            Self.log.error("Nature sound not found: \(sound.fileName).mp3")
+            Self.debugBundleAudio()
             return
         }
 
@@ -242,8 +248,9 @@ final class AmbientSoundService {
             p.numberOfLoops = -1
             p.volume = 0
             p.prepareToPlay()
-            p.play()
+            let started = p.play()
             let vol = (natureVolumes[sound] ?? 0.5) * masterVolume
+            Self.log.info("Nature play started=\(started) file=\(url.lastPathComponent) vol=\(vol)")
             p.setVolume(vol, fadeDuration: fadeDuration)
             naturePlayers[sound] = p
             activeNatureSounds.insert(sound)
@@ -361,9 +368,12 @@ final class AmbientSoundService {
         guard !sessionActive else { return }
         do {
             let session = AVAudioSession.sharedInstance()
-            try session.setCategory(.playback, options: [.mixWithOthers])
+            // Use .ambient + .mixWithOthers so ambient sounds don't conflict
+            // with voice playback (.playback + .duckOthers)
+            try session.setCategory(.playback, mode: .default, options: [.mixWithOthers])
             try session.setActive(true)
             sessionActive = true
+            Self.log.info("Audio session activated for ambient sounds")
         } catch {
             Self.log.error("Audio session error: \(error.localizedDescription)")
         }
@@ -385,5 +395,23 @@ final class AmbientSoundService {
             let vol = (natureVolumes[sound] ?? 0.5) * masterVolume
             player.volume = vol
         }
+    }
+
+    /// Debug: list all mp3 files found in bundle
+    private static func debugBundleAudio() {
+        guard let resourcePath = Bundle.main.resourcePath else {
+            log.error("No bundle resourcePath")
+            return
+        }
+        let fm = FileManager.default
+        var mp3Files: [String] = []
+        if let enumerator = fm.enumerator(atPath: resourcePath) {
+            while let file = enumerator.nextObject() as? String {
+                if file.hasSuffix(".mp3") {
+                    mp3Files.append(file)
+                }
+            }
+        }
+        log.info("Bundle MP3 files (\(mp3Files.count)): \(mp3Files.joined(separator: ", "))")
     }
 }

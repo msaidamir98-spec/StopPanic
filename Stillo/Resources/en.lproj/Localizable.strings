@@ -816,3 +816,9 @@
 "settings.voice_source_bank" = "Premium pre-recorded voice";
 "settings.voice_source_openai" = "OpenAI neural voice (online)";
 "settings.voice_source_system" = "System voice (offline fallback)";
+"settings.voice_source" = "Voice Source";
+"settings.voice_system_hint" = "Choose from iOS voices";
+"settings.voice_openai_ready" = "API key configured";
+"settings.voice_openai_need_key" = "Requires API key";
+"settings.voice_no_phrases" = "No pre-recorded phrases available";
+"voice.configure_in_settings" = "Configure voice in Settings";

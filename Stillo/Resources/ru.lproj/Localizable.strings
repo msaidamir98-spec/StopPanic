@@ -816,3 +816,9 @@
 "settings.voice_source_bank" = "Премиум-голос (предзаписанный)";
 "settings.voice_source_openai" = "OpenAI нейро-голос (онлайн)";
 "settings.voice_source_system" = "Системный голос (оффлайн)";
+"settings.voice_source" = "Источник голоса";
+"settings.voice_system_hint" = "Выбор из голосов iOS";
+"settings.voice_openai_ready" = "API-ключ настроен";
+"settings.voice_openai_need_key" = "Нужен API-ключ";
+"settings.voice_no_phrases" = "Нет предзаписанных фраз";
+"voice.configure_in_settings" = "Настроить голос в Настройках";

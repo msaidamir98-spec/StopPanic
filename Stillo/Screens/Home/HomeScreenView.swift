@@ -257,24 +257,63 @@ struct HomeScreenView: View {
                 columns: [.init(.flexible(), spacing: 12), .init(.flexible(), spacing: 12)],
                 spacing: 12
             ) {
-                QuickActionCard(
-                    icon: "wind", title: String(localized: "home_breathing"), subtitle: String(localized: "home_breathing_sub"),
-                    color: SP.Colors.calm, gradient: SP.Colors.calmGradient
-                ) { coordinator.selectedTab = .tools }
-                QuickActionCard(
-                    icon: "eye.fill", title: String(localized: "home_grounding"), subtitle: String(localized: "home_grounding_sub"),
-                    color: SP.Colors.accent, gradient: SP.Colors.heroGradient
-                ) { coordinator.selectedTab = .tools }
-                QuickActionCard(
-                    icon: "heart.text.square.fill", title: String(localized: "home_heart_analysis"),
-                    subtitle: String(localized: "home_heart_sub"), color: SP.Colors.danger,
-                    gradient: SP.Colors.sosGradient
-                ) { coordinator.selectedTab = .heart }
-                QuickActionCard(
-                    icon: "figure.strengthtraining.traditional", title: String(localized: "home_relax"),
-                    subtitle: String(localized: "home_relax_sub"),
-                    color: SP.Colors.warmth, gradient: SP.Colors.warmGradient
-                ) { coordinator.selectedTab = .tools }
+                // Breathing → opens BreathingSessionView (4-7-8 technique)
+                NavigationLink {
+                    BreathingSessionView(technique: BreathingTechnique(
+                        name: String(localized: "breath_478_name"),
+                        subtitle: String(localized: "breath_478_sub"),
+                        icon: "wind",
+                        color: SP.Colors.calm,
+                        inhale: 4, hold: 7, exhale: 8
+                    ))
+                    .environment(coordinator)
+                } label: {
+                    QuickActionCardLabel(
+                        icon: "wind", title: String(localized: "home_breathing"),
+                        subtitle: String(localized: "home_breathing_sub"),
+                        color: SP.Colors.calm, gradient: SP.Colors.calmGradient
+                    )
+                }
+                .buttonStyle(PremiumButtonStyle(scale: 0.95))
+
+                // Grounding → opens GroundingExerciseView
+                NavigationLink {
+                    GroundingExerciseView()
+                        .environment(coordinator)
+                } label: {
+                    QuickActionCardLabel(
+                        icon: "eye.fill", title: String(localized: "home_grounding"),
+                        subtitle: String(localized: "home_grounding_sub"),
+                        color: SP.Colors.accent, gradient: SP.Colors.heroGradient
+                    )
+                }
+                .buttonStyle(PremiumButtonStyle(scale: 0.95))
+
+                // Heart Analysis → opens HeartAnalysisView
+                NavigationLink {
+                    HeartAnalysisView()
+                        .environment(coordinator)
+                } label: {
+                    QuickActionCardLabel(
+                        icon: "heart.text.square.fill", title: String(localized: "home_heart_analysis"),
+                        subtitle: String(localized: "home_heart_sub"),
+                        color: SP.Colors.danger, gradient: SP.Colors.sosGradient
+                    )
+                }
+                .buttonStyle(PremiumButtonStyle(scale: 0.95))
+
+                // Relax → opens MuscleRelaxView
+                NavigationLink {
+                    MuscleRelaxView()
+                        .environment(coordinator)
+                } label: {
+                    QuickActionCardLabel(
+                        icon: "figure.strengthtraining.traditional", title: String(localized: "home_relax"),
+                        subtitle: String(localized: "home_relax_sub"),
+                        color: SP.Colors.warmth, gradient: SP.Colors.warmGradient
+                    )
+                }
+                .buttonStyle(PremiumButtonStyle(scale: 0.95))
             }
         }
     }
@@ -371,6 +410,29 @@ struct QuickActionCard: View {
             .spGlassCard(cornerRadius: SP.Layout.cornerMedium)
         }
         .buttonStyle(PremiumButtonStyle(scale: 0.95))
+    }
+}
+
+// MARK: - QuickActionCardLabel (for NavigationLink)
+
+struct QuickActionCardLabel: View {
+    let icon: String
+    let title: String
+    let subtitle: String
+    let color: Color
+    let gradient: LinearGradient
+
+    var body: some View {
+        VStack(alignment: .leading, spacing: 8) {
+            ZStack {
+                Circle().fill(color.opacity(0.15)).frame(width: 42, height: 42)
+                Image(systemName: icon).font(.system(size: 18)).foregroundColor(color)
+            }
+            Text(title).font(SP.Typography.headline).foregroundColor(SP.Colors.textPrimary)
+            Text(subtitle).font(SP.Typography.caption).foregroundColor(SP.Colors.textTertiary)
+        }
+        .frame(maxWidth: .infinity, alignment: .leading)
+        .spGlassCard(cornerRadius: SP.Layout.cornerMedium)
     }
 }
 

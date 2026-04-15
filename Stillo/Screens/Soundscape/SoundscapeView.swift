@@ -87,9 +87,9 @@ struct SoundscapeView: View {
                     .foregroundColor(SP.Colors.textTertiary)
             }
             Slider(
-                value: Binding(
-                    get: { ambient.masterVolume },
-                    set: { ambient.masterVolume = $0 }
+                value: Binding<Double>(
+                    get: { Double(ambient.masterVolume) },
+                    set: { ambient.masterVolume = Float($0) }
                 ),
                 in: 0...1
             )
@@ -125,9 +125,9 @@ struct SoundscapeView: View {
                             .font(.caption)
                             .foregroundColor(SP.Colors.textTertiary)
                         Slider(
-                            value: Binding(
-                                get: { ambient.musicVolume },
-                                set: { ambient.musicVolume = $0 }
+                            value: Binding<Double>(
+                                get: { Double(ambient.musicVolume) },
+                                set: { ambient.musicVolume = Float($0) }
                             ),
                             in: 0...1
                         )
@@ -213,7 +213,6 @@ struct SoundscapeView: View {
 
     private func natureSoundRow(_ sound: AmbientSoundService.NatureSound) -> some View {
         let isActive = ambient.activeNatureSounds.contains(sound)
-        let volume = ambient.natureVolumes[sound] ?? 0.5
 
         return VStack(spacing: 6) {
             Button {
@@ -256,9 +255,9 @@ struct SoundscapeView: View {
                         .font(.system(size: 10))
                         .foregroundColor(SP.Colors.textTertiary)
                     Slider(
-                        value: Binding(
-                            get: { volume },
-                            set: { ambient.setNatureVolume(sound, volume: $0) }
+                        value: Binding<Double>(
+                            get: { Double(ambient.natureVolumes[sound] ?? 0.5) },
+                            set: { ambient.setNatureVolume(sound, volume: Float($0)) }
                         ),
                         in: 0...1
                     )
