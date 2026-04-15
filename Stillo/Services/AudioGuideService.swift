@@ -145,10 +145,9 @@ final class AudioGuideService {
 
     /// Returns ALL voices for the current language, sorted by quality (best first)
     var availableVoices: [AVSpeechSynthesisVoice] {
-        let langCode = Locale.current.language.languageCode?.identifier ?? "en"
-        let lang = voiceLanguage(for: langCode)
+        let lang = currentLanguageTag
         return AVSpeechSynthesisVoice.speechVoices()
-            .filter { $0.language == lang || $0.language.hasPrefix(String(lang.prefix(2))) }
+            .filter { $0.language == lang }
             .sorted { lhs, rhs in
                 // Premium > Enhanced > Default
                 if lhs.quality != rhs.quality {
@@ -158,9 +157,26 @@ final class AudioGuideService {
             }
     }
 
+    /// Human-readable display name for a voice (e.g. "Milena (Улучшенный)")
+    func voiceDisplayName(_ voice: AVSpeechSynthesisVoice) -> String {
+        let badge: String
+        switch voice.quality {
+        case .premium:  badge = "★ Premium"
+        case .enhanced: badge = "✦ Enhanced"
+        default:        badge = "○ Standard"
+        }
+        return "\(voice.name) — \(badge)"
+    }
+
     /// Checks if a voice is premium or enhanced (not the default compact voice)
     func isHighQualityVoice(_ voice: AVSpeechSynthesisVoice) -> Bool {
         voice.quality.rawValue >= AVSpeechSynthesisVoiceQuality.enhanced.rawValue
+    }
+
+    /// Current BCP-47 language tag for voice matching
+    private var currentLanguageTag: String {
+        let langCode = Locale.current.language.languageCode?.identifier ?? "en"
+        return voiceLanguage(for: langCode)
     }
 
     @ObservationIgnored
@@ -189,28 +205,41 @@ final class AudioGuideService {
         synthesizer.speak(utterance)
     }
 
-    /// Resolves the best voice: user selection → premium → default
+    /// Resolves the best voice: user selection → premium → enhanced → fallback
     private func resolveVoice() -> AVSpeechSynthesisVoice? {
-        // 1. User selected voice
+        let lang = currentLanguageTag
+
+        // 1. User explicitly selected a voice
         if let id = _selectedVoiceId,
            let voice = AVSpeechSynthesisVoice(identifier: id)
         {
+            Self.log.info("Using user-selected voice: \(voice.name) [\(voice.quality.rawValue)]")
             return voice
         }
 
-        // 2. Find best quality voice for current language
-        let langCode = Locale.current.language.languageCode?.identifier ?? "en"
-        let lang = voiceLanguage(for: langCode)
-        let voices = AVSpeechSynthesisVoice.speechVoices()
-            .filter { $0.language.hasPrefix(lang.prefix(2)) }
-            .sorted { $0.quality.rawValue > $1.quality.rawValue }
+        // 2. Try to find premium voice for current language
+        let allVoices = AVSpeechSynthesisVoice.speechVoices()
+            .filter { $0.language == lang }
 
-        // Prefer premium/enhanced voices (quality >= .enhanced)
-        if let premium = voices.first(where: { $0.quality.rawValue >= AVSpeechSynthesisVoiceQuality.enhanced.rawValue }) {
+        if let premium = allVoices.first(where: { $0.quality == .premium }) {
+            Self.log.info("Using premium voice: \(premium.name)")
             return premium
         }
 
-        // 3. Fallback to any voice for this language
+        // 3. Try enhanced voice
+        if let enhanced = allVoices.first(where: { $0.quality == .enhanced }) {
+            Self.log.info("Using enhanced voice: \(enhanced.name)")
+            return enhanced
+        }
+
+        // 4. Any voice for exact language match
+        if let any = allVoices.first {
+            Self.log.info("Using default voice: \(any.name)")
+            return any
+        }
+
+        // 5. System fallback
+        Self.log.warning("No voice found for \(lang), using system fallback")
         return AVSpeechSynthesisVoice(language: lang)
     }
 

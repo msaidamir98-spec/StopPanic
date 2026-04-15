@@ -319,69 +319,60 @@ struct ProfileHubView: View {
                         }
                     }
 
-                    // Auto (best available) option
-                    Button {
-                        SP.Haptic.selectionChanged()
-                        coordinator.audioGuide.selectedVoiceId = nil
-                        coordinator.audioGuide.speakSafe()
-                    } label: {
-                        HStack {
-                            Text(String(localized: "voice.auto_best"))
-                                .font(SP.Typography.subheadline)
-                                .foregroundColor(SP.Colors.textPrimary)
-                            Spacer()
-                            if coordinator.audioGuide.selectedVoiceId == nil {
-                                Image(systemName: "checkmark.circle.fill")
-                                    .foregroundStyle(SP.Colors.heroGradient)
+                    // Picker: Auto (best) + all available voices
+                    let voices = coordinator.audioGuide.availableVoices
+                    let selectedId = Binding<String>(
+                        get: { coordinator.audioGuide.selectedVoiceId ?? "__auto__" },
+                        set: { newValue in
+                            if newValue == "__auto__" {
+                                coordinator.audioGuide.selectedVoiceId = nil
+                            } else {
+                                coordinator.audioGuide.selectedVoiceId = newValue
+                            }
+                            SP.Haptic.selectionChanged()
+                            coordinator.audioGuide.speakSafe()
+                        }
+                    )
+
+                    Picker(String(localized: "voice.select_voice"), selection: selectedId) {
+                        Text(String(localized: "voice.auto_best"))
+                            .tag("__auto__")
+
+                        if !voices.isEmpty {
+                            Divider()
+                            ForEach(voices, id: \.identifier) { voice in
+                                HStack {
+                                    Text(voice.name)
+                                    if voice.quality == .premium {
+                                        Text("★").foregroundColor(.yellow)
+                                    } else if voice.quality == .enhanced {
+                                        Text("✦").foregroundColor(.blue)
+                                    }
+                                }
+                                .tag(voice.identifier)
                             }
                         }
-                        .padding(.vertical, 4)
                     }
-                    .buttonStyle(.plain)
+                    .pickerStyle(.inline)
+                    .tint(SP.Colors.accent)
 
-                    Divider().overlay(Color.white.opacity(0.08))
-
-                    let voices = coordinator.audioGuide.availableVoices
                     if voices.isEmpty {
                         Text(String(localized: "voice.no_voices"))
                             .font(SP.Typography.caption)
                             .foregroundColor(SP.Colors.textTertiary)
-                    } else {
-                        ForEach(voices, id: \.identifier) { voice in
-                            Button {
-                                SP.Haptic.selectionChanged()
-                                coordinator.audioGuide.selectedVoiceId = voice.identifier
-                                coordinator.audioGuide.speakSafe()
-                            } label: {
-                                HStack {
-                                    VStack(alignment: .leading, spacing: 2) {
-                                        HStack(spacing: 6) {
-                                            Text(voice.name)
-                                                .font(SP.Typography.subheadline)
-                                                .foregroundColor(SP.Colors.textPrimary)
-                                            if coordinator.audioGuide.isHighQualityVoice(voice) {
-                                                Text("✨")
-                                                    .font(.caption2)
-                                            }
-                                        }
-                                        Text(voiceQualityLabel(voice.quality))
-                                            .font(SP.Typography.caption2)
-                                            .foregroundColor(
-                                                coordinator.audioGuide.isHighQualityVoice(voice)
-                                                    ? SP.Colors.accent
-                                                    : SP.Colors.textTertiary
-                                            )
-                                    }
-                                    Spacer()
-                                    if coordinator.audioGuide.selectedVoiceId == voice.identifier {
-                                        Image(systemName: "checkmark.circle.fill")
-                                            .foregroundStyle(SP.Colors.heroGradient)
-                                    }
-                                }
-                                .padding(.vertical, 4)
-                            }
-                            .buttonStyle(.plain)
+                    }
+
+                    // Currently active voice info
+                    if let activeId = coordinator.audioGuide.selectedVoiceId,
+                       let active = voices.first(where: { $0.identifier == activeId }) {
+                        HStack(spacing: 6) {
+                            Image(systemName: "speaker.wave.2.circle.fill")
+                                .foregroundColor(SP.Colors.accent)
+                            Text(coordinator.audioGuide.voiceDisplayName(active))
+                                .font(SP.Typography.caption)
+                                .foregroundColor(SP.Colors.textSecondary)
                         }
+                        .padding(.top, 2)
                     }
 
                     // Settings link for downloading better voices
@@ -409,14 +400,6 @@ struct ProfileHubView: View {
         .opacity(appear ? 1 : 0)
         .offset(y: appear ? 0 : 15)
         .animation(SP.Anim.spring.delay(0.35), value: appear)
-    }
-
-    private func voiceQualityLabel(_ quality: AVSpeechSynthesisVoiceQuality) -> String {
-        switch quality {
-        case .premium: String(localized: "voice.quality_premium")
-        case .enhanced: String(localized: "voice.quality_enhanced")
-        default: String(localized: "voice.quality_default")
-        }
     }
 
     // MARK: - About
