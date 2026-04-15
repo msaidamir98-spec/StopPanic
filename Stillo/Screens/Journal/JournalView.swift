@@ -20,16 +20,18 @@ struct JournalView: View {
                     header
                     segmentPicker
 
-                    ScrollView(.vertical, showsIndicators: false) {
-                        if selectedSegment == 0 {
-                            diaryContent
-                        } else if selectedSegment == 1 {
-                            moodContent
-                        } else {
-                            insightsContent
+                    if selectedSegment == 0 {
+                        diaryListContent
+                    } else {
+                        ScrollView(.vertical, showsIndicators: false) {
+                            if selectedSegment == 1 {
+                                moodContent
+                            } else {
+                                insightsContent
+                            }
                         }
+                        .background(ScrollBounceDisabler())
                     }
-                    .scrollBounceBehavior(.basedOnSize)
                 }
             }
             .sheet(isPresented: $showAddSheet) {
@@ -113,50 +115,76 @@ struct JournalView: View {
         .opacity(appear ? 1 : 0)
     }
 
-    // MARK: - Diary Content
+    // MARK: - Diary Content (List-based for native swipe-to-delete)
 
-    private var diaryContent: some View {
-        VStack(spacing: 12) {
+    private var sortedEpisodes: [DiaryEpisode] {
+        coordinator.diaryService.diaryEpisodes.sorted(by: { $0.date > $1.date })
+    }
+
+    private var diaryListContent: some View {
+        Group {
             if coordinator.diaryService.diaryEpisodes.isEmpty {
-                emptyState(
-                    icon: "book.closed.fill",
-                    title: String(localized: "journal.empty.title"),
-                    subtitle: String(localized: "journal.empty.subtitle")
-                )
-            } else {
-                weekSummaryCard
-
-                ForEach(
-                    Array(coordinator.diaryService.diaryEpisodes.sorted(by: { $0.date > $1.date }).enumerated()),
-                    id: \.element.id
-                ) { index, episode in
-                    EpisodeCard(episode: episode)
-                        .opacity(appear ? 1 : 0)
-                        .offset(y: appear ? 0 : 15)
-                        .animation(SP.Anim.spring.delay(Double(index) * 0.04), value: appear)
-                        .onTapGesture {
-                            SP.Haptic.light()
-                            editingEpisode = episode
-                        }
-                        .contextMenu {
-                            Button {
-                                editingEpisode = episode
-                            } label: {
-                                Label(String(localized: "journal.edit"), systemImage: "pencil")
-                            }
-                            Button(role: .destructive) {
-                                withAnimation(SP.Anim.spring) {
-                                    coordinator.diaryService.removeEpisodeById(episode.id)
-                                }
-                            } label: {
-                                Label(String(localized: "journal.delete"), systemImage: "trash")
-                            }
-                        }
+                ScrollView {
+                    emptyState(
+                        icon: "book.closed.fill",
+                        title: String(localized: "journal.empty.title"),
+                        subtitle: String(localized: "journal.empty.subtitle")
+                    )
+                    .padding(.horizontal, SP.Layout.padding)
                 }
+            } else {
+                List {
+                    Section {
+                        weekSummaryCard
+                            .listRowBackground(Color.clear)
+                            .listRowSeparator(.hidden)
+                            .listRowInsets(EdgeInsets(top: 4, leading: SP.Layout.padding, bottom: 4, trailing: SP.Layout.padding))
+                    }
+
+                    Section {
+                        ForEach(sortedEpisodes) { episode in
+                            EpisodeCard(episode: episode)
+                                .listRowBackground(Color.clear)
+                                .listRowSeparator(.hidden)
+                                .listRowInsets(EdgeInsets(top: 4, leading: SP.Layout.padding, bottom: 4, trailing: SP.Layout.padding))
+                                .onTapGesture {
+                                    SP.Haptic.light()
+                                    editingEpisode = episode
+                                }
+                                .contextMenu {
+                                    Button {
+                                        editingEpisode = episode
+                                    } label: {
+                                        Label(String(localized: "journal.edit"), systemImage: "pencil")
+                                    }
+                                    Button(role: .destructive) {
+                                        coordinator.diaryService.removeEpisodeById(episode.id)
+                                    } label: {
+                                        Label(String(localized: "journal.delete"), systemImage: "trash")
+                                    }
+                                }
+                                .swipeActions(edge: .trailing, allowsFullSwipe: true) {
+                                    Button(role: .destructive) {
+                                        coordinator.diaryService.removeEpisodeById(episode.id)
+                                    } label: {
+                                        Label(String(localized: "journal.delete"), systemImage: "trash")
+                                    }
+                                }
+                                .swipeActions(edge: .leading) {
+                                    Button {
+                                        editingEpisode = episode
+                                    } label: {
+                                        Label(String(localized: "journal.edit"), systemImage: "pencil")
+                                    }
+                                    .tint(SP.Colors.accent)
+                                }
+                        }
+                    }
+                }
+                .listStyle(.plain)
+                .scrollContentBackground(.hidden)
             }
         }
-        .padding(.horizontal, SP.Layout.padding)
-        .padding(.bottom, 40)
     }
 
     private var weekSummaryCard: some View {

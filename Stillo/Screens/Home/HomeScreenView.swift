@@ -50,7 +50,7 @@ struct HomeScreenView: View {
                     }
                     .padding(.horizontal, SP.Layout.padding)
                 }
-                .scrollBounceBehavior(.basedOnSize)
+                .background(ScrollBounceDisabler())
             }
             .navigationBarHidden(true)
         }
@@ -413,5 +413,37 @@ struct ScaleButtonStyle: ButtonStyle {
             .scaleEffect(configuration.isPressed ? 0.96 : 1.0)
             .opacity(configuration.isPressed ? 0.8 : 1.0)
             .animation(.spring(response: 0.2), value: configuration.isPressed)
+    }
+}
+
+
+// MARK: - ScrollBounceDisabler
+
+/// Disables rubber-band bounce on any ScrollView ancestor.
+/// SwiftUI has no native API for this — must drop to UIKit.
+struct ScrollBounceDisabler: UIViewRepresentable {
+    func makeUIView(context _: Context) -> UIView {
+        let view = UIView()
+        DispatchQueue.main.async {
+            if let scrollView = Self.findScrollView(in: view) {
+                scrollView.bounces = false
+                scrollView.alwaysBounceVertical = false
+            }
+        }
+        return view
+    }
+
+    func updateUIView(_: UIView, context _: Context) {}
+
+    private static func findScrollView(in view: UIView) -> UIScrollView? {
+        if let scrollView = view as? UIScrollView { return scrollView }
+        for sub in view.superview?.subviews ?? [] {
+            if let sv = sub as? UIScrollView { return sv }
+        }
+        // Walk up the view hierarchy
+        if let parent = view.superview {
+            return findScrollView(in: parent)
+        }
+        return nil
     }
 }

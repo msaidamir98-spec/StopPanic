@@ -748,3 +748,8 @@
 "voice.quality_premium" = "Premium quality";
 "voice.quality_enhanced" = "Enhanced quality";
 "voice.quality_default" = "Standard";
+
+// MARK: - Voice Download Hints
+"voice.download_hint" = "Download better voices in Settings for a softer sound";
+"voice.auto_best" = "Auto (best available)";
+"voice.download_voices" = "Download more voices in Settings…";

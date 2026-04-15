@@ -1,4 +1,3 @@
-import Combine
 import SwiftUI
 
 // MARK: - Mood Map View
@@ -6,7 +5,6 @@ import SwiftUI
 struct MoodMapView: View {
     // MARK: Internal
 
-    @ObservedObject
     var service: MoodMapService
 
     var body: some View {

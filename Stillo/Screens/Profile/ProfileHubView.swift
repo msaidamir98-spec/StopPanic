@@ -309,10 +309,37 @@ struct ProfileHubView: View {
                                 .font(.system(size: 14))
                                 .foregroundColor(SP.Colors.accent)
                         }
-                        Text(String(localized: "voice.select_voice"))
-                            .font(SP.Typography.callout)
-                            .foregroundColor(SP.Colors.textPrimary)
+                        VStack(alignment: .leading, spacing: 2) {
+                            Text(String(localized: "voice.select_voice"))
+                                .font(SP.Typography.callout)
+                                .foregroundColor(SP.Colors.textPrimary)
+                            Text(String(localized: "voice.download_hint"))
+                                .font(SP.Typography.caption2)
+                                .foregroundColor(SP.Colors.textTertiary)
+                        }
                     }
+
+                    // Auto (best available) option
+                    Button {
+                        SP.Haptic.selectionChanged()
+                        coordinator.audioGuide.selectedVoiceId = nil
+                        coordinator.audioGuide.speakSafe()
+                    } label: {
+                        HStack {
+                            Text(String(localized: "voice.auto_best"))
+                                .font(SP.Typography.subheadline)
+                                .foregroundColor(SP.Colors.textPrimary)
+                            Spacer()
+                            if coordinator.audioGuide.selectedVoiceId == nil {
+                                Image(systemName: "checkmark.circle.fill")
+                                    .foregroundStyle(SP.Colors.heroGradient)
+                            }
+                        }
+                        .padding(.vertical, 4)
+                    }
+                    .buttonStyle(.plain)
+
+                    Divider().overlay(Color.white.opacity(0.08))
 
                     let voices = coordinator.audioGuide.availableVoices
                     if voices.isEmpty {
@@ -324,17 +351,26 @@ struct ProfileHubView: View {
                             Button {
                                 SP.Haptic.selectionChanged()
                                 coordinator.audioGuide.selectedVoiceId = voice.identifier
-                                // Preview the voice
                                 coordinator.audioGuide.speakSafe()
                             } label: {
                                 HStack {
                                     VStack(alignment: .leading, spacing: 2) {
-                                        Text(voice.name)
-                                            .font(SP.Typography.subheadline)
-                                            .foregroundColor(SP.Colors.textPrimary)
+                                        HStack(spacing: 6) {
+                                            Text(voice.name)
+                                                .font(SP.Typography.subheadline)
+                                                .foregroundColor(SP.Colors.textPrimary)
+                                            if coordinator.audioGuide.isHighQualityVoice(voice) {
+                                                Text("✨")
+                                                    .font(.caption2)
+                                            }
+                                        }
                                         Text(voiceQualityLabel(voice.quality))
                                             .font(SP.Typography.caption2)
-                                            .foregroundColor(SP.Colors.textTertiary)
+                                            .foregroundColor(
+                                                coordinator.audioGuide.isHighQualityVoice(voice)
+                                                    ? SP.Colors.accent
+                                                    : SP.Colors.textTertiary
+                                            )
                                     }
                                     Spacer()
                                     if coordinator.audioGuide.selectedVoiceId == voice.identifier {
@@ -347,6 +383,24 @@ struct ProfileHubView: View {
                             .buttonStyle(.plain)
                         }
                     }
+
+                    // Settings link for downloading better voices
+                    Button {
+                        if let url = URL(string: "App-prefs:ACCESSIBILITY&path=SPEECH_TITLE") {
+                            UIApplication.shared.open(url)
+                        }
+                    } label: {
+                        HStack(spacing: 8) {
+                            Image(systemName: "arrow.down.circle")
+                                .font(.system(size: 14))
+                            Text(String(localized: "voice.download_voices"))
+                                .font(SP.Typography.caption)
+                        }
+                        .foregroundColor(SP.Colors.accent)
+                        .frame(maxWidth: .infinity, alignment: .leading)
+                        .padding(.top, 4)
+                    }
+                    .buttonStyle(.plain)
                 }
                 .spGlassCard(cornerRadius: SP.Layout.cornerSmall)
                 .transition(.opacity.combined(with: .move(edge: .top)))

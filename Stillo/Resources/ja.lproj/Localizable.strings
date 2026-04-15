@@ -748,3 +748,8 @@
 "voice.quality_premium" = "プレミアム品質";
 "voice.quality_enhanced" = "高品質";
 "voice.quality_default" = "標準";
+
+// MARK: - Voice Download Hints
+"voice.download_hint" = "設定でより良い音声をダウンロードしてください";
+"voice.auto_best" = "自動（最高品質）";
+"voice.download_voices" = "設定で音声をダウンロード…";

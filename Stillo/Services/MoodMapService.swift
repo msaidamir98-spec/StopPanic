@@ -1,4 +1,3 @@
-import Combine
 import CoreData
 import Foundation
 import os.log
@@ -28,7 +27,8 @@ struct MoodPoint: Codable, Identifiable {
 
 /// Сервис карты настроения (Core Data + CloudKit)
 @MainActor
-final class MoodMapService: ObservableObject {
+@Observable
+final class MoodMapService {
     // MARK: Lifecycle
 
     init() {
@@ -38,7 +38,6 @@ final class MoodMapService: ObservableObject {
 
     // MARK: Internal
 
-    @Published
     var points: [MoodPoint] = []
 
     func addPoint(mood: Int, note: String = "") {

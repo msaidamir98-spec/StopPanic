@@ -1,11 +1,11 @@
-import Combine
 import CoreData
 import Foundation
 import os.log
 
 /// Хранилище дневника тревожных эпизодов (Core Data + CloudKit)
 @MainActor
-final class DiaryService: ObservableObject {
+@Observable
+final class DiaryService {
     // MARK: Lifecycle
 
     init() {
@@ -15,7 +15,6 @@ final class DiaryService: ObservableObject {
 
     // MARK: Internal
 
-    @Published
     var diaryEpisodes: [DiaryEpisode] = []
 
     func addDiaryEpisode(intensity: Int, notes: String) {

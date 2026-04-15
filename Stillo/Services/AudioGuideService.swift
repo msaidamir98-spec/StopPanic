@@ -50,7 +50,7 @@ final class AudioGuideService {
         case .exhale:
             String(localized: "voice.exhale")
         }
-        speak(text, rate: 0.4, pitch: 1.0)
+        speak(text, rate: 0.35, pitch: 0.95)
     }
 
     /// Говорит шаг заземления: "Назови 5 вещей которые ты видишь"
@@ -64,19 +64,19 @@ final class AudioGuideService {
             String(localized: "voice.ground_taste"),
         ]
         let index = min(step, texts.count - 1)
-        speak(texts[index], rate: 0.42, pitch: 0.95)
+        speak(texts[index], rate: 0.36, pitch: 0.92)
     }
 
     /// Говорит аффирмацию завершения
     func speakCompletion() {
         guard isVoiceEnabled else { return }
-        speak(String(localized: "voice.you_did_it"), rate: 0.4, pitch: 1.05)
+        speak(String(localized: "voice.you_did_it"), rate: 0.35, pitch: 0.98)
     }
 
     /// Говорит "Ты в безопасности"
     func speakSafe() {
         guard isVoiceEnabled else { return }
-        speak(String(localized: "voice.you_are_safe"), rate: 0.38, pitch: 0.9)
+        speak(String(localized: "voice.you_are_safe"), rate: 0.32, pitch: 0.88)
     }
 
     /// Останавливает текущую речь и деактивирует аудио-сессию
@@ -143,19 +143,24 @@ final class AudioGuideService {
         }
     }
 
-    /// Returns available voices for the current language, sorted by quality
+    /// Returns ALL voices for the current language, sorted by quality (best first)
     var availableVoices: [AVSpeechSynthesisVoice] {
         let langCode = Locale.current.language.languageCode?.identifier ?? "en"
         let lang = voiceLanguage(for: langCode)
         return AVSpeechSynthesisVoice.speechVoices()
-            .filter { $0.language.hasPrefix(lang.prefix(2)) }
+            .filter { $0.language == lang || $0.language.hasPrefix(String(lang.prefix(2))) }
             .sorted { lhs, rhs in
-                // Premium/enhanced voices first
+                // Premium > Enhanced > Default
                 if lhs.quality != rhs.quality {
                     return lhs.quality.rawValue > rhs.quality.rawValue
                 }
                 return lhs.name < rhs.name
             }
+    }
+
+    /// Checks if a voice is premium or enhanced (not the default compact voice)
+    func isHighQualityVoice(_ voice: AVSpeechSynthesisVoice) -> Bool {
+        voice.quality.rawValue >= AVSpeechSynthesisVoiceQuality.enhanced.rawValue
     }
 
     @ObservationIgnored
@@ -171,11 +176,12 @@ final class AudioGuideService {
         }
 
         let utterance = AVSpeechUtterance(string: text)
-        utterance.rate = rate
-        utterance.pitchMultiplier = pitch
-        utterance.volume = 0.9
-        utterance.preUtteranceDelay = 0.15
-        utterance.postUtteranceDelay = 0.4
+        // Soft, slow, calming voice — not robotic
+        utterance.rate = min(rate, 0.38)            // slower = calmer
+        utterance.pitchMultiplier = pitch * 0.92    // slightly lower = warmer
+        utterance.volume = 0.85                     // not too loud
+        utterance.preUtteranceDelay = 0.2
+        utterance.postUtteranceDelay = 0.5
 
         // Use user-selected voice, or pick the best available
         utterance.voice = resolveVoice()

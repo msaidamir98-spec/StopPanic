@@ -748,3 +748,8 @@
 "voice.quality_premium" = "高级品质";
 "voice.quality_enhanced" = "增强品质";
 "voice.quality_default" = "标准";
+
+// MARK: - Voice Download Hints
+"voice.download_hint" = "在设置中下载更好的语音以获得更柔和的声音";
+"voice.auto_best" = "自动（最佳可用）";
+"voice.download_voices" = "在设置中下载更多语音…";
