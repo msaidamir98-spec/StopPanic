@@ -3,24 +3,15 @@ import os.log
 
 // MARK: - AmbientSoundService
 
-/// Менеджер фоновых звуков для снижения тревоги при панических атаках.
-///
-/// Научная база каждого трека:
-/// — **Brown noise** (1/f²): Söderlund et al. 2007, Rausch et al. 2014 — снижает тревожность.
-/// — **Pink noise** (1/f): Zhou et al. 2012 — улучшает сон и снижает кортизол.
-/// — **Gentle rain**: Gould van Praag et al. 2017 (Brighton & Sussex) — природные звуки
-///   снижают симпатическую активность нервной системы.
-/// — **Ocean waves**: Ong et al. 2023 — ритмичные волны синхронизируют дыхание,
-///   снижая частоту панических атак.
-/// — **Forest stream**: Hunter et al. 2019 — water sounds снижают кортизол на 25%
-///   за 20 минут прослушивания.
+/// Глобальный аудио-менеджер фоновых звуков (Singleton-like через AppCoordinator).
 ///
 /// Архитектура:
-/// 1. Enum `SoundTrack` — все доступные треки с метаданными.
-/// 2. Один AVAudioPlayer за раз (numberOfLoops = -1).
+/// 1. Enum `SoundTrack` — каталог треков. Файлы кладутся в бандл вручную.
+/// 2. Один AVAudioPlayer (numberOfLoops = -1) — бесконечный цикл.
 /// 3. AVAudioSession `.playback + .mixWithOthers` через AudioSessionManager.
-/// 4. Громкость сохраняется в UserDefaults per-track.
-/// 5. Сессия НИКОГДА не деактивируется.
+/// 4. Выбранный трек и громкость сохраняются в UserDefaults.
+/// 5. Музыка НЕ прерывается при переходах между экранами.
+/// 6. `playSelectedTrack()` — вызывается из SOS для мгновенного старта.
 
 @Observable
 @MainActor
@@ -28,120 +19,120 @@ final class AmbientSoundService {
 
     // MARK: - Sound Track Catalog
 
+    /// Каталог доступных треков.
+    /// Пользователь сам кладёт реальные файлы (.mp3/.wav/.m4a) в бандл.
+    /// Имя файла ДОЛЖНО совпадать с `rawValue` (например `rain_ambient.mp3`).
     enum SoundTrack: String, CaseIterable, Identifiable {
-        case brownNoise   = "brown_noise"
-        case pinkNoise    = "pink_noise"
-        case gentleRain   = "gentle_rain"
-        case oceanWaves   = "ocean_waves"
-        case forestStream = "forest_stream"
+        case rainAmbient    = "rain_ambient"
+        case forestCalm     = "forest_calm"
+        case oceanWaves     = "ocean_waves"
+        case softMelody     = "soft_melody"
+        case brownNoise     = "brown_noise"
 
         var id: String { rawValue }
 
-        /// Display name localization key
+        /// Локализованное имя
         var nameKey: String {
             switch self {
-            case .brownNoise:   "sound.brown_noise"
-            case .pinkNoise:    "sound.pink_noise"
-            case .gentleRain:   "sound.gentle_rain"
+            case .rainAmbient:  "sound.rain_ambient"
+            case .forestCalm:   "sound.forest_calm"
             case .oceanWaves:   "sound.ocean_waves"
-            case .forestStream: "sound.forest_stream"
+            case .softMelody:   "sound.soft_melody"
+            case .brownNoise:   "sound.brown_noise"
             }
         }
 
-        /// Short description localization key
+        /// Краткое описание
         var descriptionKey: String {
             switch self {
-            case .brownNoise:   "sound.brown_noise_desc"
-            case .pinkNoise:    "sound.pink_noise_desc"
-            case .gentleRain:   "sound.gentle_rain_desc"
+            case .rainAmbient:  "sound.rain_ambient_desc"
+            case .forestCalm:   "sound.forest_calm_desc"
             case .oceanWaves:   "sound.ocean_waves_desc"
-            case .forestStream: "sound.forest_stream_desc"
+            case .softMelody:   "sound.soft_melody_desc"
+            case .brownNoise:   "sound.brown_noise_desc"
             }
         }
 
-        /// SF Symbol icon
+        /// SF Symbol
         var icon: String {
             switch self {
-            case .brownNoise:   "waveform.path"
-            case .pinkNoise:    "waveform"
-            case .gentleRain:   "cloud.rain.fill"
+            case .rainAmbient:  "cloud.rain.fill"
+            case .forestCalm:   "leaf.fill"
             case .oceanWaves:   "water.waves"
-            case .forestStream: "leaf.fill"
+            case .softMelody:   "music.note"
+            case .brownNoise:   "waveform.path"
             }
         }
 
-        /// Accent color name for UI theming
+        /// Цвет для UI
         var colorName: String {
             switch self {
-            case .brownNoise:   "brown"
-            case .pinkNoise:    "pink"
-            case .gentleRain:   "blue"
+            case .rainAmbient:  "blue"
+            case .forestCalm:   "green"
             case .oceanWaves:   "teal"
-            case .forestStream: "green"
+            case .softMelody:   "purple"
+            case .brownNoise:   "brown"
             }
         }
     }
 
-    // MARK: - Observable State
+    // MARK: - State
 
-    /// Играет ли фоновый звук прямо сейчас
+    /// Играет ли прямо сейчас
     private(set) var isPlaying = false
 
-    /// Текущий выбранный трек
+    /// Текущий выбранный трек (сохраняется в UserDefaults)
     var selectedTrack: SoundTrack {
         didSet {
-            UserDefaults.standard.set(selectedTrack.rawValue, forKey: "ambient_selected_track")
-            // Если играет — переключить на новый трек
-            if isPlaying {
-                stop()
-                play()
-            }
+            UserDefaults.standard.set(selectedTrack.rawValue, forKey: Self.trackKey)
+            if isPlaying { stop(); play() }
         }
     }
 
-    /// Громкость 0.0–1.0. Сохраняется per-track.
+    /// Громкость 0.0–1.0 (сохраняется глобально)
     var volume: Double {
         didSet {
             let clamped = max(0, min(1, volume))
             if volume != clamped { volume = clamped }
             player?.volume = Float(volume)
-            UserDefaults.standard.set(volume, forKey: volumeKey)
+            UserDefaults.standard.set(volume, forKey: Self.volumeKey)
         }
     }
 
-    /// Какие треки доступны в бандле
+    /// Треки, найденные в бандле
     private(set) var availableTracks: [SoundTrack] = []
 
     // MARK: - Compat
 
-    /// Обратная совместимость
     var isAnythingPlaying: Bool { isPlaying }
     var isFileAvailable: Bool { !availableTracks.isEmpty }
+
+    // MARK: - Keys
+
+    private static let trackKey  = "ambient_selected_track"
+    private static let volumeKey = "ambient_volume"
 
     // MARK: - Init
 
     init() {
-        // Restore selected track
-        let savedTrack = UserDefaults.standard.string(forKey: "ambient_selected_track") ?? ""
-        let track = SoundTrack(rawValue: savedTrack) ?? .brownNoise
+        let savedRaw = UserDefaults.standard.string(forKey: Self.trackKey) ?? ""
+        let track = SoundTrack(rawValue: savedRaw) ?? .rainAmbient
         self._selectedTrack = track
 
-        // Restore volume for this track
-        let vKey = "ambient_volume_\(track.rawValue)"
-        let saved = UserDefaults.standard.double(forKey: vKey)
-        self._volume = saved > 0 ? saved : 0.5
+        let savedVol = UserDefaults.standard.double(forKey: Self.volumeKey)
+        self._volume = savedVol > 0 ? savedVol : 0.6
 
-        // Scan bundle for available tracks
         self.availableTracks = SoundTrack.allCases.filter { Self.locateFile($0) != nil }
-        Self.log.info("Available ambient tracks: \(self.availableTracks.map(\.rawValue))")
+        Self.log.info("Ambient: available=\(self.availableTracks.map(\.rawValue))")
     }
 
     // MARK: - Public API
 
+    /// Начать воспроизведение выбранного трека (бесконечный цикл)
     func play() {
         guard !isPlaying else { return }
         guard let url = Self.locateFile(selectedTrack) else {
-            Self.log.error("Cannot play: \(self.selectedTrack.rawValue) not found")
+            Self.log.error("File not found: \(self.selectedTrack.rawValue)")
             return
         }
 
@@ -152,7 +143,7 @@ final class AmbientSoundService {
             p.volume = Float(volume)
             p.prepareToPlay()
             let ok = p.play()
-            Self.log.info("play(\(self.selectedTrack.rawValue)) = \(ok), duration=\(p.duration)s")
+            Self.log.info("play(\(self.selectedTrack.rawValue))=\(ok), dur=\(p.duration)s")
 
             if !ok {
                 AudioSessionManager.configureForAmbient()
@@ -162,21 +153,67 @@ final class AmbientSoundService {
             self.player = p
             self.isPlaying = true
         } catch {
-            Self.log.error("Failed to play: \(error.localizedDescription)")
+            Self.log.error("Play error: \(error.localizedDescription)")
         }
     }
 
+    /// Остановить воспроизведение
     func stop() {
         player?.stop()
         player = nil
         isPlaying = false
     }
 
+    /// Toggle play/stop
     func toggle() {
-        if isPlaying { stop() } else { play() }
+        isPlaying ? stop() : play()
     }
 
-    /// Восстановить воспроизведение после голосового сервиса
+    /// Мгновенный старт выбранного трека — вызывается из SOS
+    func playSelectedTrack() {
+        if isPlaying { stop() }
+        play()
+    }
+
+    /// Воспроизвести конкретный трек для превью в настройках (5 секунд)
+    func preview(_ track: SoundTrack) {
+        previewTask?.cancel()
+        previewPlayer?.stop()
+
+        guard let url = Self.locateFile(track) else { return }
+        do {
+            AudioSessionManager.configureForAmbient()
+            let p = try AVAudioPlayer(contentsOf: url)
+            p.numberOfLoops = 0
+            p.volume = Float(volume)
+            p.prepareToPlay()
+            _ = p.play()
+            self.previewPlayer = p
+            self.previewingTrack = track
+
+            previewTask = Task { @MainActor in
+                try? await Task.sleep(for: .seconds(5))
+                guard !Task.isCancelled else { return }
+                self.stopPreview()
+            }
+        } catch {
+            Self.log.error("Preview error: \(error.localizedDescription)")
+        }
+    }
+
+    /// Остановить превью
+    func stopPreview() {
+        previewTask?.cancel()
+        previewTask = nil
+        previewPlayer?.stop()
+        previewPlayer = nil
+        previewingTrack = nil
+    }
+
+    /// Какой трек сейчас на превью (nil если нет)
+    private(set) var previewingTrack: SoundTrack?
+
+    /// Восстановить после голосового гида
     func recoverSession() {
         guard isPlaying, let p = player else { return }
         AudioSessionManager.recoverAfterSpeech()
@@ -187,32 +224,38 @@ final class AmbientSoundService {
         }
     }
 
-    /// Switch volume key when track changes
-    private var volumeKey: String { "ambient_volume_\(selectedTrack.rawValue)" }
-
     // MARK: - Private
 
     private static let log = Logger(subsystem: "MSK-PRODUKT.StopPanic", category: "Ambient")
     private var player: AVAudioPlayer?
+    private var previewPlayer: AVAudioPlayer?
+    private var previewTask: Task<Void, Never>?
 
     // MARK: - File Lookup
 
+    /// Ищет реальный аудиофайл в бандле. Поддерживает .mp3, .wav, .m4a.
     private static func locateFile(_ track: SoundTrack) -> URL? {
-        let bundle = Bundle.main
         let name = track.rawValue
+        let extensions = ["mp3", "wav", "m4a", "aac", "caf"]
+        let subdirs: [String?] = [nil, "Audio", "Sounds", "Resources/Audio"]
 
-        if let url = bundle.url(forResource: name, withExtension: "mp3") { return url }
-        if let url = bundle.url(forResource: name, withExtension: "mp3", subdirectory: "Audio") { return url }
-        if let url = bundle.url(forResource: name, withExtension: "mp3", subdirectory: "Sounds") { return url }
-        if let url = bundle.url(forResource: name, withExtension: "mp3", subdirectory: "Resources/Audio") { return url }
+        for ext in extensions {
+            for subdir in subdirs {
+                if let url = Bundle.main.url(forResource: name, withExtension: ext, subdirectory: subdir) {
+                    return url
+                }
+            }
+        }
 
         // Recursive fallback
-        if let resourcePath = bundle.resourcePath {
-            let target = "\(name).mp3"
-            if let enumerator = FileManager.default.enumerator(atPath: resourcePath) {
+        if let resourcePath = Bundle.main.resourcePath {
+            let fm = FileManager.default
+            if let enumerator = fm.enumerator(atPath: resourcePath) {
                 while let file = enumerator.nextObject() as? String {
-                    if file.hasSuffix(target) {
-                        return URL(fileURLWithPath: resourcePath).appendingPathComponent(file)
+                    for ext in extensions {
+                        if file.hasSuffix("\(name).\(ext)") {
+                            return URL(fileURLWithPath: resourcePath).appendingPathComponent(file)
+                        }
                     }
                 }
             }

@@ -2,9 +2,8 @@ import SwiftUI
 
 // MARK: - SoundscapeView
 
-/// Премиальный экран выбора фонового звука.
-/// Каждый трек — научно обоснован для снижения тревоги.
-/// Интерфейс: горизонтальный карусельный выбор + volume slider + play/stop.
+/// Экран выбора фонового звука.
+/// Пользователь прослушивает треки и выбирает "свой" — он автозапустится при SOS.
 
 struct SoundscapeView: View {
     @Environment(AppCoordinator.self) var coordinator
@@ -19,23 +18,26 @@ struct SoundscapeView: View {
             )
 
             ScrollView(.vertical, showsIndicators: false) {
-                VStack(spacing: 28) {
+                VStack(spacing: 24) {
                     Spacer(minLength: 16)
 
-                    // MARK: - Now Playing Visualization
-                    nowPlayingSection(ambient)
+                    // Header
+                    headerSection(ambient)
 
-                    // MARK: - Track Selector
-                    trackSelector(ambient)
+                    // SOS hint
+                    sosHintCard
 
-                    // MARK: - Play / Stop
+                    // Track list with preview
+                    trackListSection(ambient)
+
+                    // Play / Stop continuous
                     playButton(ambient)
 
-                    // MARK: - Volume Control
+                    // Volume
                     volumeControl(ambient)
 
-                    // MARK: - Science Info
-                    scienceCard(ambient)
+                    // Science card
+                    scienceCard
 
                     Spacer(minLength: 40)
                 }
@@ -45,37 +47,33 @@ struct SoundscapeView: View {
         }
         .navigationTitle(String(localized: "soundscape.title"))
         .navigationBarTitleDisplayMode(.inline)
+        .onDisappear { ambient.stopPreview() }
         .onAppear {
             withAnimation(.easeOut(duration: 0.5)) { appeared = true }
         }
     }
 
-    // MARK: - Private
-
     @State private var appeared = false
 
-    // MARK: - Now Playing Visualization
+    // MARK: - Header
 
-    private func nowPlayingSection(_ ambient: AmbientSoundService) -> some View {
+    private func headerSection(_ ambient: AmbientSoundService) -> some View {
         VStack(spacing: 16) {
             ZStack {
-                // Outer pulse ring
                 Circle()
                     .fill(trackColor(ambient.selectedTrack).opacity(0.06))
-                    .frame(width: 180, height: 180)
-                    .scaleEffect(ambient.isPlaying ? 1.2 : 1.0)
+                    .frame(width: 160, height: 160)
+                    .scaleEffect(ambient.isPlaying ? 1.15 : 1.0)
                     .animation(.easeInOut(duration: 3).repeatForever(autoreverses: true), value: ambient.isPlaying)
 
-                // Inner pulse ring
                 Circle()
                     .fill(trackColor(ambient.selectedTrack).opacity(0.12))
-                    .frame(width: 130, height: 130)
+                    .frame(width: 110, height: 110)
                     .scaleEffect(ambient.isPlaying ? 1.1 : 1.0)
                     .animation(.easeInOut(duration: 2.5).repeatForever(autoreverses: true).delay(0.3), value: ambient.isPlaying)
 
-                // Icon
                 Image(systemName: ambient.selectedTrack.icon)
-                    .font(.system(size: 48, weight: .light))
+                    .font(.system(size: 44, weight: .light))
                     .foregroundStyle(
                         LinearGradient(
                             colors: [trackColor(ambient.selectedTrack), trackColor(ambient.selectedTrack).opacity(0.6)],
@@ -85,11 +83,10 @@ struct SoundscapeView: View {
                     .symbolEffect(.variableColor.iterative, isActive: ambient.isPlaying)
             }
 
-            VStack(spacing: 6) {
+            VStack(spacing: 4) {
                 Text(String(localized: String.LocalizationValue(ambient.selectedTrack.nameKey)))
                     .font(SP.Typography.title2)
                     .foregroundColor(SP.Colors.textPrimary)
-
                 Text(String(localized: String.LocalizationValue(ambient.selectedTrack.descriptionKey)))
                     .font(SP.Typography.callout)
                     .foregroundColor(SP.Colors.textSecondary)
@@ -102,15 +99,38 @@ struct SoundscapeView: View {
         .animation(SP.Anim.spring.delay(0.05), value: appeared)
     }
 
-    // MARK: - Track Selector
+    // MARK: - SOS Hint
 
-    private func trackSelector(_ ambient: AmbientSoundService) -> some View {
+    private var sosHintCard: some View {
+        HStack(spacing: 10) {
+            Image(systemName: "bolt.heart.fill")
+                .foregroundColor(SP.Colors.danger)
+                .font(.system(size: 18))
+            VStack(alignment: .leading, spacing: 2) {
+                Text(String(localized: "soundscape.sos_hint_title"))
+                    .font(SP.Typography.subheadline)
+                    .foregroundColor(SP.Colors.textPrimary)
+                Text(String(localized: "soundscape.sos_hint_body"))
+                    .font(SP.Typography.caption2)
+                    .foregroundColor(SP.Colors.textSecondary)
+            }
+            Spacer()
+        }
+        .spGlassCard(cornerRadius: SP.Layout.cornerSmall)
+        .opacity(appeared ? 1 : 0)
+        .animation(SP.Anim.spring.delay(0.08), value: appeared)
+    }
+
+    // MARK: - Track List
+
+    private func trackListSection(_ ambient: AmbientSoundService) -> some View {
         VStack(alignment: .leading, spacing: 10) {
             Text(String(localized: "soundscape.choose_sound"))
                 .font(SP.Typography.headline)
                 .foregroundColor(SP.Colors.textPrimary)
 
-            ForEach(ambient.availableTracks) { track in
+            // Show ALL tracks — even those without files yet
+            ForEach(AmbientSoundService.SoundTrack.allCases) { track in
                 trackRow(track, ambient: ambient)
             }
         }
@@ -120,59 +140,79 @@ struct SoundscapeView: View {
     }
 
     private func trackRow(_ track: AmbientSoundService.SoundTrack, ambient: AmbientSoundService) -> some View {
-        Button {
-            SP.Haptic.selectionChanged()
-            // Load per-track volume when switching
-            let vKey = "ambient_volume_\(track.rawValue)"
-            let saved = UserDefaults.standard.double(forKey: vKey)
-            if saved > 0 { ambient.volume = saved }
-            ambient.selectedTrack = track
-        } label: {
-            HStack(spacing: 14) {
-                ZStack {
-                    Circle()
-                        .fill(trackColor(track).opacity(ambient.selectedTrack == track ? 0.2 : 0.08))
-                        .frame(width: 44, height: 44)
-                    Image(systemName: track.icon)
-                        .font(.system(size: 18))
-                        .foregroundColor(trackColor(track))
-                }
+        let isAvailable = ambient.availableTracks.contains(track)
+        let isSelected = ambient.selectedTrack == track
+        let isPreviewing = ambient.previewingTrack == track
 
-                VStack(alignment: .leading, spacing: 2) {
-                    Text(String(localized: String.LocalizationValue(track.nameKey)))
-                        .font(SP.Typography.subheadline)
-                        .foregroundColor(SP.Colors.textPrimary)
+        return HStack(spacing: 14) {
+            // Icon
+            ZStack {
+                Circle()
+                    .fill(trackColor(track).opacity(isSelected ? 0.2 : 0.08))
+                    .frame(width: 44, height: 44)
+                Image(systemName: track.icon)
+                    .font(.system(size: 18))
+                    .foregroundColor(isAvailable ? trackColor(track) : SP.Colors.textTertiary)
+            }
+
+            // Name + desc
+            VStack(alignment: .leading, spacing: 2) {
+                Text(String(localized: String.LocalizationValue(track.nameKey)))
+                    .font(SP.Typography.subheadline)
+                    .foregroundColor(isAvailable ? SP.Colors.textPrimary : SP.Colors.textTertiary)
+                if isAvailable {
                     Text(String(localized: String.LocalizationValue(track.descriptionKey)))
                         .font(SP.Typography.caption2)
                         .foregroundColor(SP.Colors.textTertiary)
                         .lineLimit(1)
-                }
-
-                Spacer()
-
-                if ambient.selectedTrack == track && ambient.isPlaying {
-                    Image(systemName: "speaker.wave.2.fill")
-                        .foregroundColor(trackColor(track))
-                        .symbolEffect(.variableColor.iterative, isActive: true)
-                } else if ambient.selectedTrack == track {
-                    Image(systemName: "checkmark.circle.fill")
-                        .foregroundStyle(SP.Colors.heroGradient)
                 } else {
-                    Circle()
-                        .stroke(SP.Colors.textTertiary.opacity(0.3), lineWidth: 1.5)
-                        .frame(width: 22, height: 22)
+                    Text(String(localized: "soundscape.file_missing"))
+                        .font(SP.Typography.caption2)
+                        .foregroundColor(SP.Colors.warning)
                 }
             }
-            .padding(.vertical, 8)
-            .padding(.horizontal, 14)
-            .background(
-                RoundedRectangle(cornerRadius: SP.Layout.cornerSmall, style: .continuous)
-                    .fill(ambient.selectedTrack == track
-                        ? trackColor(track).opacity(0.06)
-                        : Color.clear)
-            )
+
+            Spacer()
+
+            // Preview button
+            if isAvailable {
+                Button {
+                    SP.Haptic.light()
+                    if isPreviewing {
+                        ambient.stopPreview()
+                    } else {
+                        ambient.preview(track)
+                    }
+                } label: {
+                    Image(systemName: isPreviewing ? "stop.circle.fill" : "play.circle")
+                        .font(.system(size: 24))
+                        .foregroundColor(trackColor(track))
+                        .contentTransition(.symbolEffect(.replace))
+                }
+                .buttonStyle(.plain)
+            }
+
+            // Select indicator
+            if isSelected {
+                Image(systemName: "checkmark.circle.fill")
+                    .foregroundStyle(SP.Colors.heroGradient)
+            } else if isAvailable {
+                Circle()
+                    .stroke(SP.Colors.textTertiary.opacity(0.3), lineWidth: 1.5)
+                    .frame(width: 22, height: 22)
+            }
         }
-        .buttonStyle(.plain)
+        .padding(.vertical, 8)
+        .padding(.horizontal, 14)
+        .background(
+            RoundedRectangle(cornerRadius: SP.Layout.cornerSmall, style: .continuous)
+                .fill(isSelected ? trackColor(track).opacity(0.06) : Color.clear)
+        )
+        .onTapGesture {
+            guard isAvailable else { return }
+            SP.Haptic.selectionChanged()
+            ambient.selectedTrack = track
+        }
     }
 
     // MARK: - Play / Stop
@@ -224,7 +264,6 @@ struct SoundscapeView: View {
                     .foregroundColor(SP.Colors.textTertiary)
                     .font(.system(size: 14))
             }
-
             Text("\(Int(ambient.volume * 100))%")
                 .font(SP.Typography.caption)
                 .foregroundColor(SP.Colors.textTertiary)
@@ -238,7 +277,7 @@ struct SoundscapeView: View {
 
     // MARK: - Science Card
 
-    private func scienceCard(_ ambient: AmbientSoundService) -> some View {
+    private var scienceCard: some View {
         VStack(alignment: .leading, spacing: 8) {
             HStack(spacing: 8) {
                 Image(systemName: "brain.head.profile.fill")
@@ -247,7 +286,6 @@ struct SoundscapeView: View {
                     .font(SP.Typography.headline)
                     .foregroundColor(SP.Colors.textPrimary)
             }
-
             Text(String(localized: "soundscape.science_body"))
                 .font(SP.Typography.caption)
                 .foregroundColor(SP.Colors.textSecondary)
@@ -262,11 +300,11 @@ struct SoundscapeView: View {
 
     private func trackColor(_ track: AmbientSoundService.SoundTrack) -> Color {
         switch track {
-        case .brownNoise:   SP.Colors.warmth
-        case .pinkNoise:    SP.Colors.accent
-        case .gentleRain:   SP.Colors.calm
+        case .rainAmbient:  SP.Colors.calm
+        case .forestCalm:   SP.Colors.success
         case .oceanWaves:   Color.teal
-        case .forestStream: SP.Colors.success
+        case .softMelody:   SP.Colors.accent
+        case .brownNoise:   SP.Colors.warmth
         }
     }
 }

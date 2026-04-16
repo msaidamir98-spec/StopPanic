@@ -833,27 +833,25 @@
 // MARK: - Soundscape (Brown Noise)
 "soundscape.play" = "Play";
 "soundscape.stop" = "Stop";
-"soundscape.file_missing" = "Audio file not found. Add brown_noise.mp3 to the project.";
 
 // MARK: - Soundscape (Brown Noise)
 "soundscape.play" = "Play";
 "soundscape.stop" = "Stop";
-"soundscape.file_missing" = "Audio file not found. Add brown_noise.mp3 to the project.";
 
-// MARK: - Soundscape & Affirmations (Phase 18)
-"sound.brown_noise" = "Brown Noise";
-"sound.brown_noise_desc" = "Deep, warm hum that calms the nervous system";
-"sound.pink_noise" = "Pink Noise";
-"sound.pink_noise_desc" = "Softer noise that reduces cortisol levels";
-"sound.gentle_rain" = "Gentle Rain";
-"sound.gentle_rain_desc" = "Nature sound that lowers sympathetic activity";
+// MARK: - Soundscape & Affirmations (Phase 19)
+"sound.rain_ambient" = "Rain";
+"sound.rain_ambient_desc" = "Soft rainfall that calms the nervous system";
+"sound.forest_calm" = "Forest";
+"sound.forest_calm_desc" = "Peaceful forest sounds that reduce stress hormones";
 "sound.ocean_waves" = "Ocean Waves";
-"sound.ocean_waves_desc" = "Rhythmic waves that synchronize breathing";
-"sound.forest_stream" = "Forest Stream";
-"sound.forest_stream_desc" = "Water sounds that reduce stress hormones";
-"soundscape.choose_sound" = "Choose Your Sound";
-"soundscape.science_title" = "Why It Works";
-"soundscape.science_body" = "Natural and low-frequency sounds activate the parasympathetic nervous system, lowering heart rate and cortisol. Studies show 20 minutes of nature sounds reduce anxiety by up to 25%. Each track is selected based on peer-reviewed research.";
+"sound.ocean_waves_desc" = "Rhythmic waves that synchronize your breathing";
+"sound.soft_melody" = "Soft Melody";
+"sound.soft_melody_desc" = "Gentle instrumental that soothes anxiety";
+"sound.brown_noise" = "Brown Noise";
+"sound.brown_noise_desc" = "Deep warm hum that calms the mind";
+"soundscape.sos_hint_title" = "Your SOS Sound";
+"soundscape.sos_hint_body" = "The sound you choose here will play automatically when you press the SOS button.";
+"soundscape.file_missing" = "Add file to bundle";
 "affirmation_1" = "This feeling is temporary. It will pass, just like every time before.";
 "affirmation_2" = "Your body is safe. What you feel is adrenaline, not danger.";
 "affirmation_3" = "You have survived every panic attack so far. This one is no different.";
@@ -866,4 +864,7 @@
 "affirmation_10" = "Place your hand on your chest. Feel your heartbeat. You are alive and well.";
 "affirmation_11" = "The peak of panic lasts only 10 minutes. You can do 10 minutes.";
 "affirmation_12" = "After this passes, you will be proud of yourself for getting through it.";
+"soundscape.choose_sound" = "Choose Your Sound";
+"soundscape.science_title" = "Why It Works";
+"soundscape.science_body" = "Natural and low-frequency sounds activate the parasympathetic nervous system, lowering heart rate and cortisol. Studies show 20 minutes of nature sounds reduce anxiety by up to 25%.";
 "settings.soundscape_sub" = "Calming sounds for anxiety relief";

@@ -100,6 +100,9 @@ final class AppCoordinator {
         showSOSOverlay = true
         sosService.activateSOS()
         achievementService.updateProgress(id: "first_breath")
+
+        // Auto-play the user's pre-selected calming sound
+        ambientSound.playSelectedTrack()
     }
 
     func completedSession() {
