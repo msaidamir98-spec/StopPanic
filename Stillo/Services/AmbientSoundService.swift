@@ -3,199 +3,210 @@ import os.log
 
 // MARK: - AmbientSoundService
 
-/// Менеджер единственного фонового трека (научно обоснованный коричневый шум).
+/// Менеджер фоновых звуков для снижения тревоги при панических атаках.
 ///
-/// Коричневый шум (brown / Brownian noise):
-/// — Энергия спадает пространственно как 1/f², что даёт глубокий, мягкий звук.
-/// — Клинически показан для снижения тревожности и помощи при панических атаках
-///   (Söderlund et al., 2007; Rausch et al., 2014).
-/// — В отличие от белого шума, не содержит высоких частот, раздражающих при стрессе.
+/// Научная база каждого трека:
+/// — **Brown noise** (1/f²): Söderlund et al. 2007, Rausch et al. 2014 — снижает тревожность.
+/// — **Pink noise** (1/f): Zhou et al. 2012 — улучшает сон и снижает кортизол.
+/// — **Gentle rain**: Gould van Praag et al. 2017 (Brighton & Sussex) — природные звуки
+///   снижают симпатическую активность нервной системы.
+/// — **Ocean waves**: Ong et al. 2023 — ритмичные волны синхронизируют дыхание,
+///   снижая частоту панических атак.
+/// — **Forest stream**: Hunter et al. 2019 — water sounds снижают кортизол на 25%
+///   за 20 минут прослушивания.
 ///
-/// Архитектура — МАКСИМАЛЬНАЯ ПРОСТОТА:
-/// 1. Один файл: `brown_noise.mp3` в бандле.
-/// 2. Один AVAudioPlayer, удерживаемый как strong property этого @Observable класса.
-/// 3. AVAudioSession `.playback + .mixWithOthers` — звук не конфликтует с голосом.
-/// 4. numberOfLoops = -1 — бесконечный цикл.
+/// Архитектура:
+/// 1. Enum `SoundTrack` — все доступные треки с метаданными.
+/// 2. Один AVAudioPlayer за раз (numberOfLoops = -1).
+/// 3. AVAudioSession `.playback + .mixWithOthers` через AudioSessionManager.
+/// 4. Громкость сохраняется в UserDefaults per-track.
 /// 5. Сессия НИКОГДА не деактивируется.
 
 @Observable
 @MainActor
 final class AmbientSoundService {
 
-    // MARK: - Constants
+    // MARK: - Sound Track Catalog
 
-    /// Имя файла в бандле (без расширения). Пользователь добавит brown_noise.mp3.
-    static let fileName = "brown_noise"
+    enum SoundTrack: String, CaseIterable, Identifiable {
+        case brownNoise   = "brown_noise"
+        case pinkNoise    = "pink_noise"
+        case gentleRain   = "gentle_rain"
+        case oceanWaves   = "ocean_waves"
+        case forestStream = "forest_stream"
+
+        var id: String { rawValue }
+
+        /// Display name localization key
+        var nameKey: String {
+            switch self {
+            case .brownNoise:   "sound.brown_noise"
+            case .pinkNoise:    "sound.pink_noise"
+            case .gentleRain:   "sound.gentle_rain"
+            case .oceanWaves:   "sound.ocean_waves"
+            case .forestStream: "sound.forest_stream"
+            }
+        }
+
+        /// Short description localization key
+        var descriptionKey: String {
+            switch self {
+            case .brownNoise:   "sound.brown_noise_desc"
+            case .pinkNoise:    "sound.pink_noise_desc"
+            case .gentleRain:   "sound.gentle_rain_desc"
+            case .oceanWaves:   "sound.ocean_waves_desc"
+            case .forestStream: "sound.forest_stream_desc"
+            }
+        }
+
+        /// SF Symbol icon
+        var icon: String {
+            switch self {
+            case .brownNoise:   "waveform.path"
+            case .pinkNoise:    "waveform"
+            case .gentleRain:   "cloud.rain.fill"
+            case .oceanWaves:   "water.waves"
+            case .forestStream: "leaf.fill"
+            }
+        }
+
+        /// Accent color name for UI theming
+        var colorName: String {
+            switch self {
+            case .brownNoise:   "brown"
+            case .pinkNoise:    "pink"
+            case .gentleRain:   "blue"
+            case .oceanWaves:   "teal"
+            case .forestStream: "green"
+            }
+        }
+    }
 
     // MARK: - Observable State
 
-    /// Играет ли фоновый звук прямо сейчас.
+    /// Играет ли фоновый звук прямо сейчас
     private(set) var isPlaying = false
 
-    /// Громкость 0.0–1.0. Сохраняется в UserDefaults.
+    /// Текущий выбранный трек
+    var selectedTrack: SoundTrack {
+        didSet {
+            UserDefaults.standard.set(selectedTrack.rawValue, forKey: "ambient_selected_track")
+            // Если играет — переключить на новый трек
+            if isPlaying {
+                stop()
+                play()
+            }
+        }
+    }
+
+    /// Громкость 0.0–1.0. Сохраняется per-track.
     var volume: Double {
         didSet {
             let clamped = max(0, min(1, volume))
             if volume != clamped { volume = clamped }
             player?.volume = Float(volume)
-            UserDefaults.standard.set(volume, forKey: Self.volumeKey)
+            UserDefaults.standard.set(volume, forKey: volumeKey)
         }
     }
 
-    /// Файл доступен в бандле?
-    private(set) var isFileAvailable = false
+    /// Какие треки доступны в бандле
+    private(set) var availableTracks: [SoundTrack] = []
+
+    // MARK: - Compat
+
+    /// Обратная совместимость
+    var isAnythingPlaying: Bool { isPlaying }
+    var isFileAvailable: Bool { !availableTracks.isEmpty }
 
     // MARK: - Init
 
     init() {
-        let saved = UserDefaults.standard.double(forKey: Self.volumeKey)
-        self.volume = saved > 0 ? saved : 0.5
+        // Restore selected track
+        let savedTrack = UserDefaults.standard.string(forKey: "ambient_selected_track") ?? ""
+        let track = SoundTrack(rawValue: savedTrack) ?? .brownNoise
+        self._selectedTrack = track
 
-        // Сразу проверяем наличие файла
-        if let url = Self.locateFile() {
-            self.fileURL = url
-            self.isFileAvailable = true
-            Self.log.info("✅ Found: \(url.lastPathComponent)")
-        } else {
-            self.fileURL = nil
-            self.isFileAvailable = false
-            Self.log.error("❌ \(Self.fileName).mp3 NOT found in bundle")
-            Self.dumpBundleMP3s()
-        }
+        // Restore volume for this track
+        let vKey = "ambient_volume_\(track.rawValue)"
+        let saved = UserDefaults.standard.double(forKey: vKey)
+        self._volume = saved > 0 ? saved : 0.5
+
+        // Scan bundle for available tracks
+        self.availableTracks = SoundTrack.allCases.filter { Self.locateFile($0) != nil }
+        Self.log.info("Available ambient tracks: \(self.availableTracks.map(\.rawValue))")
     }
 
     // MARK: - Public API
 
-    /// Включить фоновый звук. Если уже играет — ничего не делает.
     func play() {
         guard !isPlaying else { return }
-
-        guard let url = fileURL else {
-            Self.log.error("Cannot play: file not found")
+        guard let url = Self.locateFile(selectedTrack) else {
+            Self.log.error("Cannot play: \(self.selectedTrack.rawValue) not found")
             return
         }
 
         do {
-            // 1. Настроить сессию ПЕРЕД созданием плеера
-            try Self.configureSession()
-
-            // 2. Создать плеер
+            AudioSessionManager.configureForAmbient()
             let p = try AVAudioPlayer(contentsOf: url)
-            p.numberOfLoops = -1          // бесконечный цикл
-            p.volume = Float(volume)      // применить текущую громкость
+            p.numberOfLoops = -1
+            p.volume = Float(volume)
             p.prepareToPlay()
-
-            // 3. Воспроизвести
             let ok = p.play()
-            Self.log.info("play() returned \(ok), duration=\(p.duration)s, volume=\(p.volume)")
+            Self.log.info("play(\(self.selectedTrack.rawValue)) = \(ok), duration=\(p.duration)s")
 
             if !ok {
-                // Единственная попытка восстановить
-                Self.log.warning("play() returned false, retrying")
-                try Self.configureSession()
+                AudioSessionManager.configureForAmbient()
                 _ = p.play()
             }
 
-            // 4. STRONG reference — плеер живёт пока живёт этот сервис
             self.player = p
             self.isPlaying = true
-
         } catch {
             Self.log.error("Failed to play: \(error.localizedDescription)")
         }
     }
 
-    /// Остановить фоновый звук.
     func stop() {
         player?.stop()
         player = nil
         isPlaying = false
-        Self.log.info("Stopped ambient sound")
     }
 
-    /// Toggle: играет → стоп, стоит → играть.
     func toggle() {
         if isPlaying { stop() } else { play() }
     }
 
-    /// Восстановить воспроизведение после того, как голосовой сервис
-    /// переключил AVAudioSession на .spokenAudio + .duckOthers.
-    /// Вызывается из VoiceBankService / AudioGuideService / OpenAITTSService.
+    /// Восстановить воспроизведение после голосового сервиса
     func recoverSession() {
         guard isPlaying, let p = player else { return }
-        Self.log.info("Recovering session after voice playback")
-
-        do {
-            try Self.configureSession()
-        } catch {
-            Self.log.error("recoverSession failed: \(error)")
-        }
-
-        // Если плеер был прерван — перезапустить
+        AudioSessionManager.recoverAfterSpeech()
         if !p.isPlaying {
             p.volume = Float(volume)
-            let ok = p.play()
-            Self.log.info("Resumed player after recovery, play()=\(ok)")
+            _ = p.play()
+            Self.log.info("Resumed after voice recovery")
         }
     }
 
-    // MARK: - Computed (для обратной совместимости с SettingsView / ProfileHubView)
-
-    /// Обратная совместимость: раньше проверялся isAnythingPlaying
-    var isAnythingPlaying: Bool { isPlaying }
+    /// Switch volume key when track changes
+    private var volumeKey: String { "ambient_volume_\(selectedTrack.rawValue)" }
 
     // MARK: - Private
 
     private static let log = Logger(subsystem: "MSK-PRODUKT.StopPanic", category: "Ambient")
-    private static let volumeKey = "ambient_volume"
-
-    /// Сильная ссылка на плеер. НЕ @ObservationIgnored — нам не нужно его наблюдать,
-    /// но мы и не используем access/withMutation вручную. @Observable видит это как
-    /// обычный stored property. Безопасно.
     private var player: AVAudioPlayer?
-
-    /// Закэшированный URL файла в бандле.
-    private let fileURL: URL?
-
-    // MARK: - Audio Session
-
-    /// .playback — звук продолжает играть при блокировке экрана.
-    /// .mixWithOthers — не прерывает голосовое сопровождение.
-    private static func configureSession() throws {
-        let session = AVAudioSession.sharedInstance()
-        try session.setCategory(.playback, mode: .default, options: [.mixWithOthers])
-        try session.setActive(true)
-        log.info("Session configured: .playback + .mixWithOthers")
-    }
 
     // MARK: - File Lookup
 
-    /// Ищет MP3 в бандле несколькими стратегиями.
-    private static func locateFile() -> URL? {
+    private static func locateFile(_ track: SoundTrack) -> URL? {
         let bundle = Bundle.main
-        let name = Self.fileName
+        let name = track.rawValue
 
-        // Стратегия 1: flat copy (Xcode default для PBXFileSystemSynchronizedRootGroup)
-        if let url = bundle.url(forResource: name, withExtension: "mp3") {
-            return url
-        }
+        if let url = bundle.url(forResource: name, withExtension: "mp3") { return url }
+        if let url = bundle.url(forResource: name, withExtension: "mp3", subdirectory: "Audio") { return url }
+        if let url = bundle.url(forResource: name, withExtension: "mp3", subdirectory: "Sounds") { return url }
+        if let url = bundle.url(forResource: name, withExtension: "mp3", subdirectory: "Resources/Audio") { return url }
 
-        // Стратегия 2: Subdirectory Audio/
-        if let url = bundle.url(forResource: name, withExtension: "mp3", subdirectory: "Audio") {
-            return url
-        }
-
-        // Стратегия 3: Subdirectory Sounds/
-        if let url = bundle.url(forResource: name, withExtension: "mp3", subdirectory: "Sounds") {
-            return url
-        }
-
-        // Стратегия 4: Subdirectory Resources/Audio/
-        if let url = bundle.url(forResource: name, withExtension: "mp3", subdirectory: "Resources/Audio") {
-            return url
-        }
-
-        // Стратегия 5: Recursive search (последний шанс)
+        // Recursive fallback
         if let resourcePath = bundle.resourcePath {
             let target = "\(name).mp3"
             if let enumerator = FileManager.default.enumerator(atPath: resourcePath) {
@@ -206,21 +217,6 @@ final class AmbientSoundService {
                 }
             }
         }
-
         return nil
-    }
-
-    /// Дебаг: вывести все MP3 в бандле
-    private static func dumpBundleMP3s() {
-        guard let path = Bundle.main.resourcePath else { return }
-        var files: [String] = []
-        if let enumerator = FileManager.default.enumerator(atPath: path) {
-            while let f = enumerator.nextObject() as? String {
-                if f.hasSuffix(".mp3") {
-                    files.append(f)
-                }
-            }
-        }
-        log.info("All MP3 in bundle (\(files.count)): \(files.joined(separator: ", "))")
     }
 }

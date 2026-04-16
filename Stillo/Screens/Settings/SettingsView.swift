@@ -73,15 +73,7 @@ struct SettingsView: View {
                             : String(localized: "settings.voice_no_phrases")
                     )
 
-                    // System voice (AVSpeech)
-                    voiceSourceRow(
-                        source: .system,
-                        icon: "person.wave.2.fill",
-                        title: String(localized: "settings.voice_source_system"),
-                        subtitle: String(localized: "settings.voice_system_hint")
-                    )
-
-                    // OpenAI TTS
+                    // OpenAI TTS (premium voices)
                     voiceSourceRow(
                         source: .openAI,
                         icon: "waveform.circle.fill",
@@ -115,11 +107,6 @@ struct SettingsView: View {
                             .foregroundColor(SP.Colors.success)
                         Spacer()
                     }
-                }
-
-                // System voice picker (only when system source is selected)
-                if coordinator.audioGuide.preferredSource == .system {
-                    systemVoicePicker
                 }
 
                 // Volume slider
@@ -203,46 +190,7 @@ struct SettingsView: View {
         .buttonStyle(.plain)
     }
 
-    private var systemVoicePicker: some View {
-        VStack(alignment: .leading, spacing: 6) {
-            Text(String(localized: "voice.select_voice"))
-                .font(SP.Typography.caption)
-                .foregroundColor(SP.Colors.textTertiary)
 
-            let voices = coordinator.audioGuide.availableVoices
-            let selectedId = Binding<String>(
-                get: { coordinator.audioGuide.selectedVoiceId ?? "__auto__" },
-                set: { newValue in
-                    if newValue == "__auto__" {
-                        coordinator.audioGuide.selectedVoiceId = nil
-                    } else {
-                        coordinator.audioGuide.selectedVoiceId = newValue
-                    }
-                    SP.Haptic.selectionChanged()
-                }
-            )
-
-            Picker(String(localized: "voice.select_voice"), selection: selectedId) {
-                Text(String(localized: "voice.auto_best"))
-                    .tag("__auto__")
-
-                ForEach(voices, id: \.identifier) { voice in
-                    HStack {
-                        Text(voice.name)
-                        if voice.quality == .premium {
-                            Text("★")
-                        } else if voice.quality == .enhanced {
-                            Text("✦")
-                        }
-                    }
-                    .tag(voice.identifier)
-                }
-            }
-            .pickerStyle(.inline)
-            .frame(maxHeight: 200)
-            .tint(SP.Colors.accent)
-        }
-    }
 
     // MARK: - OpenAI TTS (Optional Premium)
 

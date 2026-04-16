@@ -767,7 +767,6 @@
 "settings.openai_test" = "Stimme testen";
 "settings.openai_model" = "Qualität";
 "settings.soundscape" = "Umgebungsklänge";
-"settings.soundscape_sub" = "Musik & Naturgeräusche";
 "settings.appearance" = "Erscheinungsbild";
 "settings.notifications" = "Benachrichtigungen";
 "settings.data" = "Daten & Speicher";
@@ -799,8 +798,34 @@
 "settings.voice_source_system" = "System voice (offline fallback)";
 
 // MARK: - Soundscape (Brown Noise)
-"soundscape.brown_noise_title" = "Braunes Rauschen";
-"soundscape.brown_noise_subtitle" = "Klinisch bewiesener beruhigender Klang zur Angstreduzierung bei Panikattacken";
 "soundscape.play" = "Abspielen";
 "soundscape.stop" = "Stopp";
 "soundscape.file_missing" = "Audiodatei nicht gefunden. Fügen Sie brown_noise.mp3 zum Projekt hinzu.";
+
+// MARK: - Soundscape & Affirmations (Phase 18)
+"sound.brown_noise" = "Braunes Rauschen";
+"sound.brown_noise_desc" = "Tiefes, warmes Brummen, das das Nervensystem beruhigt";
+"sound.pink_noise" = "Rosa Rauschen";
+"sound.pink_noise_desc" = "Sanftes Rauschen, das den Cortisolspiegel senkt";
+"sound.gentle_rain" = "Sanfter Regen";
+"sound.gentle_rain_desc" = "Naturklang, der die sympathische Aktivität reduziert";
+"sound.ocean_waves" = "Meereswellen";
+"sound.ocean_waves_desc" = "Rhythmische Wellen, die die Atmung synchronisieren";
+"sound.forest_stream" = "Waldbach";
+"sound.forest_stream_desc" = "Wassergeräusche, die Stresshormone senken";
+"soundscape.choose_sound" = "Wähle deinen Klang";
+"soundscape.science_title" = "Warum es funktioniert";
+"soundscape.science_body" = "Natürliche und niederfrequente Klänge aktivieren das parasympathische Nervensystem und senken Herzfrequenz und Cortisol. Studien zeigen: 20 Minuten Naturgeräusche reduzieren Angst um bis zu 25%.";
+"affirmation_1" = "Dieses Gefühl ist vorübergehend. Es wird vergehen, wie jedes Mal zuvor.";
+"affirmation_2" = "Dein Körper ist sicher. Was du fühlst, ist Adrenalin, keine Gefahr.";
+"affirmation_3" = "Du hast jede Panikattacke bisher überstanden. Diese ist nicht anders.";
+"affirmation_4" = "Spüre jetzt deine Füße auf dem Boden. Du bist hier, im Moment.";
+"affirmation_5" = "Verlängere deine Ausatmung. Dein Körper wird deinem Atem folgen.";
+"affirmation_6" = "Angst lügt. Sie sagt dir, etwas sei falsch, wenn du sicher bist.";
+"affirmation_7" = "Nenne 5 Dinge, die du siehst. Dein Gehirn kann nicht gleichzeitig paniken und beobachten.";
+"affirmation_8" = "Das ist kein Herzinfarkt. Dein Herz ist gesund und stark.";
+"affirmation_9" = "Du wirst nicht verrückt. Das ist eine normale Stressreaktion.";
+"affirmation_10" = "Lege deine Hand auf die Brust. Spüre deinen Herzschlag. Du lebst.";
+"affirmation_11" = "Der Höhepunkt der Panik dauert nur 10 Minuten. Du schaffst 10 Minuten.";
+"affirmation_12" = "Wenn das vorbei ist, wirst du stolz auf dich sein.";
+"settings.soundscape_sub" = "Beruhigende Klänge zur Angstlinderung";

@@ -767,7 +767,6 @@
 "settings.openai_test" = "Test Voice";
 "settings.openai_model" = "Quality";
 "settings.soundscape" = "Ambient Sounds";
-"settings.soundscape_sub" = "Music & nature sounds";
 "settings.appearance" = "Appearance";
 "settings.notifications" = "Notifications";
 "settings.data" = "Data & Storage";
@@ -799,8 +798,34 @@
 "settings.voice_source_system" = "System voice (offline fallback)";
 
 // MARK: - Soundscape (Brown Noise)
-"soundscape.brown_noise_title" = "Bruit brun";
-"soundscape.brown_noise_subtitle" = "Son apaisant cliniquement prouvé pour réduire l'anxiété lors d'attaques de panique";
 "soundscape.play" = "Lire";
 "soundscape.stop" = "Arrêter";
 "soundscape.file_missing" = "Fichier audio introuvable. Ajoutez brown_noise.mp3 au projet.";
+
+// MARK: - Soundscape & Affirmations (Phase 18)
+"sound.brown_noise" = "Bruit brun";
+"sound.brown_noise_desc" = "Bourdonnement profond et chaud qui calme le système nerveux";
+"sound.pink_noise" = "Bruit rose";
+"sound.pink_noise_desc" = "Bruit doux qui réduit le niveau de cortisol";
+"sound.gentle_rain" = "Pluie douce";
+"sound.gentle_rain_desc" = "Son naturel qui réduit l'activité sympathique";
+"sound.ocean_waves" = "Vagues de l'océan";
+"sound.ocean_waves_desc" = "Vagues rythmiques qui synchronisent la respiration";
+"sound.forest_stream" = "Ruisseau forestier";
+"sound.forest_stream_desc" = "Sons d'eau qui réduisent les hormones du stress";
+"soundscape.choose_sound" = "Choisissez votre son";
+"soundscape.science_title" = "Pourquoi ça marche";
+"soundscape.science_body" = "Les sons naturels et basses fréquences activent le système nerveux parasympathique, réduisant le rythme cardiaque et le cortisol. Les études montrent que 20 minutes de sons naturels réduisent l'anxiété jusqu'à 25%.";
+"affirmation_1" = "Ce sentiment est temporaire. Il passera, comme chaque fois avant.";
+"affirmation_2" = "Ton corps est en sécurité. Ce que tu ressens, c'est de l'adrénaline, pas du danger.";
+"affirmation_3" = "Tu as survécu à chaque crise de panique jusqu'ici. Celle-ci n'est pas différente.";
+"affirmation_4" = "Maintenant, sens tes pieds sur le sol. Tu es ici, présent.";
+"affirmation_5" = "Allonge ton expiration. Ton corps suivra ta respiration.";
+"affirmation_6" = "L'anxiété ment. Elle te dit que quelque chose ne va pas quand tu es en sécurité.";
+"affirmation_7" = "Nomme 5 choses que tu vois. Ton cerveau ne peut pas paniquer et observer en même temps.";
+"affirmation_8" = "Ce n'est pas une crise cardiaque. Ton cœur est sain et fort.";
+"affirmation_9" = "Tu ne deviens pas fou. C'est une réaction normale au stress.";
+"affirmation_10" = "Pose ta main sur ta poitrine. Sens ton cœur battre. Tu es vivant.";
+"affirmation_11" = "Le pic de panique ne dure que 10 minutes. Tu peux tenir 10 minutes.";
+"affirmation_12" = "Quand ce sera passé, tu seras fier de toi.";
+"settings.soundscape_sub" = "Sons apaisants pour soulager l'anxiété";

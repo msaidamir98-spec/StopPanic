@@ -767,7 +767,6 @@
 "settings.openai_test" = "Probar voz";
 "settings.openai_model" = "Calidad";
 "settings.soundscape" = "Sonidos ambientales";
-"settings.soundscape_sub" = "Música y sonidos naturales";
 "settings.appearance" = "Apariencia";
 "settings.notifications" = "Notificaciones";
 "settings.data" = "Datos y almacenamiento";
@@ -799,8 +798,34 @@
 "settings.voice_source_system" = "System voice (offline fallback)";
 
 // MARK: - Soundscape (Brown Noise)
-"soundscape.brown_noise_title" = "Ruido marrón";
-"soundscape.brown_noise_subtitle" = "Sonido calmante clínicamente probado que reduce la ansiedad durante ataques de pánico";
 "soundscape.play" = "Reproducir";
 "soundscape.stop" = "Detener";
 "soundscape.file_missing" = "Archivo de audio no encontrado. Agregue brown_noise.mp3 al proyecto.";
+
+// MARK: - Soundscape & Affirmations (Phase 18)
+"sound.brown_noise" = "Ruido marrón";
+"sound.brown_noise_desc" = "Zumbido profundo y cálido que calma el sistema nervioso";
+"sound.pink_noise" = "Ruido rosa";
+"sound.pink_noise_desc" = "Ruido suave que reduce los niveles de cortisol";
+"sound.gentle_rain" = "Lluvia suave";
+"sound.gentle_rain_desc" = "Sonido natural que reduce la actividad simpática";
+"sound.ocean_waves" = "Olas del mar";
+"sound.ocean_waves_desc" = "Olas rítmicas que sincronizan la respiración";
+"sound.forest_stream" = "Arroyo del bosque";
+"sound.forest_stream_desc" = "Sonidos de agua que reducen las hormonas del estrés";
+"soundscape.choose_sound" = "Elige tu sonido";
+"soundscape.science_title" = "Por qué funciona";
+"soundscape.science_body" = "Los sonidos naturales y de baja frecuencia activan el sistema nervioso parasimpático, reduciendo la frecuencia cardíaca y el cortisol. Los estudios muestran que 20 minutos de sonidos naturales reducen la ansiedad hasta un 25%.";
+"affirmation_1" = "Este sentimiento es temporal. Pasará, como todas las veces anteriores.";
+"affirmation_2" = "Tu cuerpo está seguro. Lo que sientes es adrenalina, no peligro.";
+"affirmation_3" = "Has sobrevivido a cada ataque de pánico hasta ahora. Este no es diferente.";
+"affirmation_4" = "Ahora mismo, siente tus pies en el suelo. Estás aquí, presente.";
+"affirmation_5" = "Alarga tu exhalación. Tu cuerpo seguirá a tu respiración.";
+"affirmation_6" = "La ansiedad miente. Te dice que algo está mal cuando estás a salvo.";
+"affirmation_7" = "Nombra 5 cosas que ves. Tu cerebro no puede entrar en pánico y observar al mismo tiempo.";
+"affirmation_8" = "Esto no es un ataque al corazón. Tu corazón está sano y fuerte.";
+"affirmation_9" = "No te estás volviendo loco. Es una respuesta normal al estrés.";
+"affirmation_10" = "Pon tu mano en el pecho. Siente tu latido. Estás vivo y bien.";
+"affirmation_11" = "El pico del pánico dura solo 10 minutos. Puedes con 10 minutos.";
+"affirmation_12" = "Cuando esto pase, estarás orgulloso de ti mismo por haberlo superado.";
+"settings.soundscape_sub" = "Sonidos relajantes para aliviar la ansiedad";

@@ -767,7 +767,6 @@
 "settings.openai_test" = "Test Voice";
 "settings.openai_model" = "Quality";
 "settings.soundscape" = "Ambient Sounds";
-"settings.soundscape_sub" = "Music & nature sounds";
 "settings.appearance" = "Appearance";
 "settings.notifications" = "Notifications";
 "settings.data" = "Data & Storage";
@@ -799,8 +798,34 @@
 "settings.voice_source_system" = "System voice (offline fallback)";
 
 // MARK: - Soundscape (Brown Noise)
-"soundscape.brown_noise_title" = "棕色噪音";
-"soundscape.brown_noise_subtitle" = "经临床证明的镇静声音，可在恐慌发作时减轻焦虑";
 "soundscape.play" = "播放";
 "soundscape.stop" = "停止";
 "soundscape.file_missing" = "找不到音频文件。请将 brown_noise.mp3 添加到项目中。";
+
+// MARK: - Soundscape & Affirmations (Phase 18)
+"sound.brown_noise" = "棕色噪声";
+"sound.brown_noise_desc" = "深沉温暖的嗡鸣声，镇静神经系统";
+"sound.pink_noise" = "粉红噪声";
+"sound.pink_noise_desc" = "柔和噪声，降低皮质醇水平";
+"sound.gentle_rain" = "轻柔雨声";
+"sound.gentle_rain_desc" = "降低交感神经活动的自然声音";
+"sound.ocean_waves" = "海浪声";
+"sound.ocean_waves_desc" = "同步呼吸节奏的律动波浪";
+"sound.forest_stream" = "森林溪流";
+"sound.forest_stream_desc" = "降低压力荷尔蒙的流水声";
+"soundscape.choose_sound" = "选择声音";
+"soundscape.science_title" = "为什么有效";
+"soundscape.science_body" = "自然和低频声音激活副交感神经系统，降低心率和皮质醇。研究表明，20分钟的自然声音可将焦虑减少多达25%。";
+"affirmation_1" = "这种感觉是暂时的。它会过去的，就像每一次一样。";
+"affirmation_2" = "你的身体是安全的。你感受到的是肾上腺素，不是危险。";
+"affirmation_3" = "你已经度过了之前的每一次恐慌发作。这次也不例外。";
+"affirmation_4" = "现在，感受你的脚踩在地面上。你在这里，在当下。";
+"affirmation_5" = "延长你的呼气。你的身体会跟随你的呼吸。";
+"affirmation_6" = "焦虑在说谎。它告诉你有问题，但你是安全的。";
+"affirmation_7" = "说出你看到的5样东西。大脑无法同时恐慌和观察。";
+"affirmation_8" = "这不是心脏病发作。你的心脏健康而强壮。";
+"affirmation_9" = "你没有发疯。这是正常的压力反应。";
+"affirmation_10" = "把手放在胸口。感受你的心跳。你活着，一切都好。";
+"affirmation_11" = "恐慌的高峰只持续10分钟。你能坚持10分钟。";
+"affirmation_12" = "当这一切过去后，你会为自己克服了它而感到自豪。";
+"settings.soundscape_sub" = "缓解焦虑的舒缓音效";

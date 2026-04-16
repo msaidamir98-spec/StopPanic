@@ -1,3 +1,4 @@
+import Combine
 import SwiftUI
 
 // MARK: - HomeScreenView
@@ -29,6 +30,10 @@ struct HomeScreenView: View {
                         sosButtonSection
                             .opacity(appeared ? 1 : 0)
                             .scaleEffect(appeared ? 1 : 0.8)
+
+                        affirmationBanner
+                            .opacity(appeared ? 1 : 0)
+                            .offset(y: appeared ? 0 : 25)
 
                         statusBar
                             .opacity(appeared ? 1 : 0)
@@ -72,6 +77,17 @@ struct HomeScreenView: View {
     private var pulseGlow = false
     @State
     private var appeared = false
+    @State
+    private var affirmationIndex = 0
+    
+    // CBT & evidence-based grounding affirmations
+    // Sources: Beck (1979) Cognitive Therapy, Barlow (2002) Anxiety & Its Disorders,
+    // Clark & Beck (2010) Cognitive Therapy of Anxiety Disorders
+    private let affirmations: [String.LocalizationValue] = [
+        "affirmation_1", "affirmation_2", "affirmation_3", "affirmation_4",
+        "affirmation_5", "affirmation_6", "affirmation_7", "affirmation_8",
+        "affirmation_9", "affirmation_10", "affirmation_11", "affirmation_12",
+    ]
 
     private var dailyInsight: String {
         let insights = [
@@ -124,6 +140,49 @@ struct HomeScreenView: View {
         case .high: .orange
         case .critical: SP.Colors.danger
         case .none: SP.Colors.success
+        }
+    }
+
+    // MARK: - Affirmation Banner
+
+    private var affirmationBanner: some View {
+        Button {
+            withAnimation(.spring(response: 0.4, dampingFraction: 0.8)) {
+                affirmationIndex = (affirmationIndex + 1) % affirmations.count
+            }
+            SP.Haptic.selectionChanged()
+        } label: {
+            HStack(spacing: 12) {
+                Image(systemName: "sparkle")
+                    .font(.system(size: 16))
+                    .foregroundColor(SP.Colors.accent)
+                    .symbolEffect(.pulse, isActive: true)
+
+                Text(String(localized: affirmations[affirmationIndex]))
+                    .font(SP.Typography.subheadline)
+                    .foregroundColor(SP.Colors.textPrimary)
+                    .multilineTextAlignment(.leading)
+                    .lineLimit(3)
+                    .contentTransition(.opacity)
+                    .id(affirmationIndex)
+
+                Spacer(minLength: 4)
+
+                Image(systemName: "arrow.triangle.2.circlepath")
+                    .font(.system(size: 12))
+                    .foregroundColor(SP.Colors.textTertiary)
+            }
+            .spGlassCard(cornerRadius: SP.Layout.cornerSmall)
+        }
+        .buttonStyle(PremiumButtonStyle(scale: 0.97))
+        .onAppear {
+            // Randomize start position so it's not always the same
+            affirmationIndex = Int.random(in: 0..<affirmations.count)
+        }
+        .onReceive(Timer.publish(every: 12, on: .main, in: .common).autoconnect()) { _ in
+            withAnimation(.spring(response: 0.5, dampingFraction: 0.8)) {
+                affirmationIndex = (affirmationIndex + 1) % affirmations.count
+            }
         }
     }
 

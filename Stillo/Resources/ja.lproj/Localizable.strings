@@ -767,7 +767,6 @@
 "settings.openai_test" = "Test Voice";
 "settings.openai_model" = "Quality";
 "settings.soundscape" = "Ambient Sounds";
-"settings.soundscape_sub" = "Music & nature sounds";
 "settings.appearance" = "Appearance";
 "settings.notifications" = "Notifications";
 "settings.data" = "Data & Storage";
@@ -799,8 +798,34 @@
 "settings.voice_source_system" = "System voice (offline fallback)";
 
 // MARK: - Soundscape (Brown Noise)
-"soundscape.brown_noise_title" = "ブラウンノイズ";
-"soundscape.brown_noise_subtitle" = "パニック発作時の不安を軽減する臨床的に実証された鎮静音";
 "soundscape.play" = "再生";
 "soundscape.stop" = "停止";
 "soundscape.file_missing" = "オーディオファイルが見つかりません。brown_noise.mp3をプロジェクトに追加してください。";
+
+// MARK: - Soundscape & Affirmations (Phase 18)
+"sound.brown_noise" = "ブラウンノイズ";
+"sound.brown_noise_desc" = "神経系を落ち着かせる深く温かい音";
+"sound.pink_noise" = "ピンクノイズ";
+"sound.pink_noise_desc" = "コルチゾールを下げる柔らかいノイズ";
+"sound.gentle_rain" = "優しい雨音";
+"sound.gentle_rain_desc" = "交感神経の活動を抑える自然音";
+"sound.ocean_waves" = "海の波";
+"sound.ocean_waves_desc" = "呼吸を同期させるリズミカルな波";
+"sound.forest_stream" = "森の小川";
+"sound.forest_stream_desc" = "ストレスホルモンを減らす水の音";
+"soundscape.choose_sound" = "サウンドを選ぶ";
+"soundscape.science_title" = "なぜ効果があるのか";
+"soundscape.science_body" = "自然音や低周波音は副交感神経を活性化し、心拍数とコルチゾールを低下させます。研究では、20分の自然音で不安が最大25%減少することが示されています。";
+"affirmation_1" = "この感覚は一時的です。前と同じように、必ず過ぎ去ります。";
+"affirmation_2" = "あなたの体は安全です。感じているのはアドレナリンであり、危険ではありません。";
+"affirmation_3" = "あなたはこれまですべてのパニック発作を乗り越えてきました。今回も同じです。";
+"affirmation_4" = "今、足が地面についているのを感じてください。あなたはここにいます。";
+"affirmation_5" = "息をゆっくり吐いてください。体は呼吸に従います。";
+"affirmation_6" = "不安は嘘をつきます。安全なのに何かが間違っていると言います。";
+"affirmation_7" = "見えるものを5つ挙げてください。脳はパニックと観察を同時にできません。";
+"affirmation_8" = "これは心臓発作ではありません。あなたの心臓は健康で強いです。";
+"affirmation_9" = "あなたは正気を失っていません。これは正常なストレス反応です。";
+"affirmation_10" = "胸に手を当ててください。心臓の鼓動を感じてください。あなたは生きています。";
+"affirmation_11" = "パニックのピークはわずか10分です。10分なら耐えられます。";
+"affirmation_12" = "これが過ぎたら、乗り越えた自分を誇りに思うでしょう。";
+"settings.soundscape_sub" = "不安を和らげる癒しのサウンド";
