@@ -143,9 +143,10 @@ final class OpenAITTSService {
     /// Speak text through OpenAI TTS with caching
     func speak(_ text: String, speed: Double = 0.85) {
         guard isReady else { return }
+        speakTask?.cancel()
         let key = resolvedAPIKey
         let cacheKey = "\(selectedVoice.rawValue)_\(selectedModel.rawValue)_\(text.hashValue)"
-        Task {
+        speakTask = Task {
             isLoading = true
             defer { isLoading = false }
             do {
@@ -201,18 +202,16 @@ final class OpenAITTSService {
     @ObservationIgnored
     private var _isLoading = false
     @ObservationIgnored
+    private var speakTask: Task<Void, Never>?
+    @ObservationIgnored
     private var player: AVAudioPlayer?
+    @ObservationIgnored
+    private let playerDelegate = PlaybackDelegate()
 
     // MARK: - Audio Session
 
     private func ensureSession() {
-        do {
-            let session = AVAudioSession.sharedInstance()
-            try session.setCategory(.playback, mode: .spokenAudio, options: [.duckOthers])
-            try session.setActive(true)
-        } catch {
-            Self.log.error("Audio session setup failed: \(error.localizedDescription)")
-        }
+        AudioSessionManager.configureForSpeech()
     }
 
     // MARK: - Resolved API Key (embedded or user-provided)
@@ -285,19 +284,18 @@ final class OpenAITTSService {
     private func playAudio(url: URL) async throws {
         ensureSession()
         let p = try AVAudioPlayer(contentsOf: url)
-        p.volume = 0.0 // start silent for fade-in
+        p.volume = 0.0
         p.prepareToPlay()
+        p.delegate = playerDelegate
         p.play()
         player = p
         isSpeaking = true
-        // Fade in over 0.3s
         p.setVolume(0.9, fadeDuration: 0.3)
-        // Wait for playback to finish
-        while p.isPlaying {
-            try await Task.sleep(for: .milliseconds(100))
+        // Wait for delegate callback instead of polling
+        await withCheckedContinuation { continuation in
+            playerDelegate.onFinish = { continuation.resume() }
         }
         isSpeaking = false
-        // Восстанавливаем ambient вместо деактивации
         ambientSound?.recoverSession()
     }
 
@@ -326,6 +324,17 @@ final class OpenAITTSService {
             case .apiError(let code, let msg): "API error \(code): \(msg)"
             }
         }
+    }
+}
+
+// MARK: - PlaybackDelegate
+
+private final class PlaybackDelegate: NSObject, AVAudioPlayerDelegate {
+    var onFinish: (() -> Void)?
+
+    func audioPlayerDidFinishPlaying(_ player: AVAudioPlayer, successfully flag: Bool) {
+        onFinish?()
+        onFinish = nil
     }
 }
 

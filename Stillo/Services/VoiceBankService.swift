@@ -190,6 +190,17 @@ final class VoiceBankService {
 
     @ObservationIgnored
     private var player: AVAudioPlayer?
+    @ObservationIgnored
+    private lazy var playbackDelegate: VBPlaybackDelegate = {
+        let d = VBPlaybackDelegate()
+        d.onFinish = { [weak self] in
+            Task { @MainActor [weak self] in
+                self?.isPlaying = false
+                self?.ambientSound?.recoverSession()
+            }
+        }
+        return d
+    }()
 
     /// Cache: "en_breathe_in" → URL
     @ObservationIgnored
@@ -280,23 +291,12 @@ final class VoiceBankService {
             p.volume = 0 // start silent
             p.prepareToPlay()
             p.play()
+            p.delegate = playbackDelegate
             player = p
             isPlaying = true
 
             // Soft fade-in (0.25s)
             p.setVolume(_volume, fadeDuration: 0.25)
-
-            // Monitor completion — restore ambient session when done
-            Task { [weak self] in
-                while p.isPlaying {
-                    try? await Task.sleep(for: .milliseconds(80))
-                }
-                await MainActor.run {
-                    self?.isPlaying = false
-                    // Восстанавливаем ambient-сессию вместо деактивации
-                    self?.ambientSound?.recoverSession()
-                }
-            }
 
             Self.log.info("Playing: \(url.lastPathComponent)")
             return true
@@ -312,16 +312,17 @@ final class VoiceBankService {
     /// — приглушает музыку, но не останавливает
     /// — НЕ вызывает setActive(false) после — чтобы не убивать ambient
     private func ensureSession() {
-        do {
-            let session = AVAudioSession.sharedInstance()
-            try session.setCategory(
-                .playback,
-                mode: .spokenAudio,
-                options: [.duckOthers]
-            )
-            try session.setActive(true)
-        } catch {
-            Self.log.error("Audio session error: \(error.localizedDescription)")
-        }
+        AudioSessionManager.configureForSpeech()
+    }
+}
+
+
+// MARK: - VBPlaybackDelegate
+
+private final class VBPlaybackDelegate: NSObject, AVAudioPlayerDelegate {
+    var onFinish: (() -> Void)?
+
+    func audioPlayerDidFinishPlaying(_ player: AVAudioPlayer, successfully flag: Bool) {
+        onFinish?()
     }
 }

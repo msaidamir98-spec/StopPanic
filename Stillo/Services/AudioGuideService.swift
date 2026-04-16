@@ -331,8 +331,17 @@ final class AudioGuideService {
 
     @ObservationIgnored
     private var _isVoiceEnabled: Bool = {
-        if UserDefaults.standard.object(forKey: "audioGuideEnabled") != nil {
-            return UserDefaults.standard.bool(forKey: "audioGuideEnabled")
+        let ud = UserDefaults.standard
+        // Migrate old key → new key (Phase 17)
+        if ud.object(forKey: "audioGuideEnabled") == nil,
+           ud.object(forKey: "voiceGuideEnabled") != nil {
+            let old = ud.bool(forKey: "voiceGuideEnabled")
+            ud.set(old, forKey: "audioGuideEnabled")
+            ud.removeObject(forKey: "voiceGuideEnabled")
+            return old
+        }
+        if ud.object(forKey: "audioGuideEnabled") != nil {
+            return ud.bool(forKey: "audioGuideEnabled")
         }
         return true
     }()
@@ -450,13 +459,7 @@ final class AudioGuideService {
     // MARK: - Audio Session
 
     private func ensureAudioSession() {
-        do {
-            let session = AVAudioSession.sharedInstance()
-            try session.setCategory(.playback, mode: .spokenAudio, options: [.duckOthers])
-            try session.setActive(true)
-        } catch {
-            Self.log.error("Audio session error: \(error.localizedDescription)")
-        }
+        AudioSessionManager.configureForSpeech()
     }
 
     // MARK: - Language Mapping
