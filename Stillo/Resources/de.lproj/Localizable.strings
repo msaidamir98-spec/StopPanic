@@ -774,19 +774,6 @@
 "settings.clear_tts_cache" = "Stimm-Cache leeren";
 "settings.crisis_lines" = "Krisentelefone";
 "soundscape.title" = "Klänge";
-"soundscape.subtitle" = "Beruhigende Hintergrundklänge zum Entspannen";
-"soundscape.master_volume" = "Gesamtlautstärke";
-"soundscape.music" = "Hintergrundmusik";
-"soundscape.nature" = "Naturgeräusche";
-"soundscape.nature_hint" = "Mehrere Klänge mischen";
-"ambient.music_piano" = "Ruhiges Klavier";
-"ambient.music_ambient" = "Sanfter Ambient";
-"ambient.music_guitar" = "Sanfte Gitarre";
-"ambient.nature_rain" = "Regen";
-"ambient.nature_forest" = "Wald";
-"ambient.nature_ocean" = "Meereswellen";
-"ambient.nature_fireplace" = "Kaminfeuer";
-"ambient.nature_birds" = "Nachtvögel";
 "insight.time_of_day" = "Tageszeit";
 "insight.time_description" = "Wann treten Episoden am häufigsten auf?";
 "insight.morning" = "Morgen";
@@ -810,3 +797,10 @@
 "settings.voice_source_bank" = "Premium pre-recorded voice";
 "settings.voice_source_openai" = "OpenAI neural voice (online)";
 "settings.voice_source_system" = "System voice (offline fallback)";
+
+// MARK: - Soundscape (Brown Noise)
+"soundscape.brown_noise_title" = "Braunes Rauschen";
+"soundscape.brown_noise_subtitle" = "Klinisch bewiesener beruhigender Klang zur Angstreduzierung bei Panikattacken";
+"soundscape.play" = "Abspielen";
+"soundscape.stop" = "Stopp";
+"soundscape.file_missing" = "Audiodatei nicht gefunden. Fügen Sie brown_noise.mp3 zum Projekt hinzu.";

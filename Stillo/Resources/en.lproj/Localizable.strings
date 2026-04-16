@@ -767,7 +767,7 @@
 "settings.openai_test" = "Test Voice";
 "settings.openai_model" = "Quality";
 "settings.soundscape" = "Ambient Sounds";
-"settings.soundscape_sub" = "Music & nature sounds";
+"settings.soundscape_sub" = "Brown noise for anxiety relief";
 "settings.appearance" = "Appearance";
 "settings.notifications" = "Notifications";
 "settings.data" = "Data & Storage";
@@ -776,19 +776,6 @@
 
 // MARK: - Soundscape
 "soundscape.title" = "Sounds";
-"soundscape.subtitle" = "Calming background sounds to help you relax";
-"soundscape.master_volume" = "Master Volume";
-"soundscape.music" = "Background Music";
-"soundscape.nature" = "Nature Sounds";
-"soundscape.nature_hint" = "Mix multiple sounds together";
-"ambient.music_piano" = "Calm Piano";
-"ambient.music_ambient" = "Soft Ambient";
-"ambient.music_guitar" = "Gentle Guitar";
-"ambient.nature_rain" = "Rain";
-"ambient.nature_forest" = "Forest";
-"ambient.nature_ocean" = "Ocean Waves";
-"ambient.nature_fireplace" = "Fireplace";
-"ambient.nature_birds" = "Night Birds";
 
 // MARK: - Insights
 "insight.time_of_day" = "Time of Day";
@@ -843,3 +830,17 @@
 // OpenAI TTS status
 "settings.openai_status_ready" = "Connected — voice ready";
 "settings.openai_status_no_key" = "API key not configured";
+
+// MARK: - Soundscape (Brown Noise)
+"soundscape.brown_noise_title" = "Brown Noise";
+"soundscape.brown_noise_subtitle" = "Clinically proven low-frequency sound that reduces anxiety and helps during panic attacks";
+"soundscape.play" = "Play";
+"soundscape.stop" = "Stop";
+"soundscape.file_missing" = "Audio file not found. Add brown_noise.mp3 to the project.";
+
+// MARK: - Soundscape (Brown Noise)
+"soundscape.brown_noise_title" = "Brown Noise";
+"soundscape.brown_noise_subtitle" = "Clinically proven calming sound that reduces anxiety during panic attacks";
+"soundscape.play" = "Play";
+"soundscape.stop" = "Stop";
+"soundscape.file_missing" = "Audio file not found. Add brown_noise.mp3 to the project.";

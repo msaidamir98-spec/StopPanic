@@ -44,6 +44,7 @@ final class AppCoordinator {
         audioGuide.ttsService = ttsService
         audioGuide.ambientSound = ambientSound
         ttsService.ambientSound = ambientSound
+        audioGuide.configureSpeechDelegate()
     }
 
     // MARK: - User State (persisted via UserDefaults)

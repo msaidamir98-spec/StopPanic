@@ -767,7 +767,7 @@
 "settings.openai_test" = "Тест голоса";
 "settings.openai_model" = "Качество";
 "settings.soundscape" = "Звуковой фон";
-"settings.soundscape_sub" = "Музыка и звуки природы";
+"settings.soundscape_sub" = "Коричневый шум для снятия тревоги";
 "settings.appearance" = "Оформление";
 "settings.notifications" = "Уведомления";
 "settings.data" = "Данные и хранилище";
@@ -776,19 +776,6 @@
 
 // MARK: - Soundscape
 "soundscape.title" = "Звуки";
-"soundscape.subtitle" = "Успокаивающие фоновые звуки для расслабления";
-"soundscape.master_volume" = "Общая громкость";
-"soundscape.music" = "Фоновая музыка";
-"soundscape.nature" = "Звуки природы";
-"soundscape.nature_hint" = "Смешивайте несколько звуков вместе";
-"ambient.music_piano" = "Спокойное пианино";
-"ambient.music_ambient" = "Мягкий эмбиент";
-"ambient.music_guitar" = "Нежная гитара";
-"ambient.nature_rain" = "Дождь";
-"ambient.nature_forest" = "Лес";
-"ambient.nature_ocean" = "Океан";
-"ambient.nature_fireplace" = "Камин";
-"ambient.nature_birds" = "Ночные птицы";
 
 // MARK: - Insights
 "insight.time_of_day" = "Время суток";
@@ -843,3 +830,10 @@
 // OpenAI TTS status
 "settings.openai_status_ready" = "Подключено — голос готов";
 "settings.openai_status_no_key" = "API-ключ не настроен";
+
+// MARK: - Soundscape (Brown Noise)
+"soundscape.brown_noise_title" = "Коричневый шум";
+"soundscape.brown_noise_subtitle" = "Клинически доказанный успокаивающий звук, снижающий тревожность при панических атаках";
+"soundscape.play" = "Воспроизвести";
+"soundscape.stop" = "Остановить";
+"soundscape.file_missing" = "Аудиофайл не найден. Добавьте brown_noise.mp3 в проект.";

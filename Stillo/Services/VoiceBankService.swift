@@ -137,6 +137,7 @@ final class VoiceBankService {
     /// Остановить текущее воспроизведение
     func stop() {
         player?.stop()
+        player = nil
         isPlaying = false
     }
 

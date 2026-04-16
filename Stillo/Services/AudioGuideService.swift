@@ -44,7 +44,7 @@ final class AudioGuideService {
         set {
             withMutation(keyPath: \.isVoiceEnabled) {
                 _isVoiceEnabled = newValue
-                UserDefaults.standard.set(newValue, forKey: "voiceGuideEnabled")
+                UserDefaults.standard.set(newValue, forKey: "audioGuideEnabled")
                 if !newValue {
                     stop()
                 }
@@ -331,8 +331,8 @@ final class AudioGuideService {
 
     @ObservationIgnored
     private var _isVoiceEnabled: Bool = {
-        if UserDefaults.standard.object(forKey: "voiceGuideEnabled") != nil {
-            return UserDefaults.standard.bool(forKey: "voiceGuideEnabled")
+        if UserDefaults.standard.object(forKey: "audioGuideEnabled") != nil {
+            return UserDefaults.standard.bool(forKey: "audioGuideEnabled")
         }
         return true
     }()
@@ -349,7 +349,14 @@ final class AudioGuideService {
     @ObservationIgnored
     private var _selectedVoiceId: String? = UserDefaults.standard.string(forKey: "selectedVoiceId")
 
-    nonisolated(unsafe) private let synthesizer = AVSpeechSynthesizer()
+    private let synthesizer = AVSpeechSynthesizer()
+    private let speechDelegate = SpeechDelegate()
+
+    /// Wire delegate + ambient ref. Called from AppCoordinator after injection.
+    func configureSpeechDelegate() {
+        speechDelegate.ambientSound = ambientSound
+        synthesizer.delegate = speechDelegate
+    }
 
     // MARK: - Smart Speak (Three-tier cascade respecting preferredSource)
 
@@ -469,6 +476,19 @@ final class AudioGuideService {
         case "pt": "pt-BR"
         case "zh": "zh-CN"
         default: "en-US"
+        }
+    }
+}
+
+// MARK: - AVSpeechSynthesizerDelegate (ambient recovery after speech)
+
+@MainActor
+private final class SpeechDelegate: NSObject, AVSpeechSynthesizerDelegate {
+    weak var ambientSound: AmbientSoundService?
+
+    nonisolated func speechSynthesizer(_ synthesizer: AVSpeechSynthesizer, didFinish utterance: AVSpeechUtterance) {
+        Task { @MainActor [weak self] in
+            self?.ambientSound?.recoverSession()
         }
     }
 }

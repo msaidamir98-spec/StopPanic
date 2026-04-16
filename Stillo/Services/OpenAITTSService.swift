@@ -274,7 +274,7 @@ final class OpenAITTSService {
             throw TTSError.apiError(http.statusCode, errorText)
         }
         // Save to cache
-        let fileURL = cacheURL(for: cacheKey)!
+        guard let fileURL = cacheURL(for: cacheKey) else { throw TTSError.invalidResponse }
         try FileManager.default.createDirectory(at: fileURL.deletingLastPathComponent(), withIntermediateDirectories: true)
         try data.write(to: fileURL)
         return fileURL
