@@ -55,9 +55,15 @@ struct BreathingSessionView: View {
                 Spacer()
 
                 statsRow
-                    .padding(.bottom, 20)
+                    .padding(.bottom, 12)
                     .opacity(appear ? 1 : 0)
                     .offset(y: appear ? 0 : 30)
+
+                // Inline sound picker — change track & volume during meditation
+                InlineSoundPicker(ambient: coordinator.ambientSound)
+                    .padding(.bottom, 12)
+                    .opacity(appear ? 1 : 0)
+                    .offset(y: appear ? 0 : 20)
 
                 controlButton
                     .padding(.bottom, 40)
@@ -368,6 +374,12 @@ struct BreathingSessionView: View {
         isActive = true
         cycleCount = 0
         totalSeconds = 0
+
+        // Auto-start ambient sound for meditation
+        if !coordinator.ambientSound.isPlaying {
+            coordinator.ambientSound.play()
+        }
+
         runBreathCycle()
 
         sessionTimer = Timer.scheduledTimer(withTimeInterval: 1, repeats: true) { [self] _ in
@@ -430,12 +442,23 @@ struct BreathingSessionView: View {
         }
         SP.Haptic.soft()
 
-        // Аудио якорение — озвучка фазы дыхания
+        // Аудио якорение — duck ambient, озвучка фазы, unduck
+        let shouldSpeak = (p == .inhale || p == .hold || p == .holdAfter || p == .exhale)
+        if shouldSpeak {
+            coordinator.ambientSound.duckForVoice()
+        }
         switch p {
         case .inhale: coordinator.audioGuide.speakBreathPhase(.inhale)
         case .hold, .holdAfter: coordinator.audioGuide.speakBreathPhase(.hold)
         case .exhale: coordinator.audioGuide.speakBreathPhase(.exhale)
         default: break
+        }
+        if shouldSpeak {
+            // Unduck after voice finishes (~1.5s)
+            Task { @MainActor in
+                try? await Task.sleep(for: .seconds(1.5))
+                coordinator.ambientSound.unduck()
+            }
         }
 
         withAnimation(.easeInOut(duration: duration)) {

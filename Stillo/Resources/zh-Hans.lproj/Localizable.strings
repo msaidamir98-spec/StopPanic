@@ -808,10 +808,6 @@
 "sound.forest_calm_desc" = "降低压力荷尔蒙的宁静森林声";
 "sound.ocean_waves" = "海浪声";
 "sound.ocean_waves_desc" = "同步呼吸节奏的律动波浪";
-"sound.soft_melody" = "柔和旋律";
-"sound.soft_melody_desc" = "缓解焦虑的温柔器乐曲";
-"sound.brown_noise" = "棕色噪声";
-"sound.brown_noise_desc" = "平静心灵的深沉温暖嗡鸣";
 "soundscape.sos_hint_title" = "你的SOS音效";
 "soundscape.sos_hint_body" = "你在这里选择的音效将在按下SOS按钮时自动播放。";
 "soundscape.file_missing" = "将文件添加到包中";
@@ -831,3 +827,12 @@
 "soundscape.science_title" = "Why It Works";
 "soundscape.science_body" = "Natural and low-frequency sounds activate the parasympathetic nervous system, lowering heart rate and cortisol. Studies show 20 minutes of nature sounds reduce anxiety by up to 25%.";
 "settings.soundscape_sub" = "Calming sounds for anxiety relief";
+
+// MARK: - Sound Categories & New Tracks (Phase 20)
+"sound.category_nature" = "自然";
+"sound.category_melody" = "旋律";
+"sound.piano_meditation" = "宁静钢琴";
+"sound.piano_meditation_desc" = "舒缓思绪的轻柔钢琴";
+"sound.flute_meditation" = "疗愈长笛";
+"sound.flute_meditation_desc" = "加深呼吸的冥想长笛";
+"soundscape.background_sound" = "背景音乐";

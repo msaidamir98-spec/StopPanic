@@ -808,10 +808,6 @@
 "sound.forest_calm_desc" = "Sonidos del bosque que reducen hormonas del estrés";
 "sound.ocean_waves" = "Olas del mar";
 "sound.ocean_waves_desc" = "Olas rítmicas que sincronizan la respiración";
-"sound.soft_melody" = "Melodía suave";
-"sound.soft_melody_desc" = "Música instrumental que alivia la ansiedad";
-"sound.brown_noise" = "Ruido marrón";
-"sound.brown_noise_desc" = "Zumbido profundo y cálido que calma la mente";
 "soundscape.sos_hint_title" = "Tu sonido SOS";
 "soundscape.sos_hint_body" = "El sonido elegido aquí se reproducirá automáticamente al pulsar el botón SOS.";
 "soundscape.file_missing" = "Añadir archivo al bundle";
@@ -831,3 +827,12 @@
 "soundscape.science_title" = "Why It Works";
 "soundscape.science_body" = "Natural and low-frequency sounds activate the parasympathetic nervous system, lowering heart rate and cortisol. Studies show 20 minutes of nature sounds reduce anxiety by up to 25%.";
 "settings.soundscape_sub" = "Calming sounds for anxiety relief";
+
+// MARK: - Sound Categories & New Tracks (Phase 20)
+"sound.category_nature" = "Naturaleza";
+"sound.category_melody" = "Melodías";
+"sound.piano_meditation" = "Piano tranquilo";
+"sound.piano_meditation_desc" = "Piano suave que calma los pensamientos acelerados";
+"sound.flute_meditation" = "Flauta sanadora";
+"sound.flute_meditation_desc" = "Flauta meditativa que profundiza la respiración";
+"soundscape.background_sound" = "Sonido de fondo";

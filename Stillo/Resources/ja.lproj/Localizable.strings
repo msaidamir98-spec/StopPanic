@@ -808,10 +808,6 @@
 "sound.forest_calm_desc" = "ストレスホルモンを減らす穏やかな森の音";
 "sound.ocean_waves" = "海の波";
 "sound.ocean_waves_desc" = "呼吸を同期させるリズミカルな波";
-"sound.soft_melody" = "穏やかなメロディー";
-"sound.soft_melody_desc" = "不安を和らげる優しい楽器の音色";
-"sound.brown_noise" = "ブラウンノイズ";
-"sound.brown_noise_desc" = "心を落ち着かせる深く温かい音";
 "soundscape.sos_hint_title" = "あなたのSOSサウンド";
 "soundscape.sos_hint_body" = "ここで選んだ音はSOSボタンを押すと自動的に再生されます。";
 "soundscape.file_missing" = "バンドルにファイルを追加";
@@ -831,3 +827,12 @@
 "soundscape.science_title" = "Why It Works";
 "soundscape.science_body" = "Natural and low-frequency sounds activate the parasympathetic nervous system, lowering heart rate and cortisol. Studies show 20 minutes of nature sounds reduce anxiety by up to 25%.";
 "settings.soundscape_sub" = "Calming sounds for anxiety relief";
+
+// MARK: - Sound Categories & New Tracks (Phase 20)
+"sound.category_nature" = "自然";
+"sound.category_melody" = "メロディー";
+"sound.piano_meditation" = "穏やかなピアノ";
+"sound.piano_meditation_desc" = "思考を落ち着かせる優しいピアノ";
+"sound.flute_meditation" = "癒しのフルート";
+"sound.flute_meditation_desc" = "呼吸を深める瞑想的なフルート";
+"soundscape.background_sound" = "BGM";

@@ -841,10 +841,6 @@
 "sound.forest_calm_desc" = "Умиротворяющие звуки леса, снижающие гормоны стресса";
 "sound.ocean_waves" = "Морские волны";
 "sound.ocean_waves_desc" = "Ритмичные волны, синхронизирующие дыхание";
-"sound.soft_melody" = "Спокойная мелодия";
-"sound.soft_melody_desc" = "Нежная инструментальная музыка, снимающая тревогу";
-"sound.brown_noise" = "Коричневый шум";
-"sound.brown_noise_desc" = "Глубокий тёплый гул, успокаивающий разум";
 "soundscape.sos_hint_title" = "Ваш звук SOS";
 "soundscape.sos_hint_body" = "Выбранный здесь звук включится автоматически при нажатии кнопки SOS.";
 "soundscape.file_missing" = "Добавьте файл в бандл";
@@ -864,3 +860,12 @@
 "soundscape.science_title" = "Почему это работает";
 "soundscape.science_body" = "Природные и низкочастотные звуки активируют парасимпатическую нервную систему, снижая пульс и кортизол. Исследования показывают: 20 минут звуков природы уменьшают тревогу на 25%.";
 "settings.soundscape_sub" = "Успокаивающие звуки для снятия тревоги";
+
+// MARK: - Sound Categories & New Tracks (Phase 20)
+"sound.category_nature" = "Природа";
+"sound.category_melody" = "Мелодии";
+"sound.piano_meditation" = "Спокойное пианино";
+"sound.piano_meditation_desc" = "Нежное пианино, замедляющее мысли";
+"sound.flute_meditation" = "Целительная флейта";
+"sound.flute_meditation_desc" = "Медитативная флейта для глубокого дыхания";
+"soundscape.background_sound" = "Фоновый звук";

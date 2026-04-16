@@ -4,18 +4,27 @@ import os.log
 // MARK: - AudioSessionManager
 
 /// Единая точка конфигурации AVAudioSession.
-/// Все сервисы (AmbientSound, AudioGuide, VoiceBank, OpenAITTS) вызывают
-/// эти методы вместо прямого обращения к AVAudioSession.sharedInstance().
+///
+/// Режимы:
+/// 1. Ambient — фоновый звук (дождь/пианино) играет один: .playback + .mixWithOthers
+/// 2. SpeechOverAmbient — голос гида поверх фона: .playback + .duckOthers
+///    (iOS автоматически приглушает ambient, а мы дополнительно duck через AmbientSoundService)
+/// 3. Speech — только голос, без фона: .playback + .spokenAudio + .duckOthers
 @MainActor
 enum AudioSessionManager {
     private static let log = Logger(subsystem: "MSK-PRODUKT.StopPanic", category: "AudioSession")
 
-    /// Для фонового звука (ambient brown noise): .playback + .mixWithOthers
+    /// Для фонового звука (ambient loops): .playback + .mixWithOthers
     static func configureForAmbient() {
         configure(mode: .default, options: [.mixWithOthers])
     }
 
-    /// Для голоса (TTS / VoiceBank / AVSpeech): .playback + .duckOthers
+    /// Для голоса ПОВЕРХ фона: дождь приглушается, голос слышен чётко
+    static func configureForSpeechOverAmbient() {
+        configure(mode: .spokenAudio, options: [.mixWithOthers, .duckOthers])
+    }
+
+    /// Для голоса без фона (TTS / VoiceBank / AVSpeech)
     static func configureForSpeech() {
         configure(mode: .spokenAudio, options: [.duckOthers])
     }
