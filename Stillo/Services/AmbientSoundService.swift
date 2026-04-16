@@ -7,7 +7,7 @@ import os.log
 ///
 /// Архитектура:
 /// ┌─────────────────────────────────────────────────────────────┐
-/// │  SoundTrack — каталог из 5 премиальных треков              │
+/// │  SoundTrack — каталог из 6 премиальных треков              │
 /// │  SoundCategory — Nature / Melody (для группировки в UI)    │
 /// │  AVAudioPlayer (numberOfLoops = -1) — бесконечный цикл     │
 /// │  AVAudioSession: .mixWithOthers → ambient                  │
@@ -46,7 +46,7 @@ final class AmbientSoundService {
 
     // MARK: - Sound Track Catalog
 
-    /// 5 премиальных треков. Файл в бандле ДОЛЖЕН совпадать с rawValue.
+    /// 6 премиальных треков. Файл в бандле ДОЛЖЕН совпадать с rawValue.
     /// Пользователь кладёт .mp3 / .wav / .m4a в Resources/Audio/.
     enum SoundTrack: String, CaseIterable, Identifiable {
         case rainAmbient       = "rain_ambient"
@@ -54,12 +54,13 @@ final class AmbientSoundService {
         case oceanWaves        = "ocean_waves"
         case pianoMeditation   = "piano_meditation"
         case fluteMeditation   = "flute_meditation"
+        case underwaterAmbience = "underwater_ambience"
 
         var id: String { rawValue }
 
         var category: SoundCategory {
             switch self {
-            case .rainAmbient, .forestCalm, .oceanWaves:
+            case .rainAmbient, .forestCalm, .oceanWaves, .underwaterAmbience:
                 .nature
             case .pianoMeditation, .fluteMeditation:
                 .melody
@@ -73,6 +74,7 @@ final class AmbientSoundService {
             case .oceanWaves:       "sound.ocean_waves"
             case .pianoMeditation:  "sound.piano_meditation"
             case .fluteMeditation:  "sound.flute_meditation"
+            case .underwaterAmbience: "sound.underwater_ambience"
             }
         }
 
@@ -83,6 +85,7 @@ final class AmbientSoundService {
             case .oceanWaves:       "sound.ocean_waves_desc"
             case .pianoMeditation:  "sound.piano_meditation_desc"
             case .fluteMeditation:  "sound.flute_meditation_desc"
+            case .underwaterAmbience: "sound.underwater_ambience_desc"
             }
         }
 
@@ -93,6 +96,7 @@ final class AmbientSoundService {
             case .oceanWaves:       "water.waves"
             case .pianoMeditation:  "pianokeys"
             case .fluteMeditation:  "wand.and.stars"
+            case .underwaterAmbience: "drop.circle.fill"
             }
         }
 

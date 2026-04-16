@@ -315,6 +315,7 @@ struct SoundscapeView: View {
         case .oceanWaves:       Color.teal
         case .pianoMeditation:  SP.Colors.accent
         case .fluteMeditation:  Color.indigo
+        case .underwaterAmbience: Color.cyan
         }
     }
 }
@@ -455,6 +456,7 @@ struct InlineSoundPicker: View {
         case .oceanWaves:       Color.teal
         case .pianoMeditation:  SP.Colors.accent
         case .fluteMeditation:  Color.indigo
+        case .underwaterAmbience: Color.cyan
         }
     }
 }
