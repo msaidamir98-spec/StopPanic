@@ -806,8 +806,6 @@
 "sound.rain_ambient_desc" = "镇静神经系统的柔和雨声";
 "sound.forest_calm" = "森林";
 "sound.forest_calm_desc" = "降低压力荷尔蒙的宁静森林声";
-"sound.ocean_waves" = "海浪声";
-"sound.ocean_waves_desc" = "同步呼吸节奏的律动波浪";
 "soundscape.sos_hint_title" = "你的SOS音效";
 "soundscape.sos_hint_body" = "你在这里选择的音效将在按下SOS按钮时自动播放。";
 "soundscape.file_missing" = "将文件添加到包中";
@@ -839,3 +837,9 @@
 
 "sound.underwater_ambience" = "水下世界";
 "sound.underwater_ambience_desc" = "深海声音，完全沉浸放松";
+
+"sound.calm_melody" = "宁静旋律";
+"sound.calm_melody_desc" = "柔和旋律，平息纷乱思绪";
+
+"settings.clear_tts_cache_sub" = "删除缓存的语音文件以释放存储空间";
+"settings.crisis_lines_sub" = "您所在地区的紧急求助热线";

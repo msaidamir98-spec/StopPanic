@@ -51,7 +51,7 @@ final class AmbientSoundService {
     enum SoundTrack: String, CaseIterable, Identifiable {
         case rainAmbient       = "rain_ambient"
         case forestCalm        = "forest_calm"
-        case oceanWaves        = "ocean_waves"
+        case calmMelody       = "calm_melody"
         case pianoMeditation   = "piano_meditation"
         case fluteMeditation   = "flute_meditation"
         case underwaterAmbience = "underwater_ambience"
@@ -60,9 +60,9 @@ final class AmbientSoundService {
 
         var category: SoundCategory {
             switch self {
-            case .rainAmbient, .forestCalm, .oceanWaves, .underwaterAmbience:
+            case .rainAmbient, .forestCalm, .underwaterAmbience:
                 .nature
-            case .pianoMeditation, .fluteMeditation:
+            case .pianoMeditation, .fluteMeditation, .calmMelody:
                 .melody
             }
         }
@@ -71,7 +71,7 @@ final class AmbientSoundService {
             switch self {
             case .rainAmbient:      "sound.rain_ambient"
             case .forestCalm:       "sound.forest_calm"
-            case .oceanWaves:       "sound.ocean_waves"
+            case .calmMelody:       "sound.calm_melody"
             case .pianoMeditation:  "sound.piano_meditation"
             case .fluteMeditation:  "sound.flute_meditation"
             case .underwaterAmbience: "sound.underwater_ambience"
@@ -82,7 +82,7 @@ final class AmbientSoundService {
             switch self {
             case .rainAmbient:      "sound.rain_ambient_desc"
             case .forestCalm:       "sound.forest_calm_desc"
-            case .oceanWaves:       "sound.ocean_waves_desc"
+            case .calmMelody:       "sound.calm_melody_desc"
             case .pianoMeditation:  "sound.piano_meditation_desc"
             case .fluteMeditation:  "sound.flute_meditation_desc"
             case .underwaterAmbience: "sound.underwater_ambience_desc"
@@ -93,7 +93,7 @@ final class AmbientSoundService {
             switch self {
             case .rainAmbient:      "cloud.rain.fill"
             case .forestCalm:       "leaf.fill"
-            case .oceanWaves:       "water.waves"
+            case .calmMelody:       "music.quarternote.3"
             case .pianoMeditation:  "pianokeys"
             case .fluteMeditation:  "wand.and.stars"
             case .underwaterAmbience: "drop.circle.fill"
@@ -125,6 +125,7 @@ final class AmbientSoundService {
             let clamped = min(1, max(0, volume))
             if volume != clamped { volume = clamped }
             player?.volume = Float(volume)
+            previewPlayer?.volume = Float(volume)
             UserDefaults.standard.set(volume, forKey: Keys.volume)
         }
     }

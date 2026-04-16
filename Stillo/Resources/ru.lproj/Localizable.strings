@@ -839,8 +839,6 @@
 "sound.rain_ambient_desc" = "Мягкий дождь, успокаивающий нервную систему";
 "sound.forest_calm" = "Лес";
 "sound.forest_calm_desc" = "Умиротворяющие звуки леса, снижающие гормоны стресса";
-"sound.ocean_waves" = "Морские волны";
-"sound.ocean_waves_desc" = "Ритмичные волны, синхронизирующие дыхание";
 "soundscape.sos_hint_title" = "Ваш звук SOS";
 "soundscape.sos_hint_body" = "Выбранный здесь звук включится автоматически при нажатии кнопки SOS.";
 "soundscape.file_missing" = "Добавьте файл в бандл";
@@ -872,3 +870,9 @@
 
 "sound.underwater_ambience" = "Подводный мир";
 "sound.underwater_ambience_desc" = "Глубокие океанские звуки для полного погружения";
+
+"sound.calm_melody" = "Нежная мелодия";
+"sound.calm_melody_desc" = "Спокойная мелодия, замедляющая бег мыслей";
+
+"settings.clear_tts_cache_sub" = "Удалить кэш голосовых файлов для освобождения памяти";
+"settings.crisis_lines_sub" = "Телефоны экстренной помощи для вашего региона";

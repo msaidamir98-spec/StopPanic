@@ -24,6 +24,7 @@ struct SettingsView: View {
                     notificationsSection
                     healthSection
                     dataSection
+                    crisisSection
                     Spacer(minLength: 40)
                 }
                 .padding(.horizontal, SP.Layout.padding)
@@ -410,27 +411,15 @@ struct SettingsView: View {
                 HStack(spacing: 10) {
                     Image(systemName: "trash.circle")
                         .foregroundColor(SP.Colors.warning)
-                    Text(String(localized: "settings.clear_tts_cache"))
-                        .font(SP.Typography.subheadline)
-                        .foregroundColor(SP.Colors.textPrimary)
+                    VStack(alignment: .leading, spacing: 2) {
+                        Text(String(localized: "settings.clear_tts_cache"))
+                            .font(SP.Typography.subheadline)
+                            .foregroundColor(SP.Colors.textPrimary)
+                        Text(String(localized: "settings.clear_tts_cache_sub"))
+                            .font(SP.Typography.caption2)
+                            .foregroundColor(SP.Colors.textTertiary)
+                    }
                     Spacer()
-                }
-            }
-            .buttonStyle(.plain)
-
-            NavigationLink {
-                CrisisLineView()
-            } label: {
-                HStack(spacing: 10) {
-                    Image(systemName: "phone.fill")
-                        .foregroundColor(SP.Colors.success)
-                    Text(String(localized: "settings.crisis_lines"))
-                        .font(SP.Typography.subheadline)
-                        .foregroundColor(SP.Colors.textPrimary)
-                    Spacer()
-                    Image(systemName: "chevron.right")
-                        .font(.system(size: 12))
-                        .foregroundColor(SP.Colors.textTertiary)
                 }
             }
             .buttonStyle(.plain)
@@ -438,6 +427,34 @@ struct SettingsView: View {
         .spGlassCard(cornerRadius: SP.Layout.cornerMedium)
         .opacity(appear ? 1 : 0)
         .animation(SP.Anim.spring.delay(0.35), value: appear)
+    }
+
+    // MARK: - Crisis Lines (separate from Data)
+
+    private var crisisSection: some View {
+        NavigationLink {
+            CrisisLineView()
+        } label: {
+            HStack(spacing: 12) {
+                sectionIcon(icon: "phone.fill", color: SP.Colors.success)
+                VStack(alignment: .leading, spacing: 2) {
+                    Text(String(localized: "settings.crisis_lines"))
+                        .font(SP.Typography.callout)
+                        .foregroundColor(SP.Colors.textPrimary)
+                    Text(String(localized: "settings.crisis_lines_sub"))
+                        .font(SP.Typography.caption2)
+                        .foregroundColor(SP.Colors.textTertiary)
+                }
+                Spacer()
+                Image(systemName: "chevron.right")
+                    .font(.system(size: 12))
+                    .foregroundColor(SP.Colors.textTertiary)
+            }
+            .spGlassCard(cornerRadius: SP.Layout.cornerSmall)
+        }
+        .buttonStyle(.plain)
+        .opacity(appear ? 1 : 0)
+        .animation(SP.Anim.spring.delay(0.4), value: appear)
     }
 
     // MARK: - Helpers

@@ -9,7 +9,7 @@
 /* Begin PBXBuildFile section */
 				AA30000000000001AUDIO /* rain_ambient.m4a in Resources */ = {isa = PBXBuildFile; fileRef = AA20000000000001AUDIO /* rain_ambient.m4a */; };
 				AA30000000000002AUDIO /* forest_calm.m4a in Resources */ = {isa = PBXBuildFile; fileRef = AA20000000000002AUDIO /* forest_calm.m4a */; };
-				AA30000000000003AUDIO /* ocean_waves.m4a in Resources */ = {isa = PBXBuildFile; fileRef = AA20000000000003AUDIO /* ocean_waves.m4a */; };
+				AA30000000000003AUDIO /* calm_melody.m4a in Resources */ = {isa = PBXBuildFile; fileRef = AA20000000000003AUDIO /* calm_melody.m4a */; };
 				AA30000000000004AUDIO /* piano_meditation.m4a in Resources */ = {isa = PBXBuildFile; fileRef = AA20000000000004AUDIO /* piano_meditation.m4a */; };
 				AA30000000000005AUDIO /* flute_meditation.m4a in Resources */ = {isa = PBXBuildFile; fileRef = AA20000000000005AUDIO /* flute_meditation.m4a */; };
 				AA30000000000006AUDIO /* underwater_ambience.m4a in Resources */ = {isa = PBXBuildFile; fileRef = AA20000000000006AUDIO /* underwater_ambience.m4a */; };
@@ -43,7 +43,7 @@
 /* Begin PBXFileReference section */
 				AA20000000000001AUDIO /* rain_ambient.m4a */ = {isa = PBXFileReference; lastKnownFileType = audio.x-m4a; path = rain_ambient.m4a; sourceTree = "<group>"; name = rain_ambient.m4a; };
 				AA20000000000002AUDIO /* forest_calm.m4a */ = {isa = PBXFileReference; lastKnownFileType = audio.x-m4a; path = forest_calm.m4a; sourceTree = "<group>"; name = forest_calm.m4a; };
-				AA20000000000003AUDIO /* ocean_waves.m4a */ = {isa = PBXFileReference; lastKnownFileType = audio.x-m4a; path = ocean_waves.m4a; sourceTree = "<group>"; name = ocean_waves.m4a; };
+				AA20000000000003AUDIO /* calm_melody.m4a */ = {isa = PBXFileReference; lastKnownFileType = audio.x-m4a; path = calm_melody.m4a; sourceTree = "<group>"; name = calm_melody.m4a; };
 				AA20000000000004AUDIO /* piano_meditation.m4a */ = {isa = PBXFileReference; lastKnownFileType = audio.x-m4a; path = piano_meditation.m4a; sourceTree = "<group>"; name = piano_meditation.m4a; };
 				AA20000000000005AUDIO /* flute_meditation.m4a */ = {isa = PBXFileReference; lastKnownFileType = audio.x-m4a; path = flute_meditation.m4a; sourceTree = "<group>"; name = flute_meditation.m4a; };
 				AA20000000000006AUDIO /* underwater_ambience.m4a */ = {isa = PBXFileReference; lastKnownFileType = audio.x-m4a; path = underwater_ambience.m4a; sourceTree = "<group>"; name = underwater_ambience.m4a; };
@@ -129,7 +129,7 @@ AA20000000000000AUDGRP /* Audio */ = {
 					children = (
 						AA20000000000001AUDIO /* rain_ambient.m4a */,
 						AA20000000000002AUDIO /* forest_calm.m4a */,
-						AA20000000000003AUDIO /* ocean_waves.m4a */,
+						AA20000000000003AUDIO /* calm_melody.m4a */,
 						AA20000000000004AUDIO /* piano_meditation.m4a */,
 						AA20000000000005AUDIO /* flute_meditation.m4a */,
 						AA20000000000006AUDIO /* underwater_ambience.m4a */,

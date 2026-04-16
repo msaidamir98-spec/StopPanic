@@ -806,8 +806,6 @@
 "sound.rain_ambient_desc" = "神経系を落ち着かせる優しい雨音";
 "sound.forest_calm" = "森";
 "sound.forest_calm_desc" = "ストレスホルモンを減らす穏やかな森の音";
-"sound.ocean_waves" = "海の波";
-"sound.ocean_waves_desc" = "呼吸を同期させるリズミカルな波";
 "soundscape.sos_hint_title" = "あなたのSOSサウンド";
 "soundscape.sos_hint_body" = "ここで選んだ音はSOSボタンを押すと自動的に再生されます。";
 "soundscape.file_missing" = "バンドルにファイルを追加";
@@ -839,3 +837,9 @@
 
 "sound.underwater_ambience" = "水中世界";
 "sound.underwater_ambience_desc" = "完全なリラクゼーションのための深海サウンド";
+
+"sound.calm_melody" = "穏やかなメロディー";
+"sound.calm_melody_desc" = "心を落ち着かせる穏やかなメロディー";
+
+"settings.clear_tts_cache_sub" = "キャッシュされた音声ファイルを削除";
+"settings.crisis_lines_sub" = "お住まいの地域の緊急通報番号";

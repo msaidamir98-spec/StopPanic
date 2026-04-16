@@ -312,7 +312,7 @@ struct SoundscapeView: View {
         switch track {
         case .rainAmbient:      SP.Colors.calm
         case .forestCalm:       SP.Colors.success
-        case .oceanWaves:       Color.teal
+        case .calmMelody:       SP.Colors.warmth
         case .pianoMeditation:  SP.Colors.accent
         case .fluteMeditation:  Color.indigo
         case .underwaterAmbience: Color.cyan
@@ -453,7 +453,7 @@ struct InlineSoundPicker: View {
         switch track {
         case .rainAmbient:      SP.Colors.calm
         case .forestCalm:       SP.Colors.success
-        case .oceanWaves:       Color.teal
+        case .calmMelody:       SP.Colors.warmth
         case .pianoMeditation:  SP.Colors.accent
         case .fluteMeditation:  Color.indigo
         case .underwaterAmbience: Color.cyan
