@@ -47,7 +47,7 @@ final class AmbientSoundService {
     // MARK: - Sound Track Catalog
 
     /// 6 премиальных треков. Файл в бандле ДОЛЖЕН совпадать с rawValue.
-    /// Пользователь кладёт .mp3 / .wav / .m4a в Resources/Audio/.
+    /// Формат: AAC .m4a (128kbps) в Resources/Audio/.
     enum SoundTrack: String, CaseIterable, Identifiable {
         case rainAmbient       = "rain_ambient"
         case forestCalm        = "forest_calm"
