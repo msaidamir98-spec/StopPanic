@@ -7,6 +7,12 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+				AA30000000000001AUDIO /* rain_ambient.m4a in Resources */ = {isa = PBXBuildFile; fileRef = AA20000000000001AUDIO /* rain_ambient.m4a */; };
+				AA30000000000002AUDIO /* forest_calm.m4a in Resources */ = {isa = PBXBuildFile; fileRef = AA20000000000002AUDIO /* forest_calm.m4a */; };
+				AA30000000000003AUDIO /* ocean_waves.m4a in Resources */ = {isa = PBXBuildFile; fileRef = AA20000000000003AUDIO /* ocean_waves.m4a */; };
+				AA30000000000004AUDIO /* piano_meditation.m4a in Resources */ = {isa = PBXBuildFile; fileRef = AA20000000000004AUDIO /* piano_meditation.m4a */; };
+				AA30000000000005AUDIO /* flute_meditation.m4a in Resources */ = {isa = PBXBuildFile; fileRef = AA20000000000005AUDIO /* flute_meditation.m4a */; };
+				AA30000000000006AUDIO /* underwater_ambience.m4a in Resources */ = {isa = PBXBuildFile; fileRef = AA20000000000006AUDIO /* underwater_ambience.m4a */; };
 		BB10000000000031WIDGTCPY /* StilloWidgetExtension.appex in Embed Foundation Extensions */ = {isa = PBXBuildFile; fileRef = BB10000000000001WIDGTAPP /* StilloWidgetExtension.appex */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
 /* End PBXBuildFile section */
 
@@ -35,6 +41,12 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
+				AA20000000000001AUDIO /* rain_ambient.m4a */ = {isa = PBXFileReference; lastKnownFileType = audio.x-m4a; path = rain_ambient.m4a; sourceTree = "<group>"; name = rain_ambient.m4a; };
+				AA20000000000002AUDIO /* forest_calm.m4a */ = {isa = PBXFileReference; lastKnownFileType = audio.x-m4a; path = forest_calm.m4a; sourceTree = "<group>"; name = forest_calm.m4a; };
+				AA20000000000003AUDIO /* ocean_waves.m4a */ = {isa = PBXFileReference; lastKnownFileType = audio.x-m4a; path = ocean_waves.m4a; sourceTree = "<group>"; name = ocean_waves.m4a; };
+				AA20000000000004AUDIO /* piano_meditation.m4a */ = {isa = PBXFileReference; lastKnownFileType = audio.x-m4a; path = piano_meditation.m4a; sourceTree = "<group>"; name = piano_meditation.m4a; };
+				AA20000000000005AUDIO /* flute_meditation.m4a */ = {isa = PBXFileReference; lastKnownFileType = audio.x-m4a; path = flute_meditation.m4a; sourceTree = "<group>"; name = flute_meditation.m4a; };
+				AA20000000000006AUDIO /* underwater_ambience.m4a */ = {isa = PBXFileReference; lastKnownFileType = audio.x-m4a; path = underwater_ambience.m4a; sourceTree = "<group>"; name = underwater_ambience.m4a; };
 		6647ADFF2EFC144600A1E680 /* Stillo.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; name = Stillo.app; path = "Stillō.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		66BA421D2F8ED77700C0F6D0 /* Stillō.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Stillō.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		BB10000000000001WIDGTAPP /* StilloWidgetExtension.appex */ = {isa = PBXFileReference; explicitFileType = "wrapper.app-extension"; includeInIndex = 0; path = StilloWidgetExtension.appex; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -87,6 +99,7 @@
 			isa = PBXGroup;
 			children = (
 				6647AE012EFC144600A1E680 /* Stillo */,
+						AA20000000000000AUDGRP /* Audio */,
 				BB10000000000010WIDGTGRP /* StilloWidget */,
 				6647AE002EFC144600A1E680 /* Products */,
 				66BA421C2F8ED77700C0F6D0 /* Recovered References */,
@@ -111,6 +124,20 @@
 			name = "Recovered References";
 			sourceTree = "<group>";
 		};
+AA20000000000000AUDGRP /* Audio */ = {
+					isa = PBXGroup;
+					children = (
+						AA20000000000001AUDIO /* rain_ambient.m4a */,
+						AA20000000000002AUDIO /* forest_calm.m4a */,
+						AA20000000000003AUDIO /* ocean_waves.m4a */,
+						AA20000000000004AUDIO /* piano_meditation.m4a */,
+						AA20000000000005AUDIO /* flute_meditation.m4a */,
+						AA20000000000006AUDIO /* underwater_ambience.m4a */,
+					);
+					name = Audio;
+					path = Stillo/Resources/Audio;
+					sourceTree = "<group>";
+				};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
@@ -130,6 +157,7 @@
 			);
 			fileSystemSynchronizedGroups = (
 				6647AE012EFC144600A1E680 /* Stillo */,
+						AA20000000000000AUDGRP /* Audio */,
 			);
 			name = Stillo;
 			packageProductDependencies = (

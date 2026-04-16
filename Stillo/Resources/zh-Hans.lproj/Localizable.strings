@@ -836,3 +836,6 @@
 "sound.flute_meditation" = "疗愈长笛";
 "sound.flute_meditation_desc" = "加深呼吸的冥想长笛";
 "soundscape.background_sound" = "背景音乐";
+
+"sound.underwater_ambience" = "水下世界";
+"sound.underwater_ambience_desc" = "深海声音，完全沉浸放松";

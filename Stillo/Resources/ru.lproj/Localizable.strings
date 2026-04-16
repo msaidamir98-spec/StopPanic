@@ -869,3 +869,6 @@
 "sound.flute_meditation" = "Целительная флейта";
 "sound.flute_meditation_desc" = "Медитативная флейта для глубокого дыхания";
 "soundscape.background_sound" = "Фоновый звук";
+
+"sound.underwater_ambience" = "Подводный мир";
+"sound.underwater_ambience_desc" = "Глубокие океанские звуки для полного погружения";

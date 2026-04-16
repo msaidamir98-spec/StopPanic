@@ -836,3 +836,6 @@
 "sound.flute_meditation" = "Flauta curativa";
 "sound.flute_meditation_desc" = "Flauta meditativa que aprofunda a respiração";
 "soundscape.background_sound" = "Som de fundo";
+
+"sound.underwater_ambience" = "Mundo subaquático";
+"sound.underwater_ambience_desc" = "Sons oceânicos profundos para relaxamento total";

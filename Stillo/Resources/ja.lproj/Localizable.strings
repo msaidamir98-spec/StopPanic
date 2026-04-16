@@ -836,3 +836,6 @@
 "sound.flute_meditation" = "癒しのフルート";
 "sound.flute_meditation_desc" = "呼吸を深める瞑想的なフルート";
 "soundscape.background_sound" = "BGM";
+
+"sound.underwater_ambience" = "水中世界";
+"sound.underwater_ambience_desc" = "完全なリラクゼーションのための深海サウンド";

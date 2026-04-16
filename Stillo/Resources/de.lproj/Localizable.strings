@@ -836,3 +836,6 @@
 "sound.flute_meditation" = "Heilende Flöte";
 "sound.flute_meditation_desc" = "Meditative Flöte für tiefes Atmen";
 "soundscape.background_sound" = "Hintergrundklang";
+
+"sound.underwater_ambience" = "Unterwasserwelt";
+"sound.underwater_ambience_desc" = "Tiefe Ozeanklänge für völlige Entspannung";

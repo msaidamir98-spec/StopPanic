@@ -836,3 +836,6 @@
 "sound.flute_meditation" = "Flûte guérisseuse";
 "sound.flute_meditation_desc" = "Flûte méditative pour approfondir la respiration";
 "soundscape.background_sound" = "Son d'ambiance";
+
+"sound.underwater_ambience" = "Monde sous-marin";
+"sound.underwater_ambience_desc" = "Sons océaniques profonds pour une immersion totale";
