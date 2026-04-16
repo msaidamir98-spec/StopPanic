@@ -137,7 +137,7 @@ final class PremiumManager {
                 if let transaction = try? await self?.checkVerified(result) {
                     let isActive = transaction.productID == monthlyID ||
                         transaction.productID == yearlyID
-                    await MainActor.run {
+                    await MainActor.run { [weak self] in
                         self?.isPremium = isActive
                         self?.purchasePending = false
                     }

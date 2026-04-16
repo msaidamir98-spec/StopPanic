@@ -454,16 +454,16 @@ struct SOSFlowView: View {
                     breathPhase = .inhale
                     breathingCycles += 1
                     SP.Haptic.soft()
-                    coordinator.audioGuide.speakBreathPhase(.inhale)
+                    Task { @MainActor in coordinator.audioGuide.speakBreathPhase(.inhale) }
                     withAnimation(.easeInOut(duration: 4)) { breathScale = 1.0 }
                 case 1:
                     breathPhase = .hold
-                    coordinator.audioGuide.speakBreathPhase(.hold)
+                    Task { @MainActor in coordinator.audioGuide.speakBreathPhase(.hold) }
                     withAnimation(.easeInOut(duration: 0.3)) { breathScale = 0.95 }
                 case 2:
                     breathPhase = .exhale
                     SP.Haptic.soft()
-                    coordinator.audioGuide.speakBreathPhase(.exhale)
+                    Task { @MainActor in coordinator.audioGuide.speakBreathPhase(.exhale) }
                     withAnimation(.easeInOut(duration: 8)) { breathScale = 0.6 }
                 default: break
                 }

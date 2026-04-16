@@ -614,7 +614,7 @@ extension View {
 /// В light-режиме .ultraThinMaterial показывает белый фон.
 /// Этот ShapeStyle автоматически заменяет его тёплым fill.
 @MainActor
-struct WarmGlass: ShapeStyle {
+struct WarmGlass: @preconcurrency ShapeStyle {
     func resolve(in environment: EnvironmentValues) -> some ShapeStyle {
         if ThemeManager.shared.isLight {
             Color(hex: "EDE5D8").opacity(0.7)

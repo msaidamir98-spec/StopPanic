@@ -61,8 +61,8 @@ final class PersistenceController {
                 forName: .NSPersistentStoreRemoteChange,
                 object: container.persistentStoreCoordinator,
                 queue: .main
-            ) { _ in
-                Self.log.info("Received remote CloudKit change")
+            ) { [log = Self.log] _ in
+                log.info("Received remote CloudKit change")
             }
         }
     }
