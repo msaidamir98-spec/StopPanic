@@ -90,6 +90,8 @@
 "onb_name_subtitle" = "Para podermos te chamar pelo nome";
 "onb_name_placeholder" = "Seu nome";
 "onb_skip" = "Pular";
+"onb_skip_to_sos" = "Ajuda";
+"onb_skip_to_sos_a11y" = "Pular introdução e iniciar ajuda SOS";
 "onb_next" = "Próximo →";
 "onb_exp_title" = "Conte-nos sobre você";
 "onb_exp_subtitle" = "Isso ajuda a personalizar o app";
@@ -188,7 +190,12 @@
 "paywall_feature_heart" = "Alertas cardíacos inteligentes";
 "paywall_yearly" = "Anual";
 "paywall_monthly" = "Mensal";
-"paywall_save_50" = "Economize 50%";
+"paywall_lifetime" = "Vitalício";
+"paywall_lifetime_badge" = "Pagamento único";
+"paywall_lifetime_subtitle" = "Pagamento único · seu para sempre";
+"paywall_save_58" = "Economize 58%";
+"paywall_free_trial_badge" = "7 dias grátis";
+"paywall_intro_monthly" = "%@ no primeiro mês, depois %@";
 "paywall_loading_error" = "Falha ao carregar preços";
 "paywall_restore" = "Restaurar compras";
 "paywall_legal" = "A assinatura é renovada automaticamente. Cancele a qualquer momento nas configurações do Apple ID.";
@@ -278,6 +285,7 @@
 "sos.affirmation_body" = "A ansiedade é um alarme falso.\nSeu corpo reagiu a um perigo inexistente.\nVocê está seguro.";
 "sos.notif_title %@" = "🆘 SOS — %@";
 "sos.notif_body %@" = "Crise de pânico. Ligar: %@";
+"sos.notif_body_no_phone" = "Crise de pânico. Por favor, entre em contato.";
 "sos.crisis_notif_title" = "🆘 Crise de Pânico";
 "sos.crisis_notif_body %@" = "Linha de crise: %@";
 "sos.diary_note %@ %lld" = "Sessão SOS, duração: %1$@, ciclos: %2$lld";
@@ -793,6 +801,8 @@
 "settings.voice_phrases" = "phrases";
 "settings.voice_volume" = "Voice Volume";
 "settings.test_voice" = "Test Voice";
+"settings.voice_premium_tip_title" = "Voz mais natural";
+"settings.voice_premium_tip_body" = "Para uma voz mais calorosa offline: abra Ajustes do iOS → Acessibilidade → Conteúdo Falado → Vozes → escolha seu idioma e baixe uma voz Premium. Stillō usará automaticamente.";
 "settings.voice_source_bank" = "Premium pre-recorded voice";
 "settings.voice_source_openai" = "OpenAI neural voice (online)";
 "settings.voice_source_system" = "System voice (offline fallback)";
@@ -843,3 +853,29 @@
 
 "settings.clear_tts_cache_sub" = "Remover arquivos de voz em cache";
 "settings.crisis_lines_sub" = "Linhas de emergência para sua região";
+/* Settings — Voice/TTS (added 2026-04-18) */
+"settings.openai_status_no_key" = "Chave API não configurada";
+"settings.openai_status_ready" = "Conectado — voz pronta";
+"settings.voice_no_phrases" = "Nenhuma frase pré-gravada disponível";
+"settings.voice_openai_need_key" = "Requer chave API";
+"settings.voice_openai_ready" = "Chave API configurada";
+"settings.voice_source" = "Fonte de voz";
+"settings.voice_system_hint" = "Escolha entre as vozes do iOS";
+
+/* Voice — Cognitive reframing phrases (added 2026-04-18) */
+"voice.affirm_control" = "Você está no controle. Sua mente está clara. Seu corpo está calmo.";
+"voice.affirm_strong" = "Você é mais forte do que pensa. Você já superou isso antes.";
+"voice.body_relax" = "Relaxe o corpo. Deixe a tensão sair com cada respiração.";
+"voice.cold_water" = "Segure algo frio — um copo, gelo, água gelada. Foque na sensação.";
+"voice.configure_in_settings" = "Configurar voz em Ajustes";
+"voice.count_backward" = "Conte de trás pra frente a partir de dez. Dez, nove, oito…";
+"voice.feet_on_floor" = "Sinta seus pés no chão. Você está firme. Você está aqui.";
+"voice.gratitude_one" = "Pense em algo pelo qual você é grato agora.";
+"voice.mindful_notice" = "Observe seus pensamentos sem julgá-los. Deixe-os passar como nuvens.";
+"voice.name_objects" = "Nomeie 3 objetos ao seu redor. Descreva a cor e a forma deles.";
+"voice.not_in_danger" = "Você não está em perigo. Seu corpo reage, mas você está seguro.";
+"voice.progressive_relax" = "Tensione os ombros, segure 5 segundos, depois solte. Sinta o calor.";
+"voice.safe_place" = "Imagine um lugar seguro. Você está protegido. Nada pode te machucar.";
+"voice.slow_down" = "Vá mais devagar. Não há pressa. Aproveite seu tempo.";
+"voice.tense_fists" = "Feche o punho, aperte forte, segure 5 segundos, depois solte.";
+"voice.this_will_pass" = "Isso vai passar. Sempre passa. Apenas respire.";

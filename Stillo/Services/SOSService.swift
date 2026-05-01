@@ -45,13 +45,21 @@ final class SOSService: ObservableObject {
         // Если разрешения нет, уведомления просто не покажутся,
         // но SOS-экран всё равно отработает (критичный UX).
 
-        // Send local notification for each SOS contact
+        // Send local notification for each SOS contact.
+        // ВАЖНО: телефонный номер в body — это PII на lock-screen. Apple
+        // трактует номера как sensitive (healthcare-fitness категория особенно
+        // строга). В body оставляем только подсказку о действии; номер уже
+        // лежит в SOSContact и доступен в self-уведомлении пользователя
+        // через UI-tap (deep-link в SOS-экран). Также убираем
+        // .timeSensitive, потому что для него нужен entitlement
+        // com.apple.developer.usernotifications.time-sensitive, которого
+        // нет в Stillo.entitlements — иначе Apple Reviewer flag-нет.
         for contact in contacts where contact.notifyOnPanic {
             let content = UNMutableNotificationContent()
             content.title = String(localized: "sos.notif_title \(contact.name)")
-            content.body = String(localized: "sos.notif_body \(contact.phone)")
+            content.body = String(localized: "sos.notif_body_no_phone")
             content.sound = .default
-            content.interruptionLevel = .timeSensitive
+            content.interruptionLevel = .active
             let request = UNNotificationRequest(
                 identifier: "sos_\(contact.id.uuidString)",
                 content: content,

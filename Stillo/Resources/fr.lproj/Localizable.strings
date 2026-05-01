@@ -90,6 +90,8 @@
 "onb_name_subtitle" = "Pour que nous puissions t'appeler par ton prénom";
 "onb_name_placeholder" = "Ton prénom";
 "onb_skip" = "Passer";
+"onb_skip_to_sos" = "Aide";
+"onb_skip_to_sos_a11y" = "Passer l'intro et démarrer l'aide SOS";
 "onb_next" = "Suivant →";
 "onb_exp_title" = "Parle-nous de toi";
 "onb_exp_subtitle" = "Cela aide à personnaliser l'application";
@@ -188,7 +190,12 @@
 "paywall_feature_heart" = "Alertes cardiaques intelligentes";
 "paywall_yearly" = "Annuel";
 "paywall_monthly" = "Mensuel";
-"paywall_save_50" = "Économisez 50 %";
+"paywall_lifetime" = "À vie";
+"paywall_lifetime_badge" = "Paiement unique";
+"paywall_lifetime_subtitle" = "Paiement unique · à toi pour toujours";
+"paywall_save_58" = "Économisez 58 %";
+"paywall_free_trial_badge" = "7 jours gratuits";
+"paywall_intro_monthly" = "%@ le premier mois, puis %@";
 "paywall_loading_error" = "Échec du chargement des prix";
 "paywall_restore" = "Restaurer les achats";
 "paywall_legal" = "L'abonnement se renouvelle automatiquement. Annulation possible à tout moment dans les réglages Apple ID.";
@@ -278,6 +285,7 @@
 "sos.affirmation_body" = "L'anxiété est une fausse alarme.\nTon corps a réagi à un danger inexistant.\nTu es en sécurité.";
 "sos.notif_title %@" = "🆘 SOS — %@";
 "sos.notif_body %@" = "Crise de panique. Appeler : %@";
+"sos.notif_body_no_phone" = "Crise de panique. Veuillez prendre contact.";
 "sos.crisis_notif_title" = "🆘 Crise de Panique";
 "sos.crisis_notif_body %@" = "Ligne de crise : %@";
 "sos.diary_note %@ %lld" = "Session SOS, durée : %1$@, cycles : %2$lld";
@@ -793,6 +801,8 @@
 "settings.voice_phrases" = "phrases";
 "settings.voice_volume" = "Voice Volume";
 "settings.test_voice" = "Test Voice";
+"settings.voice_premium_tip_title" = "Voix plus naturelle";
+"settings.voice_premium_tip_body" = "Pour une voix plus chaleureuse hors ligne : ouvrez Réglages iOS → Accessibilité → Contenu énoncé → Voix → choisissez votre langue et téléchargez une voix Premium. Stillō l'utilisera automatiquement.";
 "settings.voice_source_bank" = "Premium pre-recorded voice";
 "settings.voice_source_openai" = "OpenAI neural voice (online)";
 "settings.voice_source_system" = "System voice (offline fallback)";
@@ -843,3 +853,29 @@
 
 "settings.clear_tts_cache_sub" = "Supprimer les fichiers vocaux en cache";
 "settings.crisis_lines_sub" = "Numéros d'urgence pour votre région";
+/* Settings — Voice/TTS (added 2026-04-18) */
+"settings.openai_status_no_key" = "Clé API non configurée";
+"settings.openai_status_ready" = "Connecté — voix prête";
+"settings.voice_no_phrases" = "Aucune phrase préenregistrée disponible";
+"settings.voice_openai_need_key" = "Clé API requise";
+"settings.voice_openai_ready" = "Clé API configurée";
+"settings.voice_source" = "Source vocale";
+"settings.voice_system_hint" = "Choisir parmi les voix iOS";
+
+/* Voice — Cognitive reframing phrases (added 2026-04-18) */
+"voice.affirm_control" = "Tu as le contrôle. Ton esprit est clair. Ton corps est calme.";
+"voice.affirm_strong" = "Tu es plus fort que tu ne le penses. Tu as déjà traversé cela.";
+"voice.body_relax" = "Détends ton corps. Laisse la tension s'en aller à chaque respiration.";
+"voice.cold_water" = "Tiens quelque chose de froid — un verre, de la glace, de l'eau froide. Concentre-toi sur la sensation.";
+"voice.configure_in_settings" = "Configurer la voix dans Réglages";
+"voice.count_backward" = "Compte à rebours à partir de dix. Dix, neuf, huit…";
+"voice.feet_on_floor" = "Sens tes pieds sur le sol. Tu es ancré. Tu es ici.";
+"voice.gratitude_one" = "Pense à une chose pour laquelle tu es reconnaissant maintenant.";
+"voice.mindful_notice" = "Remarque tes pensées sans les juger. Laisse-les passer comme des nuages.";
+"voice.name_objects" = "Nomme 3 objets autour de toi. Décris leur couleur et leur forme.";
+"voice.not_in_danger" = "Tu n'es pas en danger. Ton corps réagit, mais tu es en sécurité.";
+"voice.progressive_relax" = "Contracte les épaules, tiens 5 secondes, puis relâche. Sens la chaleur.";
+"voice.safe_place" = "Imagine un endroit sûr. Tu es protégé. Rien ne peut te blesser.";
+"voice.slow_down" = "Ralentis. Il n'y a pas d'urgence. Prends ton temps.";
+"voice.tense_fists" = "Serre le poing, tiens fort 5 secondes, puis relâche.";
+"voice.this_will_pass" = "Cela passera. Cela passe toujours. Respire simplement.";

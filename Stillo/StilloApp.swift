@@ -1,10 +1,13 @@
 import BackgroundTasks
+import os.log
 import SwiftUI
 import UserNotifications
 
 @main
 struct StilloApp: App {
     // MARK: Internal
+
+    private static let log = Logger(subsystem: "MSK-PRODUKT.StopPanic", category: "StilloApp")
 
     @Environment(\.scenePhase)
     var scenePhase
@@ -14,6 +17,7 @@ struct StilloApp: App {
             ContentView()
                 .environment(coordinator)
                 .preferredColorScheme(coordinator.themeManager.preferredColorScheme)
+                .dynamicTypeSize(.xSmall ... .accessibility4)
                 .onReceive(NotificationCenter.default.publisher(for: .triggerSOSFromIntent)) { _ in
                     coordinator.triggerSOS()
                 }
@@ -67,8 +71,16 @@ struct StilloApp: App {
                 await coordinator.premiumManager.checkSubscriptionStatus()
             }
         case .inactive:
+            // НЕ глушим звук на .inactive: фаза срабатывает на pull Control Center,
+            // app-switcher, sheet-анимациях и кратковременных оверлеях. Глушение
+            // тут разрушает SOS-флоу: пользователь в панике опускает Control
+            // Center и теряет голосового гида и ambient.
+            //
+            // Реальные прерывания (звонок, Siri, alarm) обрабатывает
+            // AVAudioSession.interruptionNotification на уровне audio-сервисов.
             break
         case .background:
+            coordinator.audio.silenceAll()
             saveAppState()
             scheduleAppRefresh()
         @unknown default:
@@ -87,7 +99,7 @@ struct StilloApp: App {
         do {
             try BGTaskScheduler.shared.submit(request)
         } catch {
-            print("[Stillo] Failed to schedule background refresh: \(error)")
+            Self.log.error("Failed to schedule background refresh: \(error.localizedDescription, privacy: .public)")
         }
     }
 

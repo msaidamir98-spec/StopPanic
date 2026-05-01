@@ -90,6 +90,8 @@
 "onb_name_subtitle" = "お名前でお呼びするために";
 "onb_name_placeholder" = "あなたの名前";
 "onb_skip" = "スキップ";
+"onb_skip_to_sos" = "ヘルプ";
+"onb_skip_to_sos_a11y" = "オンボーディングをスキップしてSOSを開始";
 "onb_next" = "次へ →";
 "onb_exp_title" = "あなたについて教えてください";
 "onb_exp_subtitle" = "アプリをパーソナライズするために";
@@ -188,7 +190,12 @@
 "paywall_feature_heart" = "スマート心拍アラート";
 "paywall_yearly" = "年額";
 "paywall_monthly" = "月額";
-"paywall_save_50" = "50%お得";
+"paywall_lifetime" = "永久版";
+"paywall_lifetime_badge" = "一度だけ";
+"paywall_lifetime_subtitle" = "一回払い · ずっとあなたのもの";
+"paywall_save_58" = "58%お得";
+"paywall_free_trial_badge" = "7日間無料";
+"paywall_intro_monthly" = "初月%@、以後%@";
 "paywall_loading_error" = "価格の読み込みに失敗しました";
 "paywall_restore" = "購入を復元";
 "paywall_legal" = "サブスクリプションは自動更新されます。Apple IDの設定からいつでも解約できます。";
@@ -278,6 +285,7 @@
 "sos.affirmation_body" = "不安は誤報です。\nあなたの体は存在しない危険に反応しました。\nあなたは安全です。";
 "sos.notif_title %@" = "🆘 SOS — %@";
 "sos.notif_body %@" = "不安エピソード。電話: %@";
+"sos.notif_body_no_phone" = "不安エピソード。連絡してください。";
 "sos.crisis_notif_title" = "🆘 不安エピソード";
 "sos.crisis_notif_body %@" = "相談窓口: %@";
 "sos.diary_note %@ %lld" = "SOSセッション、所要時間: %1$@、サイクル: %2$lld";
@@ -793,6 +801,8 @@
 "settings.voice_phrases" = "phrases";
 "settings.voice_volume" = "Voice Volume";
 "settings.test_voice" = "Test Voice";
+"settings.voice_premium_tip_title" = "より自然な声";
+"settings.voice_premium_tip_body" = "オフラインで温かみのある声にするには：iOS 設定 → アクセシビリティ → 読み上げコンテンツ → 声 → 言語を選び、Premium の声をダウンロード。Stillō が自動的に使用します。";
 "settings.voice_source_bank" = "Premium pre-recorded voice";
 "settings.voice_source_openai" = "OpenAI neural voice (online)";
 "settings.voice_source_system" = "System voice (offline fallback)";
@@ -843,3 +853,29 @@
 
 "settings.clear_tts_cache_sub" = "キャッシュされた音声ファイルを削除";
 "settings.crisis_lines_sub" = "お住まいの地域の緊急通報番号";
+/* Settings — Voice/TTS (added 2026-04-18) */
+"settings.openai_status_no_key" = "APIキーが設定されていません";
+"settings.openai_status_ready" = "接続済み — 音声準備完了";
+"settings.voice_no_phrases" = "録音済みフレーズがありません";
+"settings.voice_openai_need_key" = "APIキーが必要です";
+"settings.voice_openai_ready" = "APIキー設定済み";
+"settings.voice_source" = "音声ソース";
+"settings.voice_system_hint" = "iOSの音声から選択";
+
+/* Voice — Cognitive reframing phrases (added 2026-04-18) */
+"voice.affirm_control" = "あなたはコントロールしています。心は澄んでいます。身体は穏やかです。";
+"voice.affirm_strong" = "あなたは思っているより強い。これは以前にも乗り越えました。";
+"voice.body_relax" = "身体を緩めてください。呼吸とともに緊張を手放しましょう。";
+"voice.cold_water" = "冷たいものを持ってください — コップ、氷、冷水。感覚に集中しましょう。";
+"voice.configure_in_settings" = "設定で音声を構成";
+"voice.count_backward" = "10から逆に数えてください。10、9、8…";
+"voice.feet_on_floor" = "足の裏を床に感じてください。あなたは地に足がついています。ここにいます。";
+"voice.gratitude_one" = "いま感謝していることを一つ思い浮かべてください。";
+"voice.mindful_notice" = "思考を判断せず観察してください。雲のように過ぎ去らせましょう。";
+"voice.name_objects" = "周りの物を3つ挙げてください。色と形を描写しましょう。";
+"voice.not_in_danger" = "危険はありません。身体は反応していますが、あなたは安全です。";
+"voice.progressive_relax" = "肩に力を入れ、5秒間保ち、そして緩めてください。温かさを感じましょう。";
+"voice.safe_place" = "安全な場所を想像してください。あなたは守られています。何もあなたを傷つけません。";
+"voice.slow_down" = "ゆっくりと。急ぐ必要はありません。時間をかけてください。";
+"voice.tense_fists" = "拳を握り、強く5秒間保ち、そして緩めてください。";
+"voice.this_will_pass" = "これは過ぎ去ります。いつもそうです。ただ呼吸してください。";
