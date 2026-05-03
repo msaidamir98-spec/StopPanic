@@ -26,8 +26,17 @@ final class AppCoordinator {
     let reviewService = ReviewService.shared
     let voiceBank = VoiceBankService()
     let audioGuide = AudioGuideService()
-    let ttsService = OpenAITTSService()
     let ambientSound = AmbientSoundService()
+
+    /// Фасад над 3 audio-сервисами. Views должны предпочитать его прямому доступу.
+    /// `@ObservationIgnored` нужен, т.к. `@Observable` не поддерживает `lazy`;
+    /// обсервация состояния аудио идёт через вложенные сервисы (ambient, guide, …).
+    @ObservationIgnored
+    lazy var audio: AudioController = AudioController(
+        ambient: ambientSound,
+        guide: audioGuide,
+        bank: voiceBank
+    )
 
     // MARK: - Navigation State
 
@@ -36,14 +45,12 @@ final class AppCoordinator {
     var showBreathingSheet: Bool = false
     var showPaywall: Bool = false
 
-    // Wire up dependencies: VoiceBank + TTS → AudioGuide, Ambient → all voice services
+    // Wire up dependencies: VoiceBank → AudioGuide, Ambient → all voice services
     func bootstrap() {
         voiceBank.warmUp()
         voiceBank.ambientSound = ambientSound
         audioGuide.voiceBank = voiceBank
-        audioGuide.ttsService = ttsService
         audioGuide.ambientSound = ambientSound
-        ttsService.ambientSound = ambientSound
         audioGuide.configureSpeechDelegate()
     }
 
@@ -101,8 +108,8 @@ final class AppCoordinator {
         sosService.activateSOS()
         achievementService.updateProgress(id: "first_breath")
 
-        // Auto-play the user's pre-selected calming sound
-        ambientSound.playSelectedTrack()
+        // Facade гарантирует: stopPreview + cancel crossfade + play currentTrack.
+        audio.activateSOS()
     }
 
     func completedSession() {
@@ -110,6 +117,10 @@ final class AppCoordinator {
         achievementService.updateProgress(id: "first_breath")
         streakService.recordActivity()
         reviewService.trackSessionCompleted()
+        // 2026-05-03 (День 3): sliding 3-day reminder — после каждой сессии
+        // сбрасываем таймер. Юзер активный — никогда не увидит уведомление.
+        // Юзер ушёл на 3+ дня — мягкое .passive напоминание.
+        notificationService.rescheduleAbsenceReminder()
         SP.Haptic.success()
     }
 
