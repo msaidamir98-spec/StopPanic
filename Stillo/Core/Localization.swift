@@ -102,6 +102,64 @@ enum L10n {
         static let crisisLine = String(localized: "profile.crisisLine", defaultValue: "Телефон доверия")
     }
 
+    // MARK: - Plural
+
+    /// Корректные формы единиц измерения для значений-счётчиков.
+    /// В русском нужны 3 формы (1 запись / 2 записи / 5 записей);
+    /// в большинстве других языков — 2 (1 record / N records).
+    /// На iOS 16+ предпочтительно использовать `Localizable.stringsdict`,
+    /// здесь даём программный fallback, чтобы работало без доп. ресурсов.
+    enum Plural {
+        private static var lang: String {
+            Locale.current.language.languageCode?.identifier ?? "en"
+        }
+
+        private static func ru(one: String, few: String, many: String, count: Int) -> String {
+            let mod10 = abs(count) % 10
+            let mod100 = abs(count) % 100
+            if (11 ... 14).contains(mod100) { return many }
+            if mod10 == 1 { return one }
+            if (2 ... 4).contains(mod10) { return few }
+            return many
+        }
+
+        /// Метка-единица для счётчика записей дневника.
+        static func records(_ count: Int) -> String {
+            switch lang {
+            case "ru":
+                return ru(one: "запись", few: "записи", many: "записей", count: count)
+            case "en":
+                return count == 1 ? "entry" : "entries"
+            default:
+                return Profile.entries.lowercased()
+            }
+        }
+
+        /// Метка-единица для счётчика сессий (SOS / дыхание).
+        static func sessions(_ count: Int) -> String {
+            switch lang {
+            case "ru":
+                return ru(one: "сессия", few: "сессии", many: "сессий", count: count)
+            case "en":
+                return count == 1 ? "session" : "sessions"
+            default:
+                return Profile.sessions.lowercased()
+            }
+        }
+
+        /// Метка-единица для счётчика минут дыхания.
+        static func minutes(_ count: Int) -> String {
+            switch lang {
+            case "ru":
+                return ru(one: "минута", few: "минуты", many: "минут", count: count)
+            case "en":
+                return count == 1 ? "minute" : "minutes"
+            default:
+                return Profile.breathingMin
+            }
+        }
+    }
+
     // MARK: - Onboarding
 
     enum Onboarding {

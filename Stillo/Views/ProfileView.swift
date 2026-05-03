@@ -23,7 +23,7 @@ struct ProfileView: View {
                             .fill(SP.Colors.accent.opacity(0.15))
                             .frame(width: 100, height: 100)
                         Text(avatarEmoji)
-                            .font(.system(size: 44))
+                            .font(.system(.largeTitle))
                     }
                     .opacity(appear ? 1 : 0)
                     .scaleEffect(appear ? 1 : 0.7)
@@ -114,17 +114,17 @@ struct ProfileView: View {
     private var statsSection: some View {
         HStack(spacing: 12) {
             statCard(
-                title: String(localized: "profile.entries"),
+                title: L10n.Plural.records(coordinator.diaryService.diaryEpisodes.count).capitalized,
                 value: "\(coordinator.diaryService.diaryEpisodes.count)",
                 color: SP.Colors.accent
             )
             statCard(
-                title: String(localized: "profile.sessions"),
+                title: L10n.Plural.sessions(coordinator.sessionsCompleted).capitalized,
                 value: "\(coordinator.sessionsCompleted)",
                 color: SP.Colors.warmth
             )
             statCard(
-                title: String(localized: "profile.breath_min"),
+                title: L10n.Plural.minutes(coordinator.totalBreathingMinutes),
                 value: "\(coordinator.totalBreathingMinutes)",
                 color: SP.Colors.calm
             )

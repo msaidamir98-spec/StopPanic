@@ -137,13 +137,15 @@ struct ProfileHubView: View {
 
     private var statsOverview: some View {
         HStack(spacing: 12) {
-            statTile("📝", coordinator.diaryService.diaryEpisodes.count, String(localized: "profile.entries"))
-            statTile("🧘", coordinator.sessionsCompleted, String(localized: "profile.sessions"))
-            statTile("🌬️", coordinator.totalBreathingMinutes, String(localized: "profile.breathingMin"))
-            statTile(
-                "🏆", coordinator.achievementService.achievements.filter(\.isUnlocked).count,
-                String(localized: "profile.awards")
-            )
+            statTile("📝",
+                     coordinator.diaryService.diaryEpisodes.count,
+                     L10n.Plural.records(coordinator.diaryService.diaryEpisodes.count).capitalized)
+            statTile("🧘",
+                     coordinator.sessionsCompleted,
+                     L10n.Plural.sessions(coordinator.sessionsCompleted).capitalized)
+            statTile("🌬️",
+                     coordinator.totalBreathingMinutes,
+                     L10n.Plural.minutes(coordinator.totalBreathingMinutes))
         }
         .opacity(appear ? 1 : 0)
         .offset(y: appear ? 0 : 15)
@@ -362,7 +364,6 @@ struct ProfileHubView: View {
     private func voiceSourceText(_ source: AudioGuideService.VoiceSource) -> String {
         switch source {
         case .voiceBank: String(localized: "settings.voice_source_bank")
-        case .openAI: String(localized: "settings.voice_source_openai")
         case .system: String(localized: "settings.voice_source_system")
         }
     }

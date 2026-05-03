@@ -72,7 +72,7 @@ struct SplashScreenView: View {
 
                     // Shield icon
                     Image(systemName: "hand.raised.fill")
-                        .font(.system(size: 32, weight: .bold))
+                        .font(.system(.title2).weight(.bold))
                         .foregroundColor(SP.Colors.textOnAccent)
                         .shadow(color: .black.opacity(0.2), radius: 4, y: 2)
                 }
@@ -81,15 +81,20 @@ struct SplashScreenView: View {
 
                 VStack(spacing: 6) {
                     Text("Stillō")
-                        .font(.system(size: 32, weight: .heavy, design: .rounded))
+                        .font(.system(.title, design: .rounded).weight(.heavy))
                         .foregroundColor(SP.Colors.textPrimary)
 
                     Text(String(localized: "splash.tagline"))
-                        .font(.system(size: 15, weight: .medium, design: .rounded))
+                        .font(.system(.subheadline, design: .rounded).weight(.medium))
                         .foregroundColor(SP.Colors.textTertiary)
                 }
                 .opacity(textOpacity)
             }
+        }
+        .contentShape(Rectangle())
+        .onTapGesture {
+            // Tap-to-skip — пользователь в панике не должен ждать.
+            dismiss()
         }
         .onAppear {
             withAnimation(.spring(response: 0.6, dampingFraction: 0.7)) {
@@ -107,15 +112,15 @@ struct SplashScreenView: View {
                 particlesVisible = true
             }
 
-            // Auto-dismiss after 1.5s
-            DispatchQueue.main.asyncAfter(deadline: .now() + 1.5) {
-                withAnimation(.easeIn(duration: 0.3)) {
-                    logoOpacity = 0
-                    textOpacity = 0
-                    ringOpacity = 0
-                }
-                DispatchQueue.main.asyncAfter(deadline: .now() + 0.35) {
-                    onFinished()
+            // Auto-dismiss через detached-таск. Раньше использовался
+            // `DispatchQueue.main.asyncAfter`, который вис, если main
+            // thread занят Core Data migration или iCloud entitlement
+            // probe (см. PersistenceController). Detached-приоритет
+            // userInitiated отделяет таймер от main runloop.
+            Task.detached(priority: .userInitiated) {
+                try? await Task.sleep(nanoseconds: 1_500_000_000)
+                await MainActor.run {
+                    dismiss()
                 }
             }
         }
@@ -135,4 +140,19 @@ struct SplashScreenView: View {
     private var ringOpacity: Double = 0
     @State
     private var particlesVisible = false
+    @State
+    private var didDismiss = false
+
+    private func dismiss() {
+        guard !didDismiss else { return }
+        didDismiss = true
+        withAnimation(.easeIn(duration: 0.3)) {
+            logoOpacity = 0
+            textOpacity = 0
+            ringOpacity = 0
+        }
+        DispatchQueue.main.asyncAfter(deadline: .now() + 0.35) {
+            onFinished()
+        }
+    }
 }

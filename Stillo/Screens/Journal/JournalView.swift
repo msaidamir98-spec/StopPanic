@@ -76,7 +76,7 @@ struct JournalView: View {
                 Text(String(localized: "journal.title"))
                     .font(SP.Typography.title1)
                     .foregroundColor(SP.Colors.textPrimary)
-                Text("\(coordinator.diaryService.diaryEpisodes.count) \(String(localized: "journal.entries"))")
+                Text("\(coordinator.diaryService.diaryEpisodes.count) \(L10n.Plural.records(coordinator.diaryService.diaryEpisodes.count))")
                     .font(SP.Typography.caption)
                     .foregroundColor(SP.Colors.textTertiary)
                     .contentTransition(.numericText())
@@ -89,7 +89,7 @@ struct JournalView: View {
                 showAddSheet = true
             } label: {
                 Image(systemName: "plus.circle.fill")
-                    .font(.system(size: 28))
+                    .font(.system(.title3))
                     .foregroundStyle(SP.Colors.heroGradient)
             }
         }
@@ -225,7 +225,7 @@ struct JournalView: View {
 
             VStack(spacing: 4) {
                 Image(systemName: weekEp.count <= 2 ? "arrow.down.right" : "arrow.up.right")
-                    .font(.system(size: 20))
+                    .font(.system(.body))
                     .foregroundColor(weekEp.count <= 2 ? SP.Colors.success : SP.Colors.warning)
                 Text(String(localized: "journal.trend"))
                     .font(SP.Typography.caption2)
@@ -296,7 +296,7 @@ struct JournalView: View {
                 ForEach(recent) { point in
                     VStack(spacing: 2) {
                         Text(moodEmoji(point.mood))
-                            .font(.system(size: 10))
+                            .font(.system(.caption2))
                         RoundedRectangle(cornerRadius: 3)
                             .fill(moodBarColor(point.mood))
                             .frame(width: 16, height: CGFloat(point.mood) * 6 + 4)
@@ -329,17 +329,6 @@ struct JournalView: View {
                     title: String(localized: "tools_patterns_title"),
                     subtitle: String(localized: "tools_patterns_sub"),
                     color: SP.Colors.accent
-                )
-            }
-
-            NavigationLink {
-                AchievementsView(service: coordinator.achievementService)
-            } label: {
-                ToolCardLabel(
-                    icon: "trophy.fill",
-                    title: String(localized: "journal.achievements"),
-                    subtitle: "\(coordinator.achievementService.achievements.filter(\.isUnlocked).count)/\(coordinator.achievementService.achievements.count) \(String(localized: "journal.unlocked"))",
-                    color: SP.Colors.warning
                 )
             }
 
@@ -420,9 +409,12 @@ struct JournalView: View {
 
         // Last 4 weeks comparison
         var weeks: [(String, Int, Int)] = [] // label, count, avgIntensity
+        let today = Date()
         for w in 0..<4 {
-            let end = cal.date(byAdding: .day, value: -(w * 7), to: Date())!
-            let start = cal.date(byAdding: .day, value: -7, to: end)!
+            guard
+                let end = cal.date(byAdding: .day, value: -(w * 7), to: today),
+                let start = cal.date(byAdding: .day, value: -7, to: end)
+            else { continue }
             let weekEps = episodes.filter { $0.date >= start && $0.date < end }
             let avg = weekEps.isEmpty ? 0 : weekEps.map(\.intensity).reduce(0, +) / weekEps.count
             let label = w == 0 ? String(localized: "insight.this_week")
@@ -561,7 +553,7 @@ struct JournalView: View {
     private func emptyState(icon: String, title: String, subtitle: String) -> some View {
         VStack(spacing: 16) {
             Image(systemName: icon)
-                .font(.system(size: 48))
+                .font(.system(.largeTitle))
                 .foregroundColor(SP.Colors.textTertiary)
             Text(title)
                 .font(SP.Typography.title3)
@@ -1016,7 +1008,7 @@ struct EditMoodSheet: View {
                     VStack(spacing: 24) {
                         // Mood emoji
                         Text(moodEmoji(Int(mood)))
-                            .font(.system(size: 64))
+                            .font(.system(.largeTitle))
                             .contentTransition(.symbolEffect(.replace))
 
                         // Mood slider
