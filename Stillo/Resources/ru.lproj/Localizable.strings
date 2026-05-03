@@ -901,3 +901,10 @@
 "settings.privacy.confirm2_btn" = "Удалить навсегда";
 "settings.privacy.done_title" = "Готово";
 "settings.privacy.done_body %lld" = "Удалено %lld записей.";
+"settings.subscription.title" = "Подписка";
+"settings.subscription.active" = "У тебя активный Premium-доступ. Спасибо!";
+"settings.subscription.inactive" = "Premium открывает Watch, HealthKit, расширенный Soundscape и smart-напоминания.";
+"settings.subscription.upgrade_btn" = "Открыть Premium";
+"settings.subscription.restore_btn" = "Восстановить";
+"notif_absence_title" = "Stillō здесь, если нужно";
+"notif_absence_body" = "Несколько дней без сессии. Не как обязанность — просто чтобы знал: техника 4-7-8 в кармане, когда понадобится.";

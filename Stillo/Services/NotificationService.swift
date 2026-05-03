@@ -92,4 +92,39 @@ final class NotificationService: ObservableObject {
     func cancelAll() {
         UNUserNotificationCenter.current().removeAllPendingNotificationRequests()
     }
+
+    // MARK: - Smart Absence Reminder
+
+    /// 2026-05-03 (Master Plan День 3): мягкое напоминание после
+    /// заданного периода без активности. Не пушит «давайте позанимаемся» —
+    /// тон спокойный, тревожной аудитории нужен опт-аут давления.
+    ///
+    /// Вызывать после каждой завершённой SOS-сессии или mood-snapshot.
+    /// Каждый вызов отменяет предыдущее напоминание и ставит новое
+    /// (sliding window). Если юзер активен — он его никогда не увидит.
+    ///
+    /// - Parameter days: через сколько дней неактивности показать
+    ///   напоминание. По умолчанию 3 дня (72 часа).
+    func rescheduleAbsenceReminder(afterDays days: Int = 3) {
+        let identifier = "absence_reminder"
+        let center = UNUserNotificationCenter.current()
+        center.removePendingNotificationRequests(withIdentifiers: [identifier])
+
+        let content = UNMutableNotificationContent()
+        content.title = String(localized: "notif_absence_title")
+        content.body = String(localized: "notif_absence_body")
+        content.sound = .default
+        content.interruptionLevel = .passive  // не яркое, спокойное напоминание
+
+        let interval = TimeInterval(days * 24 * 3_600)
+        let trigger = UNTimeIntervalNotificationTrigger(timeInterval: interval, repeats: false)
+        let request = UNNotificationRequest(identifier: identifier, content: content, trigger: trigger)
+        center.add(request)
+    }
+
+    /// Полностью отключить smart-reminders (вызывается из Settings toggle).
+    func cancelAbsenceReminder() {
+        UNUserNotificationCenter.current()
+            .removePendingNotificationRequests(withIdentifiers: ["absence_reminder"])
+    }
 }

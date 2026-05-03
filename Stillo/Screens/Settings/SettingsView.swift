@@ -23,6 +23,7 @@ struct SettingsView: View {
                     notificationsSection
                     healthSection
                     crisisSection
+                    subscriptionSection
                     PrivacySettingsView()
                     #if DEBUG
                     debugSection
@@ -345,6 +346,69 @@ struct SettingsView: View {
         .buttonStyle(.plain)
         .opacity(appear ? 1 : 0)
         .animation(SP.Anim.spring.delay(0.4), value: appear)
+    }
+
+    // MARK: - Subscription / Restore (Apple Guideline 3.1.1)
+
+    /// 2026-05-03: добавлено в Master Plan День 3.
+    /// Apple требует видимую кнопку Restore Purchases во всех приложениях
+    /// с IAP, доступную пользователю без необходимости открывать paywall.
+    private var subscriptionSection: some View {
+        VStack(alignment: .leading, spacing: 12) {
+            sectionHeader(icon: "crown.fill",
+                          title: String(localized: "settings.subscription.title"),
+                          color: SP.Colors.warmth)
+
+            Text(coordinator.premiumManager.isPremium
+                 ? String(localized: "settings.subscription.active")
+                 : String(localized: "settings.subscription.inactive"))
+                .font(SP.Typography.caption)
+                .foregroundColor(SP.Colors.textSecondary)
+
+            HStack(spacing: 10) {
+                if !coordinator.premiumManager.isPremium {
+                    Button {
+                        coordinator.showPaywall = true
+                    } label: {
+                        HStack {
+                            Image(systemName: "sparkles")
+                            Text(String(localized: "settings.subscription.upgrade_btn"))
+                                .font(SP.Typography.body.weight(.semibold))
+                        }
+                        .foregroundColor(SP.Colors.textOnAccent)
+                        .frame(maxWidth: .infinity)
+                        .padding(.vertical, 12)
+                        .background(SP.Colors.heroGradient)
+                        .cornerRadius(SP.Layout.cornerSmall)
+                    }
+                    .buttonStyle(.plain)
+                }
+
+                Button {
+                    SP.Haptic.light()
+                    Task {
+                        await coordinator.premiumManager.restorePurchases()
+                        if coordinator.premiumManager.isPremium { SP.Haptic.success() }
+                    }
+                } label: {
+                    HStack {
+                        Image(systemName: "arrow.clockwise")
+                        Text(String(localized: "settings.subscription.restore_btn"))
+                            .font(SP.Typography.body.weight(.medium))
+                    }
+                    .foregroundColor(SP.Colors.accent)
+                    .frame(maxWidth: .infinity)
+                    .padding(.vertical, 12)
+                    .background(SP.Colors.accent.opacity(0.10))
+                    .cornerRadius(SP.Layout.cornerSmall)
+                }
+                .buttonStyle(.plain)
+            }
+        }
+        .spGlassCard(cornerRadius: SP.Layout.cornerMedium)
+        .opacity(appear ? 1 : 0)
+        .offset(y: appear ? 0 : 15)
+        .animation(SP.Anim.spring.delay(0.45), value: appear)
     }
 
     // MARK: - Debug (DEBUG-only, никогда не попадает в Release)

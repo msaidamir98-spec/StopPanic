@@ -900,3 +900,10 @@
 "settings.privacy.confirm2_btn" = "Delete forever";
 "settings.privacy.done_title" = "Done";
 "settings.privacy.done_body %lld" = "%lld items deleted.";
+"settings.subscription.title" = "Subscription";
+"settings.subscription.active" = "Your Premium access is active. Thank you!";
+"settings.subscription.inactive" = "Premium unlocks Watch, HealthKit, extended Soundscape and smart reminders.";
+"settings.subscription.upgrade_btn" = "Get Premium";
+"settings.subscription.restore_btn" = "Restore";
+"notif_absence_title" = "Stillō is here when you need it";
+"notif_absence_body" = "A few days without a session. No pressure — just so you know: the 4-7-8 technique is in your pocket whenever it's needed.";
