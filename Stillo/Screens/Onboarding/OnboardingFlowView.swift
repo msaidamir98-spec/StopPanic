@@ -21,9 +21,12 @@ struct OnboardingFlowView: View {
             AmbientBackground(primaryColor: SP.Colors.accent, secondaryColor: SP.Colors.calm)
 
             VStack(spacing: 0) {
-                progressBar
-                    .padding(.top, 12)
-                    .opacity(showContent ? 1 : 0)
+                HStack {
+                    progressBar
+                    skipToSOSButton
+                }
+                .padding(.top, 12)
+                .opacity(showContent ? 1 : 0)
 
                 TabView(selection: $currentPage) {
                     welcomePage.tag(0)
@@ -96,7 +99,36 @@ struct OnboardingFlowView: View {
                     .animation(SP.Anim.springSnappy.delay(Double(i) * 0.05), value: currentPage)
             }
         }
-        .padding(.horizontal, SP.Layout.padding)
+        .padding(.leading, SP.Layout.padding)
+    }
+
+    // MARK: - Skip-to-SOS (panic escape hatch — visible from page 0)
+
+    private var skipToSOSButton: some View {
+        Button {
+            SP.Haptic.warning()
+            stopMiniBreathing()
+            withAnimation(SP.Anim.spring) {
+                coordinator.hasSeenOnboarding = true
+            }
+            coordinator.triggerSOS()
+        } label: {
+            HStack(spacing: 4) {
+                Image(systemName: "hand.raised.fill")
+                    .font(.system(.caption2))
+                Text(String(localized: "onb_skip_to_sos"))
+                    .font(SP.Typography.caption)
+            }
+            .foregroundColor(SP.Colors.danger)
+            .padding(.horizontal, 10)
+            .padding(.vertical, 6)
+            .background(
+                Capsule().fill(SP.Colors.danger.opacity(0.12))
+            )
+        }
+        .buttonStyle(PremiumButtonStyle(scale: 0.94))
+        .padding(.trailing, SP.Layout.padding)
+        .accessibilityLabel(Text(String(localized: "onb_skip_to_sos_a11y")))
     }
 
     // MARK: - Page 0: Welcome
@@ -125,14 +157,14 @@ struct OnboardingFlowView: View {
                     .frame(width: 120, height: 120)
 
                 Image(systemName: "hand.raised.fill")
-                    .font(.system(size: 50))
+                    .font(.system(.largeTitle))
                     .foregroundColor(SP.Colors.accent)
                     .scaleEffect(logoScale)
             }
 
             VStack(spacing: 12) {
                 Text("Stillō")
-                    .font(.system(size: 40, weight: .bold, design: .rounded))
+                    .font(SP.Typography.heroTitle)
                     .foregroundColor(SP.Colors.textPrimary)
 
                 Text(String(localized: "onb_tagline"))
@@ -252,7 +284,7 @@ struct OnboardingFlowView: View {
                     .animation(.spring(response: 0.6, dampingFraction: 0.5), value: currentPage)
 
                 Image(systemName: "checkmark.circle.fill")
-                    .font(.system(size: 60))
+                    .font(.system(.largeTitle))
                     .foregroundColor(SP.Colors.success)
                     .scaleEffect(currentPage == 2 ? 1 : 0.3)
                     .animation(.spring(response: 0.7, dampingFraction: 0.4).delay(0.15), value: currentPage)
@@ -302,7 +334,7 @@ struct OnboardingFlowView: View {
             Spacer()
 
             Text("👋")
-                .font(.system(size: 64))
+                .font(.system(.largeTitle))
                 .scaleEffect(currentPage == 3 ? 1 : 0.5)
                 .animation(.spring(response: 0.6, dampingFraction: 0.5), value: currentPage)
 
@@ -415,7 +447,7 @@ struct OnboardingFlowView: View {
                     .frame(width: 130, height: 130)
 
                 Image(systemName: "checkmark.shield.fill")
-                    .font(.system(size: 56))
+                    .font(.system(.largeTitle))
                     .foregroundColor(SP.Colors.success)
                     .scaleEffect(currentPage == 5 ? 1 : 0.3)
                     .animation(.spring(response: 0.6, dampingFraction: 0.5).delay(0.1), value: currentPage)

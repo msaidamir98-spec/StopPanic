@@ -20,7 +20,7 @@ struct MedicalDisclaimerView: View {
                 // Header
                 VStack(spacing: 12) {
                     Image(systemName: "heart.text.square.fill")
-                        .font(.system(size: 48))
+                        .font(.system(.largeTitle))
                         .foregroundStyle(
                             LinearGradient(
                                 colors: [SP.Colors.calm, SP.Colors.accent],
@@ -125,7 +125,7 @@ struct MedicalDisclaimerView: View {
     private func disclaimerBlock(icon: String, color: Color, title: String, body: String) -> some View {
         HStack(alignment: .top, spacing: 14) {
             Image(systemName: icon)
-                .font(.system(size: 22))
+                .font(.system(.title3))
                 .foregroundColor(color)
                 .frame(width: 32)
 

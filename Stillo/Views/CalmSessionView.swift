@@ -76,7 +76,7 @@ struct CalmSessionView: View {
                         .fill(SP.Colors.calm.opacity(0.15))
                         .frame(width: 100, height: 100)
                     Image(systemName: viewModel.phase.icon)
-                        .font(.system(size: 42))
+                        .font(.system(.largeTitle))
                         .foregroundColor(SP.Colors.calm)
                 }
                 .opacity(appear ? 1 : 0)

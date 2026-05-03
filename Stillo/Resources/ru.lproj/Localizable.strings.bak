@@ -1,0 +1,888 @@
+/* Russian — Primary Language */
+
+/* General */
+"app.name" = "Stillō";
+"general.done" = "Готово";
+"general.cancel" = "Отмена";
+"general.save" = "Сохранить";
+"general.next" = "Далее →";
+"general.skip" = "Пропустить";
+"general.start" = "Начать";
+"general.stop" = "Остановить";
+"general.close" = "Закрыть";
+"general.important" = "Важно";
+
+/* Tabs */
+"tab_home" = "Главная";
+"tab_tools" = "Техники";
+"tab_heart" = "Сердце";
+"tab_journal" = "Дневник";
+"tab_profile" = "Профиль";
+
+/* Greetings */
+"greeting_morning" = "Доброе утро";
+"greeting_afternoon" = "Добрый день";
+"greeting_evening" = "Добрый вечер";
+"greeting_night" = "Доброй ночи";
+
+/* Motivational messages */
+"motivation_1" = "Ты в безопасности. Это место — для тебя.";
+"motivation_2" = "Каждый вдох — шаг к спокойствию.";
+"motivation_3" = "Сегодня ты сильнее вчерашней тревоги.";
+"motivation_4" = "Паника временна. Ты — постоянен.";
+"motivation_5" = "Дыши. Чувствуй. Ты здесь.";
+"motivation_6" = "Тревога — гость. Ты — хозяин.";
+"motivation_7" = "Ты уже справлялся. Справишься и сейчас.";
+
+/* Home Screen */
+"home_sos_tap" = "Нажми, если плохо";
+"home_help_3sec" = "Помощь за 3 секунды";
+"home_quick_help" = "Быстрая помощь";
+"home_breathing" = "Дыхание";
+"home_breathing_sub" = "4-7-8 техника";
+"home_grounding" = "Заземление";
+"home_grounding_sub" = "5-4-3-2-1";
+"home_heart_analysis" = "Анализ пульса";
+"home_heart_sub" = "Пульс и тревога";
+"home_relax" = "Релаксация";
+"home_relax_sub" = "Мышечная";
+"home_did_you_know" = "Знал ли ты?";
+"home_progress" = "Твой прогресс";
+"home_today" = "Сегодня";
+"home_week" = "Неделя";
+"home_streak" = "Серия";
+"home_episodes" = "эпизодов";
+"home_in_row" = "подряд";
+"home_sessions" = "сессий";
+"home_min" = "мин";
+"home_risk" = "риск";
+
+/* Daily Insights */
+"insight_1" = "Эпизод тревоги длится в среднем 10-20 минут. Ни один эпизод тревоги в истории не длился вечно.";
+"insight_2" = "При тревоге пульс учащается, но ритм остаётся регулярным. Дыхание 4-7-8 помогает быстро его снизить.";
+"insight_3" = "Техника 4-7-8 активирует блуждающий нерв и снижает ЧСС за 2-3 минуты. Научно доказано.";
+"insight_4" = "40% людей хотя бы раз в жизни испытывают эпизод тревоги. Ты не один.";
+"insight_5" = "Дыхание — единственная автономная функция, которой ты можешь управлять сознательно.";
+"insight_6" = "Заземление 5-4-3-2-1 переключает мозг с миндалины на префронтальную кору.";
+"insight_7" = "Эпизод тревоги — ложная тревога. Тело реагирует на несуществующую опасность.";
+
+/* Onboarding — Value-first */
+"onb_tagline" = "Точка покоя\nв моменте тревоги";
+"onb_feature_sos" = "SOS помощь";
+"onb_feature_sos_sub" = "Мгновенная помощь в панике";
+"onb_feature_heart" = "Мониторинг пульса";
+"onb_feature_heart_sub" = "Apple Watch в реальном времени";
+"onb_feature_breath" = "Дыхательные техники";
+"onb_feature_breath_sub" = "Научно доказанные методы";
+"onb_try_now" = "Попробовать прямо сейчас";
+"onb_breath_title" = "Попробуй прямо сейчас";
+"onb_breath_subtitle" = "30 секунд дыхания изменят всё";
+"onb_breath_start" = "Начать дыхание";
+"onb_breath_follow" = "Следуй за кругом…";
+"onb_breath_complete" = "Отлично! ✨";
+"onb_breath_done_next" = "Как ощущения? →";
+"onb_result_title" = "Чувствуешь?";
+"onb_result_subtitle" = "Это работает. 3 цикла дыхания активировали блуждающий нерв и снизили тревогу.";
+"onb_result_science_title" = "Наука";
+"onb_result_science_body" = "Техника 4-7-8 снижает ЧСС за 2-3 минуты. Доказано исследованиями в Harvard Medical School.";
+"onb_continue" = "Продолжить";
+"onb_name_title" = "Давай знакомиться";
+"onb_name_subtitle" = "Чтобы обращаться к тебе по имени";
+"onb_name_placeholder" = "Твоё имя";
+"onb_skip" = "Пропустить";
+"onb_skip_to_sos" = "Помощь";
+"onb_skip_to_sos_a11y" = "Пропустить обучение и сразу запустить SOS";
+"onb_next" = "Далее →";
+"onb_exp_title" = "Расскажи о себе";
+"onb_exp_subtitle" = "Это поможет настроить приложение";
+"onb_exp_first" = "Впервые испытываю";
+"onb_exp_rare" = "Редко, пару раз";
+"onb_exp_sometimes" = "Иногда бывает";
+"onb_exp_often" = "Часто мучает";
+"onb_exp_daily" = "Каждый день";
+"onb_ready_title %@" = "Готово%@!";
+"onb_ready_subtitle" = "Stillō всегда рядом. Просто открой приложение или нажми SOS.";
+"onb_disclaimer_title" = "Важно";
+"onb_disclaimer_body" = "Stillō — помощник, НЕ замена врачу. При подозрении на сердечную проблему всегда вызывайте скорую.";
+"onb_start_using" = "Начать использовать ✨";
+
+/* Breathing */
+"breath_inhale" = "Вдох";
+"breath_hold" = "Задержка";
+"breath_exhale" = "Выдох";
+"breath_478_name" = "4-7-8 Дыхание";
+"breath_478_sub" = "Самое мощное для паники";
+"breath_box_name" = "Квадратное дыхание";
+"breath_box_sub" = "Баланс и фокус";
+"breath_2x_name" = "Дыхание 2x";
+"breath_2x_sub" = "Выдох вдвое длиннее вдоха";
+"breath_resonance_name" = "Резонансное дыхание";
+"breath_resonance_sub" = "5.5 вдохов в минуту — когерентность";
+
+/* Tools Hub */
+"tools_title" = "Инструменты";
+"tools_subtitle" = "Твой арсенал против тревоги";
+"tools_cat_emergency" = "Экстренно";
+"tools_cat_breathing" = "Дыхание";
+"tools_cat_techniques" = "Техники";
+"tools_sos_title" = "SOS — Я в панике";
+"tools_sos_sub" = "Пошаговая помощь прямо сейчас";
+"tools_steps_title" = "Шаги при панике";
+"tools_steps_sub" = "5 текстовых шагов заземления";
+"tools_heart_title" = "Анализ пульса";
+"tools_heart_sub" = "Ритм, тревога и спокойствие";
+"tools_grounding_title" = "Заземление 5-4-3-2-1";
+"tools_grounding_sub" = "Переключи внимание на 5 органов чувств";
+"tools_calm_title" = "Сессия спокойствия";
+"tools_calm_sub" = "Дыхание → Заземление → Рефлексия";
+"tools_muscle_title" = "Мышечная релаксация";
+"tools_muscle_sub" = "Прогрессивное расслабление мышц";
+"tools_cognitive_title" = "Когнитивный рефрейминг";
+"tools_cognitive_sub" = "Разберём тревожные мысли по полочкам";
+"tools_patterns_title" = "Анализ паттернов";
+"tools_patterns_sub" = "Статистика на основе твоих записей";
+"tools_crisis_title" = "Телефоны доверия";
+"tools_crisis_call" = "Позвонить";
+
+/* Pattern Analysis (honest naming) */
+"pattern_empty" = "Ведите дневник для более точного анализа";
+"pattern_critical" = "⚠️ Высокая активность. Обратитесь к специалисту.";
+"pattern_high" = "Повышенная тревожность. Попробуйте дыхание 4-7-8.";
+"pattern_moderate" = "Умеренный уровень. Продолжайте практики.";
+"pattern_low" = "Отличная неделя! 🎉";
+
+/* Triggers */
+"trigger_stress" = "Стресс";
+"trigger_sleep" = "Недосып";
+"trigger_caffeine" = "Кофеин";
+"trigger_transport" = "Транспорт";
+"trigger_crowds" = "Толпа";
+"trigger_night" = "Ночь";
+
+/* Day names */
+"day_sun" = "Вс";
+"day_mon" = "Пн";
+"day_tue" = "Вт";
+"day_wed" = "Ср";
+"day_thu" = "Чт";
+"day_fri" = "Пт";
+"day_sat" = "Сб";
+
+/* Notifications */
+"notif_breathing_title" = "Время для дыхания 🌬️";
+"notif_breathing_body" = "2 минуты техники 4-7-8 снизят тревогу. Попробуй сейчас.";
+"notif_hr_high_title" = "💓 Пульс повышен";
+"notif_hr_high_body %lld" = "Пульс %lld BPM — выше нормы. Попробуй дыхание 4-7-8 для успокоения.";
+"notif_streak_title" = "�� Не потеряй серию!";
+"notif_streak_body %lld" = "У тебя серия %lld дней! Продолжай — 2 минуты дыхания.";
+"notif_reflection_title" = "🌙 Вечерняя рефлексия";
+"notif_reflection_body" = "Как прошёл день? Запиши свои ощущения в дневник.";
+"notif_morning_title" = "☀️ Доброе утро";
+"notif_morning_body" = "Начни день с 2 минут спокойного дыхания.";
+
+/* Paywall */
+"paywall_title" = "Stillō Premium";
+"paywall_subtitle" = "Полный доступ ко всем техникам";
+"paywall_feature_breathing" = "Все дыхательные техники";
+"paywall_feature_analytics" = "Расширенная аналитика";
+"paywall_feature_diary" = "Безлимитный дневник";
+"paywall_feature_themes" = "Все темы оформления";
+"paywall_feature_heart" = "Умные уведомления пульса";
+"paywall_yearly" = "Годовая подписка";
+"paywall_monthly" = "Месячная подписка";
+"paywall_lifetime" = "Навсегда";
+"paywall_lifetime_badge" = "Один раз";
+"paywall_lifetime_subtitle" = "Единоразовая покупка · твоё навсегда";
+"paywall_save_58" = "Экономия 58%";
+"paywall_free_trial_badge" = "7 дней бесплатно";
+"paywall_intro_monthly" = "%@ первый месяц, далее %@";
+"paywall_loading_error" = "Не удалось загрузить цены";
+"paywall_restore" = "Восстановить покупки";
+"paywall_legal" = "Подписка автоматически продлевается. Отменить можно в настройках Apple ID.";
+
+/* SOS */
+"sos.title" = "SOS — Мне плохо";
+"sos.stepByStep" = "Пошаговая помощь прямо сейчас";
+"sos.breatheIn" = "Вдох";
+"sos.hold" = "Задержка";
+"sos.breatheOut" = "Выдох";
+"sos.youAreSafe" = "Ты в безопасности";
+"sos.panicWillPass" = "Тревога пройдёт. Это временно.";
+
+/* Breathing Session */
+"breathing.ready" = "Готов?";
+"breathing.inhale" = "Вдох";
+"breathing.hold" = "Задержка";
+"breathing.exhale" = "Выдох";
+"breathing.pause" = "Пауза";
+"breathing.complete" = "Готово!";
+"breathing.excellent" = "Отлично! 🎉";
+"breathing.cycles" = "циклов";
+"breathing.time" = "время";
+"breathing.throughNose" = "через нос 🫁";
+"breathing.calmly" = "спокойно 🧘";
+"breathing.throughMouth" = "через рот 💨";
+"breathing.relax" = "расслабься";
+
+/* Journal */
+"journal.title" = "Дневник";
+"journal.entries" = "записей";
+"journal.episodes" = "Записи";
+"journal.mood" = "Настроение";
+"journal.insights" = "Аналитика";
+"journal.empty.title" = "Дневник пока пуст";
+"journal.empty.subtitle" = "Веди записи, чтобы увидеть свои паттерны";
+"journal.perWeek" = "за неделю";
+"journal.avgIntensity" = "средний уровень";
+"journal.trend" = "тренд";
+
+/* Profile */
+"profile.member" = "Участник Stillō";
+"profile.setName" = "Укажи имя";
+"profile.entries" = "Записей";
+"profile.sessions" = "Сессий";
+"profile.breathingMin" = "мин";
+"profile.awards" = "Наград";
+"profile.sosContacts" = "SOS Контакты";
+"profile.settings" = "Настройки";
+"profile.notifications" = "Уведомления";
+"profile.crisisLine" = "Телефон доверия";
+
+/* Legacy compatibility keys */
+"home.sos.button" = "SOS";
+"home.sos.subtitle" = "Нажми, если тревога";
+"home.quickActions" = "Быстрые действия";
+"home.breathe" = "Дыхание";
+"home.grounding" = "Заземление";
+"home.heartCheck" = "Пульс";
+"tabs.home" = "Главная";
+"tabs.tools" = "Инструменты";
+"tabs.heart" = "Сердце";
+"tabs.journal" = "Дневник";
+"tabs.profile" = "Профиль";
+"onboarding.tagline" = "Точка покоя\nв моменте тревоги";
+"onboarding.name" = "Как тебя зовут?";
+"onboarding.howOften" = "Как часто ты испытываешь\nтревожные состояния?";
+"onboarding.whatGoals" = "Чего ты хочешь достичь?";
+"onboarding.allReady" = "Всё готово";
+"onboarding.startUsing" = "Начать использовать";
+"onboarding.notAlone" = "Ты больше не один.";
+"onboarding.disclaimer" = "Stillō — помощник, НЕ замена врачу. При подозрении на сердечную проблему всегда вызывайте скорую.";
+"greeting.morning" = "Доброе утро";
+"greeting.afternoon" = "Добрый день";
+"greeting.evening" = "Добрый вечер";
+
+/* ========== NEW KEYS (Localization Pass) ========== */
+
+/* General (new) */
+"general.back" = "Назад";
+
+/* Splash */
+"splash.tagline" = "Точка покоя";
+
+/* SOS Flow (new) */
+"sos.breathe_with_me" = "Дыши со мной";
+"sos.affirmation_body" = "Тревога — ложная тревога.\nТвоё тело реагировало на несуществующую опасность.\nТы в безопасности.";
+"sos.notif_title %@" = "🆘 SOS — %@";
+"sos.notif_body %@" = "Эпизод тревоги. Позвони: %@";
+"sos.notif_body_no_phone" = "Эпизод тревоги. Свяжись со мной.";
+"sos.crisis_notif_title" = "🆘 Эпизод тревоги";
+"sos.crisis_notif_body %@" = "Телефон доверия: %@";
+"sos.diary_note %@ %lld" = "SOS-сессия, длительность: %1$@, циклов: %2$lld";
+
+/* Breathing Session (new) */
+
+/* Grounding Exercise */
+"grounding.sense_see" = "ВИДИШЬ";
+"grounding.sense_touch" = "ТРОГАЕШЬ";
+"grounding.sense_hear" = "СЛЫШИШЬ";
+"grounding.sense_smell" = "ЧУВСТВУЕШЬ";
+"grounding.sense_taste" = "ОЩУЩАЕШЬ";
+"grounding.verb_see" = "вижу";
+"grounding.verb_touch" = "касаюсь";
+"grounding.verb_hear" = "слышу";
+"grounding.verb_smell" = "чувствую запах";
+"grounding.verb_taste" = "ощущаю вкус";
+"grounding.step_of %lld %lld" = "Шаг %lld из %lld";
+"grounding.name_count %lld" = "Назови %lld";
+"grounding.what_you %@" = "то, что ты %@";
+"grounding.i_verb %@ %@" = "Я %@: %@";
+"grounding.enter" = "Введи...";
+"grounding.next" = "Дальше →";
+"grounding.finish" = "Завершить";
+"grounding.done_title" = "Ты заземлился 🌍";
+"grounding.done_body" = "Ты переключил внимание с тревоги на реальность.\nТвой мозг сейчас работает в логическом режиме.";
+
+/* Muscle Relaxation */
+"muscle.hands_title" = "Кисти рук";
+"muscle.hands_desc" = "Сожми кулаки как можно сильнее";
+"muscle.forearms_title" = "Предплечья";
+"muscle.forearms_desc" = "Согни руки в локтях, напряги предплечья";
+"muscle.shoulders_title" = "Плечи";
+"muscle.shoulders_desc" = "Подними плечи к ушам";
+"muscle.face_title" = "Лицо";
+"muscle.face_desc" = "Зажмурься, сожми зубы, наморщи лоб";
+"muscle.neck_title" = "Шея";
+"muscle.neck_desc" = "Прижми подбородок к груди";
+"muscle.back_title" = "Спина";
+"muscle.back_desc" = "Выгни спину, сведи лопатки";
+"muscle.abs_title" = "Живот";
+"muscle.abs_desc" = "Напряги пресс максимально";
+"muscle.legs_title" = "Ноги";
+"muscle.legs_desc" = "Вытяни ноги, напряги бёдра и икры";
+"muscle.tense" = "НАПРЯГИ на 5 секунд! 💪";
+"muscle.relax" = "Расслабь... отпусти... 😌";
+"muscle.tense_button" = "Напрячь →";
+"muscle.relaxing" = "Расслабляюсь...";
+"muscle.done_title" = "Тело расслаблено 🧘";
+
+/* Cognitive Reframing */
+"cognitive.title" = "🧠 Когнитивный рефрейминг";
+"cognitive.subtitle" = "Разберём тревожную мысль по модели CBT";
+"cognitive.anxious_thought" = "Тревожная мысль";
+"cognitive.write_thought" = "Запиши мысль, которая вызывает тревогу";
+"cognitive.thought_example" = "Например: «Сейчас случится что-то ужасное»";
+"cognitive.facts_against" = "Факты против";
+"cognitive.what_facts" = "Какие факты ПРОТИВ этой мысли?";
+"cognitive.facts_example" = "Например: «Врач сказал, что сердце здоровое»";
+"cognitive.distortions_title" = "Возможные когнитивные искажения:";
+"cognitive.catastrophizing" = "Катастрофизация";
+"cognitive.catastrophizing_desc" = "Худший сценарий = единственный";
+"cognitive.black_white" = "Чёрно-белое мышление";
+"cognitive.black_white_desc" = "Всё или ничего";
+"cognitive.mind_reading" = "Чтение мыслей";
+"cognitive.mind_reading_desc" = "Знаю, что думают другие";
+"cognitive.emotional_reasoning" = "Эмоциональное рассуждение";
+"cognitive.emotional_reasoning_desc" = "Чувствую = правда";
+"cognitive.alternative" = "Альтернативная мысль";
+"cognitive.how_reframe" = "Как можно переформулировать?";
+"cognitive.alternative_example" = "Например: «Это тревога, она временна. Я в безопасности»";
+"cognitive.excellent" = "Отлично!";
+"cognitive.done_body" = "Ты только что применил CBT-технику. Каждый раз, когда мысль вернётся, вспоминай альтернативу.";
+"cognitive.done_button" = "Готово ✓";
+
+/* Now Help View */
+"nowhelp.step1_title" = "Остановись";
+"nowhelp.step1_instruction" = "Замри. Прими удобную позу — сядь или обопрись о стену. Ты в безопасности.";
+"nowhelp.step2_title" = "Дыши медленно";
+"nowhelp.step2_instruction" = "Вдох на 4 секунды через нос. Задержка на 7. Выдох на 8 через рот. Повтори 3 раза.";
+"nowhelp.step3_title" = "Заземлись";
+"nowhelp.step3_instruction" = "Назови вслух: 5 вещей, которые видишь. 4, которые слышишь. 3, которых касаешься.";
+"nowhelp.step4_title" = "Напомни себе";
+"nowhelp.step4_instruction" = "\"Это эпизод тревоги. Она временна. Я НЕ умираю. Мне не грозит опасность.\"";
+"nowhelp.step5_title" = "Расслабь тело";
+"nowhelp.step5_instruction" = "Сожми кулаки на 5 секунд — отпусти. Подними плечи к ушам — опусти. Расслабь челюсть.";
+"nowhelp.step_of %lld %lld" = "Шаг %lld из %lld";
+"nowhelp.next" = "Далее →";
+"nowhelp.finish" = "Готово ✓";
+"nowhelp.well_done" = "Молодец! 💪";
+"nowhelp.done_body" = "Ты прошёл все 5 шагов.\nПаника отступает. Ты справился.";
+
+/* Panic Radar */
+"radar.title" = "Радар паники";
+"radar.risk_level" = "Уровень риска";
+"radar.by_weekday" = "По дням недели";
+"radar.triggers" = "Триггеры";
+"radar.recommendation" = "Рекомендация";
+
+/* Risk Levels */
+"risk.low" = "Низкий";
+"risk.moderate" = "Умеренный";
+"risk.high" = "Повышенный";
+"risk.critical" = "Критический";
+
+/* Heart Analysis View */
+"heart.title" = "Мониторинг ❤️";
+"heart.important_info" = "Важная информация";
+"heart.disclaimer_body" = "Этот инструмент — информационный помощник, НЕ медицинское устройство. Он НЕ ставит диагнозы. При боли в груди, одышке или плохом самочувствии НЕМЕДЛЕННО вызовите скорую помощь (103 / 112).";
+"heart.waiting" = "Ожидание...";
+"heart.pulse_monitoring" = "Мониторинг пульса";
+"heart.consult_doctor" = "⚠️ Рекомендуем обратиться к врачу";
+"heart.consult_doctor_body" = "Приложение НЕ является медицинским прибором. При необычных паттернах рекомендуем проконсультироваться с врачом.";
+"heart.breathing_test" = "Дыхательный тест";
+"heart.breathing_test_body" = "Если пульс снижается после дыхания 4-7-8 — это косвенно указывает на тревогу, а не на сердечную проблему.";
+"heart.fix_pulse" = "📌 Зафиксировать пульс";
+"heart.check" = "✅ Проверить";
+"heart.pulse_dropped" = "Пульс снизился после дыхания";
+"heart.stop" = "Остановить";
+"heart.start_monitoring" = "Начать мониторинг";
+"heart.how_it_works" = "Как это работает";
+"heart.info_reads_pulse" = "Считывает пульс через Apple Health / Watch";
+"heart.info_analyzes_rhythm" = "Анализирует регулярность ритма";
+"heart.info_compares_patterns" = "Сравнивает паттерны тревоги и сердечных проблем";
+"heart.info_checks_breathing" = "Проверяет реакцию на дыхание";
+"heart.algorithm_disclaimer" = "Алгоритм основан на том, что при тревоге ритм ровный (синусовая тахикардия), а при сердечных проблемах — нерегулярный. Это НЕ замена ЭКГ или врача.";
+"heart.confidence %lld" = "Уверенность: %lld%%";
+"heart.stress_signs" = "Признаки стрессовой реакции:";
+"heart.regular_rhythm" = "Ритм регулярный (синусовая тахикардия)";
+"heart.hr_typical %lld" = "ЧСС %lld BPM — характерно для тревоги";
+"heart.pattern %@" = "Паттерн: %@";
+"heart.pulse_responds" = "Пульс реагирует на дыхание ✓";
+"heart.try_breathing" = "Попробуйте дыхание для проверки";
+"heart.consult_signs" = "Необычный паттерн — рекомендуем консультацию:";
+"heart.irregular_rhythm %@" = "Нерегулярный ритм (%@)";
+"heart.hrv_value %@" = "HRV: %@ мс";
+"heart.no_breathing_response" = "Не реагирует на дыхательные техники";
+"heart.recommend_consult" = "При необычных ощущениях рекомендуем обратиться к специалисту";
+"heart.metric_hr" = "❤️ ЧСС";
+"heart.metric_hrv" = "📈 HRV";
+"heart.metric_regularity" = "🔀 Регулярность";
+"heart.metric_pattern" = "📊 Паттерн";
+"heart.ms" = "мс";
+"heart.recommendation" = "Рекомендация";
+
+/* Heart Pattern Analysis */
+"diagnosis.stress_response" = "Стрессовая реакция";
+"diagnosis.elevated_irregular" = "Необычный паттерн";
+"diagnosis.irregular_pattern" = "Нерегулярный паттерн";
+"diagnosis.normal" = "Нормальный ритм";
+"diagnosis.collecting" = "Сбор данных...";
+
+/* Rise Patterns */
+"pattern.sudden_regular" = "Резкий регулярный подъём";
+"pattern.sudden_irregular" = "Резкий нерегулярный";
+"pattern.gradual" = "Постепенный";
+"pattern.no_change" = "Без изменений";
+
+/* Calm Session */
+"calm.phase_intro" = "Сессия спокойствия";
+"calm.phase_breathing" = "Дыхание";
+"calm.phase_grounding" = "Заземление";
+"calm.phase_reflection" = "Рефлексия";
+"calm.phase_complete" = "Готово!";
+"calm.start_breathing" = "Начать дыхание →";
+"calm.to_grounding" = "К заземлению →";
+"calm.to_reflection" = "К рефлексии →";
+"calm.finish" = "Завершить ✓";
+"calm.intro_body" = "Эта сессия проведёт тебя через 3 этапа:";
+"calm.intro_breathing_desc" = "Успокоим нервную систему";
+"calm.intro_grounding_desc" = "Переключим внимание";
+"calm.intro_reflection_desc" = "Проработаем мысли";
+"calm.breathe_478" = "Дыши по схеме 4-7-8";
+"calm.breathe_instructions" = "Вдох 4 сек → Задержка 7 сек → Выдох 8 сек\n\nСделай 4 цикла, затем нажми «Далее»";
+"calm.ground_see" = "5 вещей, которые ты ВИДИШЬ";
+"calm.ground_hear" = "4 звука, которые ты СЛЫШИШЬ";
+"calm.ground_touch" = "3 предмета, которых КАСАЕШЬСЯ";
+"calm.ground_smell" = "2 запаха, которые ЧУВСТВУЕШЬ";
+"calm.ground_taste" = "1 вкус, который ОЩУЩАЕШЬ";
+"calm.reflection_title" = "Запиши или проговори:";
+"calm.reflection_q1" = "• Что вызвало тревогу?";
+"calm.reflection_q2" = "• Насколько она была реальной угрозой? (1-10)";
+"calm.reflection_q3" = "• Что помогло успокоиться?";
+"calm.reflection_q4" = "• Что ты скажешь себе в следующий раз?";
+"calm.session_done" = "Сессия завершена! 🎉";
+"calm.session_done_body" = "Ты прошёл дыхание, заземление и рефлексию.\nКаждая сессия делает тебя сильнее.";
+
+/* Mood Map */
+"mood.title" = "Карта настроений";
+"mood.subtitle" = "Отслеживай своё эмоциональное состояние";
+"mood.add_mood" = "Записать настроение";
+"mood.empty_title" = "Пока пусто";
+"mood.empty_body" = "Записывай настроение, чтобы увидеть паттерны";
+"mood.nav_title" = "Настроения";
+"mood.last_7_days" = "Последние 7 дней";
+"mood.average" = "Среднее:";
+"mood.history" = "История";
+"mood.how_feel" = "Как ты себя чувствуешь?";
+"mood.awful" = "Ужасно";
+"mood.great" = "Отлично";
+"mood.note_optional" = "Заметка (опционально)";
+"mood.mood" = "Настроение";
+
+/* Achievements */
+"achievements.title" = "Достижения";
+"achievements.unlocked" = "Разблокировано";
+"achievements.unlocked_count %lld %lld" = "%lld / %lld разблокировано";
+"achievement.cat_streak" = "Серия";
+"achievement.cat_breathing" = "Дыхание";
+"achievement.cat_diary" = "Дневник";
+"achievement.cat_techniques" = "Техники";
+"achievement.cat_milestone" = "Вехи";
+"achievement.first_breath_title" = "Первый вдох";
+"achievement.first_breath_desc" = "Завершите первое дыхательное упражнение";
+"achievement.week_warrior_title" = "Воин недели";
+"achievement.week_warrior_desc" = "7 дней подряд без эпизода тревоги";
+"achievement.diary_master_title" = "Мастер дневника";
+"achievement.diary_master_desc" = "Запишите 30 записей в дневник";
+"achievement.technique_explorer_title" = "Исследователь";
+"achievement.technique_explorer_desc" = "Попробуйте все 10 техник";
+"achievement.calm_month_title" = "Спокойный месяц";
+"achievement.calm_month_desc" = "30 дней подряд практики";
+
+/* Profile View (new) */
+"profile.title" = "Профиль";
+"profile.name" = "Имя";
+"profile.set_name" = "Укажи имя";
+"profile.edit" = "Редактировать";
+"profile.about" = "О приложении";
+"profile.about_body" = "Stillō — твой помощник при тревоге. Базовые функции бесплатны, без рекламы. Доступна премиум-подписка.";
+"profile.version %@" = "Версия %@";
+"profile.breath_min" = "Мин дыхания";
+
+/* Journal (new) */
+"journal.mood_empty" = "Записывай настроение, чтобы увидеть паттерны";
+"journal.no_notes" = "Без заметок";
+"journal.intensity" = "Интенсивность";
+
+/* Trigger Options */
+"trigger_opt_work" = "Работа";
+"trigger_opt_health" = "Здоровье";
+
+/* Theme */
+"theme.title" = "Оформление";
+"theme.preview" = "Предпросмотр";
+"theme.theme" = "Тема";
+"theme.tip_title" = "💡 Подсказка";
+"theme.tip_body" = "Режим «Авто» подстраивается под настройки устройства. Тёмная тема лучше для вечера — она снижает нагрузку на глаза и помогает расслабиться.";
+
+/* Crisis Line */
+"crisis.title" = "Телефон доверия";
+"crisis.not_alone" = "Ты не один";
+"crisis.subtitle" = "Если тебе плохо — позвони. Это бесплатно, анонимно, круглосуточно.";
+"crisis.call" = "Позвонить";
+"crisis.lines_by_country" = "🌍 Линии по странам";
+"crisis.important" = "Важно помнить";
+"crisis.info_free" = "Звонки бесплатные и анонимные";
+"crisis.info_24h" = "Специалисты работают круглосуточно";
+"crisis.info_any_issue" = "Можно звонить по любому вопросу";
+"crisis.info_panic_safe" = "Тревога — это не опасно, она пройдёт";
+"crisis.emergency_112" = "⚠️ При угрозе жизни звони 112";
+
+/* Country Names */
+"country.ru" = "Россия";
+"country.us" = "США";
+"country.uk" = "Великобритания";
+"country.de" = "Германия";
+"country.fr" = "Франция";
+"country.es" = "Испания";
+"country.it" = "Италия";
+"country.jp" = "Япония";
+
+/* HealthKit Settings */
+"health.unavailable" = "Health недоступен";
+"health.connected" = "Apple Health подключён";
+"health.not_connected" = "Apple Health не подключён";
+"health.unavailable_body" = "На этом устройстве нет доступа к HealthKit. Используй iPhone с Apple Watch для чтения пульса.";
+"health.connected_body" = "Stillō считывает данные пульса для отслеживания тревожности";
+"health.not_connected_body" = "Подключи Apple Health, чтобы Stillō мог считывать пульс с Apple Watch";
+"health.unavailable_device" = "HealthKit недоступен на этом устройстве";
+"health.connect" = "Подключить Apple Health";
+"health.connected_label" = "Подключено";
+"health.data_title" = "📊 Какие данные считываются";
+"health.data_pulse" = "Пульс (BPM)";
+"health.data_pulse_desc" = "Частота сердечных сокращений с Apple Watch";
+"health.data_hrv" = "HRV (SDNN)";
+"health.data_hrv_desc" = "Вариабельность сердечного ритма — маркер стресса";
+"health.privacy_title" = "Приватность";
+"health.privacy_body" = "Все данные хранятся только на устройстве. Stillō только читает данные — мы ничего не записываем в Apple Health и не передаём на серверы.";
+
+/* Notification Settings */
+"notif.title" = "Уведомления";
+"notif.enabled" = "Уведомления включены";
+"notif.disabled" = "Уведомления выключены";
+"notif.enabled_body" = "Stillō может напоминать о дыхательных практиках";
+"notif.disabled_body" = "Разреши уведомления, чтобы не забывать о практиках";
+"notif.allow" = "Разрешить уведомления";
+"notif.breathing_reminder" = "Напоминание о дыхании";
+"notif.time" = "Время";
+"notif.save_reminder" = "Сохранить напоминание";
+"notif.how_it_works" = "💡 Как это работает";
+"notif.how_body" = "Stillō отправит мягкое напоминание в выбранное время. Дыхательная практика занимает всего 2 минуты и доказанно снижает уровень кортизола.";
+
+/* ProfileHub (new) */
+"profile.name_placeholder" = "Имя";
+"profile.sos_empty" = "Добавь контакт, который получит уведомление при SOS";
+"profile.theme" = "Оформление";
+"profile.disclaimer" = "Stillō — помощник, НЕ медицинское устройство. Не заменяет врача.";
+"profile.contact_name" = "Имя";
+"profile.contact_phone" = "Телефон";
+"profile.contact_who" = "Кто это?";
+"profile.contact_who_placeholder" = "Мама, друг, терапевт...";
+"profile.contact_notify" = "Уведомлять при SOS";
+"profile.contact_add" = "Добавить";
+"profile.contact_new" = "Новый контакт";
+
+/* HeartAnalysis Service Recommendations */
+"heart.rec_collecting" = "⚪ Недостаточно данных. Подождите 30 секунд.";
+"heart.rec_stress_breathing_helped" = "✅ Ваш пульс реагирует на дыхание — это характерно для стрессовой реакции. Продолжайте дыхание 4-7-8. Через несколько минут станет легче. Вы в безопасности.";
+"heart.rec_stress %lld" = "🟡 Стрессовая реакция: ритм регулярный, ЧСС %lld BPM. Попробуйте дыхание 4-7-8 для расслабления. Если дискомфорт сохраняется — рекомендуем обратиться к специалисту.";
+"heart.rec_irregular_elevated %lld" = "🟠 Обнаружен необычный паттерн ритма (%lld BPM). Рекомендуем обратиться к специалисту для оценки.";
+"heart.rec_irregular_pattern" = "🟠 Обнаружен нерегулярный паттерн ритма. Рекомендуем записаться на приём к специалисту.";
+"heart.rec_normal %lld" = "🟢 Ритм в норме: %lld BPM, регулярный. Если чувствуете тревогу — это может быть субъективное ощущение. Дыхательная техника поможет расслабиться.";
+
+/* Onboarding */
+"onb_tap_start" = "Нажми старт";
+
+/* Notification Pickers */
+"notif.hour" = "Час";
+"notif.minute" = "Минута";
+
+/* Theme Names */
+"theme.auto" = "Авто";
+"theme.dark" = "Тёмная";
+"theme.light" = "Светлая";
+
+/* Empty States */
+"empty.journal_title" = "Дневник пуст";
+"empty.journal_message" = "Это хорошая новость! Записывай эпизоды, чтобы отслеживать прогресс и находить паттерны.";
+"empty.journal_action" = "Записать первый эпизод";
+"empty.tools_done_title" = "Все техники освоены 🎉";
+"empty.tools_done_message" = "Ты молодец! Продолжай практиковать — каждая сессия делает тебя сильнее.";
+"empty.heart_title" = "Нет данных пульса";
+"empty.heart_message" = "Подключи Apple Watch или используй камеру для измерения пульса и анализа.";
+"empty.heart_action" = "Подключить Health";
+"empty.achievements_title" = "Начни свой путь";
+"empty.achievements_message" = "Выполняй упражнения, записывай дневник и зарабатывай достижения. Каждый шаг считается.";
+"empty.achievements_action" = "Начать";
+"empty.search_title" = "Ничего не найдено";
+"empty.search_message %@" = "По запросу «%@» нет результатов. Попробуй другие ключевые слова.";
+
+/* Accessibility */
+"a11y.breath_phase %@" = "Фаза дыхания: %@";
+"a11y.breath_idle" = "Дыхательная сессия не начата";
+"a11y.breath_follow" = "Следуйте инструкциям на экране";
+"a11y.breath_tap_start" = "Нажмите кнопку Начать для запуска сессии";
+"a11y.sos_started" = "Экстренная помощь активирована. Следуйте инструкциям на экране.";
+"a11y.session_complete" = "Сессия завершена. Молодец!";
+
+/* Paywall Legal Links */
+"paywall_terms" = "Условия использования";
+"paywall_privacy" = "Политика конфиденциальности";
+
+/* Intent Results */
+"intent.open_forecast" = "Откройте приложение для просмотра прогноза тревожности.";
+
+"country.br" = "Бразилия";
+"country.cn" = "Китай";
+"country.pt" = "Португалия";
+"country.kr" = "Южная Корея";
+
+"siri_quick_log_note" = "Быстрая запись Siri";
+
+// MARK: - Journal (PM#6 fix)
+"journal.achievements" = "Достижения";
+"journal.add_intensity" = "Сила тревоги";
+"journal.add_notes" = "Твои заметки";
+"journal.add_notes_placeholder" = "Что ты чувствовал?";
+"journal.add_save" = "Сохранить";
+"journal.add_title" = "Новая запись";
+"journal.add_triggers" = "Что вызвало?";
+"journal.add_triggers_prefix" = "Причины:";
+"journal.common_triggers" = "Частые причины";
+"journal.intensity_1" = "Едва заметно";
+"journal.intensity_2" = "Лёгкий дискомфорт";
+"journal.intensity_3" = "Умеренная тревога";
+"journal.intensity_4" = "Сильная тревога";
+"journal.intensity_5" = "Невыносимо";
+"journal.mood_empty_title" = "Записей настроения пока нет";
+"journal.mood_empty_subtitle" = "Отслеживай настроение, чтобы увидеть паттерны";
+"journal.trigger_food" = "Еда";
+"journal.trigger_sport" = "Спорт";
+"journal.triggers_empty" = "Продолжай записывать, чтобы увидеть паттерны";
+"journal.unlocked" = "открыто";
+"trigger_opt_caffeine" = "Кофеин";
+"trigger_opt_crowds" = "Людные места";
+"trigger_opt_family" = "Семья";
+"trigger_opt_meds" = "Лекарства";
+"trigger_opt_money" = "Финансы";
+"trigger_opt_night" = "Ночь";
+"trigger_opt_none" = "Не знаю";
+"trigger_opt_sleep" = "Плохой сон";
+"trigger_opt_social" = "Соцсети";
+"trigger_opt_transport" = "Транспорт";
+
+// MARK: - SOS + Profile (PM#7 fix)
+"sos.breath_cycles" = "Циклы дыхания";
+"sos.duration" = "Длительность";
+"sos.feeling_better" = "Стало лучше?";
+"sos.ground_hear_sub" = "Сосредоточься на звуках вокруг";
+"sos.ground_hear_title" = "2 вещи, которые ты слышишь";
+"sos.ground_next" = "Далее";
+"sos.ground_see_sub" = "Оглянись и назови, что видишь";
+"sos.ground_see_title" = "5 вещей, которые ты видишь";
+"sos.ground_smell_sub" = "Обрати внимание на запахи вокруг";
+"sos.ground_smell_title" = "1 вещь, которую ты ощущаешь на запах";
+"sos.ground_taste_sub" = "Обрати внимание на вкус во рту";
+"sos.ground_taste_title" = "1 вещь, которую ты ощущаешь на вкус";
+"sos.ground_touch_sub" = "Почувствуй текстуры вокруг себя";
+"sos.ground_touch_title" = "4 вещи, которые ты можешь потрогать";
+"sos.grounding" = "Упражнение заземления";
+"sos.grounding_sub" = "Соединись со своими чувствами";
+"sos.hint_exhale" = "Медленно выдохни";
+"sos.hint_hold" = "Задержи дыхание";
+"sos.hint_inhale" = "Глубоко вдохни";
+"sos.save_and_close" = "Сохранить и закрыть";
+"sos.you_are_safe_detail" = "Ты справился. Ты в безопасности.";
+"sos.you_did_it" = "Ты справился!";
+"profile.contact_name_placeholder" = "Имя контакта";
+"profile.detailed" = "Подробно";
+"profile.moodMap" = "Карта настроения";
+"profile.name_alert" = "Введи своё имя";
+
+"profile.made_with_love" = "Сделано с ❤️";
+
+// MARK: - Medical Disclaimer
+"disclaimer.title" = "Важное уведомление";
+"disclaimer.not_medical_title" = "Не медицинское устройство";
+"disclaimer.not_medical_body" = "Stillō — приложение для самопомощи с техниками расслабления. Это НЕ медицинское устройство, оно НЕ даёт медицинских рекомендаций и НЕ диагностирует, НЕ лечит, НЕ предотвращает какие-либо заболевания.";
+"disclaimer.emergency_title" = "В экстренной ситуации";
+"disclaimer.emergency_body" = "При боли в груди, затруднённом дыхании, онемении или подозрении на проблему с сердцем — прекратите использование приложения и немедленно вызовите скорую помощь. Stillō НЕ заменяет профессиональную медицинскую помощь.";
+"disclaimer.healthkit_title" = "Данные пульса";
+"disclaimer.healthkit_body" = "Stillō может считывать пульс с Apple Watch только в информационных целях. Эти данные НЕ используются для медицинской диагностики. Показания пульса приблизительны и НЕ должны использоваться для медицинских решений.";
+"disclaimer.intended_use_title" = "Назначение";
+"disclaimer.intended_use_body" = "Приложение предоставляет дыхательные упражнения, техники заземления и отслеживание настроения для общего благополучия. Это инструмент самопомощи, который НЕ заменяет консультацию лицензированного специалиста.";
+"disclaimer.accept" = "Я понимаю и принимаю";
+"disclaimer.scroll_hint" = "Прочитайте все разделы перед принятием";
+
+// MARK: - Voice Guide (AVSpeechSynthesizer)
+"voice.inhale" = "Вдох";
+"voice.hold" = "Задержи";
+"voice.exhale" = "Выдох, медленно";
+"voice.ground_see" = "Назови 5 вещей которые видишь";
+"voice.ground_touch" = "Потрогай 4 предмета рядом";
+"voice.ground_hear" = "Прислушайся к 3 звукам";
+"voice.ground_smell" = "Заметь 2 запаха";
+"voice.ground_taste" = "Сосредоточься на 1 вкусе";
+"voice.you_did_it" = "У тебя получилось. Ты в безопасности.";
+"voice.you_are_safe" = "Ты в безопасности. Я с тобой.";
+"voice.toggle_label" = "Голосовой помощник";
+
+// MARK: - Edit/Delete + Voice Selection
+"journal.edit" = "Изменить";
+"journal.delete" = "Удалить";
+"journal.edit_title" = "Редактирование";
+"voice.select_voice" = "Выбор голоса";
+"voice.no_voices" = "Нет голосов для вашего языка";
+"voice.quality_premium" = "Премиум качество";
+"voice.quality_enhanced" = "Улучшенное качество";
+"voice.quality_default" = "Стандартный";
+
+// MARK: - Voice Download Hints
+"voice.download_hint" = "Скачайте голоса в Настройках для мягкого звучания";
+"voice.auto_best" = "Авто (лучший доступный)";
+"voice.download_voices" = "Скачать голоса в Настройках…";
+
+// MARK: - Settings
+"settings.title" = "Настройки";
+"settings.voice_guide" = "Голосовой помощник";
+"settings.voice_enabled" = "Голосовое сопровождение";
+"settings.voice_fallback_hint" = "Используются голоса устройства. Добавьте ключ OpenAI для премиум-качества.";
+"settings.openai_tts" = "Голос OpenAI (Премиум)";
+"settings.openai_description" = "Естественные, человечные голоса от OpenAI. Намного мягче системных.";
+"settings.openai_enabled" = "Использовать OpenAI";
+"settings.openai_no_key" = "API-ключ не задан";
+"settings.openai_voice" = "Голос";
+"settings.openai_test" = "Тест голоса";
+"settings.openai_model" = "Качество";
+"settings.soundscape" = "Звуковой фон";
+"settings.appearance" = "Оформление";
+"settings.notifications" = "Уведомления";
+"settings.data" = "Данные и хранилище";
+"settings.clear_tts_cache" = "Очистить кэш голоса";
+"settings.crisis_lines" = "Экстренные линии";
+
+// MARK: - Soundscape
+"soundscape.title" = "Звуки";
+
+// MARK: - Insights
+"insight.time_of_day" = "Время суток";
+"insight.time_description" = "Когда эпизоды случаются чаще?";
+"insight.morning" = "Утро";
+"insight.afternoon" = "День";
+"insight.evening" = "Вечер";
+"insight.night" = "Ночь";
+"insight.weekly_progress" = "Недельный прогресс";
+"insight.this_week" = "Эта неделя";
+"insight.last_week" = "Прошлая";
+"insight.weeks_ago" = "нед. назад";
+"insight.trend_improving" = "Меньше эпизодов, чем на прошлой неделе — отличный прогресс!";
+"insight.trend_attention" = "Больше эпизодов на этой неделе — будь мягче к себе";
+
+// MARK: - Journal extras
+"journal.mood_trend" = "Динамика настроения";
+"journal.edit_mood_title" = "Редактировать настроение";
+
+/* Voice Bank Settings */
+"settings.voice_bank_ready" = "Премиум-голос готов";
+"settings.voice_phrases" = "фраз";
+"settings.voice_volume" = "Громкость голоса";
+"settings.test_voice" = "Протестировать голос";
+"settings.voice_premium_tip_title" = "Более живой голос";
+"settings.voice_premium_tip_body" = "Для более тёплого голоса оффлайн: откройте Настройки iOS → Универсальный доступ → Контент вслух → Голоса → выберите язык и загрузите Премиум-голос. Stillō подхватит его автоматически.";
+"settings.voice_source_bank" = "Премиум-голос (предзаписанный)";
+"settings.voice_source_openai" = "OpenAI нейро-голос (онлайн)";
+"settings.voice_source_system" = "Системный голос (оффлайн)";
+"settings.voice_source" = "Источник голоса";
+"settings.voice_system_hint" = "Выбор из голосов iOS";
+"settings.voice_openai_ready" = "API-ключ настроен";
+"settings.voice_openai_need_key" = "Нужен API-ключ";
+"settings.voice_no_phrases" = "Нет предзаписанных фраз";
+"voice.configure_in_settings" = "Настроить голос в Настройках";
+
+// CBT & Grounding voice phrases (medically grounded)
+"voice.body_relax" = "Расслабь тело. Пусть напряжение уходит с каждым выдохом.";
+"voice.feet_on_floor" = "Почувствуй ступни на полу. Ты заземлён. Ты здесь.";
+"voice.safe_place" = "Представь безопасное место. Ты защищён. Тебе ничего не угрожает.";
+"voice.not_in_danger" = "Тебе ничего не угрожает. Тело реагирует, но ты в безопасности.";
+"voice.this_will_pass" = "Это пройдёт. Всегда проходит. Просто дыши.";
+"voice.slow_down" = "Замедлись. Не торопись. У тебя есть время.";
+"voice.name_objects" = "Назови 3 предмета вокруг. Опиши их цвет и форму.";
+"voice.cold_water" = "Возьми что-то холодное — стакан, лёд, воду. Сосредоточься на ощущении.";
+"voice.tense_fists" = "Сожми кулаки, подержи 5 секунд, отпусти. Почувствуй разницу.";
+"voice.count_backward" = "Считай обратно от десяти. Десять, девять, восемь…";
+"voice.affirm_strong" = "Ты сильнее, чем думаешь. Ты уже проходил через это.";
+"voice.affirm_control" = "Ты контролируешь ситуацию. Твой разум ясен. Тело спокойно.";
+"voice.progressive_relax" = "Напряги плечи, подержи 5 секунд, отпусти. Почувствуй тепло.";
+"voice.mindful_notice" = "Замечай мысли без осуждения. Пусть пройдут как облака.";
+"voice.gratitude_one" = "Подумай об одной вещи, за которую ты благодарен сейчас.";
+
+// OpenAI TTS status
+"settings.openai_status_ready" = "Подключено — голос готов";
+"settings.openai_status_no_key" = "API-ключ не настроен";
+
+// MARK: - Soundscape (Brown Noise)
+"soundscape.play" = "Воспроизвести";
+"soundscape.stop" = "Остановить";
+
+// MARK: - Soundscape & Affirmations (Phase 19)
+"sound.rain_ambient" = "Дождь";
+"sound.rain_ambient_desc" = "Мягкий дождь, успокаивающий нервную систему";
+"sound.forest_calm" = "Лес";
+"sound.forest_calm_desc" = "Умиротворяющие звуки леса, снижающие гормоны стресса";
+"soundscape.sos_hint_title" = "Ваш звук SOS";
+"soundscape.sos_hint_body" = "Выбранный здесь звук включится автоматически при нажатии кнопки SOS.";
+"soundscape.file_missing" = "Добавьте файл в бандл";
+"affirmation_1" = "Это чувство временное. Оно пройдёт, как и каждый раз до этого.";
+"affirmation_2" = "Твоё тело в безопасности. То, что ты чувствуешь — адреналин, не опасность.";
+"affirmation_3" = "Ты пережил каждую паническую атаку до сих пор. Эта — не исключение.";
+"affirmation_4" = "Прямо сейчас почувствуй стопы на полу. Ты здесь, в настоящем.";
+"affirmation_5" = "Удлини выдох. Твоё тело последует за дыханием.";
+"affirmation_6" = "Тревога врёт. Она говорит, что что-то не так, когда ты в безопасности.";
+"affirmation_7" = "Назови 5 вещей, которые видишь. Мозг не может паниковать и наблюдать одновременно.";
+"affirmation_8" = "Это не сердечный приступ. Твоё сердце здоровое и сильное.";
+"affirmation_9" = "Ты не сходишь с ума. Это нормальная реакция на стресс.";
+"affirmation_10" = "Положи руку на грудь. Почувствуй сердцебиение. Ты жив и в порядке.";
+"affirmation_11" = "Пик паники длится всего 10 минут. Ты можешь выдержать 10 минут.";
+"affirmation_12" = "Когда это пройдёт, ты будешь гордиться собой за то, что справился.";
+"soundscape.choose_sound" = "Выберите звук";
+"soundscape.science_title" = "Почему это работает";
+"soundscape.science_body" = "Природные и низкочастотные звуки активируют парасимпатическую нервную систему, снижая пульс и кортизол. Исследования показывают: 20 минут звуков природы уменьшают тревогу на 25%.";
+"settings.soundscape_sub" = "Успокаивающие звуки для снятия тревоги";
+
+// MARK: - Sound Categories & New Tracks (Phase 20)
+"sound.category_nature" = "Природа";
+"sound.category_melody" = "Мелодии";
+"sound.piano_meditation" = "Спокойное пианино";
+"sound.piano_meditation_desc" = "Нежное пианино, замедляющее мысли";
+"sound.flute_meditation" = "Целительная флейта";
+"sound.flute_meditation_desc" = "Медитативная флейта для глубокого дыхания";
+"soundscape.background_sound" = "Фоновый звук";
+
+"sound.underwater_ambience" = "Подводный мир";
+"sound.underwater_ambience_desc" = "Глубокие океанские звуки для полного погружения";
+
+"sound.calm_melody" = "Нежная мелодия";
+"sound.calm_melody_desc" = "Спокойная мелодия, замедляющая бег мыслей";
+
+"settings.clear_tts_cache_sub" = "Удалить кэш голосовых файлов для освобождения памяти";
+"settings.crisis_lines_sub" = "Телефоны экстренной помощи для вашего региона";

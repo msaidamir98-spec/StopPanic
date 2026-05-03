@@ -64,7 +64,7 @@ struct CrisisLineView: View {
                     .fill(SP.Colors.success.opacity(0.15))
                     .frame(width: 60, height: 60)
                 Image(systemName: "phone.fill")
-                    .font(.system(size: 26))
+                    .font(.system(.title3))
                     .foregroundColor(SP.Colors.success)
             }
 
@@ -83,7 +83,7 @@ struct CrisisLineView: View {
             } label: {
                 HStack(spacing: 10) {
                     Image(systemName: "phone.arrow.up.right.fill")
-                        .font(.system(size: 18))
+                        .font(.system(.callout))
                     VStack(alignment: .leading, spacing: 2) {
                         Text(String(localized: "crisis.call"))
                             .font(SP.Typography.headline)
@@ -118,7 +118,7 @@ struct CrisisLineView: View {
             ForEach(sortedLines, id: \.key) { entry in
                 HStack(spacing: 12) {
                     Text(flag(for: entry.key))
-                        .font(.system(size: 20))
+                        .font(.system(.body))
 
                     Text(countryName(for: entry.key))
                         .font(SP.Typography.callout)
@@ -152,7 +152,7 @@ struct CrisisLineView: View {
     private var importantInfoCard: some View {
         VStack(spacing: 10) {
             Image(systemName: "heart.text.square.fill")
-                .font(.system(size: 28))
+                .font(.system(.title3))
                 .foregroundColor(SP.Colors.warmth)
 
             Text(String(localized: "crisis.important"))
@@ -181,7 +181,7 @@ struct CrisisLineView: View {
     private func infoPoint(_ text: String) -> some View {
         HStack(alignment: .top, spacing: 8) {
             Image(systemName: "checkmark.circle.fill")
-                .font(.system(size: 12))
+                .font(.system(.caption))
                 .foregroundColor(SP.Colors.success)
                 .padding(.top, 2)
             Text(text)

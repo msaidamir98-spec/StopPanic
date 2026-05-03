@@ -233,7 +233,7 @@
 "journal.empty.title" = "Tagebuch ist leer";
 "journal.empty.subtitle" = "Erstelle Einträge, um deine Muster zu erkennen";
 "journal.perWeek" = "pro Woche";
-"journal.avgIntensity" = "durchschn. Angstpegel";
+"journal.avgIntensity" = "Ø Niveau";
 "journal.trend" = "Trend";
 
 /* Profile */

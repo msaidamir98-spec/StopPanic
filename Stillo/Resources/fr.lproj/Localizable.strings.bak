@@ -233,7 +233,7 @@
 "journal.empty.title" = "Le journal est vide";
 "journal.empty.subtitle" = "Note tes entrées pour découvrir tes tendances";
 "journal.perWeek" = "par semaine";
-"journal.avgIntensity" = "niveau moyen d’anxiété";
+"journal.avgIntensity" = "niveau moyen";
 "journal.trend" = "tendance";
 
 /* Profile */

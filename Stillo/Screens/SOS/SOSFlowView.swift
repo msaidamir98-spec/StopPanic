@@ -85,7 +85,7 @@ struct SOSFlowView: View {
         }
         .onDisappear {
             stopTimers()
-            coordinator.audioGuide.stop()
+            coordinator.audio.silenceAll()
         }
     }
 
@@ -141,6 +141,7 @@ struct SOSFlowView: View {
         HStack {
             Button {
                 stopTimers()
+                coordinator.audio.silenceAll()
                 withAnimation(SP.Anim.spring) {
                     coordinator.showSOSOverlay = false
                     coordinator.sosService.deactivateSOS()
@@ -148,7 +149,7 @@ struct SOSFlowView: View {
             } label: {
                 HStack(spacing: 6) {
                     Image(systemName: "xmark")
-                        .font(.system(size: 14, weight: .bold))
+                        .font(.system(.footnote).weight(.bold))
                     Text(String(localized: "general.close"))
                         .font(SP.Typography.subheadline)
                 }
@@ -264,7 +265,7 @@ struct SOSFlowView: View {
                 HStack(spacing: 8) {
                     Image(systemName: "heart.fill")
                         .foregroundColor(SP.Colors.danger)
-                        .font(.system(size: 14))
+                        .font(.system(.footnote))
                     Text("\(Int(coordinator.healthManager.heartRate)) BPM")
                         .font(SP.Typography.subheadline)
                         .foregroundColor(SP.Colors.textSecondary)
@@ -303,7 +304,7 @@ struct SOSFlowView: View {
             Spacer().frame(height: 10)
 
             Text(emoji)
-                .font(.system(size: 64))
+                .font(.system(.largeTitle))
                 .scaleEffect(appeared ? 1 : 0)
                 .animation(SP.Anim.springBouncy, value: groundingStep)
 
@@ -352,7 +353,7 @@ struct SOSFlowView: View {
                     .scaleEffect(completionScale)
 
                 Image(systemName: "checkmark.circle.fill")
-                    .font(.system(size: 64))
+                    .font(.system(.largeTitle))
                     .foregroundColor(SP.Colors.success)
                     .scaleEffect(completionScale)
                     .shadow(color: SP.Colors.success.opacity(0.4), radius: 20, y: 4)
@@ -400,6 +401,7 @@ struct SOSFlowView: View {
                     notes: String(localized: "sos.diary_note \(timeString) \(breathingCycles)")
                 )
                 coordinator.completedSession()
+                coordinator.audio.silenceAll()
                 coordinator.showSOSOverlay = false
             } label: {
                 Text(String(localized: "sos.save_and_close"))
@@ -444,7 +446,7 @@ struct SOSFlowView: View {
         coordinator.audioGuide.speakBreathPhase(.inhale)
         withAnimation(.easeInOut(duration: 4)) { breathScale = 1.0 }
 
-        breathTimer = Timer.scheduledTimer(withTimeInterval: 0.1, repeats: true) { [self] _ in
+        let newBreathTimer = Timer(timeInterval: 0.1, repeats: true) { [self] _ in
             elapsed += 0.1
             if elapsed >= durations[phase] {
                 elapsed = 0
@@ -469,12 +471,14 @@ struct SOSFlowView: View {
                 }
             }
         }
-        RunLoop.main.add(breathTimer!, forMode: .common)
+        breathTimer = newBreathTimer
+        RunLoop.main.add(newBreathTimer, forMode: .common)
 
-        countdownTimer = Timer.scheduledTimer(withTimeInterval: 1, repeats: true) { [self] _ in
+        let newCountdownTimer = Timer(timeInterval: 1, repeats: true) { [self] _ in
             secondsElapsed += 1
         }
-        RunLoop.main.add(countdownTimer!, forMode: .common)
+        countdownTimer = newCountdownTimer
+        RunLoop.main.add(newCountdownTimer, forMode: .common)
     }
 
     private func stopTimers() {

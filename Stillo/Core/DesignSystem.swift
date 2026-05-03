@@ -123,22 +123,24 @@ enum SP {
     // MARK: - Typography
 
     enum Typography {
-        static let heroTitle = Font.system(size: 34, weight: .bold, design: .rounded)
-        static let title1 = Font.system(size: 28, weight: .bold, design: .rounded)
-        static let title2 = Font.system(size: 22, weight: .semibold, design: .rounded)
-        static let title3 = Font.system(size: 20, weight: .semibold, design: .rounded)
-        static let headline = Font.system(size: 17, weight: .semibold, design: .rounded)
-        static let body = Font.system(size: 16, weight: .regular, design: .rounded)
-        static let callout = Font.system(size: 15, weight: .regular, design: .rounded)
-        static let subheadline = Font.system(size: 14, weight: .regular, design: .rounded)
-        static let footnote = Font.system(size: 13, weight: .regular, design: .rounded)
-        static let caption = Font.system(size: 12, weight: .medium, design: .rounded)
-        static let caption2 = Font.system(size: 11, weight: .regular, design: .rounded)
+        // Scalable tokens — respect Dynamic Type (clamped at root to .accessibility2)
+        static let heroTitle = Font.system(.largeTitle, design: .rounded, weight: .bold)
+        static let title1 = Font.system(.title, design: .rounded, weight: .bold)
+        static let title2 = Font.system(.title2, design: .rounded, weight: .semibold)
+        static let title3 = Font.system(.title3, design: .rounded, weight: .semibold)
+        static let headline = Font.system(.headline, design: .rounded).weight(.semibold)
+        static let body = Font.system(.body, design: .rounded)
+        static let callout = Font.system(.callout, design: .rounded)
+        static let subheadline = Font.system(.subheadline, design: .rounded)
+        static let footnote = Font.system(.footnote, design: .rounded)
+        static let caption = Font.system(.caption, design: .rounded).weight(.medium)
+        static let caption2 = Font.system(.caption2, design: .rounded)
 
-        // Special
-        static let sosButton = Font.system(size: 52, weight: .black, design: .rounded)
-        static let bigNumber = Font.system(size: 48, weight: .bold, design: .rounded)
-        static let breathPhase = Font.system(size: 28, weight: .medium, design: .rounded)
+        // These tokens also use semantic styles so they scale with Dynamic Type.
+        // AX5 users see larger text in SOS and breathing contexts — intentional per HIG.
+        static let sosButton = Font.system(.largeTitle, design: .rounded, weight: .black)
+        static let bigNumber = Font.system(.largeTitle, design: .rounded, weight: .bold)
+        static let breathPhase = Font.system(.title2, design: .rounded, weight: .medium)
     }
 
     // MARK: - Spacing & Layout
@@ -454,6 +456,30 @@ struct AmbientBackground: View {
         ZStack {
             theme.bg.ignoresSafeArea()
 
+            // MeshGradient "живое дыхание" (iOS 18+).
+            // На старых OS — падаем в старый orb-лейаут ниже (он остаётся активен и на новых OS
+            // в light mode, чтобы сохранить тактильное чувство фона; в dark — MeshGradient делает глубину).
+            if #available(iOS 18, *), !theme.isLight {
+                MeshGradient(
+                    width: 3,
+                    height: 3,
+                    points: [
+                        .init(0, 0), .init(0.5, meshTop), .init(1, 0),
+                        .init(meshLeft, 0.5), .init(meshCenterX, meshCenterY), .init(meshRight, 0.5),
+                        .init(0, 1), .init(0.5, meshBottom), .init(1, 1),
+                    ],
+                    colors: [
+                        theme.bg, primaryColor.opacity(0.45), theme.bg,
+                        primaryColor.opacity(0.35), secondary.opacity(0.50), secondary.opacity(0.35),
+                        theme.bg, secondary.opacity(0.40), theme.bg,
+                    ],
+                    smoothsColors: true
+                )
+                .ignoresSafeArea()
+                .blur(radius: 24)
+                .opacity(0.85)
+            }
+
             // Large primary orb — ярче в light mode
             Circle()
                 .fill(primaryColor.opacity(theme.ambientPrimaryOpacity))
@@ -490,6 +516,10 @@ struct AmbientBackground: View {
             withAnimation(SP.Anim.float) {
                 animate = true
             }
+            // Медленная 20-сек «жизнь» mesh-точек.
+            withAnimation(.easeInOut(duration: 20).repeatForever(autoreverses: true)) {
+                meshPhase = 1
+            }
         }
     }
 
@@ -497,6 +527,18 @@ struct AmbientBackground: View {
 
     @State
     private var animate = false
+
+    /// 0…1 — фаза дыхания mesh-гradient. Центральная точка и средние узлы
+    /// медленно дрейфуют, создавая ощущение «живого фона» без джиттера.
+    @State
+    private var meshPhase: Double = 0
+
+    private var meshCenterX: Float { Float(0.42 + 0.16 * meshPhase) }
+    private var meshCenterY: Float { Float(0.45 + 0.10 * meshPhase) }
+    private var meshTop: Float { Float(0.02 + 0.04 * (1 - meshPhase)) }
+    private var meshBottom: Float { Float(0.98 - 0.04 * meshPhase) }
+    private var meshLeft: Float { Float(0.00 + 0.03 * meshPhase) }
+    private var meshRight: Float { Float(1.00 - 0.03 * meshPhase) }
 }
 
 // MARK: - ShimmerEffect

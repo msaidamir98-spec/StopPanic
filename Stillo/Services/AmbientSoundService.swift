@@ -208,7 +208,8 @@ final class AmbientSoundService {
             isPlaying = false
             return
         }
-        fadeOut(p, duration: 0.3) {
+        duckTask?.cancel(); duckTask = nil
+        fadeOut(p, duration: 0.3, task: &mainFadeTask) {
             p.stop()
             Task { @MainActor [weak self] in
                 self?.player = nil
@@ -224,7 +225,14 @@ final class AmbientSoundService {
 
     /// Мгновенный старт — вызывается из SOS и Meditation
     func playSelectedTrack() {
-        if isPlaying { player?.stop(); player = nil; isPlaying = false }
+        crossfadeTask?.cancel(); crossfadeTask = nil
+        mainFadeTask?.cancel(); mainFadeTask = nil
+        duckTask?.cancel(); duckTask = nil
+        previewTask?.cancel(); previewTask = nil
+        previewPlayer?.stop(); previewPlayer = nil; previewingTrack = nil
+        if let p = player { p.stop() }
+        player = nil
+        isPlaying = false
         play()
     }
 
@@ -297,7 +305,7 @@ final class AmbientSoundService {
         previewTask?.cancel()
         previewTask = nil
         if let p = previewPlayer {
-            fadeOut(p, duration: 0.2) {
+            fadeOut(p, duration: 0.2, task: &previewFadeTask) {
                 p.stop()
                 Task { @MainActor [weak self] in
                     self?.previewPlayer = nil
@@ -315,8 +323,9 @@ final class AmbientSoundService {
     func duckForVoice() {
         guard isPlaying, let p = player else { return }
         let duckedVol = Float(volume) * 0.2
-        fadeVolume(p, to: duckedVol, duration: 0.3)
         AudioSessionManager.configureForSpeechOverAmbient()
+        fadeVolume(p, to: duckedVol, duration: 0.3, task: &duckTask)
+        if !p.isPlaying { _ = p.play() }
         Self.log.info("🔉 Ducked ambient to \(duckedVol)")
     }
 
@@ -324,7 +333,7 @@ final class AmbientSoundService {
     func unduck() {
         guard isPlaying, let p = player else { return }
         AudioSessionManager.configureForAmbient()
-        fadeVolume(p, to: Float(volume), duration: 0.5)
+        fadeVolume(p, to: Float(volume), duration: 0.5, task: &duckTask)
         if !p.isPlaying { _ = p.play() }
         Self.log.info("🔊 Restored ambient to \(self.volume)")
     }
@@ -339,39 +348,54 @@ final class AmbientSoundService {
     private var previewPlayer: AVAudioPlayer?
     private var previewTask: Task<Void, Never>?
     private var crossfadeTask: Task<Void, Never>?
-    private var fadeTask: Task<Void, Never>?
+    private var mainFadeTask: Task<Void, Never>?
+    private var previewFadeTask: Task<Void, Never>?
+    private var duckTask: Task<Void, Never>?
 
     // MARK: - Fade Helpers
 
-    private func fadeOut(_ player: AVAudioPlayer, duration: Double, completion: @escaping @Sendable () -> Void) {
+    private func fadeOut(
+        _ player: AVAudioPlayer,
+        duration: Double,
+        task: inout Task<Void, Never>?,
+        completion: @escaping @Sendable () -> Void
+    ) {
         let steps = 15
         let interval = duration / Double(steps)
         let startVol = player.volume
 
-        fadeTask?.cancel()
-        fadeTask = Task { @MainActor in
+        task?.cancel()
+        task = Task { @MainActor in
             for i in 1...steps {
                 guard !Task.isCancelled else { return }
                 try? await Task.sleep(for: .milliseconds(Int(interval * 1000)))
                 player.volume = startVol * (1 - Float(i) / Float(steps))
             }
+            guard !Task.isCancelled else { return }
             completion()
         }
     }
 
-    private func fadeVolume(_ player: AVAudioPlayer, to target: Float, duration: Double) {
+    private func fadeVolume(
+        _ player: AVAudioPlayer,
+        to target: Float,
+        duration: Double,
+        task: inout Task<Void, Never>?
+    ) {
         let steps = 15
         let interval = duration / Double(steps)
         let startVol = player.volume
 
-        fadeTask?.cancel()
-        fadeTask = Task { @MainActor in
+        task?.cancel()
+        task = Task { @MainActor in
             for i in 1...steps {
                 guard !Task.isCancelled else { return }
                 try? await Task.sleep(for: .milliseconds(Int(interval * 1000)))
                 let progress = Float(i) / Float(steps)
                 player.volume = startVol + (target - startVol) * progress
             }
+            guard !Task.isCancelled else { return }
+            player.volume = target
         }
     }
 

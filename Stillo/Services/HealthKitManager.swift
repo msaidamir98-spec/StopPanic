@@ -1,12 +1,15 @@
 import Combine
 import Foundation
 import HealthKit
+import os.log
 import UserNotifications
 
 /// Менеджер HealthKit — пульс с Apple Watch + фоновые уведомления о тревоге
 @MainActor
 final class HealthKitManager: ObservableObject {
     // MARK: Internal
+
+    private static let log = Logger(subsystem: "MSK-PRODUKT.StopPanic", category: "HealthKit")
 
     @Published var heartRate: Double = 0
     @Published var isAuthorized: Bool = false
@@ -20,7 +23,7 @@ final class HealthKitManager: ObservableObject {
         guard HKHealthStore.isHealthDataAvailable() else { return }
 
         guard Bundle.main.object(forInfoDictionaryKey: "NSHealthShareUsageDescription") != nil else {
-            print("[HealthKitManager] NSHealthShareUsageDescription missing from Info.plist — skipping authorization")
+            Self.log.error("NSHealthShareUsageDescription missing from Info.plist — skipping authorization")
             return
         }
 
@@ -80,9 +83,9 @@ final class HealthKitManager: ObservableObject {
 
         healthStore.enableBackgroundDelivery(for: hrType, frequency: .immediate) { success, error in
             if let error {
-                print("[HealthKit] Background delivery error: \(error)")
+                Self.log.error("Background delivery error: \(error.localizedDescription, privacy: .public)")
             } else if success {
-                print("[HealthKit] Background heart rate delivery enabled")
+                Self.log.info("Background heart rate delivery enabled")
             }
         }
 

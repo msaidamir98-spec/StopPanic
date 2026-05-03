@@ -79,7 +79,7 @@ struct PanicRadarView: View {
                     .animation(SP.Anim.spring, value: predictionService.currentRisk?.confidence)
                 VStack(spacing: 6) {
                     Text(predictionService.currentRisk?.riskLevel.emoji ?? "🟢")
-                        .font(.system(size: 36))
+                        .font(.system(.title))
                     Text(predictionService.currentRisk?.riskLevel.title ?? "…")
                         .font(SP.Typography.headline)
                         .foregroundColor(SP.Colors.textPrimary)

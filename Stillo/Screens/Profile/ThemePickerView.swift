@@ -133,7 +133,7 @@ struct ThemePickerView: View {
                                 .frame(width: 40, height: 40)
 
                             Image(systemName: appTheme.icon)
-                                .font(.system(size: 18))
+                                .font(.system(.callout))
                                 .foregroundColor(theme.currentTheme == appTheme
                                     ? SP.Colors.accent
                                     : SP.Colors.textTertiary)
@@ -147,7 +147,7 @@ struct ThemePickerView: View {
 
                         if theme.currentTheme == appTheme {
                             Image(systemName: "checkmark.circle.fill")
-                                .font(.system(size: 20))
+                                .font(.system(.body))
                                 .foregroundStyle(SP.Colors.heroGradient)
                                 .transition(.scale.combined(with: .opacity))
                         }

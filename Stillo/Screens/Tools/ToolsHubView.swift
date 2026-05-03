@@ -184,17 +184,6 @@ struct ToolsHubView: View {
             }
 
             NavigationLink {
-                NowHelpView(viewModel: NowHelpViewModel())
-            } label: {
-                ToolCardLabel(
-                    icon: "list.number",
-                    title: String(localized: "tools_steps_title"),
-                    subtitle: String(localized: "tools_steps_sub"),
-                    color: SP.Colors.warmth
-                )
-            }
-
-            NavigationLink {
                 HeartAnalysisView()
             } label: {
                 ToolCardLabel(
@@ -333,16 +322,6 @@ struct ToolsHubView: View {
                 )
             }
 
-            NavigationLink {
-                PanicRadarView(predictionService: coordinator.predictionService)
-            } label: {
-                ToolCardLabel(
-                    icon: "chart.bar.xaxis",
-                    title: String(localized: "tools_patterns_title"),
-                    subtitle: String(localized: "tools_patterns_sub"),
-                    color: SP.Colors.accent
-                )
-            }
         }
     }
 

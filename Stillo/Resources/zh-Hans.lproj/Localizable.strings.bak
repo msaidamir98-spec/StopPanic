@@ -233,7 +233,7 @@
 "journal.empty.title" = "日记为空";
 "journal.empty.subtitle" = "记录条目以发现你的模式";
 "journal.perWeek" = "每周";
-"journal.avgIntensity" = "平均焦虑水平";
+"journal.avgIntensity" = "平均水平";
 "journal.trend" = "趋势";
 
 /* Profile */

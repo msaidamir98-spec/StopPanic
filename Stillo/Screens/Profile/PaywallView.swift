@@ -22,7 +22,10 @@ struct PaywallView: View {
                     // Close button
                     HStack {
                         Spacer()
-                        Button { dismiss() } label: {
+                        Button {
+                            SP.Haptic.light()
+                            dismiss()
+                        } label: {
                             Image(systemName: "xmark.circle.fill")
                                 .font(.title2)
                                 .foregroundColor(SP.Colors.textTertiary)
@@ -38,7 +41,7 @@ struct PaywallView: View {
                                 .frame(width: 100, height: 100)
 
                             Image(systemName: "crown.fill")
-                                .font(.system(size: 44))
+                                .font(.system(.largeTitle))
                                 .foregroundStyle(SP.Colors.heroGradient)
                         }
 
@@ -73,8 +76,20 @@ struct PaywallView: View {
                             priceCard(
                                 product: yearly,
                                 title: String(localized: "paywall_yearly"),
-                                badge: String(localized: "paywall_save_50"),
-                                isPopular: true
+                                badge: String(localized: "paywall_save_58"),
+                                isPopular: true,
+                                anchorPrice: yearlyAnchorPrice,
+                                freeTrialAvailable: yearlyHasFreeTrial
+                            )
+                        }
+
+                        if let lifetime = premium.products.first(where: { $0.id == PremiumManager.lifetimeID }) {
+                            priceCard(
+                                product: lifetime,
+                                title: String(localized: "paywall_lifetime"),
+                                badge: String(localized: "paywall_lifetime_badge"),
+                                isPopular: false,
+                                subtitle: String(localized: "paywall_lifetime_subtitle")
                             )
                         }
 
@@ -83,7 +98,8 @@ struct PaywallView: View {
                                 product: monthly,
                                 title: String(localized: "paywall_monthly"),
                                 badge: nil,
-                                isPopular: false
+                                isPopular: false,
+                                introPrice: monthlyIntroPrice
                             )
                         }
 
@@ -97,7 +113,11 @@ struct PaywallView: View {
 
                     // Restore
                     Button {
-                        Task { await premium.restorePurchases() }
+                        SP.Haptic.light()
+                        Task {
+                            await premium.restorePurchases()
+                            if premium.isPremium { SP.Haptic.success() }
+                        }
                     } label: {
                         Text(String(localized: "paywall_restore"))
                             .font(SP.Typography.caption)
@@ -135,6 +155,7 @@ struct PaywallView: View {
         }
         .task {
             await premium.loadProducts()
+            await computeIntroOffers()
         }
     }
 
@@ -143,7 +164,40 @@ struct PaywallView: View {
     @State
     private var purchasing = false
 
+    @State
+    private var yearlyHasFreeTrial = false
+
+    @State
+    private var monthlyIntroPrice: String?
+
+    @State
+    private var yearlyAnchorPrice: String?
+
     private let premium = PremiumManager.shared
+
+    private func computeIntroOffers() async {
+        // Yearly: detect eligible free-trial introductory offer
+        if let yearly = premium.products.first(where: { $0.id == PremiumManager.yearlyID }),
+           let sub = yearly.subscription,
+           let offer = sub.introductoryOffer,
+           offer.paymentMode == .freeTrial,
+           await sub.isEligibleForIntroOffer {
+            yearlyHasFreeTrial = true
+        }
+        // Monthly: detect eligible paid introductory offer (e.g. $1.99 first month)
+        if let monthly = premium.products.first(where: { $0.id == PremiumManager.monthlyID }),
+           let sub = monthly.subscription,
+           let offer = sub.introductoryOffer,
+           offer.paymentMode != .freeTrial,
+           await sub.isEligibleForIntroOffer {
+            monthlyIntroPrice = offer.displayPrice
+        }
+        // Anchor price for yearly card: monthly × 12, formatted in monthly's currency style
+        if let monthly = premium.products.first(where: { $0.id == PremiumManager.monthlyID }) {
+            let anchor = monthly.price * Decimal(12)
+            yearlyAnchorPrice = anchor.formatted(monthly.priceFormatStyle)
+        }
+    }
 
     private func premiumFeature(icon: String, title: String, color: Color) -> some View {
         HStack(spacing: 14) {
@@ -169,24 +223,49 @@ struct PaywallView: View {
         )
     }
 
-    private func priceCard(product: Product, title: String, badge: String?, isPopular: Bool) -> some View {
+    private func priceCard(
+        product: Product,
+        title: String,
+        badge: String?,
+        isPopular: Bool,
+        anchorPrice: String? = nil,
+        freeTrialAvailable: Bool = false,
+        introPrice: String? = nil,
+        subtitle: String? = nil
+    ) -> some View {
         Button {
             guard !purchasing else { return }
+            SP.Haptic.medium()
             purchasing = true
             Task {
-                _ = await premium.purchase(product)
+                let success = await premium.purchase(product)
                 purchasing = false
-                if premium.isPremium { dismiss() }
+                if success, premium.isPremium {
+                    SP.Haptic.success()
+                    dismiss()
+                } else if !success {
+                    SP.Haptic.warning()
+                }
             }
         } label: {
             VStack(spacing: 8) {
-                if let badge {
-                    Text(badge)
-                        .font(SP.Typography.caption)
-                        .foregroundColor(.white)
-                        .padding(.horizontal, 12)
-                        .padding(.vertical, 4)
-                        .background(Capsule().fill(SP.Colors.success))
+                HStack(spacing: 8) {
+                    if let badge {
+                        Text(badge)
+                            .font(SP.Typography.caption)
+                            .foregroundColor(.white)
+                            .padding(.horizontal, 12)
+                            .padding(.vertical, 4)
+                            .background(Capsule().fill(SP.Colors.success))
+                    }
+                    if freeTrialAvailable {
+                        Text(String(localized: "paywall_free_trial_badge"))
+                            .font(SP.Typography.caption)
+                            .foregroundColor(.white)
+                            .padding(.horizontal, 12)
+                            .padding(.vertical, 4)
+                            .background(Capsule().fill(SP.Colors.accent))
+                    }
                 }
 
                 HStack {
@@ -194,9 +273,35 @@ struct PaywallView: View {
                         Text(title)
                             .font(SP.Typography.headline)
                             .foregroundColor(SP.Colors.textPrimary)
+
+                        if let anchorPrice {
+                            Text(anchorPrice)
+                                .font(SP.Typography.caption)
+                                .foregroundColor(SP.Colors.textTertiary)
+                                .strikethrough(true, color: SP.Colors.textTertiary)
+                        }
+
                         Text(product.displayPrice)
                             .font(SP.Typography.title2)
                             .foregroundColor(SP.Colors.accent)
+
+                        if let subtitle {
+                            Text(subtitle)
+                                .font(SP.Typography.caption2)
+                                .foregroundColor(SP.Colors.textSecondary)
+                        }
+
+                        if let introPrice {
+                            Text(
+                                String(
+                                    format: NSLocalizedString("paywall_intro_monthly", comment: ""),
+                                    introPrice,
+                                    product.displayPrice
+                                )
+                            )
+                            .font(SP.Typography.caption2)
+                            .foregroundColor(SP.Colors.textSecondary)
+                        }
                     }
 
                     Spacer()

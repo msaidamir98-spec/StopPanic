@@ -73,7 +73,9 @@ playground.xcworkspace
 *.gcno
 Stillo/Stillo.entitlements.full
 
-## OpenAI API Key (NEVER commit)
+## Deprecated (Phase 22): OpenAI key moved server-side via stillo-tts-proxy (Cloudflare Worker).
+## OpenAITTSConfig.swift больше не используется — эти строки оставлены как safety net
+## на случай, если старая локальная копия всплывёт при merge из feature-ветки.
 Stillo/Services/OpenAITTSConfig.swift
 
 # Telegram notifier config

@@ -150,15 +150,14 @@
         <h2>2. Data We Access</h2>
 
         <h3 style="font-size:1.1em; margin-top:20px; margin-bottom:8px;">2.1 Apple HealthKit</h3>
-        <p>With your explicit permission, Stillō may read:</p>
+        <p>With your explicit permission, Stillō reads (and only reads) the following from Apple Health:</p>
         <ul>
             <li><strong>Heart Rate</strong> — displayed on-screen during breathing exercises for informational purposes
                 only.</li>
+            <li><strong>Heart Rate Variability (SDNN)</strong> — used locally to show your body's recovery pattern after
+                a panic episode. Never uploaded, never shared.</li>
         </ul>
-        <p>With your explicit permission, Stillō may write:</p>
-        <ul>
-            <li><strong>Mindful Minutes</strong> — to record completed breathing sessions in Apple Health.</li>
-        </ul>
+        <p>Stillō <strong>does not write</strong> any data to Apple Health.</p>
 
         <div class="highlight-box">
             <p><span class="badge">HealthKit Disclosure</span></p>
@@ -189,19 +188,26 @@
         <ul>
             <li>Your name, email, or account information (no sign-up required)</li>
             <li>Location data (GPS, IP-based, or otherwise)</li>
-            <li>Device identifiers (IDFA, IDFV used only by Apple for subscriptions)</li>
+            <li>Advertising identifiers (IDFA) or device identifiers (IDFV)</li>
             <li>Browsing history or usage analytics</li>
             <li>Contacts (beyond what you voluntarily enter as emergency contacts)</li>
             <li>Photos, camera, or microphone data</li>
         </ul>
 
         <h2>4. Third-Party Services</h2>
-        <p>Stillō uses <strong>no</strong> third-party analytics, crash reporting, or advertising SDKs. The only
-            external service is:</p>
+        <p>Stillō uses <strong>no</strong> third-party analytics, crash reporting, or advertising SDKs. External
+            services are strictly limited to the following, and only activate when you explicitly opt in:</p>
         <ul>
             <li><strong>Apple StoreKit 2</strong> — for in-app subscription management. Apple processes payments per
                 their <a href="https://www.apple.com/legal/privacy/">Privacy Policy</a>. We do not have access to your
                 payment information.</li>
+            <li><strong>Optional premium voice (OpenAI Text-to-Speech, via our Cloudflare Worker proxy)</strong> —
+                disabled by default. When enabled in Settings, short, non-identifying guidance phrases (≤500 characters,
+                such as "Breathe in", "You are safe now") are sent through our privacy-preserving proxy to OpenAI
+                solely to synthesize audio. No account data, journal entries, health data, or personally identifying
+                information is ever transmitted. OpenAI does not retain or train on this audio per their
+                <a href="https://openai.com/policies/api-data-usage-policies">API data policy</a>. Our Worker does not
+                log request bodies or IP addresses.</li>
         </ul>
 
         <h2>5. Data Sharing</h2>

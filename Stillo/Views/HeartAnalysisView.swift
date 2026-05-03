@@ -48,29 +48,14 @@ struct HeartAnalysisView: View {
         }
     }
 
-    // MARK: - Disclaimer
+    // MARK: - Disclaimer (collapsed footnote)
 
+    /// 2026-05-01: дисклеймер свёрнут в footnote по решению B-DIS
+    /// (Live QA — он усиливал тревогу при каждом открытии Heart-таба
+    /// у panic-app аудитории). Полный текст и crisis-line открываются
+    /// по тапу — non-blocking sheet.
     private var disclaimerCard: some View {
-        VStack(alignment: .leading, spacing: 10) {
-            HStack {
-                Image(systemName: "exclamationmark.triangle.fill")
-                    .foregroundColor(.orange)
-                    .font(.system(size: 18))
-                Text(String(localized: "heart.important_info"))
-                    .font(SP.Typography.headline)
-                    .foregroundColor(SP.Colors.textPrimary)
-                Spacer()
-            }
-            Text(String(localized: "heart.disclaimer_body"))
-                .font(SP.Typography.caption)
-                .foregroundColor(SP.Colors.textSecondary)
-                .lineSpacing(3)
-        }
-        .spGlassCard(cornerRadius: SP.Layout.cornerMedium)
-        .overlay(
-            RoundedRectangle(cornerRadius: SP.Layout.cornerMedium)
-                .stroke(Color.orange.opacity(0.3), lineWidth: 1)
-        )
+        DisclaimerFootnote()
     }
 
     // MARK: - Status Circle
@@ -93,7 +78,7 @@ struct HeartAnalysisView: View {
 
                 VStack(spacing: 6) {
                     Image(systemName: service.isMonitoring ? "heart.fill" : "heart")
-                        .font(.system(size: 36))
+                        .font(.system(.title))
                         .foregroundColor(diagnosisColor)
                         .symbolEffect(.pulse, isActive: service.isMonitoring)
                     Text(service.currentAnalysis?.diagnosis.localizedTitle ?? String(localized: "heart.waiting"))
@@ -258,7 +243,7 @@ struct HeartAnalysisView: View {
     private func infoLine(_ icon: String, _ text: String) -> some View {
         HStack(spacing: 8) {
             Image(systemName: icon)
-                .font(.system(size: 12))
+                .font(.system(.caption))
                 .foregroundColor(SP.Colors.accent)
                 .frame(width: 16)
             Text(text)

@@ -32,7 +32,7 @@ struct EmptyStateView: View {
                     .scaleEffect(appear ? 1.05 : 0.9)
 
                 Image(systemName: icon)
-                    .font(.system(size: 48, weight: .light))
+                    .font(.system(.largeTitle).weight(.light))
                     .foregroundStyle(
                         LinearGradient(
                             colors: [SP.Colors.accent, SP.Colors.calm],

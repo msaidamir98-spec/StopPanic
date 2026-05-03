@@ -233,7 +233,7 @@
 "journal.empty.title" = "O diário está vazio";
 "journal.empty.subtitle" = "Registre entradas para descobrir seus padrões";
 "journal.perWeek" = "por semana";
-"journal.avgIntensity" = "nível médio de ansiedade";
+"journal.avgIntensity" = "nível médio";
 "journal.trend" = "tendência";
 
 /* Profile */

@@ -7,12 +7,6 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-				AA30000000000001AUDIO /* rain_ambient.m4a in Resources */ = {isa = PBXBuildFile; fileRef = AA20000000000001AUDIO /* rain_ambient.m4a */; };
-				AA30000000000002AUDIO /* forest_calm.m4a in Resources */ = {isa = PBXBuildFile; fileRef = AA20000000000002AUDIO /* forest_calm.m4a */; };
-				AA30000000000003AUDIO /* calm_melody.m4a in Resources */ = {isa = PBXBuildFile; fileRef = AA20000000000003AUDIO /* calm_melody.m4a */; };
-				AA30000000000004AUDIO /* piano_meditation.m4a in Resources */ = {isa = PBXBuildFile; fileRef = AA20000000000004AUDIO /* piano_meditation.m4a */; };
-				AA30000000000005AUDIO /* flute_meditation.m4a in Resources */ = {isa = PBXBuildFile; fileRef = AA20000000000005AUDIO /* flute_meditation.m4a */; };
-				AA30000000000006AUDIO /* underwater_ambience.m4a in Resources */ = {isa = PBXBuildFile; fileRef = AA20000000000006AUDIO /* underwater_ambience.m4a */; };
 		BB10000000000031WIDGTCPY /* StilloWidgetExtension.appex in Embed Foundation Extensions */ = {isa = PBXBuildFile; fileRef = BB10000000000001WIDGTAPP /* StilloWidgetExtension.appex */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
 /* End PBXBuildFile section */
 
@@ -41,14 +35,14 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
-				AA20000000000001AUDIO /* rain_ambient.m4a */ = {isa = PBXFileReference; lastKnownFileType = audio.x-m4a; path = rain_ambient.m4a; sourceTree = "<group>"; name = rain_ambient.m4a; };
-				AA20000000000002AUDIO /* forest_calm.m4a */ = {isa = PBXFileReference; lastKnownFileType = audio.x-m4a; path = forest_calm.m4a; sourceTree = "<group>"; name = forest_calm.m4a; };
-				AA20000000000003AUDIO /* calm_melody.m4a */ = {isa = PBXFileReference; lastKnownFileType = audio.x-m4a; path = calm_melody.m4a; sourceTree = "<group>"; name = calm_melody.m4a; };
-				AA20000000000004AUDIO /* piano_meditation.m4a */ = {isa = PBXFileReference; lastKnownFileType = audio.x-m4a; path = piano_meditation.m4a; sourceTree = "<group>"; name = piano_meditation.m4a; };
-				AA20000000000005AUDIO /* flute_meditation.m4a */ = {isa = PBXFileReference; lastKnownFileType = audio.x-m4a; path = flute_meditation.m4a; sourceTree = "<group>"; name = flute_meditation.m4a; };
-				AA20000000000006AUDIO /* underwater_ambience.m4a */ = {isa = PBXFileReference; lastKnownFileType = audio.x-m4a; path = underwater_ambience.m4a; sourceTree = "<group>"; name = underwater_ambience.m4a; };
 		6647ADFF2EFC144600A1E680 /* Stillo.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; name = Stillo.app; path = "Stillō.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		66BA421D2F8ED77700C0F6D0 /* Stillō.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Stillō.app"; sourceTree = BUILT_PRODUCTS_DIR; };
+		AA20000000000001AUDIO /* rain_ambient.m4a */ = {isa = PBXFileReference; lastKnownFileType = "audio.x-m4a"; path = rain_ambient.m4a; sourceTree = "<group>"; };
+		AA20000000000002AUDIO /* forest_calm.m4a */ = {isa = PBXFileReference; lastKnownFileType = "audio.x-m4a"; path = forest_calm.m4a; sourceTree = "<group>"; };
+		AA20000000000003AUDIO /* calm_melody.m4a */ = {isa = PBXFileReference; lastKnownFileType = "audio.x-m4a"; path = calm_melody.m4a; sourceTree = "<group>"; };
+		AA20000000000004AUDIO /* piano_meditation.m4a */ = {isa = PBXFileReference; lastKnownFileType = "audio.x-m4a"; path = piano_meditation.m4a; sourceTree = "<group>"; };
+		AA20000000000005AUDIO /* flute_meditation.m4a */ = {isa = PBXFileReference; lastKnownFileType = "audio.x-m4a"; path = flute_meditation.m4a; sourceTree = "<group>"; };
+		AA20000000000006AUDIO /* underwater_ambience.m4a */ = {isa = PBXFileReference; lastKnownFileType = "audio.x-m4a"; path = underwater_ambience.m4a; sourceTree = "<group>"; };
 		BB10000000000001WIDGTAPP /* StilloWidgetExtension.appex */ = {isa = PBXFileReference; explicitFileType = "wrapper.app-extension"; includeInIndex = 0; path = StilloWidgetExtension.appex; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
 
@@ -99,7 +93,7 @@
 			isa = PBXGroup;
 			children = (
 				6647AE012EFC144600A1E680 /* Stillo */,
-						AA20000000000000AUDGRP /* Audio */,
+				AA20000000000000AUDGRP /* Audio */,
 				BB10000000000010WIDGTGRP /* StilloWidget */,
 				6647AE002EFC144600A1E680 /* Products */,
 				66BA421C2F8ED77700C0F6D0 /* Recovered References */,
@@ -124,20 +118,20 @@
 			name = "Recovered References";
 			sourceTree = "<group>";
 		};
-AA20000000000000AUDGRP /* Audio */ = {
-					isa = PBXGroup;
-					children = (
-						AA20000000000001AUDIO /* rain_ambient.m4a */,
-						AA20000000000002AUDIO /* forest_calm.m4a */,
-						AA20000000000003AUDIO /* calm_melody.m4a */,
-						AA20000000000004AUDIO /* piano_meditation.m4a */,
-						AA20000000000005AUDIO /* flute_meditation.m4a */,
-						AA20000000000006AUDIO /* underwater_ambience.m4a */,
-					);
-					name = Audio;
-					path = Stillo/Resources/Audio;
-					sourceTree = "<group>";
-				};
+		AA20000000000000AUDGRP /* Audio */ = {
+			isa = PBXGroup;
+			children = (
+				AA20000000000001AUDIO /* rain_ambient.m4a */,
+				AA20000000000002AUDIO /* forest_calm.m4a */,
+				AA20000000000003AUDIO /* calm_melody.m4a */,
+				AA20000000000004AUDIO /* piano_meditation.m4a */,
+				AA20000000000005AUDIO /* flute_meditation.m4a */,
+				AA20000000000006AUDIO /* underwater_ambience.m4a */,
+			);
+			name = Audio;
+			path = Stillo/Resources/Audio;
+			sourceTree = "<group>";
+		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
@@ -157,7 +151,7 @@ AA20000000000000AUDGRP /* Audio */ = {
 			);
 			fileSystemSynchronizedGroups = (
 				6647AE012EFC144600A1E680 /* Stillo */,
-						AA20000000000000AUDGRP /* Audio */,
+				AA20000000000000AUDGRP /* Audio */,
 			);
 			name = Stillo;
 			packageProductDependencies = (
@@ -444,7 +438,7 @@ AA20000000000000AUDGRP /* Audio */ = {
 				INFOPLIST_KEY_CFBundleDisplayName = "Stillō";
 				INFOPLIST_KEY_ITSAppUsesNonExemptEncryption = NO;
 				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.healthcare-fitness";
-				INFOPLIST_KEY_NSHealthShareUsageDescription = "Stillō reads your heart rate from Apple Watch to analyze anxiety episodes and help you understand your body's stress response.";
+				INFOPLIST_KEY_NSHealthShareUsageDescription = "Stillō displays your heart rate and heart-rate variability (HRV) during breathing sessions so you can see yourself calm down. Data is read-only and never leaves your device.";
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UIBackgroundModes = "fetch processing";
@@ -483,7 +477,7 @@ AA20000000000000AUDGRP /* Audio */ = {
 				INFOPLIST_KEY_CFBundleDisplayName = "Stillō";
 				INFOPLIST_KEY_ITSAppUsesNonExemptEncryption = NO;
 				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.healthcare-fitness";
-				INFOPLIST_KEY_NSHealthShareUsageDescription = "Stillō reads your heart rate from Apple Watch to analyze anxiety episodes and help you understand your body's stress response.";
+				INFOPLIST_KEY_NSHealthShareUsageDescription = "Stillō displays your heart rate and heart-rate variability (HRV) during breathing sessions so you can see yourself calm down. Data is read-only and never leaves your device.";
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UIBackgroundModes = "fetch processing";
@@ -523,7 +517,7 @@ AA20000000000000AUDGRP /* Audio */ = {
 				INFOPLIST_KEY_CFBundleDisplayName = "Stillō";
 				INFOPLIST_KEY_ITSAppUsesNonExemptEncryption = NO;
 				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.healthcare-fitness";
-				INFOPLIST_KEY_NSHealthShareUsageDescription = "Reading heart rate to help you understand your body's response during anxiety moments.";
+				INFOPLIST_KEY_NSHealthShareUsageDescription = "Stillō displays your heart rate and heart-rate variability (HRV) during breathing sessions so you can see yourself calm down. Data is read-only and never leaves your device.";
 				INFOPLIST_KEY_UIBackgroundModes = "fetch processing";
 				INFOPLIST_KEY_UISupportedInterfaceOrientations = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown";
 				INFOPLIST_KEY_WKCompanionAppBundleIdentifier = "MSK-PRODUKT.StopPanic";
@@ -561,7 +555,7 @@ AA20000000000000AUDGRP /* Audio */ = {
 				INFOPLIST_KEY_CFBundleDisplayName = "Stillō";
 				INFOPLIST_KEY_ITSAppUsesNonExemptEncryption = NO;
 				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.healthcare-fitness";
-				INFOPLIST_KEY_NSHealthShareUsageDescription = "Reading heart rate to help you understand your body's response during anxiety moments.";
+				INFOPLIST_KEY_NSHealthShareUsageDescription = "Stillō displays your heart rate and heart-rate variability (HRV) during breathing sessions so you can see yourself calm down. Data is read-only and never leaves your device.";
 				INFOPLIST_KEY_UIBackgroundModes = "fetch processing";
 				INFOPLIST_KEY_UISupportedInterfaceOrientations = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown";
 				INFOPLIST_KEY_WKCompanionAppBundleIdentifier = "MSK-PRODUKT.StopPanic";

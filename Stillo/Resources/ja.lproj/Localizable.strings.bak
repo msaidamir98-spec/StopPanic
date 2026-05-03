@@ -233,7 +233,7 @@
 "journal.empty.title" = "日記は空です";
 "journal.empty.subtitle" = "記録をつけてパターンを発見しましょう";
 "journal.perWeek" = "週間";
-"journal.avgIntensity" = "平均不安レベル";
+"journal.avgIntensity" = "平均レベル";
 "journal.trend" = "傾向";
 
 /* Profile */

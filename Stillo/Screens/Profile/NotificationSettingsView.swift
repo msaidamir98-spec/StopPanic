@@ -79,6 +79,7 @@ struct NotificationSettingsView: View {
 
             if !isAuthorized {
                 Button {
+                    SP.Haptic.medium()
                     requestPermission()
                 } label: {
                     Text(String(localized: "notif.allow"))
@@ -102,7 +103,13 @@ struct NotificationSettingsView: View {
                     .font(SP.Typography.headline)
                     .foregroundColor(SP.Colors.textPrimary)
                 Spacer()
-                Toggle("", isOn: $breathingReminder)
+                Toggle("", isOn: Binding(
+                    get: { breathingReminder },
+                    set: { newValue in
+                        SP.Haptic.selectionChanged()
+                        breathingReminder = newValue
+                    }
+                ))
                     .tint(SP.Colors.accent)
                     .labelsHidden()
             }
@@ -111,6 +118,7 @@ struct NotificationSettingsView: View {
                 Divider().background(SP.Colors.textTertiary.opacity(0.3))
 
                 Button {
+                    SP.Haptic.selectionChanged()
                     showTimePicker.toggle()
                 } label: {
                     HStack {
@@ -161,6 +169,7 @@ struct NotificationSettingsView: View {
                 }
 
                 Button {
+                    SP.Haptic.light()
                     saveReminder()
                 } label: {
                     Text(String(localized: "notif.save_reminder"))

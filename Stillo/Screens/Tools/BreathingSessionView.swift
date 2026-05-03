@@ -177,6 +177,7 @@ struct BreathingSessionView: View {
     private var topBar: some View {
         HStack {
             Button {
+                SP.Haptic.light()
                 stopSession()
                 dismiss()
             } label: {

@@ -154,7 +154,7 @@ struct HomeScreenView: View {
         } label: {
             HStack(spacing: 12) {
                 Image(systemName: "sparkle")
-                    .font(.system(size: 16))
+                    .font(.system(.callout))
                     .foregroundColor(SP.Colors.accent)
                     .symbolEffect(.pulse, isActive: true)
 
@@ -169,7 +169,7 @@ struct HomeScreenView: View {
                 Spacer(minLength: 4)
 
                 Image(systemName: "arrow.triangle.2.circlepath")
-                    .font(.system(size: 12))
+                    .font(.system(.caption))
                     .foregroundColor(SP.Colors.textTertiary)
             }
             .spGlassCard(cornerRadius: SP.Layout.cornerSmall)
@@ -255,7 +255,7 @@ struct HomeScreenView: View {
 
                     VStack(spacing: 6) {
                         Image(systemName: "hand.raised.fill")
-                            .font(.system(size: 36, weight: .bold))
+                            .font(.system(.title, design: .default).weight(.bold))
                             .foregroundColor(.white)
                             .shadow(color: .black.opacity(0.3), radius: 4, y: 2)
 
@@ -335,7 +335,7 @@ struct HomeScreenView: View {
                 }
                 .buttonStyle(PremiumButtonStyle(scale: 0.95))
 
-                // Grounding → opens GroundingExerciseView
+                // Grounding → opens GroundingExerciseView (5-4-3-2-1 evidence-based)
                 NavigationLink {
                     GroundingExerciseView()
                         .environment(coordinator)
@@ -344,32 +344,6 @@ struct HomeScreenView: View {
                         icon: "eye.fill", title: String(localized: "home_grounding"),
                         subtitle: String(localized: "home_grounding_sub"),
                         color: SP.Colors.accent, gradient: SP.Colors.heroGradient
-                    )
-                }
-                .buttonStyle(PremiumButtonStyle(scale: 0.95))
-
-                // Heart Analysis → opens HeartAnalysisView
-                NavigationLink {
-                    HeartAnalysisView()
-                        .environment(coordinator)
-                } label: {
-                    QuickActionCardLabel(
-                        icon: "heart.text.square.fill", title: String(localized: "home_heart_analysis"),
-                        subtitle: String(localized: "home_heart_sub"),
-                        color: SP.Colors.danger, gradient: SP.Colors.sosGradient
-                    )
-                }
-                .buttonStyle(PremiumButtonStyle(scale: 0.95))
-
-                // Relax → opens MuscleRelaxView
-                NavigationLink {
-                    MuscleRelaxView()
-                        .environment(coordinator)
-                } label: {
-                    QuickActionCardLabel(
-                        icon: "figure.strengthtraining.traditional", title: String(localized: "home_relax"),
-                        subtitle: String(localized: "home_relax_sub"),
-                        color: SP.Colors.warmth, gradient: SP.Colors.warmGradient
                     )
                 }
                 .buttonStyle(PremiumButtonStyle(scale: 0.95))
@@ -427,7 +401,7 @@ struct HomeScreenView: View {
     private func statusItem(icon: String, value: String, label: String, color: Color) -> some View {
         VStack(spacing: 4) {
             Image(systemName: icon)
-                .font(.system(size: 14))
+                .font(.system(.footnote))
                 .foregroundColor(color)
             Text(value)
                 .font(SP.Typography.headline)
@@ -460,7 +434,7 @@ struct QuickActionCard: View {
             VStack(alignment: .leading, spacing: 8) {
                 ZStack {
                     Circle().fill(color.opacity(0.15)).frame(width: 42, height: 42)
-                    Image(systemName: icon).font(.system(size: 18)).foregroundColor(color)
+                    Image(systemName: icon).font(.system(.callout)).foregroundColor(color)
                 }
                 Text(title).font(SP.Typography.headline).foregroundColor(SP.Colors.textPrimary)
                 Text(subtitle).font(SP.Typography.caption).foregroundColor(SP.Colors.textTertiary)
@@ -485,7 +459,7 @@ struct QuickActionCardLabel: View {
         VStack(alignment: .leading, spacing: 8) {
             ZStack {
                 Circle().fill(color.opacity(0.15)).frame(width: 42, height: 42)
-                Image(systemName: icon).font(.system(size: 18)).foregroundColor(color)
+                Image(systemName: icon).font(.system(.callout)).foregroundColor(color)
             }
             Text(title).font(SP.Typography.headline).foregroundColor(SP.Colors.textPrimary)
             Text(subtitle).font(SP.Typography.caption).foregroundColor(SP.Colors.textTertiary)
