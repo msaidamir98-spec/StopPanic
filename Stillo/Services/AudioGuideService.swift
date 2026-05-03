@@ -6,10 +6,9 @@ import SwiftUI
 
 /// Голосовое сопровождение дыхательных упражнений и заземления.
 ///
-/// Трёхуровневая система голоса:
+/// Двухуровневая система голоса (100% оффлайн):
 ///   1. 🥇 VoiceBankService — предзаписанные MP3 из бандла (мгновенно, оффлайн)
-///   2. 🥈 OpenAITTSService — через API OpenAI (если пользователь ввёл ключ)
-///   3. 🥉 AVSpeechSynthesizer — системный голос iOS (всегда доступен)
+///   2. 🥈 AVSpeechSynthesizer — системный голос iOS (всегда доступен)
 ///
 /// Аудио-сессия активируется лениво — только при speak(), не захватывает фокус
 /// без необходимости (Apple Review friendly).
@@ -27,9 +26,6 @@ final class AudioGuideService {
 
     /// Предзаписанные фразы — основной источник
     var voiceBank: VoiceBankService?
-
-    /// OpenAI TTS — опциональный премиум-голос
-    var ttsService: OpenAITTSService?
 
     /// Ссылка на ambient — для восстановления сессии после голоса
     var ambientSound: AmbientSoundService?
@@ -55,14 +51,12 @@ final class AudioGuideService {
     /// Какой источник голоса сейчас используется
     enum VoiceSource: String, CaseIterable {
         case voiceBank = "Pre-recorded"
-        case openAI = "OpenAI TTS"
         case system = "System Voice"
     }
 
     /// Режим голоса, выбранный пользователем
     /// .voiceBank = предзаписанные (по умолчанию)
     /// .system = системный AVSpeech (выбор голоса работает)
-    /// .openAI = OpenAI TTS (если есть ключ)
     var preferredSource: VoiceSource {
         get {
             access(keyPath: \.preferredSource)
@@ -83,11 +77,6 @@ final class AudioGuideService {
             if let vb = voiceBank, vb.isEnabled, vb.availablePhraseCount > 0 {
                 return .voiceBank
             }
-            // fallback
-            if let tts = ttsService, tts.isReady { return .openAI }
-            return .system
-        case .openAI:
-            if let tts = ttsService, tts.isReady { return .openAI }
             return .system
         case .system:
             return .system
@@ -111,7 +100,7 @@ final class AudioGuideService {
             phrase = .breatheOut
             text = String(localized: "voice.exhale")
         }
-        smartSpeak(phrase: phrase, fallbackText: text, rate: 0.35, pitch: 0.95)
+        smartSpeak(phrase: phrase, fallbackText: text, rate: 0.5, pitch: 1.0)
     }
 
     // MARK: - Public API: Grounding 5-4-3-2-1
@@ -129,149 +118,148 @@ final class AudioGuideService {
             String(localized: "voice.ground_taste"),
         ]
         let index = min(step, phrases.count - 1)
-        smartSpeak(phrase: phrases[index], fallbackText: texts[index], rate: 0.36, pitch: 0.92)
+        smartSpeak(phrase: phrases[index], fallbackText: texts[index], rate: 0.5, pitch: 1.0)
     }
 
     // MARK: - Public API: Completion & Safety
 
     func speakCompletion() {
         guard isVoiceEnabled else { return }
-        smartSpeak(phrase: .youDidIt, fallbackText: String(localized: "voice.you_did_it"), rate: 0.35, pitch: 0.98)
+        smartSpeak(phrase: .youDidIt, fallbackText: String(localized: "voice.you_did_it"), rate: 0.5, pitch: 1.05)
     }
 
     func speakSafe() {
         guard isVoiceEnabled else { return }
-        smartSpeak(phrase: .youAreSafe, fallbackText: String(localized: "voice.you_are_safe"), rate: 0.32, pitch: 0.88)
+        smartSpeak(phrase: .youAreSafe, fallbackText: String(localized: "voice.you_are_safe"), rate: 0.48, pitch: 0.95)
     }
 
     // MARK: - Public API: Session & SOS
 
     func speakWelcome() {
         guard isVoiceEnabled else { return }
-        smartSpeak(phrase: .welcome, fallbackText: String(localized: "voice.inhale"), rate: 0.34, pitch: 0.9)
+        smartSpeak(phrase: .welcome, fallbackText: String(localized: "voice.inhale"), rate: 0.5, pitch: 1.0)
     }
 
     func speakSessionStart() {
         guard isVoiceEnabled else { return }
-        smartSpeak(phrase: .sessionStart, fallbackText: "", rate: 0.34, pitch: 0.9)
+        smartSpeak(phrase: .sessionStart, fallbackText: "", rate: 0.5, pitch: 1.0)
     }
 
     func speakPanicIntro() {
         guard isVoiceEnabled else { return }
-        smartSpeak(phrase: .panicIntro, fallbackText: String(localized: "voice.you_are_safe"), rate: 0.30, pitch: 0.85)
+        smartSpeak(phrase: .panicIntro, fallbackText: String(localized: "voice.you_are_safe"), rate: 0.48, pitch: 0.95)
     }
 
     func speakSOSCalm() {
         guard isVoiceEnabled else { return }
-        smartSpeak(phrase: .sosCalmDown, fallbackText: String(localized: "voice.you_are_safe"), rate: 0.30, pitch: 0.85)
+        smartSpeak(phrase: .sosCalmDown, fallbackText: String(localized: "voice.you_are_safe"), rate: 0.48, pitch: 0.95)
     }
 
     func speakEncouragement() {
         guard isVoiceEnabled else { return }
-        smartSpeak(phrase: .greatJob, fallbackText: "", rate: 0.34, pitch: 0.92)
+        smartSpeak(phrase: .greatJob, fallbackText: "", rate: 0.5, pitch: 1.0)
     }
 
     func speakAlmostDone() {
         guard isVoiceEnabled else { return }
-        smartSpeak(phrase: .almostDone, fallbackText: "", rate: 0.34, pitch: 0.9)
+        smartSpeak(phrase: .almostDone, fallbackText: "", rate: 0.5, pitch: 1.0)
     }
 
     func speakRelaxShoulders() {
         guard isVoiceEnabled else { return }
-        smartSpeak(phrase: .relaxShoulders, fallbackText: "", rate: 0.32, pitch: 0.88)
+        smartSpeak(phrase: .relaxShoulders, fallbackText: "", rate: 0.48, pitch: 0.95)
     }
 
     func speakCloseEyes() {
         guard isVoiceEnabled else { return }
-        smartSpeak(phrase: .closeEyes, fallbackText: "", rate: 0.32, pitch: 0.88)
+        smartSpeak(phrase: .closeEyes, fallbackText: "", rate: 0.48, pitch: 0.95)
     }
 
     func speakFocusBreath() {
         guard isVoiceEnabled else { return }
-        smartSpeak(phrase: .focusBreath, fallbackText: "", rate: 0.32, pitch: 0.88)
+        smartSpeak(phrase: .focusBreath, fallbackText: "", rate: 0.48, pitch: 0.95)
     }
 
     // MARK: - CBT & Grounding (new medically-grounded phrases)
 
     func speakBodyRelax() {
         guard isVoiceEnabled else { return }
-        smartSpeak(phrase: .bodyRelax, fallbackText: String(localized: "voice.body_relax"), rate: 0.30, pitch: 0.85)
+        smartSpeak(phrase: .bodyRelax, fallbackText: String(localized: "voice.body_relax"), rate: 0.48, pitch: 0.95)
     }
 
     func speakFeetOnFloor() {
         guard isVoiceEnabled else { return }
-        smartSpeak(phrase: .feetOnFloor, fallbackText: String(localized: "voice.feet_on_floor"), rate: 0.32, pitch: 0.88)
+        smartSpeak(phrase: .feetOnFloor, fallbackText: String(localized: "voice.feet_on_floor"), rate: 0.5, pitch: 1.0)
     }
 
     func speakSafePlace() {
         guard isVoiceEnabled else { return }
-        smartSpeak(phrase: .safePlace, fallbackText: String(localized: "voice.safe_place"), rate: 0.30, pitch: 0.85)
+        smartSpeak(phrase: .safePlace, fallbackText: String(localized: "voice.safe_place"), rate: 0.48, pitch: 0.95)
     }
 
     func speakNotInDanger() {
         guard isVoiceEnabled else { return }
-        smartSpeak(phrase: .notInDanger, fallbackText: String(localized: "voice.not_in_danger"), rate: 0.30, pitch: 0.85)
+        smartSpeak(phrase: .notInDanger, fallbackText: String(localized: "voice.not_in_danger"), rate: 0.48, pitch: 0.95)
     }
 
     func speakThisWillPass() {
         guard isVoiceEnabled else { return }
-        smartSpeak(phrase: .thisWillPass, fallbackText: String(localized: "voice.this_will_pass"), rate: 0.30, pitch: 0.85)
+        smartSpeak(phrase: .thisWillPass, fallbackText: String(localized: "voice.this_will_pass"), rate: 0.48, pitch: 0.95)
     }
 
     func speakSlowDown() {
         guard isVoiceEnabled else { return }
-        smartSpeak(phrase: .slowDown, fallbackText: String(localized: "voice.slow_down"), rate: 0.28, pitch: 0.82)
+        smartSpeak(phrase: .slowDown, fallbackText: String(localized: "voice.slow_down"), rate: 0.45, pitch: 0.9)
     }
 
     func speakNameObjects() {
         guard isVoiceEnabled else { return }
-        smartSpeak(phrase: .nameObjects, fallbackText: String(localized: "voice.name_objects"), rate: 0.32, pitch: 0.88)
+        smartSpeak(phrase: .nameObjects, fallbackText: String(localized: "voice.name_objects"), rate: 0.5, pitch: 1.0)
     }
 
     func speakColdWater() {
         guard isVoiceEnabled else { return }
-        smartSpeak(phrase: .coldWater, fallbackText: String(localized: "voice.cold_water"), rate: 0.32, pitch: 0.88)
+        smartSpeak(phrase: .coldWater, fallbackText: String(localized: "voice.cold_water"), rate: 0.5, pitch: 1.0)
     }
 
     func speakTenseFists() {
         guard isVoiceEnabled else { return }
-        smartSpeak(phrase: .tenseFists, fallbackText: String(localized: "voice.tense_fists"), rate: 0.32, pitch: 0.88)
+        smartSpeak(phrase: .tenseFists, fallbackText: String(localized: "voice.tense_fists"), rate: 0.5, pitch: 1.0)
     }
 
     func speakCountBackward() {
         guard isVoiceEnabled else { return }
-        smartSpeak(phrase: .countBackward, fallbackText: String(localized: "voice.count_backward"), rate: 0.32, pitch: 0.88)
+        smartSpeak(phrase: .countBackward, fallbackText: String(localized: "voice.count_backward"), rate: 0.5, pitch: 1.0)
     }
 
     func speakAffirmStrong() {
         guard isVoiceEnabled else { return }
-        smartSpeak(phrase: .affirmStrong, fallbackText: String(localized: "voice.affirm_strong"), rate: 0.30, pitch: 0.88)
+        smartSpeak(phrase: .affirmStrong, fallbackText: String(localized: "voice.affirm_strong"), rate: 0.5, pitch: 1.0)
     }
 
     func speakAffirmControl() {
         guard isVoiceEnabled else { return }
-        smartSpeak(phrase: .affirmControl, fallbackText: String(localized: "voice.affirm_control"), rate: 0.30, pitch: 0.88)
+        smartSpeak(phrase: .affirmControl, fallbackText: String(localized: "voice.affirm_control"), rate: 0.5, pitch: 1.0)
     }
 
     func speakProgressiveRelax() {
         guard isVoiceEnabled else { return }
-        smartSpeak(phrase: .progressiveRelax, fallbackText: String(localized: "voice.progressive_relax"), rate: 0.30, pitch: 0.85)
+        smartSpeak(phrase: .progressiveRelax, fallbackText: String(localized: "voice.progressive_relax"), rate: 0.48, pitch: 0.95)
     }
 
     func speakMindfulNotice() {
         guard isVoiceEnabled else { return }
-        smartSpeak(phrase: .mindfulNotice, fallbackText: String(localized: "voice.mindful_notice"), rate: 0.30, pitch: 0.85)
+        smartSpeak(phrase: .mindfulNotice, fallbackText: String(localized: "voice.mindful_notice"), rate: 0.48, pitch: 0.95)
     }
 
     func speakGratitudeOne() {
         guard isVoiceEnabled else { return }
-        smartSpeak(phrase: .gratitudeOne, fallbackText: String(localized: "voice.gratitude_one"), rate: 0.30, pitch: 0.88)
+        smartSpeak(phrase: .gratitudeOne, fallbackText: String(localized: "voice.gratitude_one"), rate: 0.5, pitch: 1.0)
     }
 
     /// Останавливает всё воспроизведение
     func stop() {
         voiceBank?.stop()
-        ttsService?.stop()
         synthesizer.stopSpeaking(at: .immediate)
         // Восстанавливаем ambient вместо деактивации общей сессии
         ambientSound?.recoverSession()
@@ -367,57 +355,30 @@ final class AudioGuideService {
         synthesizer.delegate = speechDelegate
     }
 
-    // MARK: - Smart Speak (Three-tier cascade respecting preferredSource)
+    // MARK: - Smart Speak (single-tier: VoiceBank only — human voice, no robot)
 
+    /// 2026-05-01: AVSpeech-fallback удалён по решению пользователя
+    /// (см. obsiddian/StopPanic/Decisions/2026-05-01 — Voice and Cold-Start UX).
+    /// Если фразы нет в VoiceBank — тишина (graceful), не synth-робот.
+    /// Параметры fallbackText/rate/pitch оставлены в сигнатуре для совместимости
+    /// со звонками из других сервисов, но fallback больше не выполняется.
     private func smartSpeak(
         phrase: VoiceBankService.Phrase,
         fallbackText: String,
         rate: Float = 0.45,
         pitch: Float = 1.0
     ) {
-        switch _preferredSource {
-        case .voiceBank:
-            // 🥇 Tier 1: Pre-recorded voice bank (instant, offline)
-            if let vb = voiceBank, vb.play(phrase) {
-                Self.log.info("Played from VoiceBank: \(phrase.rawValue)")
-                return
-            }
-            // fallback → OpenAI → AVSpeech
-            if let tts = ttsService, tts.isReady, !fallbackText.isEmpty {
-                Self.log.info("VoiceBank miss, fallback OpenAI: \(phrase.rawValue)")
-                tts.speak(fallbackText, speed: Double(rate) * 2.5)
-                return
-            }
-            if !fallbackText.isEmpty {
-                Self.log.info("VoiceBank miss, fallback AVSpeech: \(phrase.rawValue)")
-                speakLocal(fallbackText, rate: rate, pitch: pitch)
-            }
-
-        case .openAI:
-            // 🥈 OpenAI TTS first
-            if let tts = ttsService, tts.isReady, !fallbackText.isEmpty {
-                Self.log.info("Playing via OpenAI TTS: \(phrase.rawValue)")
-                tts.speak(fallbackText, speed: Double(rate) * 2.5)
-                return
-            }
-            // fallback → AVSpeech
-            if !fallbackText.isEmpty {
-                Self.log.info("OpenAI unavailable, fallback AVSpeech: \(phrase.rawValue)")
-                speakLocal(fallbackText, rate: rate, pitch: pitch)
-            }
-
-        case .system:
-            // 🥉 System voice directly (user picked specific voice)
-            if !fallbackText.isEmpty {
-                Self.log.info("System voice (user choice): \(phrase.rawValue)")
-                speakLocal(fallbackText, rate: rate, pitch: pitch)
-            }
+        _ = (fallbackText, rate, pitch) // silence "unused" warnings
+        guard let vb = voiceBank, vb.play(phrase) else {
+            Self.log.info("VoiceBank miss for \(phrase.rawValue) — silence (no robot fallback)")
+            return
         }
+        Self.log.info("Played from VoiceBank: \(phrase.rawValue)")
     }
 
     // MARK: - AVSpeech Fallback
 
-    private func speakLocal(_ text: String, rate: Float = 0.45, pitch: Float = 1.0) {
+    private func speakLocal(_ text: String, rate: Float = 0.5, pitch: Float = 1.0) {
         ensureAudioSession()
 
         if synthesizer.isSpeaking {
@@ -425,11 +386,14 @@ final class AudioGuideService {
         }
 
         let utterance = AVSpeechUtterance(string: text)
-        utterance.rate = min(rate, 0.38)
-        utterance.pitchMultiplier = pitch * 0.92
-        utterance.volume = 0.85
-        utterance.preUtteranceDelay = 0.2
-        utterance.postUtteranceDelay = 0.5
+        utterance.rate = max(0.35, min(rate, AVSpeechUtteranceMaximumSpeechRate))
+        utterance.pitchMultiplier = max(0.5, min(pitch, 2.0))
+        let persistedVolume = UserDefaults.standard.object(forKey: "voiceBankVolume") as? Float ?? 1.0
+        utterance.volume = max(0, min(1, persistedVolume))
+        // Human-feel timing: thoughtful pause before, graceful tail after.
+        // Prevents robotic "instant-start/abrupt-stop" cadence.
+        utterance.preUtteranceDelay = 0.22
+        utterance.postUtteranceDelay = 0.38
         utterance.voice = resolveVoice()
 
         synthesizer.speak(utterance)
@@ -447,13 +411,22 @@ final class AudioGuideService {
         let allVoices = AVSpeechSynthesisVoice.speechVoices()
             .filter { $0.language == lang }
 
-        if let premium = allVoices.first(where: { $0.quality == .premium }) {
-            return premium
+        // Within each quality tier, prefer female voices — research on calming-voice
+        // perception in anxiety contexts (Keltner et al.) shows female-register
+        // voices are perceived as warmer and reduce sympathetic arousal.
+        func pickPreferringFemale(_ voices: [AVSpeechSynthesisVoice]) -> AVSpeechSynthesisVoice? {
+            voices.first(where: { $0.gender == .female })
+                ?? voices.first(where: { $0.gender == .unspecified })
+                ?? voices.first
         }
-        if let enhanced = allVoices.first(where: { $0.quality == .enhanced }) {
-            return enhanced
-        }
-        return allVoices.first ?? AVSpeechSynthesisVoice(language: lang)
+
+        let premium = allVoices.filter { $0.quality == .premium }
+        if let v = pickPreferringFemale(premium) { return v }
+
+        let enhanced = allVoices.filter { $0.quality == .enhanced }
+        if let v = pickPreferringFemale(enhanced) { return v }
+
+        return pickPreferringFemale(allVoices) ?? AVSpeechSynthesisVoice(language: lang)
     }
 
     // MARK: - Audio Session

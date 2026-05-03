@@ -16,17 +16,25 @@ struct MainTabView: View {
         var coordinator = coordinator
         ZStack {
             TabView(selection: $coordinator.selectedTab) {
-                HomeScreenView()
-                    .tabItem {
-                        Label(AppTab.home.title, systemImage: AppTab.home.icon)
-                    }
-                    .tag(AppTab.home)
+                // КАЖДЫЙ таб — отдельный NavigationStack. Без обёртки
+                // NavigationLink в дочерних view (Quick Help cards в Home,
+                // карточки техник в Tools, Journal Detail) молча
+                // игнорируются — это и был B-003 в Live QA от 2026-05-01.
+                NavigationStack {
+                    HomeScreenView()
+                }
+                .tabItem {
+                    Label(AppTab.home.title, systemImage: AppTab.home.icon)
+                }
+                .tag(AppTab.home)
 
-                ToolsHubView()
-                    .tabItem {
-                        Label(AppTab.tools.title, systemImage: AppTab.tools.icon)
-                    }
-                    .tag(AppTab.tools)
+                NavigationStack {
+                    ToolsHubView()
+                }
+                .tabItem {
+                    Label(AppTab.tools.title, systemImage: AppTab.tools.icon)
+                }
+                .tag(AppTab.tools)
 
                 NavigationStack {
                     HeartAnalysisView()
@@ -36,17 +44,21 @@ struct MainTabView: View {
                 }
                 .tag(AppTab.heart)
 
-                JournalView()
-                    .tabItem {
-                        Label(AppTab.journal.title, systemImage: AppTab.journal.icon)
-                    }
-                    .tag(AppTab.journal)
+                NavigationStack {
+                    JournalView()
+                }
+                .tabItem {
+                    Label(AppTab.journal.title, systemImage: AppTab.journal.icon)
+                }
+                .tag(AppTab.journal)
 
-                ProfileHubView()
-                    .tabItem {
-                        Label(AppTab.profile.title, systemImage: AppTab.profile.icon)
-                    }
-                    .tag(AppTab.profile)
+                NavigationStack {
+                    ProfileHubView()
+                }
+                .tabItem {
+                    Label(AppTab.profile.title, systemImage: AppTab.profile.icon)
+                }
+                .tag(AppTab.profile)
             }
             .tint(SP.Colors.accent)
 
