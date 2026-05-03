@@ -18,13 +18,15 @@ struct SettingsView: View {
             ScrollView(.vertical, showsIndicators: false) {
                 VStack(spacing: 16) {
                     voiceSection
-                    openAISection
                     soundscapeSection
                     appearanceSection
                     notificationsSection
                     healthSection
-                    dataSection
                     crisisSection
+                    PrivacySettingsView()
+                    #if DEBUG
+                    debugSection
+                    #endif
                     Spacer(minLength: 40)
                 }
                 .padding(.horizontal, SP.Layout.padding)
@@ -51,7 +53,10 @@ struct SettingsView: View {
 
             Toggle(String(localized: "settings.voice_enabled"), isOn: Binding(
                 get: { coordinator.audioGuide.isVoiceEnabled },
-                set: { coordinator.audioGuide.isVoiceEnabled = $0 }
+                set: {
+                    SP.Haptic.selectionChanged()
+                    coordinator.audioGuide.isVoiceEnabled = $0
+                }
             ))
             .font(SP.Typography.callout)
             .foregroundColor(SP.Colors.textPrimary)
@@ -74,22 +79,13 @@ struct SettingsView: View {
                             : String(localized: "settings.voice_no_phrases")
                     )
 
-                    // OpenAI TTS (premium voices)
-                    voiceSourceRow(
-                        source: .openAI,
-                        icon: "waveform.circle.fill",
-                        title: String(localized: "settings.voice_source_openai"),
-                        subtitle: coordinator.ttsService.isReady
-                            ? String(localized: "settings.voice_openai_ready")
-                            : String(localized: "settings.voice_openai_need_key")
-                    )
                 }
 
                 // Show current active source
                 let source = coordinator.audioGuide.activeSource
                 HStack(spacing: 8) {
                     Circle()
-                        .fill(source == .voiceBank ? SP.Colors.success : source == .openAI ? SP.Colors.accent : SP.Colors.calm)
+                        .fill(source == .voiceBank ? SP.Colors.success : SP.Colors.calm)
                         .frame(width: 8, height: 8)
                     Text(voiceSourceLabel(source))
                         .font(SP.Typography.caption2)
@@ -102,7 +98,7 @@ struct SettingsView: View {
                     HStack(spacing: 6) {
                         Image(systemName: "checkmark.seal.fill")
                             .foregroundColor(SP.Colors.success)
-                            .font(.system(size: 14))
+                            .font(.system(.footnote))
                         Text(String(localized: "settings.voice_bank_ready"))
                             .font(SP.Typography.caption2)
                             .foregroundColor(SP.Colors.success)
@@ -117,7 +113,7 @@ struct SettingsView: View {
                         .foregroundColor(SP.Colors.textTertiary)
                     HStack(spacing: 10) {
                         Image(systemName: "speaker.fill")
-                            .font(.system(size: 10))
+                            .font(.system(.caption2))
                             .foregroundColor(SP.Colors.textTertiary)
                         Slider(
                             value: Binding(
@@ -128,7 +124,7 @@ struct SettingsView: View {
                         )
                         .tint(SP.Colors.accent)
                         Image(systemName: "speaker.wave.3.fill")
-                            .font(.system(size: 10))
+                            .font(.system(.caption2))
                             .foregroundColor(SP.Colors.textTertiary)
                     }
                 }
@@ -149,11 +145,37 @@ struct SettingsView: View {
                     .background(SP.Colors.heroGradient)
                     .clipShape(RoundedRectangle(cornerRadius: SP.Layout.cornerSmall))
                 }
+
+                // Premium voice tip
+                premiumVoiceTip
             }
         }
         .spGlassCard(cornerRadius: SP.Layout.cornerMedium)
         .opacity(appear ? 1 : 0)
         .animation(SP.Anim.spring.delay(0.05), value: appear)
+    }
+
+    private var premiumVoiceTip: some View {
+        VStack(alignment: .leading, spacing: 6) {
+            HStack(spacing: 6) {
+                Image(systemName: "sparkles")
+                    .font(.system(.footnote))
+                    .foregroundColor(SP.Colors.accent)
+                Text(String(localized: "settings.voice_premium_tip_title"))
+                    .font(SP.Typography.subheadline)
+                    .foregroundColor(SP.Colors.textPrimary)
+            }
+            Text(String(localized: "settings.voice_premium_tip_body"))
+                .font(SP.Typography.caption2)
+                .foregroundColor(SP.Colors.textSecondary)
+                .fixedSize(horizontal: false, vertical: true)
+        }
+        .padding(10)
+        .frame(maxWidth: .infinity, alignment: .leading)
+        .background(
+            RoundedRectangle(cornerRadius: SP.Layout.cornerSmall)
+                .fill(SP.Colors.accent.opacity(0.08))
+        )
     }
 
     private func voiceSourceRow(source: AudioGuideService.VoiceSource, icon: String, title: String, subtitle: String) -> some View {
@@ -165,7 +187,7 @@ struct SettingsView: View {
         } label: {
             HStack(spacing: 10) {
                 Image(systemName: icon)
-                    .font(.system(size: 16))
+                    .font(.system(.callout))
                     .foregroundColor(coordinator.audioGuide.preferredSource == source ? SP.Colors.accent : SP.Colors.textTertiary)
                     .frame(width: 24)
                 VStack(alignment: .leading, spacing: 2) {
@@ -193,107 +215,6 @@ struct SettingsView: View {
 
 
 
-    // MARK: - OpenAI TTS (Optional Premium)
-
-    private var openAISection: some View {
-        VStack(alignment: .leading, spacing: 12) {
-            sectionHeader(icon: "waveform.circle.fill", title: "OpenAI TTS", color: SP.Colors.accent)
-
-            Text(String(localized: "settings.openai_description"))
-                .font(SP.Typography.caption)
-                .foregroundColor(SP.Colors.textSecondary)
-
-            Toggle(String(localized: "settings.openai_enabled"), isOn: Binding(
-                get: { coordinator.ttsService.isEnabled },
-                set: { coordinator.ttsService.isEnabled = $0 }
-            ))
-            .font(SP.Typography.callout)
-            .foregroundColor(SP.Colors.textPrimary)
-            .tint(SP.Colors.accent)
-
-            if coordinator.ttsService.isEnabled {
-                // Status indicator
-                HStack(spacing: 8) {
-                    Circle()
-                        .fill(coordinator.ttsService.isReady ? SP.Colors.success : SP.Colors.warning)
-                        .frame(width: 8, height: 8)
-                    Text(coordinator.ttsService.isReady
-                        ? String(localized: "settings.openai_status_ready")
-                        : String(localized: "settings.openai_status_no_key"))
-                        .font(SP.Typography.caption2)
-                        .foregroundColor(SP.Colors.textSecondary)
-                    Spacer()
-                }
-
-                // Voice selection
-                VStack(alignment: .leading, spacing: 6) {
-                    Text(String(localized: "settings.openai_voice"))
-                        .font(SP.Typography.caption)
-                        .foregroundColor(SP.Colors.textTertiary)
-
-                    ForEach(OpenAITTSService.TTSVoice.allCases) { voice in
-                        Button {
-                            SP.Haptic.selectionChanged()
-                            coordinator.ttsService.selectedVoice = voice
-                        } label: {
-                            HStack(spacing: 10) {
-                                Text(voice.emoji)
-                                Text(voice.displayName)
-                                    .font(SP.Typography.subheadline)
-                                    .foregroundColor(SP.Colors.textPrimary)
-                                Spacer()
-                                if coordinator.ttsService.selectedVoice == voice {
-                                    Image(systemName: "checkmark.circle.fill")
-                                        .foregroundStyle(SP.Colors.heroGradient)
-                                }
-                            }
-                            .padding(.vertical, 4)
-                        }
-                        .buttonStyle(.plain)
-                    }
-                }
-
-                // Test button
-                Button {
-                    SP.Haptic.light()
-                    coordinator.ttsService.speak(String(localized: "voice.you_are_safe"))
-                } label: {
-                    HStack {
-                        if coordinator.ttsService.isLoading {
-                            ProgressView()
-                                .scaleEffect(0.8)
-                        } else {
-                            Image(systemName: "play.circle.fill")
-                        }
-                        Text(String(localized: "settings.openai_test"))
-                    }
-                    .font(SP.Typography.subheadline)
-                    .foregroundColor(.white)
-                    .frame(maxWidth: .infinity)
-                    .padding(.vertical, 12)
-                    .background(SP.Colors.heroGradient)
-                    .clipShape(RoundedRectangle(cornerRadius: SP.Layout.cornerSmall))
-                }
-                .disabled(!coordinator.ttsService.isReady)
-                .opacity(!coordinator.ttsService.isReady ? 0.5 : 1)
-
-                // Model picker
-                Picker(String(localized: "settings.openai_model"), selection: Binding(
-                    get: { coordinator.ttsService.selectedModel },
-                    set: { coordinator.ttsService.selectedModel = $0 }
-                )) {
-                    ForEach(OpenAITTSService.TTSModel.allCases, id: \.rawValue) { model in
-                        Text(model.displayName).tag(model)
-                    }
-                }
-                .pickerStyle(.segmented)
-            }
-        }
-        .spGlassCard(cornerRadius: SP.Layout.cornerMedium)
-        .opacity(appear ? 1 : 0)
-        .animation(SP.Anim.spring.delay(0.1), value: appear)
-    }
-
     // MARK: - Soundscape
 
     private var soundscapeSection: some View {
@@ -318,7 +239,7 @@ struct SettingsView: View {
                         .frame(width: 8, height: 8)
                 }
                 Image(systemName: "chevron.right")
-                    .font(.system(size: 12))
+                    .font(.system(.caption))
                     .foregroundColor(SP.Colors.textTertiary)
             }
             .spGlassCard(cornerRadius: SP.Layout.cornerSmall)
@@ -342,7 +263,7 @@ struct SettingsView: View {
                     .foregroundColor(SP.Colors.textPrimary)
                 Spacer()
                 Image(systemName: "chevron.right")
-                    .font(.system(size: 12))
+                    .font(.system(.caption))
                     .foregroundColor(SP.Colors.textTertiary)
             }
             .spGlassCard(cornerRadius: SP.Layout.cornerSmall)
@@ -365,7 +286,7 @@ struct SettingsView: View {
                     .foregroundColor(SP.Colors.textPrimary)
                 Spacer()
                 Image(systemName: "chevron.right")
-                    .font(.system(size: 12))
+                    .font(.system(.caption))
                     .foregroundColor(SP.Colors.textTertiary)
             }
             .spGlassCard(cornerRadius: SP.Layout.cornerSmall)
@@ -388,7 +309,7 @@ struct SettingsView: View {
                     .foregroundColor(SP.Colors.textPrimary)
                 Spacer()
                 Image(systemName: "chevron.right")
-                    .font(.system(size: 12))
+                    .font(.system(.caption))
                     .foregroundColor(SP.Colors.textTertiary)
             }
             .spGlassCard(cornerRadius: SP.Layout.cornerSmall)
@@ -398,38 +319,7 @@ struct SettingsView: View {
         .animation(SP.Anim.spring.delay(0.3), value: appear)
     }
 
-    // MARK: - Data
-
-    private var dataSection: some View {
-        VStack(alignment: .leading, spacing: 12) {
-            sectionHeader(icon: "externaldrive.fill", title: String(localized: "settings.data"), color: SP.Colors.textSecondary)
-
-            Button {
-                coordinator.ttsService.clearCache()
-                SP.Haptic.success()
-            } label: {
-                HStack(spacing: 10) {
-                    Image(systemName: "trash.circle")
-                        .foregroundColor(SP.Colors.warning)
-                    VStack(alignment: .leading, spacing: 2) {
-                        Text(String(localized: "settings.clear_tts_cache"))
-                            .font(SP.Typography.subheadline)
-                            .foregroundColor(SP.Colors.textPrimary)
-                        Text(String(localized: "settings.clear_tts_cache_sub"))
-                            .font(SP.Typography.caption2)
-                            .foregroundColor(SP.Colors.textTertiary)
-                    }
-                    Spacer()
-                }
-            }
-            .buttonStyle(.plain)
-        }
-        .spGlassCard(cornerRadius: SP.Layout.cornerMedium)
-        .opacity(appear ? 1 : 0)
-        .animation(SP.Anim.spring.delay(0.35), value: appear)
-    }
-
-    // MARK: - Crisis Lines (separate from Data)
+    // MARK: - Crisis Lines
 
     private var crisisSection: some View {
         NavigationLink {
@@ -447,7 +337,7 @@ struct SettingsView: View {
                 }
                 Spacer()
                 Image(systemName: "chevron.right")
-                    .font(.system(size: 12))
+                    .font(.system(.caption))
                     .foregroundColor(SP.Colors.textTertiary)
             }
             .spGlassCard(cornerRadius: SP.Layout.cornerSmall)
@@ -457,12 +347,54 @@ struct SettingsView: View {
         .animation(SP.Anim.spring.delay(0.4), value: appear)
     }
 
+    // MARK: - Debug (DEBUG-only, никогда не попадает в Release)
+
+    #if DEBUG
+    private var debugSection: some View {
+        VStack(alignment: .leading, spacing: 12) {
+            sectionHeader(icon: "hammer.fill", title: "Developer", color: SP.Colors.warning)
+
+            Toggle(isOn: Binding(
+                get: { coordinator.premiumManager.isGodModeEnabled },
+                set: {
+                    SP.Haptic.selectionChanged()
+                    coordinator.premiumManager.isGodModeEnabled = $0
+                }
+            )) {
+                VStack(alignment: .leading, spacing: 2) {
+                    Text("🛠 God Mode")
+                        .font(SP.Typography.callout)
+                        .foregroundColor(SP.Colors.textPrimary)
+                    Text("Unlock all premium content (DEBUG only)")
+                        .font(SP.Typography.caption2)
+                        .foregroundColor(SP.Colors.textTertiary)
+                }
+            }
+            .tint(SP.Colors.warning)
+
+            if coordinator.premiumManager.isGodModeEnabled {
+                HStack(spacing: 6) {
+                    Image(systemName: "checkmark.seal.fill")
+                        .foregroundColor(SP.Colors.warning)
+                        .font(.system(.footnote))
+                    Text("All paywalls bypassed")
+                        .font(SP.Typography.caption2)
+                        .foregroundColor(SP.Colors.warning)
+                    Spacer()
+                }
+            }
+        }
+        .spGlassCard(cornerRadius: SP.Layout.cornerMedium)
+        .opacity(appear ? 1 : 0)
+        .animation(SP.Anim.spring.delay(0.45), value: appear)
+    }
+    #endif
+
     // MARK: - Helpers
 
     private func voiceSourceLabel(_ source: AudioGuideService.VoiceSource) -> String {
         switch source {
         case .voiceBank: String(localized: "settings.voice_source_bank")
-        case .openAI: String(localized: "settings.voice_source_openai")
         case .system: String(localized: "settings.voice_source_system")
         }
     }
@@ -482,7 +414,7 @@ struct SettingsView: View {
                 .fill(color.opacity(0.15))
                 .frame(width: 32, height: 32)
             Image(systemName: icon)
-                .font(.system(size: 14))
+                .font(.system(.footnote))
                 .foregroundColor(color)
         }
     }

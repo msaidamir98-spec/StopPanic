@@ -98,6 +98,58 @@ final class PersistenceController {
         }
     }
 
+    // MARK: - Privacy / Wipe
+
+    /// Удаляет ВСЕ пользовательские данные из Core Data + UserDefaults.
+    /// Apple Guideline 5.1.1 (iv) + GDPR Right to Erasure.
+    /// 2026-05-03: добавлено в рамках Master Plan День 2.
+    ///
+    /// - Note: вызывается из PrivacySettingsView с двойным подтверждением.
+    ///   Возвращает количество удалённых entities, либо -1 при ошибке.
+    @discardableResult
+    func wipeAllData() -> Int {
+        guard !storeLoadFailed else {
+            Self.log.error("Wipe failed — store not loaded")
+            return -1
+        }
+
+        // 1. Удалить все объекты Core Data через NSBatchDeleteRequest.
+        let coordinator = container.persistentStoreCoordinator
+        let model = coordinator.managedObjectModel
+        var deletedCount = 0
+
+        for entity in model.entities {
+            guard let name = entity.name else { continue }
+            let fetch = NSFetchRequest<NSFetchRequestResult>(entityName: name)
+            let delete = NSBatchDeleteRequest(fetchRequest: fetch)
+            delete.resultType = .resultTypeCount
+            do {
+                let result = try viewContext.execute(delete) as? NSBatchDeleteResult
+                let n = (result?.result as? Int) ?? 0
+                deletedCount += n
+                Self.log.info("Wiped \(n) of \(name)")
+            } catch {
+                Self.log.error("Wipe \(name) failed: \(error.localizedDescription)")
+            }
+        }
+
+        // 2. Сбросить in-memory context, чтобы UI получил пустые fetched results.
+        viewContext.reset()
+
+        // 3. Стереть UserDefaults для нашего bundle (preferences, mood-флаги,
+        // streak, voice config — всё, что не является security/IAP).
+        if let bundleId = Bundle.main.bundleIdentifier {
+            UserDefaults.standard.removePersistentDomain(forName: bundleId)
+            UserDefaults.standard.synchronize()
+        }
+
+        // 4. Уведомить координатор (если слушает) — пускай обновит состояние.
+        NotificationCenter.default.post(name: .stilloDataWiped, object: nil)
+
+        Self.log.info("Wipe complete: \(deletedCount) total objects deleted")
+        return deletedCount
+    }
+
     // MARK: - JSON → Core Data миграция
 
     /// Вызывается один раз при первом запуске после обновления.
@@ -208,4 +260,13 @@ final class PersistenceController {
         // This call returns nil instantly (no network) when entitlement is missing
         return FileManager.default.url(forUbiquityContainerIdentifier: nil) != nil
     }
+}
+
+// MARK: - Notification Names
+
+extension Notification.Name {
+    /// Бросается после `PersistenceController.wipeAllData()`.
+    /// Слушатели (AppCoordinator, ProfileHubView и т.п.) должны
+    /// сбросить локальные state-кеши: name, streaks, achievements.
+    static let stilloDataWiped = Notification.Name("stilloDataWiped")
 }

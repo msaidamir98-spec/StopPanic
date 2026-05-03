@@ -233,7 +233,7 @@
 "journal.empty.title" = "Journal is empty";
 "journal.empty.subtitle" = "Log entries to discover your patterns";
 "journal.perWeek" = "per week";
-"journal.avgIntensity" = "avg level";
+"journal.avgIntensity" = "avg anxiety level";
 "journal.trend" = "trend";
 
 /* Profile */
@@ -885,3 +885,18 @@
 
 "settings.clear_tts_cache_sub" = "Remove cached voice files to free storage";
 "settings.crisis_lines_sub" = "Emergency helplines for your region";
+"heart.disclaimer_a11y_hint" = "Open full disclaimer and crisis-line directory";
+"heart.crisis_line_title" = "If you are in immediate danger";
+"heart.crisis_line_hint" = "Open Profile → Settings → Crisis Line. 12 country numbers preset by locale.";
+"settings.privacy.title" = "Privacy";
+"settings.privacy.body" = "All your data stays on your device. Stillō never sends anything to the cloud without your iCloud account. You can permanently erase your full history — journal entries, sessions, SOS contacts.";
+"settings.privacy.delete_btn" = "Delete all my data";
+"settings.privacy.delete_a11y_hint" = "Two confirmations before permanent deletion";
+"settings.privacy.confirm1_title" = "Delete all data?";
+"settings.privacy.confirm1_body" = "Journal entries, breathing sessions, SOS contacts, moods and achievements will be erased. This cannot be undone.";
+"settings.privacy.confirm1_btn" = "Continue";
+"settings.privacy.confirm2_title" = "Are you sure?";
+"settings.privacy.confirm2_body" = "Last warning. After confirming, your data cannot be recovered.";
+"settings.privacy.confirm2_btn" = "Delete forever";
+"settings.privacy.done_title" = "Done";
+"settings.privacy.done_body %lld" = "%lld items deleted.";

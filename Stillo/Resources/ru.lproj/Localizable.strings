@@ -233,7 +233,7 @@
 "journal.empty.title" = "Дневник пока пуст";
 "journal.empty.subtitle" = "Веди записи, чтобы увидеть свои паттерны";
 "journal.perWeek" = "за неделю";
-"journal.avgIntensity" = "средний уровень";
+"journal.avgIntensity" = "средний уровень тревоги";
 "journal.trend" = "тренд";
 
 /* Profile */
@@ -886,3 +886,18 @@
 
 "settings.clear_tts_cache_sub" = "Удалить кэш голосовых файлов для освобождения памяти";
 "settings.crisis_lines_sub" = "Телефоны экстренной помощи для вашего региона";
+"heart.disclaimer_a11y_hint" = "Открыть полный дисклеймер и список телефонов доверия";
+"heart.crisis_line_title" = "При острой опасности";
+"heart.crisis_line_hint" = "Открой Профиль → Настройки → Телефон доверия. Список номеров для 12 стран преднастроен по локали.";
+"settings.privacy.title" = "Приватность";
+"settings.privacy.body" = "Все данные хранятся на твоём устройстве. Stillō не отправляет ничего в облако без iCloud-аккаунта. Здесь ты можешь полностью удалить всю историю — записи дневника, сессии, контакты SOS.";
+"settings.privacy.delete_btn" = "Удалить все мои данные";
+"settings.privacy.delete_a11y_hint" = "Открывается два подтверждения перед окончательным удалением";
+"settings.privacy.confirm1_title" = "Удалить все данные?";
+"settings.privacy.confirm1_body" = "Будут удалены все записи дневника, сессии дыхания, контакты SOS, настроения и достижения. Действие нельзя отменить.";
+"settings.privacy.confirm1_btn" = "Продолжить";
+"settings.privacy.confirm2_title" = "Точно удалить?";
+"settings.privacy.confirm2_body" = "Это последнее предупреждение. После подтверждения восстановить данные будет невозможно.";
+"settings.privacy.confirm2_btn" = "Удалить навсегда";
+"settings.privacy.done_title" = "Готово";
+"settings.privacy.done_body %lld" = "Удалено %lld записей.";
