@@ -205,7 +205,7 @@ final class PremiumManager {
                 // Заменено на do/catch с логом. НЕ finish() unverified —
                 // StoreKit повторит, и если повтор тоже unverified — это
                 // не наша проблема, юзер получит refund от Apple.
-                let transaction: Transaction
+                let transaction: StoreKit.Transaction
                 do {
                     guard let verified = try await self?.checkVerified(result) else { continue }
                     transaction = verified
