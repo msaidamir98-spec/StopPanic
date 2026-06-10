@@ -8,6 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		BB10000000000031WIDGTCPY /* StilloWidgetExtension.appex in Embed Foundation Extensions */ = {isa = PBXBuildFile; fileRef = BB10000000000001WIDGTAPP /* StilloWidgetExtension.appex */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
+		CC10000000000031WATCHCPY /* Stillō.app in Embed Watch Content */ = {isa = PBXBuildFile; fileRef = 66BA421D2F8ED77700C0F6D0 /* Stillō.app */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -17,6 +18,20 @@
 			proxyType = 1;
 			remoteGlobalIDString = BB10000000000003WIDGTTGT;
 			remoteInfo = StilloWidgetExtension;
+		};
+		CC10000000000020WATCHPRX /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 6647ADF72EFC144600A1E680 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = AA10000000000003WATCHTGT;
+			remoteInfo = "StilloWatch Watch App";
+		};
+		DD10000000000020TESTSPRX /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 6647ADF72EFC144600A1E680 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 6647ADFE2EFC144600A1E680;
+			remoteInfo = Stillo;
 		};
 /* End PBXContainerItemProxy section */
 
@@ -32,6 +47,17 @@
 			name = "Embed Foundation Extensions";
 			runOnlyForDeploymentPostprocessing = 0;
 		};
+		CC10000000000030WATCHEMB /* Embed Watch Content */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = "$(CONTENTS_FOLDER_PATH)/Watch";
+			dstSubfolderSpec = 16;
+			files = (
+				CC10000000000031WATCHCPY /* Stillō.app in Embed Watch Content */,
+			);
+			name = "Embed Watch Content";
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
@@ -44,11 +70,27 @@
 		AA20000000000005AUDIO /* flute_meditation.m4a */ = {isa = PBXFileReference; lastKnownFileType = "audio.x-m4a"; path = flute_meditation.m4a; sourceTree = "<group>"; };
 		AA20000000000006AUDIO /* underwater_ambience.m4a */ = {isa = PBXFileReference; lastKnownFileType = "audio.x-m4a"; path = underwater_ambience.m4a; sourceTree = "<group>"; };
 		BB10000000000001WIDGTAPP /* StilloWidgetExtension.appex */ = {isa = PBXFileReference; explicitFileType = "wrapper.app-extension"; includeInIndex = 0; path = StilloWidgetExtension.appex; sourceTree = BUILT_PRODUCTS_DIR; };
+		DD10000000000001TESTSXCT /* StilloTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = StilloTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
+
+/* Begin PBXFileSystemSynchronizedBuildFileExceptionSet section */
+		EE10000000000040EXCEPSET /* Exceptions for "Stillo" folder in "Stillo" target */ = {
+			isa = PBXFileSystemSynchronizedBuildFileExceptionSet;
+			membershipExceptions = (
+				Products.storekit,
+				Stillo.entitlements,
+				Stillo.entitlements.full,
+			);
+			target = 6647ADFE2EFC144600A1E680 /* Stillo */;
+		};
+/* End PBXFileSystemSynchronizedBuildFileExceptionSet section */
 
 /* Begin PBXFileSystemSynchronizedRootGroup section */
 		6647AE012EFC144600A1E680 /* Stillo */ = {
 			isa = PBXFileSystemSynchronizedRootGroup;
+			exceptions = (
+				EE10000000000040EXCEPSET /* Exceptions for "Stillo" folder in "Stillo" target */,
+			);
 			path = Stillo;
 			sourceTree = "<group>";
 		};
@@ -60,6 +102,11 @@
 		BB10000000000010WIDGTGRP /* StilloWidget */ = {
 			isa = PBXFileSystemSynchronizedRootGroup;
 			path = StilloWidget;
+			sourceTree = "<group>";
+		};
+		DD10000000000010TESTSGRP /* StilloTests */ = {
+			isa = PBXFileSystemSynchronizedRootGroup;
+			path = StilloTests;
 			sourceTree = "<group>";
 		};
 /* End PBXFileSystemSynchronizedRootGroup section */
@@ -86,6 +133,13 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
+		DD10000000000002TESTSFWK /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
@@ -95,6 +149,7 @@
 				6647AE012EFC144600A1E680 /* Stillo */,
 				AA20000000000000AUDGRP /* Audio */,
 				BB10000000000010WIDGTGRP /* StilloWidget */,
+				DD10000000000010TESTSGRP /* StilloTests */,
 				6647AE002EFC144600A1E680 /* Products */,
 				66BA421C2F8ED77700C0F6D0 /* Recovered References */,
 			);
@@ -105,6 +160,7 @@
 			children = (
 				6647ADFF2EFC144600A1E680 /* Stillo.app */,
 				BB10000000000001WIDGTAPP /* StilloWidgetExtension.appex */,
+				DD10000000000001TESTSXCT /* StilloTests.xctest */,
 				66BA421D2F8ED77700C0F6D0 /* Stillō.app */,
 			);
 			name = Products;
@@ -143,11 +199,13 @@
 				6647ADFC2EFC144600A1E680 /* Frameworks */,
 				6647ADFD2EFC144600A1E680 /* Resources */,
 				BB10000000000030WIDGTEMB /* Embed Foundation Extensions */,
+				CC10000000000030WATCHEMB /* Embed Watch Content */,
 			);
 			buildRules = (
 			);
 			dependencies = (
 				BB10000000000021WIDGTDEP /* PBXTargetDependency */,
+				CC10000000000021WATCHDEP /* PBXTargetDependency */,
 			);
 			fileSystemSynchronizedGroups = (
 				6647AE012EFC144600A1E680 /* Stillo */,
@@ -202,6 +260,29 @@
 			productReference = BB10000000000001WIDGTAPP /* StilloWidgetExtension.appex */;
 			productType = "com.apple.product-type.app-extension";
 		};
+		DD10000000000003TESTSTGT /* StilloTests */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = DD10000000000009TESTSCFL /* Build configuration list for PBXNativeTarget "StilloTests" */;
+			buildPhases = (
+				DD10000000000004TESTSSRC /* Sources */,
+				DD10000000000002TESTSFWK /* Frameworks */,
+				DD10000000000005TESTSRES /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				DD10000000000021TESTSDEP /* PBXTargetDependency */,
+			);
+			fileSystemSynchronizedGroups = (
+				DD10000000000010TESTSGRP /* StilloTests */,
+			);
+			name = StilloTests;
+			packageProductDependencies = (
+			);
+			productName = StilloTests;
+			productReference = DD10000000000001TESTSXCT /* StilloTests.xctest */;
+			productType = "com.apple.product-type.bundle.unit-test";
+		};
 /* End PBXNativeTarget section */
 
 /* Begin PBXProject section */
@@ -214,6 +295,9 @@
 				TargetAttributes = {
 					6647ADFE2EFC144600A1E680 = {
 						CreatedOnToolsVersion = 26.2;
+					};
+					DD10000000000003TESTSTGT = {
+						TestTargetID = 6647ADFE2EFC144600A1E680;
 					};
 				};
 			};
@@ -241,6 +325,7 @@
 				6647ADFE2EFC144600A1E680 /* Stillo */,
 				AA10000000000003WATCHTGT /* StilloWatch Watch App */,
 				BB10000000000003WIDGTTGT /* StilloWidgetExtension */,
+				DD10000000000003TESTSTGT /* StilloTests */,
 			);
 		};
 /* End PBXProject section */
@@ -261,6 +346,13 @@
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 		BB10000000000005WIDGTRES /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		DD10000000000005TESTSRES /* Resources */ = {
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
@@ -291,6 +383,13 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
+		DD10000000000004TESTSSRC /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 /* End PBXSourcesBuildPhase section */
 
 /* Begin PBXTargetDependency section */
@@ -298,6 +397,16 @@
 			isa = PBXTargetDependency;
 			target = BB10000000000003WIDGTTGT /* StilloWidgetExtension */;
 			targetProxy = BB10000000000020WIDGTPRX /* PBXContainerItemProxy */;
+		};
+		CC10000000000021WATCHDEP /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = AA10000000000003WATCHTGT /* StilloWatch Watch App */;
+			targetProxy = CC10000000000020WATCHPRX /* PBXContainerItemProxy */;
+		};
+		DD10000000000021TESTSDEP /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 6647ADFE2EFC144600A1E680 /* Stillo */;
+			targetProxy = DD10000000000020TESTSPRX /* PBXContainerItemProxy */;
 		};
 /* End PBXTargetDependency section */
 
@@ -451,6 +560,7 @@
 				);
 				MARKETING_VERSION = 1.0.0;
 				PRODUCT_BUNDLE_IDENTIFIER = "MSK-PRODUKT.StopPanic";
+				PRODUCT_MODULE_NAME = Stillo;
 				PRODUCT_NAME = "Stillō";
 				STRING_CATALOG_GENERATE_SYMBOLS = YES;
 				SWIFT_APPROACHABLE_CONCURRENCY = YES;
@@ -490,6 +600,7 @@
 				);
 				MARKETING_VERSION = 1.0.0;
 				PRODUCT_BUNDLE_IDENTIFIER = "MSK-PRODUKT.StopPanic";
+				PRODUCT_MODULE_NAME = Stillo;
 				PRODUCT_NAME = "Stillō";
 				STRING_CATALOG_GENERATE_SYMBOLS = YES;
 				SWIFT_APPROACHABLE_CONCURRENCY = YES;
@@ -633,6 +744,44 @@
 			};
 			name = Release;
 		};
+		DD10000000000006TESTSDBG /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = 6K26HD4XFR;
+				GENERATE_INFOPLIST_FILE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 17.0;
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = "MSK-PRODUKT.StopPanic.StilloTests";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_EMIT_LOC_STRINGS = NO;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/Stillō.app/Stillō";
+			};
+			name = Debug;
+		};
+		DD10000000000007TESTSREL /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = 6K26HD4XFR;
+				GENERATE_INFOPLIST_FILE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 17.0;
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = "MSK-PRODUKT.StopPanic.StilloTests";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_EMIT_LOC_STRINGS = NO;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/Stillō.app/Stillō";
+			};
+			name = Release;
+		};
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
@@ -668,6 +817,15 @@
 			buildConfigurations = (
 				BB10000000000006WIDGTDBG /* Debug */,
 				BB10000000000007WIDGTREL /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		DD10000000000009TESTSCFL /* Build configuration list for PBXNativeTarget "StilloTests" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				DD10000000000006TESTSDBG /* Debug */,
+				DD10000000000007TESTSREL /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;

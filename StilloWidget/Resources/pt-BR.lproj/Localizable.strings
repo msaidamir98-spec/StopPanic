@@ -1,0 +1,7 @@
+/* Brazilian Portuguese — Stillō Widget */
+"widget.sos_title" = "SOS";
+"widget.sos_inline_title" = "Stillō SOS";
+"widget.sos_tap_hint" = "Toque para receber ajuda";
+"widget.sos_description" = "Acesso rápido à ajuda de emergência";
+"widget.breathe_title" = "Respiração 4-7-8";
+"widget.breathe_description" = "Comece a respirar pela Tela de Bloqueio";

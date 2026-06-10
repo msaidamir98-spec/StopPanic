@@ -184,8 +184,13 @@ final class VoiceBankService {
 
     @ObservationIgnored
     private var _volume: Float = {
-        let v = UserDefaults.standard.float(forKey: "voiceBankVolume")
-        return v > 0 ? v : 0.85 // default 85%
+        // «Ключ отсутствует» (первый запуск) → дефолт 85%; сохранённый 0
+        // уважаем — иначе сознательно выставленный ноль сбрасывался
+        // на дефолт после рестарта.
+        guard UserDefaults.standard.object(forKey: "voiceBankVolume") != nil else {
+            return 0.85 // default 85%
+        }
+        return UserDefaults.standard.float(forKey: "voiceBankVolume")
     }()
 
     @ObservationIgnored

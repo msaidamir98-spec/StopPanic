@@ -71,7 +71,6 @@ playground.xcworkspace
 ## Profiling
 *.gcda
 *.gcno
-Stillo/Stillo.entitlements.full
 
 ## Deprecated (Phase 22): OpenAI key moved server-side via stillo-tts-proxy (Cloudflare Worker).
 ## OpenAITTSConfig.swift больше не используется — эти строки оставлены как safety net

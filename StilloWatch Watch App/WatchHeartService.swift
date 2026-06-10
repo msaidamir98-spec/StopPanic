@@ -1,7 +1,10 @@
 import Combine
 import Foundation
 import HealthKit
+import os.log
 import SwiftUI
+
+private let heartLog = Logger(subsystem: "MSK-PRODUKT.StopPanic.watchkitapp", category: "WatchHeart")
 
 /// Сервис мониторинга пульса на Apple Watch
 /// Мониторинг ЧСС в реальном времени — анализ паттернов пульса (wellness)
@@ -35,6 +38,9 @@ class WatchHeartService: ObservableObject {
     var isMonitoring = false
     @Published
     var suggestMedicalConsult = false
+    /// HealthKit-авторизация отклонена / не получена — UI может показать empty-state
+    @Published
+    var authorizationDenied = false
 
     @Published
     var diagnosis: DiagnosisResult = .normal
@@ -100,10 +106,20 @@ class WatchHeartService: ObservableObject {
               let hrvType = HKQuantityType.quantityType(forIdentifier: .heartRateVariabilitySDNN)
         else { return }
 
-        healthStore.requestAuthorization(toShare: nil, read: [hrType, hrvType]) { [weak self] ok, _ in
-            guard ok else { return }
+        healthStore.requestAuthorization(toShare: nil, read: [hrType, hrvType]) { [weak self] ok, error in
             Task { @MainActor [weak self] in
-                self?.startLiveQuery()
+                guard let self else { return }
+                if let error {
+                    heartLog.error("⌚ HealthKit authorization error: \(error.localizedDescription)")
+                }
+                guard ok else {
+                    heartLog.error("⌚ HealthKit authorization denied — monitoring unavailable")
+                    self.authorizationDenied = true
+                    return
+                }
+                self.authorizationDenied = false
+                self.startWorkoutSession()
+                self.startLiveQuery()
             }
         }
     }
@@ -113,6 +129,8 @@ class WatchHeartService: ObservableObject {
             healthStore.stop(q)
         }
         anchoredQuery = nil
+        workoutSession?.end()
+        workoutSession = nil
         isMonitoring = false
         sampleBuffer.removeAll()
     }
@@ -130,6 +148,26 @@ class WatchHeartService: ObservableObject {
     private let irregularityThreshold: Double = 0.35
     private let lowHRV: Double = 20
 
+    // MARK: - Workout Session
+
+    /// Активная workout-сессия (.mindAndBody) заставляет watchOS отдавать
+    /// HR-сэмплы каждые несколько секунд вместо раза в минуты
+    private func startWorkoutSession() {
+        guard workoutSession == nil else { return }
+        let configuration = HKWorkoutConfiguration()
+        configuration.activityType = .mindAndBody
+        configuration.locationType = .unknown
+        do {
+            let session = try HKWorkoutSession(healthStore: healthStore, configuration: configuration)
+            session.startActivity(with: Date())
+            workoutSession = session
+            heartLog.info("⌚ Workout session (.mindAndBody) started — live HR enabled")
+        } catch {
+            heartLog.error("⌚ Failed to start workout session: \(error.localizedDescription) — falling back to passive sampling")
+            workoutSession = nil
+        }
+    }
+
     // MARK: - Live Query
 
     private func startLiveQuery() {
@@ -143,14 +181,20 @@ class WatchHeartService: ObservableObject {
             predicate: predicate,
             anchor: nil,
             limit: HKObjectQueryNoLimit
-        ) { [weak self] _, added, _, _, _ in
+        ) { [weak self] _, added, _, _, error in
+            if let error {
+                heartLog.error("⌚ HR anchored query failed: \(error.localizedDescription)")
+            }
             let samples = added ?? []
             Task { @MainActor [weak self] in
                 self?.processHRSamples(samples)
             }
         }
 
-        query.updateHandler = { [weak self] _, added, _, _, _ in
+        query.updateHandler = { [weak self] _, added, _, _, error in
+            if let error {
+                heartLog.error("⌚ HR query update failed: \(error.localizedDescription)")
+            }
             let samples = added ?? []
             Task { @MainActor [weak self] in
                 self?.processHRSamples(samples)

@@ -364,7 +364,6 @@ struct ProfileHubView: View {
     private func voiceSourceText(_ source: AudioGuideService.VoiceSource) -> String {
         switch source {
         case .voiceBank: String(localized: "settings.voice_source_bank")
-        case .system: String(localized: "settings.voice_source_system")
         }
     }
 }

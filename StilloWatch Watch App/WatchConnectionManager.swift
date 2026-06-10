@@ -7,9 +7,11 @@ private let watchLog = Logger(subsystem: "MSK-PRODUKT.StopPanic.watchkitapp", ca
 // MARK: - WatchConnectionManager
 
 // Обмен данными Apple Watch ↔ iPhone:
-//  • SOS триггер → iPhone
-//  • Пульс → iPhone
-//  • Получение контактов/настроек с iPhone
+//  • SOS триггер → iPhone (sendMessage; при недоступности — transferUserInfo с гарантированной доставкой)
+//  • Запрос экрана кризисной линии на iPhone ("showCrisisLine")
+//  • Уведомление о завершении дыхательной сессии → iPhone
+//  • Приём userName (applicationContext) и sosContacts с iPhone —
+//    сохраняются, но в watch-UI пока не отображаются (v1.1)
 
 @MainActor
 final class WatchConnectionManager: NSObject, ObservableObject {
@@ -28,42 +30,72 @@ final class WatchConnectionManager: NSObject, ObservableObject {
 
     // MARK: Internal
 
+    /// Статус доставки SOS на iPhone
+    enum SOSDeliveryStatus {
+        /// iPhone доступен — сообщение отправлено напрямую
+        case delivered
+        /// iPhone недоступен — поставлено в очередь transferUserInfo,
+        /// доставится когда iPhone станет доступен
+        case queued
+    }
+
     static let shared = WatchConnectionManager()
 
     @Published
     var isPhoneReachable = false
     @Published
-    var userName: String = ""
+    var userName: String = "" // unused: kept for v1.1 (приходит через applicationContext)
     @Published
-    var sosContacts: [(name: String, phone: String)] = []
+    var sosContacts: [(name: String, phone: String)] = [] // unused: kept for v1.1
 
     // MARK: - Send to iPhone
 
-    /// Отправить SOS-сигнал на iPhone
-    func triggerSOSOnPhone() {
+    /// Отправить SOS-сигнал на iPhone.
+    /// - Returns: `.delivered` если iPhone доступен и сообщение отправлено напрямую,
+    ///   `.queued` если SOS поставлен в очередь гарантированной доставки.
+    @discardableResult
+    func triggerSOSOnPhone() -> SOSDeliveryStatus {
+        let payload: [String: Any] = ["type": "sos", "timestamp": Date().timeIntervalSince1970]
         watchLog.critical("🚨⌚ SOS TRIGGERED! Sending to iPhone. Reachable: \(self.session?.isReachable ?? false)")
-        guard let session, session.isReachable else {
-            watchLog.error("❌⌚ iPhone NOT reachable — SOS cannot be sent")
-            return
+
+        guard let session else {
+            watchLog.error("❌⌚ WCSession unsupported — SOS cannot be sent")
+            return .queued
         }
+
+        guard session.isReachable else {
+            watchLog.error("❌⌚ iPhone NOT reachable — queueing SOS via transferUserInfo")
+            session.transferUserInfo(payload)
+            return .queued
+        }
+
         session.sendMessage(
-            ["type": "sos", "timestamp": Date().timeIntervalSince1970],
+            payload,
             replyHandler: { reply in
                 watchLog.info("✅⌚ iPhone confirmed SOS receipt: \(reply)")
             },
-            errorHandler: { error in
-                watchLog.error("❌⌚ SOS send failed: \(error.localizedDescription)")
+            errorHandler: { [weak session] error in
+                watchLog.error("❌⌚ SOS send failed: \(error.localizedDescription) — falling back to transferUserInfo")
+                session?.transferUserInfo(payload)
             }
         )
+        return .delivered
     }
 
-    /// Отправить текущий пульс на iPhone
-    func sendHeartRate(_ bpm: Double) {
-        guard let session, session.isReachable else { return }
-        watchLog.info("💓⌚ Sending HR \(bpm) to iPhone")
+    /// Попросить iPhone показать экран кризисной линии (по аналогии с SOS).
+    /// На UI часов не влияет — основная информация показывается локально.
+    func requestCrisisLineOnPhone() {
+        watchLog.info("📞⌚ Requesting crisis line screen on iPhone. Reachable: \(self.session?.isReachable ?? false)")
+        guard let session, session.isReachable else {
+            watchLog.warning("⚠️⌚ iPhone not reachable — crisis line request skipped")
+            return
+        }
         session.sendMessage(
-            ["type": "heartRate", "bpm": bpm],
-            replyHandler: nil
+            ["type": "showCrisisLine"],
+            replyHandler: nil,
+            errorHandler: { error in
+                watchLog.error("❌⌚ Crisis line request failed: \(error.localizedDescription)")
+            }
         )
     }
 

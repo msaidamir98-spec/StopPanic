@@ -74,6 +74,11 @@ final class WatchConnectivityService: NSObject, ObservableObject {
     private var session: WCSession?
 }
 
+extension Notification.Name {
+    /// Часы запросили показать экран кризисной линии на iPhone
+    static let showCrisisLineFromWatch = Notification.Name("showCrisisLineFromWatch")
+}
+
 // MARK: WCSessionDelegate
 
 extension WatchConnectivityService: WCSessionDelegate {
@@ -126,6 +131,18 @@ extension WatchConnectivityService: WCSessionDelegate {
         }
     }
 
+    /// Гарантированная доставка (transferUserInfo): часы шлют так SOS,
+    /// когда iPhone был не reachable в момент нажатия. Доставляется при
+    /// следующей активации приложения — обрабатываем тем же роутером.
+    nonisolated func session(
+        _ session: WCSession,
+        didReceiveUserInfo userInfo: [String: Any] = [:]
+    ) {
+        Task { @MainActor in
+            handleWatchMessage(userInfo)
+        }
+    }
+
     @MainActor
     private func handleWatchMessage(_ message: [String: Any]) {
         guard let type = message["type"] as? String else { return }
@@ -149,6 +166,11 @@ extension WatchConnectivityService: WCSessionDelegate {
             NotificationCenter.default.post(
                 name: NSNotification.Name("watchSessionCompleted"), object: nil
             )
+
+        case "showCrisisLine":
+            // Кнопка экстренной помощи на часах: показать кризисную линию на iPhone
+            Self.log.info("☎️📱 Watch requested crisis line screen")
+            NotificationCenter.default.post(name: .showCrisisLineFromWatch, object: nil)
 
         default:
             Self.log.warning("⚠️📱 Unknown message type: \(type)")

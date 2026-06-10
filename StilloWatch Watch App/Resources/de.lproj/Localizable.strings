@@ -62,3 +62,9 @@
 "watch.ref_tingling" = "Kribbeln in den Händen ist normal";
 "watch.ref_unreality" = "Gefühl der Unwirklichkeit möglich";
 "watch.ref_disclaimer" = "Nur zur Information — keine medizinische Beratung";
+
+/* Emergency info & SOS delivery */
+"watch.emergency_title" = "Notfall";
+"watch.emergency_call_phone" = "Rufen Sie 112 von Ihrem Telefon an";
+"watch.emergency_crisis_line" = "Telefonseelsorge: 0800 111 0 111";
+"watch.sos_queued" = "SOS wird gesendet, sobald das iPhone erreichbar ist";

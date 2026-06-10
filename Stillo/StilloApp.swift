@@ -24,17 +24,25 @@ struct StilloApp: App {
                 .onReceive(NotificationCenter.default.publisher(for: .triggerBreathingFromIntent)) { _ in
                     coordinator.showBreathingSheet = true
                 }
+                .onReceive(NotificationCenter.default.publisher(for: .showCrisisLineFromWatch)) { _ in
+                    coordinator.showCrisisLineSheet = true
+                }
                 .onReceive(NotificationCenter.default.publisher(for: .triggerQuickLogFromIntent)) { notification in
                     let intensity = notification.userInfo?["intensity"] as? Int ?? 5
                     coordinator.diaryService.addDiaryEpisode(intensity: intensity, notes: String(localized: "siri_quick_log_note"))
                     coordinator.selectedTab = .journal
                 }
+                // ЕДИНСТВЕННЫЙ onOpenURL в приложении. Дублирующий обработчик
+                // в MainTabView удалён: два .onOpenURL вызывали triggerSOS()
+                // дважды на один URL. Корневой надёжнее — он в иерархии даже
+                // на cold start (splash/onboarding), а UI (SOS overlay, sheets)
+                // подхватывает состояние coordinator, когда MainTabView появится.
                 .onOpenURL { url in
                     guard url.scheme == "stillo" else { return }
                     switch url.host {
                     case "sos":
                         coordinator.triggerSOS()
-                    case "breathing":
+                    case "breathing", "breathe": // виджет шлёт stillo://breathe
                         coordinator.showBreathingSheet = true
                     default: break
                     }

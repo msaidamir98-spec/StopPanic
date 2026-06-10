@@ -62,3 +62,9 @@
 "watch.ref_tingling" = "手部刺痛很常见";
 "watch.ref_unreality" = "可能出现不真实感";
 "watch.ref_disclaimer" = "仅供参考——非医疗建议";
+
+/* Emergency info & SOS delivery */
+"watch.emergency_title" = "紧急情况";
+"watch.emergency_call_phone" = "请用手机拨打 120";
+"watch.emergency_crisis_line" = "心理援助热线：12356";
+"watch.sos_queued" = "iPhone 可用时将发送 SOS";

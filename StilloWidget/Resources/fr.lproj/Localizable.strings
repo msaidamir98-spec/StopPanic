@@ -1,0 +1,7 @@
+/* French — Stillō Widget */
+"widget.sos_title" = "SOS";
+"widget.sos_inline_title" = "Stillō SOS";
+"widget.sos_tap_hint" = "Appuie pour obtenir de l'aide";
+"widget.sos_description" = "Accès rapide à l'aide d'urgence";
+"widget.breathe_title" = "Respiration 4-7-8";
+"widget.breathe_description" = "Commence à respirer depuis l'écran verrouillé";

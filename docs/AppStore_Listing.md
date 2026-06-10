@@ -87,15 +87,15 @@ FREE TIER (FOREVER)
 ━━━━━━━━━━━━━━━━━━
 PREMIUM
 ━━━━━━━━━━━━━━━━━━
-• Monthly subscription $4.99 / month
-• Yearly subscription $24.99 / year (vs $59.88 at monthly rate)
-• Lifetime unlock $79.99 one-time (non-consumable)
+• Monthly subscription $0.99 / month
+• Yearly subscription $4.99 / year (vs $11.88 at monthly rate)
+• Lifetime unlock $9.99 one-time (non-consumable)
 • All breathing techniques
 • Unlimited diary + MoodMap + PanicRadar
 • Heart-rate analysis (Apple Watch)
 • 5 calming themes
 
-Yearly plan: 7-day free trial, then $24.99/year. Subscriptions auto-renew unless
+Yearly plan: 7-day free trial, then $4.99/year. Subscriptions auto-renew unless
 cancelled at least 24 hours before the end of the current period. Cancel anytime
 in Settings → Apple ID → Subscriptions. Lifetime is a one-time non-refundable
 purchase (subject to App Store refund policies).
@@ -108,16 +108,15 @@ PRIVACY
 • Everything stays on your device + your private iCloud
 • Zero third-party analytics, zero ads, zero tracking
 • We never see your diary entries
-• Optional premium voice (opt-in) routes short guidance phrases through our
-  privacy-preserving proxy to OpenAI TTS. No account, journal, or health data
-  is ever transmitted.
+• Voice guidance is 100% offline — pre-recorded human voice bundled with the
+  app. Nothing is ever sent to any server.
 
 ━━━━━━━━━━━━━━━━━━
 DISCLAIMER
 ━━━━━━━━━━━━━━━━━━
 Stillō is a self-help tool, not a substitute for medical care. If you are in
 crisis, please contact emergency services or a qualified professional.
-In-app crisis lines are available for 30+ countries.
+In-app crisis lines are available for 12 countries.
 
 Subscription auto-renews unless cancelled at least 24 hours before the end of
 the current period. Manage in Settings → Apple ID → Subscriptions.
@@ -163,15 +162,15 @@ FREE-УРОВЕНЬ (НАВСЕГДА)
 ━━━━━━━━━━━━━━━━━━
 PREMIUM
 ━━━━━━━━━━━━━━━━━━
-• Месячная подписка: ₽299 / мес
-• Годовая подписка: ₽1 490 / год (против ₽3 588 при месячной)
-• Навсегда: ₽7 990 единоразово (non-consumable)
+• Месячная подписка: ₽49 / мес
+• Годовая подписка: ₽149 / год (против ₽588 при месячной)
+• Навсегда: ₽299 единоразово (non-consumable)
 • Все техники дыхания
 • Безлимитный дневник + MoodMap + PanicRadar
 • Анализ пульса (Apple Watch)
 • 5 успокаивающих тем
 
-Годовая подписка: 7 дней бесплатно, далее ₽1 490/год. Подписка продлевается
+Годовая подписка: 7 дней бесплатно, далее ₽149/год. Подписка продлевается
 автоматически, если не отменить минимум за 24 часа до конца периода.
 Отмена в любой момент: Настройки → Apple ID → Подписки. «Навсегда» — это
 одноразовая non-consumable покупка (возврат — по правилам App Store).
@@ -184,15 +183,14 @@ Grandfather-гарантия: цена в день подписки — твоя
 • Всё хранится на устройстве и в твоём iCloud
 • Ноль стороннего трекинга, ноль рекламы, ноль аналитики
 • Мы никогда не видим твои записи
-• Опциональный премиум-голос (по выбору) отправляет короткие подсказки через
-  приватный прокси к OpenAI TTS. Ни аккаунта, ни записей, ни данных здоровья
-  не передаётся.
+• Голосовой гид работает 100% офлайн — живой записанный голос внутри
+  приложения. Ничего никогда не отправляется на сервер.
 
 ━━━━━━━━━━━━━━━━━━
 ВАЖНО
 ━━━━━━━━━━━━━━━━━━
 Stillō — инструмент самопомощи, не замена медицинской помощи. При кризисе
-свяжись со службой экстренной помощи. В приложении — кризисные линии для 30+
+свяжись со службой экстренной помощи. В приложении — кризисные линии для 12
 стран.
 
 Подписка продлевается автоматически, если не отменить за 24 часа до конца
@@ -291,11 +289,10 @@ panico,ansiedade,respiracao,calma,meditacao,478,sos,mindfulness,estresse,relaxar
 • No user account / no login. App Review can demo directly after install.
 • Background modes "fetch" + "processing" used by BGTaskScheduler for breathing-reminder
   notifications only; no network uploads.
-• Optional premium voice (disabled by default) routes ≤500-char guidance phrases through
-  our Cloudflare Worker proxy to OpenAI TTS. No user/health/journal data transmitted.
-  The Worker does not log request bodies or IP addresses.
-• Crisis-line phone numbers are shown for 30+ countries (pulled from a bundled JSON, not
-  a network call).
+• Voice guidance is 100% offline: pre-recorded human voice files bundled with the app.
+  The app makes NO network calls of its own (StoreKit excepted).
+• Crisis-line phone numbers are shown for 12 countries (bundled in code, not a network
+  call).
 ```
 
 ---
@@ -339,15 +336,15 @@ iPhone 6.9" (iPhone 16 Pro Max, 1320×2868) — **обязательный** е�
 - [ ] **App Record** создан в App Store Connect → My Apps → `+`
 - [ ] **Support URL** → https://msaidamir98-spec.github.io/StopPanic/support.html *(создать одностраничник с e-mail m.saidamir98@gmail.com)*
 - [ ] **Marketing URL** (опц) → тот же сайт
-- [ ] **Privacy Policy URL** → https://msaidamir98-spec.github.io/StopPanic/privacy.html ✅ (файл обновлён с TTS-абзацем)
+- [ ] **Privacy Policy URL** → https://msaidamir98-spec.github.io/StopPanic/privacy.html ✅ (2026-06-10: OpenAI/TTS-раздел удалён — приложение полностью офлайн)
 - [ ] **App Privacy (Data Collection)** → `None` (всё on-device + iCloud private)
 - [ ] **Encryption Export** → **Exempt** (только HTTPS, нет proprietary crypto) — `ITSAppUsesNonExemptEncryption = NO` ✅
 - [ ] **Account deletion** → есть (Settings → Data → Erase) ✅
 - [ ] **Contact info для App Review** → e-mail + тел, демо-аккаунт не нужен (нет логина)
 - [ ] **IAP Products** созданы в ASC:
-  - `com.stillo.premium.monthly` — auto-renewable subscription, $4.99/mo, intro $1.99 first month
-  - `com.stillo.premium.yearly` — auto-renewable subscription, $24.99/yr, 7-day free trial
-  - `com.stillo.premium.lifetime` — non-consumable, $79.99 one-time
+  - `com.stillo.premium.monthly` — auto-renewable subscription, $0.99/mo (Tier 2 RU: ₽49)
+  - `com.stillo.premium.yearly` — auto-renewable subscription, $4.99/yr, 7-day free trial (Tier 2 RU: ₽149)
+  - `com.stillo.premium.lifetime` — non-consumable, $9.99 one-time, Family Sharing ON (Tier 2 RU: ₽299)
 - [ ] **StoreKit Localizations** × 8 языков для каждого продукта
 - [ ] **TestFlight build** загружен через Xcode Organizer → Archive → Distribute App
 - [ ] **Export Compliance** в ASC — галочка "Uses Standard Encryption" = exempt
@@ -360,9 +357,9 @@ iPhone 6.9" (iPhone 16 Pro Max, 1320×2868) — **обязательный** е�
 1. **«Medical» category без disclaimer** → Rejection 5.1.1. Disclaimer уже есть в onboarding ✅
 2. **SOS без упоминания «not emergency service»** → в description есть ✅
 3. **Grandfather / «навсегда» в маркетинге** → код реально grandfather'ит (см. `PremiumManager.GrandfatherInfo`) ✅
-4. **Price anchor «save 58%»** → привязано к monthly×12 честно ✅
-5. **Intro offer без указания условий** → прописать в description "$1.99 first month, then $4.99/mo" ✅
-6. **Crisis lines только EN** → у нас 30+ стран с локальными номерами ✅
+4. **Price anchor «save 58%»** → привязано к monthly×12 честно ($0.99×12=$11.88 vs $4.99) ✅
+5. **Intro offer** → убран (Pricing C: просто $0.99/mo без intro; яснее для ревью) ✅
+6. **Crisis lines только EN** → у нас 12 стран с локальными номерами (RU, US, GB, DE, FR, ES, IT, JP, BR, CN, PT, KR) + блок 112 ✅
 7. **Лишние permissions в Info.plist** → в pbxproj только HealthKit + Notifications, ничего лишнего ✅
 8. **`NSLocationWhenInUseUsageDescription` без использования** → отсутствует (приложение не юзает location) ✅
 
@@ -397,7 +394,7 @@ iPhone 6.9" (iPhone 16 Pro Max, 1320×2868) — **обязательный** е�
 - ✅ Privacy Policy обновлён (TTS-параграф) в `docs/privacy.html`
 - ✅ Все 4 таргета (Stillo / Watch / Widget) билдятся в Release
 - ✅ Ложные блокеры закрыты (Keychain, print, AppIcon, force-unwraps, Dynamic Type)
-- ✅ OpenAI TTS безопасно выключен по умолчанию — не ломается без Worker-деплоя
+- ✅ Голос полностью офлайн (VoiceBank mp3) — OpenAI TTS и Worker удалены из кода 2026-05
 
 **Что от тебя нужно (только оттуда, куда у меня нет доступа):**
 1. Оплатить Apple Developer membership $99

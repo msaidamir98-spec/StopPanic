@@ -6,9 +6,9 @@ import SwiftUI
 
 /// Голосовое сопровождение дыхательных упражнений и заземления.
 ///
-/// Двухуровневая система голоса (100% оффлайн):
-///   1. 🥇 VoiceBankService — предзаписанные MP3 из бандла (мгновенно, оффлайн)
-///   2. 🥈 AVSpeechSynthesizer — системный голос iOS (всегда доступен)
+/// Единственный источник голоса (100% оффлайн):
+///   VoiceBankService — предзаписанные MP3 из бандла (мгновенно, оффлайн).
+///   AVSpeech-fallback удалён 2026-05-01 (см. smartSpeak) — нет фразы → тишина.
 ///
 /// Аудио-сессия активируется лениво — только при speak(), не захватывает фокус
 /// без необходимости (Apple Review friendly).
@@ -48,15 +48,16 @@ final class AudioGuideService {
         }
     }
 
-    /// Какой источник голоса сейчас используется
+    /// Какой источник голоса сейчас используется.
+    /// Единственный кейс оставлен намеренно: AVSpeech (.system) удалён
+    /// 2026-05-01, но enum сохранён, чтобы не трогать preferredSource
+    /// и завязанный на него UI (SettingsView/ProfileHubView).
     enum VoiceSource: String, CaseIterable {
         case voiceBank = "Pre-recorded"
-        case system = "System Voice"
     }
 
     /// Режим голоса, выбранный пользователем
-    /// .voiceBank = предзаписанные (по умолчанию)
-    /// .system = системный AVSpeech (выбор голоса работает)
+    /// .voiceBank = предзаписанные (единственный источник)
     var preferredSource: VoiceSource {
         get {
             access(keyPath: \.preferredSource)
@@ -70,17 +71,10 @@ final class AudioGuideService {
         }
     }
 
-    /// Текущий активный источник (для отображения в UI)
+    /// Текущий активный источник (для отображения в UI).
+    /// После удаления .system источник всегда один — VoiceBank.
     var activeSource: VoiceSource {
-        switch _preferredSource {
-        case .voiceBank:
-            if let vb = voiceBank, vb.isEnabled, vb.availablePhraseCount > 0 {
-                return .voiceBank
-            }
-            return .system
-        case .system:
-            return .system
-        }
+        .voiceBank
     }
 
     // MARK: - Public API: Breathing
@@ -336,6 +330,9 @@ final class AudioGuideService {
 
     @ObservationIgnored
     private var _preferredSource: VoiceSource = {
+        // Миграция: в UserDefaults может лежать rawValue удалённых кейсов
+        // ("System Voice" / "openAI" и т.п.) — failable init вернёт nil,
+        // и мы падаем на .voiceBank.
         if let raw = UserDefaults.standard.string(forKey: "preferredVoiceSource"),
            let source = VoiceSource(rawValue: raw) {
             return source
@@ -374,65 +371,6 @@ final class AudioGuideService {
             return
         }
         Self.log.info("Played from VoiceBank: \(phrase.rawValue)")
-    }
-
-    // MARK: - AVSpeech Fallback
-
-    private func speakLocal(_ text: String, rate: Float = 0.5, pitch: Float = 1.0) {
-        ensureAudioSession()
-
-        if synthesizer.isSpeaking {
-            synthesizer.stopSpeaking(at: .immediate)
-        }
-
-        let utterance = AVSpeechUtterance(string: text)
-        utterance.rate = max(0.35, min(rate, AVSpeechUtteranceMaximumSpeechRate))
-        utterance.pitchMultiplier = max(0.5, min(pitch, 2.0))
-        let persistedVolume = UserDefaults.standard.object(forKey: "voiceBankVolume") as? Float ?? 1.0
-        utterance.volume = max(0, min(1, persistedVolume))
-        // Human-feel timing: thoughtful pause before, graceful tail after.
-        // Prevents robotic "instant-start/abrupt-stop" cadence.
-        utterance.preUtteranceDelay = 0.22
-        utterance.postUtteranceDelay = 0.38
-        utterance.voice = resolveVoice()
-
-        synthesizer.speak(utterance)
-    }
-
-    private func resolveVoice() -> AVSpeechSynthesisVoice? {
-        let lang = currentLanguageTag
-
-        if let id = _selectedVoiceId,
-           let voice = AVSpeechSynthesisVoice(identifier: id)
-        {
-            return voice
-        }
-
-        let allVoices = AVSpeechSynthesisVoice.speechVoices()
-            .filter { $0.language == lang }
-
-        // Within each quality tier, prefer female voices — research on calming-voice
-        // perception in anxiety contexts (Keltner et al.) shows female-register
-        // voices are perceived as warmer and reduce sympathetic arousal.
-        func pickPreferringFemale(_ voices: [AVSpeechSynthesisVoice]) -> AVSpeechSynthesisVoice? {
-            voices.first(where: { $0.gender == .female })
-                ?? voices.first(where: { $0.gender == .unspecified })
-                ?? voices.first
-        }
-
-        let premium = allVoices.filter { $0.quality == .premium }
-        if let v = pickPreferringFemale(premium) { return v }
-
-        let enhanced = allVoices.filter { $0.quality == .enhanced }
-        if let v = pickPreferringFemale(enhanced) { return v }
-
-        return pickPreferringFemale(allVoices) ?? AVSpeechSynthesisVoice(language: lang)
-    }
-
-    // MARK: - Audio Session
-
-    private func ensureAudioSession() {
-        AudioSessionManager.configureForSpeech()
     }
 
     // MARK: - Language Mapping

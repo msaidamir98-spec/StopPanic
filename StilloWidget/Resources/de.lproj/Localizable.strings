@@ -1,0 +1,7 @@
+/* German — Stillō Widget */
+"widget.sos_title" = "SOS";
+"widget.sos_inline_title" = "Stillō SOS";
+"widget.sos_tap_hint" = "Tippen für Hilfe";
+"widget.sos_description" = "Schneller Zugriff auf Soforthilfe";
+"widget.breathe_title" = "4-7-8-Atmung";
+"widget.breathe_description" = "Atmung direkt vom Sperrbildschirm starten";

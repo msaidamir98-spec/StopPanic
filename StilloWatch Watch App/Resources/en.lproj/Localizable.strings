@@ -62,3 +62,9 @@
 "watch.ref_tingling" = "Tingling in hands is common";
 "watch.ref_unreality" = "Feeling of unreality may occur";
 "watch.ref_disclaimer" = "For informational purposes only — not medical advice";
+
+/* Emergency info & SOS delivery */
+"watch.emergency_title" = "Emergency";
+"watch.emergency_call_phone" = "Call 112 or 911 from your phone";
+"watch.emergency_crisis_line" = "Crisis line: 988";
+"watch.sos_queued" = "SOS will be sent when iPhone is available";

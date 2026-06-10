@@ -75,6 +75,29 @@ struct MainTabView: View {
             PaywallView()
                 .environment(coordinator)
         }
+        // Breathing Sheet — открывается по deep link (stillo://breathe из
+        // виджета, stillo://breathing) и Siri-интенту. До этого флаг
+        // coordinator.showBreathingSheet выставлялся, но ни один view его
+        // не презентовал — кнопка виджета была no-op.
+        .sheet(isPresented: $coordinator.showBreathingSheet) {
+            NavigationStack {
+                BreathingSessionView(technique: BreathingTechnique(
+                    name: String(localized: "breath_478_name"),
+                    subtitle: String(localized: "breath_478_sub"),
+                    icon: "wind",
+                    color: SP.Colors.calm,
+                    inhale: 4, hold: 7, exhale: 8
+                ))
+                .environment(coordinator)
+            }
+        }
+        // Crisis Line Sheet — запрос с Apple Watch (кнопка экстренной помощи)
+        .sheet(isPresented: $coordinator.showCrisisLineSheet) {
+            NavigationStack {
+                CrisisLineView()
+                    .environment(coordinator)
+            }
+        }
         .animation(SP.Anim.spring, value: coordinator.showSOSOverlay)
         .onAppear {
             configureAppearance()
@@ -84,9 +107,9 @@ struct MainTabView: View {
             configureAppearance()
             refreshAllBarAppearances()
         }
-        .onOpenURL { url in
-            handleDeepLink(url)
-        }
+        // Deep links (stillo://sos, stillo://breathing) обрабатываются
+        // ТОЛЬКО в StilloApp.onOpenURL — здесь дубликат удалён, иначе
+        // triggerSOS() срабатывал дважды на один URL.
         .onShake {
             if !coordinator.showSOSOverlay {
                 coordinator.triggerSOS()
@@ -153,17 +176,6 @@ struct MainTabView: View {
         }
     }
 
-    /// Handle deep links: stillo://sos, stillo://breathing
-    private func handleDeepLink(_ url: URL) {
-        guard url.scheme == "stillo" else { return }
-        switch url.host {
-        case "sos":
-            coordinator.triggerSOS()
-        case "breathing":
-            coordinator.showBreathingSheet = true
-        default: break
-        }
-    }
 }
 
 // MARK: - Shake Gesture Support

@@ -1,0 +1,7 @@
+/* Russian — Stillō Widget */
+"widget.sos_title" = "SOS";
+"widget.sos_inline_title" = "Stillō SOS";
+"widget.sos_tap_hint" = "Нажми для помощи";
+"widget.sos_description" = "Быстрый доступ к экстренной помощи";
+"widget.breathe_title" = "4-7-8 Дыхание";
+"widget.breathe_description" = "Начни дышать с экрана блокировки";

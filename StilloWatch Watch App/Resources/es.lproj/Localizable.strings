@@ -62,3 +62,9 @@
 "watch.ref_tingling" = "Hormigueo en las manos es normal";
 "watch.ref_unreality" = "Puede aparecer sensación de irrealidad";
 "watch.ref_disclaimer" = "Solo informativo — no es consejo médico";
+
+/* Emergency info & SOS delivery */
+"watch.emergency_title" = "Emergencia";
+"watch.emergency_call_phone" = "Llama al 112 desde tu teléfono";
+"watch.emergency_crisis_line" = "Línea de crisis: 024";
+"watch.sos_queued" = "El SOS se enviará cuando el iPhone esté disponible";

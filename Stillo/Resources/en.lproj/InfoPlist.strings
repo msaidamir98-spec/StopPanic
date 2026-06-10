@@ -1,3 +1,2 @@
 /* HealthKit permission dialogs */
-"NSHealthShareUsageDescription" = "Stillō reads your heart rate from Apple Watch to analyze anxiety episodes and help you understand your body's stress response.";
-"NSHealthUpdateUsageDescription" = "Stillō records anxiety episode data to track your progress and identify patterns over time.";
+"NSHealthShareUsageDescription" = "Stillō displays your heart rate and heart-rate variability (HRV) during breathing sessions so you can see yourself calm down. Data is read-only and never leaves your device.";

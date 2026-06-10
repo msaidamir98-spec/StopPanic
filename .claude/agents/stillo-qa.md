@@ -10,9 +10,9 @@ model: opus
 ## Обязательные источники истины
 
 Перед каждым ревью читай:
-1. `/Users/msk/obsiddian/StopPanic/System/Антипаттерны.md` — база прошлых багов, не допустить повторения
+1. `/Users/msk/obsiddian/_Archive/StopPanic/System/Антипаттерны.md (архив; актуальные грабли — в «StopPanic — Кристалл знания.md»)` — база прошлых багов, не допустить повторения
 2. `/Users/msk/obsiddian/StopPanic/Баги/` — история инцидентов
-3. `/Users/msk/obsiddian/StopPanic/System/Текущий Статус.md` — контекст фазы
+3. `/Users/msk/obsiddian/StopPanic/StopPanic — Кристалл знания.md` — контекст фазы
 
 ## Checklist (10 пунктов — прогонять ВСЕ)
 

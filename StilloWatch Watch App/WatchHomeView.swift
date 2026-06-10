@@ -296,7 +296,11 @@ struct WatchAnalysisResultView: View {
 
                 if heartService.suggestMedicalConsult {
                     Button(role: .destructive) {
-                        // Emergency
+                        WKInterfaceDevice.current().play(.failure)
+                        // Прямой звонок с часов недоступен — просим iPhone открыть
+                        // экран кризисной линии (best-effort, UI не зависит от доставки)
+                        WatchConnectionManager.shared.requestCrisisLineOnPhone()
+                        showEmergencyInfo = true
                     } label: {
                         HStack(spacing: 4) {
                             Image(systemName: "phone.fill")
@@ -320,12 +324,18 @@ struct WatchAnalysisResultView: View {
             }
             .padding(.horizontal, 2)
         }
+        .sheet(isPresented: $showEmergencyInfo) {
+            WatchEmergencyInfoView()
+        }
     }
 
     // MARK: Private
 
     @Environment(\.dismiss)
     private var dismiss
+
+    @State
+    private var showEmergencyInfo = false
 
     private func metricCard(value: String, label: String, color: Color) -> some View {
         VStack(spacing: 2) {
@@ -338,6 +348,64 @@ struct WatchAnalysisResultView: View {
         }
         .frame(maxWidth: .infinity)
     }
+}
+
+// MARK: - WatchEmergencyInfoView
+
+/// Экран экстренной помощи — прямой звонок с часов недоступен,
+/// показываем номера для звонка с телефона
+struct WatchEmergencyInfoView: View {
+    // MARK: Internal
+
+    var body: some View {
+        ScrollView {
+            VStack(spacing: 10) {
+                ZStack {
+                    Circle()
+                        .fill(.red.opacity(0.15))
+                        .frame(width: 56, height: 56)
+
+                    Image(systemName: "phone.fill")
+                        .font(.title2)
+                        .foregroundStyle(.red)
+                        .symbolEffect(.pulse, options: .repeating)
+                }
+
+                Text(String(localized: "watch.emergency_title"))
+                    .font(.system(.headline, design: .rounded))
+                    .multilineTextAlignment(.center)
+
+                Text(String(localized: "watch.emergency_call_phone"))
+                    .font(.system(.caption2, design: .rounded))
+                    .foregroundStyle(.secondary)
+                    .multilineTextAlignment(.center)
+                    .padding(.horizontal, 4)
+
+                Text(String(localized: "watch.emergency_crisis_line"))
+                    .font(.system(.caption, design: .rounded, weight: .bold))
+                    .foregroundStyle(.red)
+                    .multilineTextAlignment(.center)
+                    .frame(maxWidth: .infinity)
+                    .padding(.vertical, 8)
+                    .background(.ultraThinMaterial, in: RoundedRectangle(cornerRadius: 10))
+
+                Button {
+                    dismiss()
+                } label: {
+                    Text(String(localized: "watch.close"))
+                        .font(.system(.caption, design: .rounded, weight: .medium))
+                        .frame(maxWidth: .infinity)
+                }
+                .tint(.gray.opacity(0.5))
+            }
+            .padding(.horizontal, 2)
+        }
+    }
+
+    // MARK: Private
+
+    @Environment(\.dismiss)
+    private var dismiss
 }
 
 #Preview {

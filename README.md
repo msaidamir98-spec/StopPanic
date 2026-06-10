@@ -1,252 +1,69 @@
-# 🛑 StopPanic
+# Stillō
 
-> iOS-приложение для помощи при панических атаках. Дыхательные техники, заземление, дневник эпизодов, карта настроения и интеграция с HealthKit — всё в одном месте.
+> iOS + watchOS приложение скорой самопомощи при панической атаке.
+> Один тап SOS → живой голос → дыхание 4-7-8 → заземление 5-4-3-2-1 → запись в дневник.
+> 100% офлайн. Ни одного сетевого вызова (кроме StoreKit).
 
-![Platform](https://img.shields.io/badge/platform-iOS%2026.2%2B-blue)
-![Swift](https://img.shields.io/badge/Swift-5.0-orange)
-![Xcode](https://img.shields.io/badge/Xcode-26%2B-blue)
-![License](https://img.shields.io/badge/license-MIT-green)
+| Параметр | Значение |
+|---|---|
+| Bundle ID | `MSK-PRODUKT.StopPanic` |
+| App name | **Stillō** (с макроном) |
+| Таргеты | `Stillo` (iOS 17+), `StilloWatch Watch App` (watchOS 26), `StilloWidgetExtension`, `StilloTests` |
+| Team | `6K26HD4XFR` |
+| Языки | 8 (en, ru, de, es, fr, ja, pt-BR, zh-Hans) — голос RU/EN, остальные текст |
+| Стек | Swift 5 (approachable concurrency, MainActor default), SwiftUI, Core Data (+CloudKit private), HealthKit (read-only HR/HRV), StoreKit 2, WatchConnectivity, BGTaskScheduler, AVFoundation |
+| Зависимости | 0 сторонних |
 
----
+## Источники истины
 
-## 📱 О проекте
+**Не доверяй этому README в деталях — доверяй vault:**
 
-**StopPanic** — нативное SwiftUI-приложение, которое помогает людям, страдающим от панических атак и тревожных расстройств. Приложение предоставляет мгновенные инструменты помощи прямо во время приступа, а также долгосрочные инструменты для отслеживания и понимания своих паттернов.
+1. `/Users/msk/obsiddian/StopPanic/StopPanic — Кристалл знания.md` — сжатое состояние проекта
+2. `/Users/msk/obsiddian/StopPanic/Баги/История багов и решений.md` — root causes, антипаттерны
+3. `tasks/todo.md` — текущий чеклист до App Store
+4. `.claude/agents/stillo-ios-dev.md`, `.claude/agents/stillo-qa.md` — правила для AI-агентов
 
-### Автор
+## Архитектура (кратко)
 
-**Саид Магдиев** (MSK-PRODUKT)
-
----
-
-## ✨ Возможности
-
-### 🆘 Экстренная помощь
-- **Кнопка «Я в панике»** — мгновенный доступ к пошаговой помощи
-- **SOS-кнопка** с анимацией пульса и записью в HealthKit
-- **Пошаговый протокол** КПТ-заземления (5 шагов)
-- **Управляемое дыхание** (паттерн 4-4-6: вдох–задержка–выдох)
-
-### 🧘 Техники успокоения
-- **4-7-8 дыхание** — успокаивающая техника
-- **Заземление 5-4-3-2-1** — через органы чувств
-- **Мышечное расслабление** — прогрессивная релаксация
-- **Сессия спокойствия** — комбинированная сессия (дыхание → заземление → рефлексия)
-
-### 📔 Дневник и аналитика
-- Запись панических эпизодов с интенсивностью и заметками
-- Запись триггеров с привязкой к локации
-- Статистика за день и за неделю
-- Отслеживание серий (streak) практик
-
-### 🗺️ Карта настроения
-- Отметки настроения с геопривязкой (1–10)
-- Визуализация паттернов по местоположению
-- Выявление «безопасных» и «тревожных» зон
-
-### ❤️ Интеграция с HealthKit
-- Чтение пульса в реальном времени
-- Запись mindful-сессий при паническом эпизоде
-- Визуальная индикация повышенного пульса (> 100 BPM)
-
-### 👤 Профиль пользователя
-- Имя, возраст, цели терапии
-- Данные терапевта
-- Персональные заметки
-
-### 🎨 Дизайн
-- Тёмная «космическая» тема (CosmicHomeKit)
-- Плавные градиенты и анимации
-- Haptic-обратная связь (CoreHaptics)
-- Glassmorphism-эффекты
-- Адаптивный UI с rounded-шрифтами
-
----
-
-## 🏗️ Архитектура
-
-Проект следует паттерну **MVVM** (Model — View — ViewModel):
+- `@Observable AppCoordinator` (Core/AppCoordinator.swift) — DI-контейнер, создаёт 18 сервисов в `bootstrap()`, раздаёт через `@Environment`.
+- Дизайн-система: namespace `SP` в `Core/DesignSystem.swift` — никакого хардкода цветов/шрифтов.
+- Аудио: shared AVAudioSession, **НИКОГДА не `setActive(false)`** (см. Антипаттерны). Голос — только VoiceBank mp3 (34 фразы × RU/EN), синтез удалён.
+- Данные: дневник → Core Data; настройки → UserDefaults; всё on-device.
+- Deep links: `stillo://sos`, `stillo://breathe` (виджет). Обработчик — ТОЛЬКО в `StilloApp.onOpenURL`.
 
 ```
-StopPanic/
-├── StopPanicApp.swift            # Точка входа, онбординг-флоу
-├── StopPanic.entitlements        # HealthKit entitlement
-│
-├── Models/                       # Модели данных
-│   ├── CourseStep.swift          # Курсы и прогресс
-│   ├── DiaryEpisode.swift        # Эпизод паники
-│   ├── EpisodeTrigger.swift      # Триггеры эпизодов
-│   ├── MoodState.swift           # Состояния настроения + MoodPin
-│   ├── Technique.swift           # Техника успокоения
-│   └── UserProfile.swift         # Профиль пользователя
-│
-├── ViewModels/                   # Бизнес-логика
-│   ├── HomeViewModel.swift       # Главный экран, статистика
-│   ├── NowHelpViewModel.swift    # Экстренная помощь, дыхание
-│   └── CalmSessionPhase.swift    # Сессия спокойствия (фазы)
-│
-├── Views/                        # UI-компоненты
-│   ├── ContentView.swift         # Корневой TabView
-│   ├── HomeView.swift            # Главный экран
-│   ├── NowHelpView.swift         # Экран «Я в панике»
-│   ├── SosView.swift             # SOS-кнопка с пульсом
-│   ├── CalmSessionView.swift     # Сессия спокойствия
-│   ├── MoodMapView.swift         # Карта настроения
-│   ├── ProfileView.swift         # Профиль
-│   ├── OnboardingPage.swift      # Онбординг
-│   ├── AppTheme.swift            # Тема и цвета
-│   └── HealthKitManager.swift    # HealthKit-интеграция
-│
-├── Services/                     # Сервисный слой (хранение, логика)
-│   ├── DiaryService.swift        # Дневник эпизодов (JSON)
-│   ├── MoodMapService.swift      # Карта настроения + CLLocation
-│   ├── NotificationService.swift # Локальные уведомления
-│   ├── TechniqueLibrary.swift    # Каталог техник
-│   └── UserProfileService.swift  # Профиль пользователя (JSON)
-│
-├── CosmicHomeKit/                # UI-кит в космическом стиле
-│   ├── CosmicBreathingSessionView.swift
-│   ├── CosmicGlass.swift         # Glassmorphism-эффекты
-│   ├── CosmicGrounding54321View.swift
-│   ├── CosmicHaptics.swift       # Хаптик-обратная связь
-│   ├── CosmicHomeShellView.swift
-│   ├── CosmicPanicFlowView.swift
-│   ├── CosmicQuickLogView.swift
-│   ├── CosmicRouter.swift        # Навигация
-│   ├── CosmicTheme.swift         # Космическая тема
-│   └── CosmicUIComponents.swift  # Переиспользуемые компоненты
-│
-└── Assets.xcassets/              # Ресурсы (иконки, цвета)
+Stillo/
+├── Core/          # AppCoordinator, DesignSystem (SP), MainTabView, Persistence
+├── Models/        # DiaryEpisode, Achievement, HeartAnalysis, PanicPrediction, SOSContact
+├── Screens/       # Home, SOS, Tools, Journal, Soundscape, Profile, Settings, Onboarding
+├── Services/      # 18 сервисов: Ambient/Voice/AudioGuide, Premium, Streak, HealthKit...
+├── Views/         # Переиспользуемые view
+└── Resources/     # 8×.lproj, Audio (6 m4a), Voice/{ru,en} (68 mp3)
 ```
 
-### Ключевые принципы
-- **Чистый SwiftUI** — без UIKit (кроме haptics)
-- **@StateObject / @ObservedObject** — реактивное управление состоянием
-- **Локальное хранение** — JSON-файлы в Documents (без сервера)
-- **Нативные фреймворки** — HealthKit, CoreLocation, CoreHaptics, UserNotifications
-
----
-
-## 🔧 Системные требования
-
-| Компонент | Версия |
-|-----------|--------|
-| macOS | 15.0+ (Sequoia) |
-| Xcode | 26.0+ |
-| Swift | 5.0+ |
-| iOS (deploy target) | 26.2+ |
-| Устройства | iPhone + iPad (`TARGETED_DEVICE_FAMILY = 1,2`) |
-| Реальное устройство | Рекомендуется (HealthKit, CoreLocation) |
-
----
-
-## 🚀 Установка и запуск
-
-### 1. Клонирование репозитория
+## Сборка
 
 ```bash
-git clone <repository-url>
-cd StopPanic
+# Дев-сборка на iPhone (rsync → /tmp → strip entitlements → build → deploy → commit):
+Scripts/pipeline.sh "Phase XX: что сделал"
+
+# Тесты (симулятор):
+Scripts/pipeline.sh --mode=test
+
+# App Store архив (entitlements .full подставляются автоматически):
+Scripts/pipeline.sh --mode=archive "v1.0.0"
 ```
 
-### 2. Откройте проект в Xcode
+⚠️ Никогда не билдить напрямую из рабочей директории и не коммитить stripped entitlements — см. `Деплой` в vault.
 
-```bash
-open StopPanic.xcodeproj
-```
+## App Store
 
-### 3. Настройка подписи
+- Чеклист и ASO-копия 8 локалей: `docs/AppStore_Listing.md`
+- Privacy policy / terms: `docs/privacy.html`, `docs/terms.html` (хостить на GitHub Pages)
+- Цены (Pricing C, 2026-05-01): Lifetime $9.99 / Yearly $4.99 (7д trial) / Monthly $0.99; Tier 2 RU ₽299/₽149/₽49
+- SKU: `com.stillo.premium.{monthly,yearly,lifetime}`
+- Внешний блокер: активация Apple Developer Program ($99/год)
 
-1. Откройте **StopPanic.xcodeproj** → выберите target **StopPanic**
-2. Перейдите во вкладку **Signing & Capabilities**
-3. Выберите свою **Team** (Apple Developer Account)
-4. Xcode автоматически создаст provisioning profile
+## Дисклеймер
 
-### 4. Сборка и запуск
-
-- Выберите **симулятор** (iPhone 15 Pro рекомендуется) или **реальное устройство**
-- Нажмите **⌘R** (Run) или кнопку ▶ в Xcode
-
-> ⚠️ **Примечание:** Для полной работы HealthKit и CoreLocation необходимо реальное устройство (на симуляторе данные будут фиктивными).
-
-### 5. Сборка из командной строки (опционально)
-
-```bash
-xcodebuild -project StopPanic.xcodeproj \
-           -scheme StopPanic \
-           -destination 'platform=iOS Simulator,name=iPhone 16' \
-           build
-```
-
----
-
-## 📦 Зависимости
-
-Проект **не использует сторонних зависимостей** — только нативные фреймворки Apple:
-
-| Фреймворк | Использование |
-|-----------|--------------|
-| **SwiftUI** | Весь UI |
-| **HealthKit** | Пульс, mindful-сессии |
-| **CoreLocation** | Карта настроения (геопозиция) |
-| **CoreHaptics** | Тактильная обратная связь |
-| **UserNotifications** | Локальные уведомления-напоминания |
-| **Combine** | Реактивные потоки данных |
-
----
-
-## 🔑 Entitlements и разрешения
-
-Приложение запрашивает следующие разрешения:
-
-- **HealthKit** (`com.apple.developer.healthkit`) — чтение пульса, запись mindful-сессий
-- **Location When In Use** — для карты настроения
-- **Notifications** — напоминания о практиках
-
-> Не забудьте добавить описания в `Info.plist`:
-> - `NSHealthShareUsageDescription` — зачем приложение читает данные здоровья
-> - `NSHealthUpdateUsageDescription` — зачем пишет данные
-> - `NSLocationWhenInUseUsageDescription` — зачем нужна геопозиция
-
----
-
-## 🎯 Планы развития
-
-- [ ] Полноценный дневник эпизодов (вкладка «Дневник»)
-- [ ] Каталог техник с детальными описаниями (вкладка «Техники»)
-- [ ] Apple Watch companion-приложение
-- [ ] Виджеты на главный экран (WidgetKit)
-- [ ] Экспорт данных (PDF/CSV)
-- [ ] Графики и тренды (Charts framework)
-- [ ] Локализация (EN, TR)
-- [ ] CloudKit синхронизация между устройствами
-
----
-
-## 🤝 Вклад в проект
-
-1. Форкните репозиторий
-2. Создайте ветку фичи (`git checkout -b feature/amazing-feature`)
-3. Закоммитьте изменения (`git commit -m 'Add amazing feature'`)
-4. Запушьте ветку (`git push origin feature/amazing-feature`)
-5. Откройте Pull Request
-
----
-
-## 📄 Лицензия
-
-Этот проект распространяется под лицензией MIT. Подробности см. в файле [LICENSE](LICENSE).
-
----
-
-## 📞 Контакты
-
-**Саид Магдиев** — MSK-PRODUKT
-
-Bundle ID: `MSK-PRODUKT.StopPanic`
-
----
-
-<p align="center">
-  <i>Сделано с ❤️ для тех, кому бывает страшно.</i>
-</p>
+Stillō — инструмент самопомощи, не медицинское устройство и не замена терапии.

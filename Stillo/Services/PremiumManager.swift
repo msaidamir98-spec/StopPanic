@@ -54,8 +54,8 @@ final class PremiumManager {
 
     // MARK: - Free Tier Limits
 
-    /// Максимум записей дневника для Free (Phase 21 Monetization Strategy: 7).
-    static let freeDiaryLimit = 7
+    /// Decision 2026-05-01 (Pricing C): дневник в Free безлимитный. Premium = Watch, live HR, soundscape, smart-reminders.
+    static let freeDiaryLimit = Int.max
 
     /// Бесплатная техника — только 4-7-8
     static let freeTechniqueID = "fourSevenEight"

@@ -7,10 +7,13 @@
 #   ./pipeline.sh "Phase XX: description"                 # dev mode (default)
 #   ./pipeline.sh --mode=archive "v1.0.0 App Store"       # App Store archive
 #   ./pipeline.sh --mode=release "v1.0.0 release build"   # release .ipa without upload
+#   ./pipeline.sh --mode=test                             # unit tests on iOS Simulator
 #
 # dev mode: strips entitlements, builds Debug, installs to device, commits+pushes.
-# archive mode: keeps HealthKit entitlements, builds archive for App Store Connect upload.
+# archive mode: applies FULL entitlements (.full → .entitlements в /tmp/StilloBuild),
+#               builds archive for App Store Connect upload.
 # release mode: keeps entitlements, builds Release without sideload.
+# test mode: runs StilloTests (xcodebuild test) on the iPhone 17 simulator.
 # ============================================================
 
 set -euo pipefail
@@ -69,8 +72,20 @@ if [[ "$MODE" == "dev" ]]; then
 </plist>
 PLIST
   echo "     ✅ Stripped (dev sideload)"
+elif [[ "$MODE" == "archive" ]]; then
+  # archive — apply FULL entitlements (HealthKit etc.) on top of Stillo.entitlements.
+  # ВАЖНО: копируем ВНУТРИ $BUILD_DIR (/tmp/StilloBuild), НЕ в рабочей директории —
+  # иначе dev-копия Stillo.entitlements в репо будет затёрта (документированная грабля).
+  if [[ ! -f "$BUILD_DIR/Stillo/Stillo.entitlements.full" ]]; then
+    echo "     ❌ $BUILD_DIR/Stillo/Stillo.entitlements.full не найден."
+    echo "        Архив без полных entitlements (HealthKit) загружать нельзя."
+    echo "        Проверь, что Stillo/Stillo.entitlements.full существует в $PROJECT и не игнорируется rsync/.gitignore."
+    exit 1
+  fi
+  cp "$BUILD_DIR/Stillo/Stillo.entitlements.full" "$BUILD_DIR/Stillo/Stillo.entitlements"
+  echo "     ✅ Applied full entitlements (.full → .entitlements in $BUILD_DIR)"
 else
-  # archive/release — KEEP original entitlements (HealthKit etc.)
+  # release/test — KEEP original entitlements (HealthKit etc.)
   echo "     ✅ Preserved (HealthKit entitlements intact)"
 fi
 
@@ -99,9 +114,27 @@ if [[ "$MODE" == "archive" ]]; then
   echo "\n  ℹ️  Next: upload via Xcode Organizer or:"
   echo "      xcodebuild -exportArchive -archivePath $ARCHIVE_PATH \\"
   echo "                 -exportPath $EXPORT_DIR \\"
-  echo "                 -exportOptionsPlist ExportOptions.plist"
+  echo "                 -exportOptionsPlist $PROJECT/ExportOptions.plist"
   echo "      xcrun altool --upload-app -f $EXPORT_DIR/*.ipa --apiKey ... --apiIssuer ..."
   exit 0
+
+elif [[ "$MODE" == "test" ]]; then
+  # Unit tests (StilloTests) on iOS Simulator
+  xcodebuild test \
+    -project "$BUILD_DIR/Stillo.xcodeproj" \
+    -scheme Stillo \
+    -destination 'platform=iOS Simulator,name=iPhone 17' \
+    2>&1 | tee /tmp/stillo_test.log | grep -E "error:|failed|passed|Test Suite|BUILD|TEST" | tail -40 || true
+
+  if grep -q "TEST SUCCEEDED" /tmp/stillo_test.log; then
+    echo "     ✅ TEST SUCCEEDED"
+    $NOTIFY --message "✅ Tests passed (StilloTests)" 2>/dev/null || true
+    exit 0
+  else
+    echo "     ❌ TEST FAILED (see /tmp/stillo_test.log)"
+    $NOTIFY --message "❌ Tests failed (see /tmp/stillo_test.log)" 2>/dev/null || true
+    exit 1
+  fi
 
 elif [[ "$MODE" == "release" ]]; then
   # Release build without archive upload

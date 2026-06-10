@@ -173,8 +173,8 @@
 "notif_breathing_body" = "2 minutos de técnica 4-7-8 vão reduzir a ansiedade. Experimente agora.";
 "notif_hr_high_title" = "💓 Frequência cardíaca elevada";
 "notif_hr_high_body %lld" = "Frequência cardíaca %lld BPM — acima do normal. Experimente a respiração 4-7-8 para se acalmar.";
-"notif_streak_title" = "🔥 Não quebre sua sequência!";
-"notif_streak_body %lld" = "Você está com %lld dias seguidos! Continue — 2 minutos de respiração.";
+"notif_streak_title" = "Um minuto de calma para você?";
+"notif_streak_body %lld" = "Já são %lld dias de prática. 2 minutos de respiração hoje, se quiser.";
 "notif_reflection_title" = "🌙 Reflexão noturna";
 "notif_reflection_body" = "Como foi seu dia? Escreva seus sentimentos no diário.";
 "notif_morning_title" = "☀️ Bom dia";
@@ -185,7 +185,7 @@
 "paywall_subtitle" = "Acesso completo a todas as técnicas";
 "paywall_feature_breathing" = "Todas as técnicas de respiração";
 "paywall_feature_analytics" = "Análises avançadas";
-"paywall_feature_diary" = "Diário ilimitado";
+"paywall_feature_watch" = "App para Apple Watch";
 "paywall_feature_themes" = "Todos os temas";
 "paywall_feature_heart" = "Alertas cardíacos inteligentes";
 "paywall_yearly" = "Anual";
@@ -710,7 +710,10 @@
 "sos.grounding_sub" = "Conecte-se com seus sentidos";
 "sos.hint_exhale" = "Expire lentamente";
 "sos.hint_hold" = "Segure a respiração";
-"sos.hint_inhale" = "Inspire profundamente";
+"sos.hint_inhale" = "Inspire devagar pelo nariz";
+"sos.psychoed_after" = "A onda passou — e seu corpo teria lidado com ela sozinho. Se as crises se repetem com frequência, um especialista em TCC oferece os melhores resultados a longo prazo.";
+"sos.psychoed_body" = "O pico passa em poucos minutos. Não é perigoso: seu corpo está reagindo à adrenalina, não a um perigo real.";
+"sos.psychoed_title" = "Isto é um ataque de pânico";
 "sos.save_and_close" = "Salvar e fechar";
 "sos.you_are_safe_detail" = "Você conseguiu. Está seguro agora.";
 "sos.you_did_it" = "Você conseguiu!";
@@ -766,19 +769,10 @@
 "settings.title" = "Settings";
 "settings.voice_guide" = "Voice Guide";
 "settings.voice_enabled" = "Enable Voice Guide";
-"settings.voice_fallback_hint" = "Uses device voices. Add OpenAI key for premium quality.";
-"settings.openai_tts" = "OpenAI Voice (Premium)";
-"settings.openai_description" = "Natural, human voices by OpenAI. Much softer than device voices.";
-"settings.openai_enabled" = "Use OpenAI Voice";
-"settings.openai_no_key" = "No API key set";
-"settings.openai_voice" = "Voice";
-"settings.openai_test" = "Test Voice";
-"settings.openai_model" = "Quality";
 "settings.soundscape" = "Ambient Sounds";
 "settings.appearance" = "Appearance";
 "settings.notifications" = "Notifications";
 "settings.data" = "Data & Storage";
-"settings.clear_tts_cache" = "Clear Voice Cache";
 "settings.crisis_lines" = "Crisis Lines";
 "soundscape.title" = "Sounds";
 "insight.time_of_day" = "Time of Day";
@@ -804,8 +798,6 @@
 "settings.voice_premium_tip_title" = "Voz mais natural";
 "settings.voice_premium_tip_body" = "Para uma voz mais calorosa offline: abra Ajustes do iOS → Acessibilidade → Conteúdo Falado → Vozes → escolha seu idioma e baixe uma voz Premium. Stillō usará automaticamente.";
 "settings.voice_source_bank" = "Premium pre-recorded voice";
-"settings.voice_source_openai" = "OpenAI neural voice (online)";
-"settings.voice_source_system" = "System voice (offline fallback)";
 
 // MARK: - Soundscape (Brown Noise)
 "soundscape.play" = "Reproduzir";
@@ -851,16 +843,32 @@
 "sound.calm_melody" = "Melodia calma";
 "sound.calm_melody_desc" = "Melodia suave que acalma pensamentos acelerados";
 
-"settings.clear_tts_cache_sub" = "Remover arquivos de voz em cache";
 "settings.crisis_lines_sub" = "Linhas de emergência para sua região";
+"heart.disclaimer_a11y_hint" = "Abrir o aviso completo e a lista de linhas de apoio";
+"heart.crisis_line_title" = "Se você estiver em perigo imediato";
+"heart.crisis_line_hint" = "Abra Perfil → Ajustes → Linha de apoio. Números de 12 países pré-configurados pela região.";
+"settings.privacy.title" = "Privacidade";
+"settings.privacy.body" = "Todos os seus dados ficam no seu dispositivo. O Stillō nunca envia nada para a nuvem sem a sua conta iCloud. Você pode apagar permanentemente todo o histórico — registros do diário, sessões, contatos SOS.";
+"settings.privacy.delete_btn" = "Apagar todos os meus dados";
+"settings.privacy.delete_a11y_hint" = "Duas confirmações antes da exclusão permanente";
+"settings.privacy.confirm1_title" = "Apagar todos os dados?";
+"settings.privacy.confirm1_body" = "Registros do diário, sessões de respiração, contatos SOS, humores e conquistas serão apagados. Isso não pode ser desfeito.";
+"settings.privacy.confirm1_btn" = "Continuar";
+"settings.privacy.confirm2_title" = "Tem certeza?";
+"settings.privacy.confirm2_body" = "Último aviso. Após confirmar, seus dados não poderão ser recuperados.";
+"settings.privacy.confirm2_btn" = "Apagar para sempre";
+"settings.privacy.done_title" = "Pronto";
+"settings.privacy.done_body %lld" = "%lld itens apagados.";
+"settings.subscription.title" = "Assinatura";
+"settings.subscription.active" = "Seu acesso Premium está ativo. Obrigado!";
+"settings.subscription.inactive" = "O Premium desbloqueia Watch, HealthKit, Soundscape estendido e lembretes inteligentes.";
+"settings.subscription.upgrade_btn" = "Obter Premium";
+"settings.subscription.restore_btn" = "Restaurar";
+"notif_absence_title" = "O Stillō está aqui quando você precisar";
+"notif_absence_body" = "Alguns dias sem sessão. Sem pressão — só para você saber: a técnica 4-7-8 está no seu bolso sempre que precisar.";
 /* Settings — Voice/TTS (added 2026-04-18) */
-"settings.openai_status_no_key" = "Chave API não configurada";
-"settings.openai_status_ready" = "Conectado — voz pronta";
 "settings.voice_no_phrases" = "Nenhuma frase pré-gravada disponível";
-"settings.voice_openai_need_key" = "Requer chave API";
-"settings.voice_openai_ready" = "Chave API configurada";
 "settings.voice_source" = "Fonte de voz";
-"settings.voice_system_hint" = "Escolha entre as vozes do iOS";
 
 /* Voice — Cognitive reframing phrases (added 2026-04-18) */
 "voice.affirm_control" = "Você está no controle. Sua mente está clara. Seu corpo está calmo.";

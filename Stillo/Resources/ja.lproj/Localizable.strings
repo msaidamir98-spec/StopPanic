@@ -173,8 +173,8 @@
 "notif_breathing_body" = "2分間の4-7-8テクニックで不安を軽減。今すぐ試してみましょう。";
 "notif_hr_high_title" = "💓 心拍数が上昇しています";
 "notif_hr_high_body %lld" = "心拍数 %lld BPM — 通常より高めです。4-7-8呼吸法で落ち着きましょう。";
-"notif_streak_title" = "🔥 連続記録を途切れさせないで！";
-"notif_streak_body %lld" = "%lld日連続です！続けましょう — 2分間の呼吸。";
+"notif_streak_title" = "自分のための穏やかな1分はいかが？";
+"notif_streak_body %lld" = "これまで%lld日の練習。今日も気が向いたら2分間の呼吸を。";
 "notif_reflection_title" = "🌙 夜の振り返り";
 "notif_reflection_body" = "今日はどんな一日でしたか？日記に気持ちを書きましょう。";
 "notif_morning_title" = "☀️ おはようございます";
@@ -185,7 +185,7 @@
 "paywall_subtitle" = "すべてのテクニックへのフルアクセス";
 "paywall_feature_breathing" = "すべての呼吸テクニック";
 "paywall_feature_analytics" = "高度な分析";
-"paywall_feature_diary" = "無制限の日記";
+"paywall_feature_watch" = "Apple Watchアプリ";
 "paywall_feature_themes" = "すべてのテーマ";
 "paywall_feature_heart" = "スマート心拍アラート";
 "paywall_yearly" = "年額";
@@ -710,7 +710,10 @@
 "sos.grounding_sub" = "五感とつながりましょう";
 "sos.hint_exhale" = "ゆっくり息を吐いて";
 "sos.hint_hold" = "息を止めて";
-"sos.hint_inhale" = "深く息を吸って";
+"sos.hint_inhale" = "鼻からゆっくり息を吸って";
+"sos.psychoed_after" = "波は過ぎました。体は自分の力で乗り越えられたはずです。発作が頻繁に繰り返される場合は、認知行動療法（CBT）の専門家に相談するのが長期的に最も効果的です。";
+"sos.psychoed_body" = "数分でピークを越えて、おさまっていきます。危険なものではありません。体がアドレナリンに反応しているだけで、本当の危険はないのです。";
+"sos.psychoed_title" = "これはパニック発作です";
 "sos.save_and_close" = "保存して閉じる";
 "sos.you_are_safe_detail" = "乗り越えました。もう安全です。";
 "sos.you_did_it" = "やり遂げました！";
@@ -766,19 +769,10 @@
 "settings.title" = "Settings";
 "settings.voice_guide" = "Voice Guide";
 "settings.voice_enabled" = "Enable Voice Guide";
-"settings.voice_fallback_hint" = "Uses device voices. Add OpenAI key for premium quality.";
-"settings.openai_tts" = "OpenAI Voice (Premium)";
-"settings.openai_description" = "Natural, human voices by OpenAI. Much softer than device voices.";
-"settings.openai_enabled" = "Use OpenAI Voice";
-"settings.openai_no_key" = "No API key set";
-"settings.openai_voice" = "Voice";
-"settings.openai_test" = "Test Voice";
-"settings.openai_model" = "Quality";
 "settings.soundscape" = "Ambient Sounds";
 "settings.appearance" = "Appearance";
 "settings.notifications" = "Notifications";
 "settings.data" = "Data & Storage";
-"settings.clear_tts_cache" = "Clear Voice Cache";
 "settings.crisis_lines" = "Crisis Lines";
 "soundscape.title" = "Sounds";
 "insight.time_of_day" = "Time of Day";
@@ -804,8 +798,6 @@
 "settings.voice_premium_tip_title" = "より自然な声";
 "settings.voice_premium_tip_body" = "オフラインで温かみのある声にするには：iOS 設定 → アクセシビリティ → 読み上げコンテンツ → 声 → 言語を選び、Premium の声をダウンロード。Stillō が自動的に使用します。";
 "settings.voice_source_bank" = "Premium pre-recorded voice";
-"settings.voice_source_openai" = "OpenAI neural voice (online)";
-"settings.voice_source_system" = "System voice (offline fallback)";
 
 // MARK: - Soundscape (Brown Noise)
 "soundscape.play" = "再生";
@@ -851,16 +843,32 @@
 "sound.calm_melody" = "穏やかなメロディー";
 "sound.calm_melody_desc" = "心を落ち着かせる穏やかなメロディー";
 
-"settings.clear_tts_cache_sub" = "キャッシュされた音声ファイルを削除";
 "settings.crisis_lines_sub" = "お住まいの地域の緊急通報番号";
+"heart.disclaimer_a11y_hint" = "免責事項の全文と相談窓口一覧を開く";
+"heart.crisis_line_title" = "今すぐ危険を感じたら";
+"heart.crisis_line_hint" = "プロフィール → 設定 → 相談窓口 を開いてください。12か国の番号が地域に合わせて設定済みです。";
+"settings.privacy.title" = "プライバシー";
+"settings.privacy.body" = "すべてのデータはデバイス内に保存されます。StillōはiCloudアカウントなしにクラウドへ何も送信しません。日記、セッション、SOS連絡先など、履歴をすべて完全に削除できます。";
+"settings.privacy.delete_btn" = "すべてのデータを削除";
+"settings.privacy.delete_a11y_hint" = "完全に削除する前に2回の確認があります";
+"settings.privacy.confirm1_title" = "すべてのデータを削除しますか？";
+"settings.privacy.confirm1_body" = "日記、呼吸セッション、SOS連絡先、気分、実績がすべて削除されます。この操作は取り消せません。";
+"settings.privacy.confirm1_btn" = "続ける";
+"settings.privacy.confirm2_title" = "本当に削除しますか？";
+"settings.privacy.confirm2_body" = "最後の警告です。確認後、データを復元することはできません。";
+"settings.privacy.confirm2_btn" = "完全に削除";
+"settings.privacy.done_title" = "完了";
+"settings.privacy.done_body %lld" = "%lld件のデータを削除しました。";
+"settings.subscription.title" = "サブスクリプション";
+"settings.subscription.active" = "Premiumアクセスは有効です。ありがとうございます！";
+"settings.subscription.inactive" = "PremiumでWatch、HealthKit、拡張Soundscape、スマートリマインダーが使えます。";
+"settings.subscription.upgrade_btn" = "Premiumを入手";
+"settings.subscription.restore_btn" = "復元";
+"notif_absence_title" = "Stillōは必要なときにそばにいます";
+"notif_absence_body" = "数日セッションがありませんでした。焦らなくて大丈夫 — ただお知らせです：4-7-8呼吸法はいつでもポケットの中にあります。";
 /* Settings — Voice/TTS (added 2026-04-18) */
-"settings.openai_status_no_key" = "APIキーが設定されていません";
-"settings.openai_status_ready" = "接続済み — 音声準備完了";
 "settings.voice_no_phrases" = "録音済みフレーズがありません";
-"settings.voice_openai_need_key" = "APIキーが必要です";
-"settings.voice_openai_ready" = "APIキー設定済み";
 "settings.voice_source" = "音声ソース";
-"settings.voice_system_hint" = "iOSの音声から選択";
 
 /* Voice — Cognitive reframing phrases (added 2026-04-18) */
 "voice.affirm_control" = "あなたはコントロールしています。心は澄んでいます。身体は穏やかです。";

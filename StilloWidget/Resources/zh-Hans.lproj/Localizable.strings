@@ -1,0 +1,7 @@
+/* Simplified Chinese — Stillō Widget */
+"widget.sos_title" = "SOS";
+"widget.sos_inline_title" = "Stillō SOS";
+"widget.sos_tap_hint" = "点按获取帮助";
+"widget.sos_description" = "快速获取紧急帮助";
+"widget.breathe_title" = "4-7-8呼吸法";
+"widget.breathe_description" = "从锁定屏幕开始呼吸";

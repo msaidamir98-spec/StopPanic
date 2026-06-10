@@ -173,8 +173,8 @@
 "notif_breathing_body" = "2 minutes of 4-7-8 technique will reduce anxiety. Try now.";
 "notif_hr_high_title" = "💓 Heart rate elevated";
 "notif_hr_high_body %lld" = "Heart rate %lld BPM — above normal. Try 4-7-8 breathing to calm down.";
-"notif_streak_title" = "🔥 Don't break your streak!";
-"notif_streak_body %lld" = "You have a %lld-day streak! Keep going — 2 minutes of breathing.";
+"notif_streak_title" = "A calm minute for yourself?";
+"notif_streak_body %lld" = "%lld days of practice so far. 2 minutes of breathing today, if you feel like it.";
 "notif_reflection_title" = "🌙 Evening reflection";
 "notif_reflection_body" = "How was your day? Write your feelings in the journal.";
 "notif_morning_title" = "☀️ Good morning";
@@ -185,7 +185,7 @@
 "paywall_subtitle" = "Full access to all techniques";
 "paywall_feature_breathing" = "All breathing techniques";
 "paywall_feature_analytics" = "Advanced analytics";
-"paywall_feature_diary" = "Unlimited journal";
+"paywall_feature_watch" = "Apple Watch app";
 "paywall_feature_themes" = "All themes";
 "paywall_feature_heart" = "Smart heart rate alerts";
 "paywall_yearly" = "Yearly";
@@ -710,7 +710,10 @@
 "sos.grounding_sub" = "Connect with your senses";
 "sos.hint_exhale" = "Exhale slowly";
 "sos.hint_hold" = "Hold your breath";
-"sos.hint_inhale" = "Breathe in deeply";
+"sos.hint_inhale" = "Slow breath in through your nose";
+"sos.psychoed_after" = "The wave passed — and your body would have handled it on its own. If attacks repeat often, a CBT specialist gives the best long-term results.";
+"sos.psychoed_body" = "It peaks within minutes and passes. It is not dangerous — your body is reacting to adrenaline, not to real danger.";
+"sos.psychoed_title" = "This is a panic attack";
 "sos.save_and_close" = "Save & Close";
 "sos.you_are_safe_detail" = "You got through it. You are safe now.";
 "sos.you_did_it" = "You did it!";
@@ -766,19 +769,10 @@
 "settings.title" = "Settings";
 "settings.voice_guide" = "Voice Guide";
 "settings.voice_enabled" = "Enable Voice Guide";
-"settings.voice_fallback_hint" = "Uses device voices. Add OpenAI key for premium quality.";
-"settings.openai_tts" = "OpenAI Voice (Premium)";
-"settings.openai_description" = "Natural, human voices by OpenAI. Much softer than device voices.";
-"settings.openai_enabled" = "Use OpenAI Voice";
-"settings.openai_no_key" = "No API key set";
-"settings.openai_voice" = "Voice";
-"settings.openai_test" = "Test Voice";
-"settings.openai_model" = "Quality";
 "settings.soundscape" = "Ambient Sounds";
 "settings.appearance" = "Appearance";
 "settings.notifications" = "Notifications";
 "settings.data" = "Data & Storage";
-"settings.clear_tts_cache" = "Clear Voice Cache";
 "settings.crisis_lines" = "Crisis Lines";
 
 // MARK: - Soundscape
@@ -810,12 +804,7 @@
 "settings.voice_premium_tip_title" = "More natural voice";
 "settings.voice_premium_tip_body" = "For a warmer voice offline: open iOS Settings → Accessibility → Spoken Content → Voices → tap your language and download a Premium voice. Stillō will pick it up automatically.";
 "settings.voice_source_bank" = "Premium pre-recorded voice";
-"settings.voice_source_openai" = "OpenAI neural voice (online)";
-"settings.voice_source_system" = "System voice (offline fallback)";
 "settings.voice_source" = "Voice Source";
-"settings.voice_system_hint" = "Choose from iOS voices";
-"settings.voice_openai_ready" = "API key configured";
-"settings.voice_openai_need_key" = "Requires API key";
 "settings.voice_no_phrases" = "No pre-recorded phrases available";
 "voice.configure_in_settings" = "Configure voice in Settings";
 
@@ -837,8 +826,6 @@
 "voice.gratitude_one" = "Think of one thing you are grateful for right now.";
 
 // OpenAI TTS status
-"settings.openai_status_ready" = "Connected — voice ready";
-"settings.openai_status_no_key" = "API key not configured";
 
 // MARK: - Soundscape (Brown Noise)
 "soundscape.play" = "Play";
@@ -883,7 +870,6 @@
 "sound.calm_melody" = "Calm Melody";
 "sound.calm_melody_desc" = "Gentle melody that quiets racing thoughts";
 
-"settings.clear_tts_cache_sub" = "Remove cached voice files to free storage";
 "settings.crisis_lines_sub" = "Emergency helplines for your region";
 "heart.disclaimer_a11y_hint" = "Open full disclaimer and crisis-line directory";
 "heart.crisis_line_title" = "If you are in immediate danger";

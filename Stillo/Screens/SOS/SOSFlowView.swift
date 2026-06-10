@@ -10,6 +10,7 @@ struct SOSFlowView: View {
     // MARK: Internal
 
     enum SOSStep: Int, CaseIterable {
+        case psychoeducation
         case breathing
         case grounding
         case affirmation
@@ -60,6 +61,7 @@ struct SOSFlowView: View {
 
                 Group {
                     switch currentStep {
+                    case .psychoeducation: psychoedStepView
                     case .breathing: breathingStepView
                     case .grounding: groundingStepView
                     case .affirmation: affirmationStepView
@@ -79,8 +81,8 @@ struct SOSFlowView: View {
             .padding(.horizontal, SP.Layout.padding)
         }
         .onAppear {
-            startBreathing()
             coordinator.audioGuide.speakSafe()
+            startPsychoedAutoAdvance()
             withAnimation(.easeOut(duration: 0.6)) { appeared = true }
         }
         .onDisappear {
@@ -92,7 +94,7 @@ struct SOSFlowView: View {
     // MARK: Private
 
     @State
-    private var currentStep: SOSStep = .breathing
+    private var currentStep: SOSStep = .psychoeducation
     @State
     private var breathScale: CGFloat = 0.6
     @State
@@ -105,6 +107,8 @@ struct SOSFlowView: View {
     private var breathingCycles: Int = 0
     @State
     private var countdownTimer: Timer?
+    @State
+    private var psychoedTimer: Timer?
     @State
     private var groundingStep = 0
     @State
@@ -129,6 +133,7 @@ struct SOSFlowView: View {
 
     private var stepColor: Color {
         switch currentStep {
+        case .psychoeducation: SP.Colors.calm
         case .breathing: SP.Colors.calm
         case .grounding: SP.Colors.accent
         case .affirmation: SP.Colors.success
@@ -183,6 +188,26 @@ struct SOSFlowView: View {
                     .frame(width: step == currentStep ? 32 : 12, height: 6)
                     .animation(SP.Anim.springFast, value: currentStep)
             }
+        }
+    }
+
+    // MARK: - Step 0: Psychoeducation
+
+    // NICE CG113: короткое психообразование снижает катастрофизацию
+    // («я умираю») в момент эпизода. Автопереход через 6 секунд или тап.
+    private var psychoedStepView: some View {
+        VStack(spacing: 24) {
+            Text(String(localized: "sos.psychoed_title"))
+                .font(SP.Typography.title1)
+                .foregroundColor(SP.Colors.textPrimary)
+                .multilineTextAlignment(.center)
+
+            Text(String(localized: "sos.psychoed_body"))
+                .font(SP.Typography.body)
+                .foregroundColor(SP.Colors.textSecondary)
+                .multilineTextAlignment(.center)
+                .lineSpacing(4)
+                .spGlassCard()
         }
     }
 
@@ -260,21 +285,6 @@ struct SOSFlowView: View {
                 }
             }
             .padding(.vertical, 20)
-
-            if coordinator.healthManager.heartRate > 0 {
-                HStack(spacing: 8) {
-                    Image(systemName: "heart.fill")
-                        .foregroundColor(SP.Colors.danger)
-                        .font(.system(.footnote))
-                    Text("\(Int(coordinator.healthManager.heartRate)) BPM")
-                        .font(SP.Typography.subheadline)
-                        .foregroundColor(SP.Colors.textSecondary)
-                        .monospacedDigit()
-                }
-                .padding(.horizontal, 16)
-                .padding(.vertical, 8)
-                .background(Capsule().fill(.warmGlass))
-            }
         }
     }
 
@@ -393,6 +403,15 @@ struct SOSFlowView: View {
             }
             .spGlassCard()
 
+            // Post-episode психообразование (NICE CG113): нормализация + мягкий
+            // указатель на КПТ при частых атаках.
+            Text(String(localized: "sos.psychoed_after"))
+                .font(SP.Typography.callout)
+                .foregroundColor(SP.Colors.textSecondary)
+                .multilineTextAlignment(.center)
+                .lineSpacing(4)
+                .spGlassCard()
+
             Button {
                 // Intensity based on duration: longer session = more intense episode was
                 let estimatedIntensity = min(max(10 - (secondsElapsed / 60), 3), 9)
@@ -481,10 +500,25 @@ struct SOSFlowView: View {
         RunLoop.main.add(newCountdownTimer, forMode: .common)
     }
 
+    /// Психообразовательный шаг не должен задерживать пользователя:
+    /// автопереход к дыханию через 6 секунд, тап по кнопке — раньше.
+    private func startPsychoedAutoAdvance() {
+        let timer = Timer(timeInterval: 6, repeats: false) { [self] _ in
+            Task { @MainActor in
+                guard currentStep == .psychoeducation else { return }
+                withAnimation(SP.Anim.spring) { advanceStep() }
+            }
+        }
+        psychoedTimer = timer
+        RunLoop.main.add(timer, forMode: .common)
+    }
+
     private func stopTimers() {
         breathTimer?.invalidate()
         breathTimer = nil
         countdownTimer?.invalidate()
         countdownTimer = nil
+        psychoedTimer?.invalidate()
+        psychoedTimer = nil
     }
 }

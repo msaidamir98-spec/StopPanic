@@ -160,8 +160,14 @@ final class AmbientSoundService {
         let track = SoundTrack(rawValue: savedRaw) ?? .rainAmbient
         self._selectedTrack = track
 
-        let savedVol = UserDefaults.standard.double(forKey: Keys.volume)
-        self._volume = savedVol > 0 ? savedVol : 0.6
+        // Отличаем «ключ отсутствует» (первый запуск → дефолт 0.6) от
+        // сознательно сохранённого 0 — иначе выставленный пользователем
+        // ноль сбрасывался на 0.6 после рестарта.
+        if UserDefaults.standard.object(forKey: Keys.volume) == nil {
+            self._volume = 0.6
+        } else {
+            self._volume = UserDefaults.standard.double(forKey: Keys.volume)
+        }
 
         // Migrate from old brown_noise selection
         if savedRaw == "brown_noise" {

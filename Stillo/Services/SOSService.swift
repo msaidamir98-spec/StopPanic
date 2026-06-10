@@ -17,7 +17,9 @@ final class SOSService: ObservableObject {
     // MARK: Internal
 
     static let crisisLines: [String: String] = [
-        "RU": "8-800-2000-122", "US": "988", "UK": "116 123",
+        // RU: ЦЭПП МЧС России — взрослая круглосуточная линия.
+        // НЕ 8-800-2000-122: это детский телефон доверия.
+        "RU": "+7 495 989-50-50", "US": "988", "GB": "116 123",
         "DE": "0800 111 0 111", "FR": "3114", "ES": "024",
         "IT": "800 274 274", "JP": "0570-064-556",
         "BR": "188", "CN": "400-161-9995",
@@ -30,7 +32,11 @@ final class SOSService: ObservableObject {
     var panicModeActive: Bool = false
 
     static func getCrisisLine() -> String {
-        let region = Locale.current.language.region?.identifier ?? "US"
+        // Регион УСТРОЙСТВА (Settings → General → Region), не региона языка:
+        // у пользователя с en-US языком в Германии должен быть немецкий номер.
+        let region = Locale.current.region?.identifier
+            ?? Locale.current.language.region?.identifier
+            ?? "US"
         return crisisLines[region] ?? "988"
     }
 

@@ -459,7 +459,6 @@ struct SettingsView: View {
     private func voiceSourceLabel(_ source: AudioGuideService.VoiceSource) -> String {
         switch source {
         case .voiceBank: String(localized: "settings.voice_source_bank")
-        case .system: String(localized: "settings.voice_source_system")
         }
     }
 

@@ -43,6 +43,7 @@ final class AppCoordinator {
     var selectedTab: AppTab = .home
     var showSOSOverlay: Bool = false
     var showBreathingSheet: Bool = false
+    var showCrisisLineSheet: Bool = false
     var showPaywall: Bool = false
 
     // Wire up dependencies: VoiceBank → AudioGuide, Ambient → all voice services

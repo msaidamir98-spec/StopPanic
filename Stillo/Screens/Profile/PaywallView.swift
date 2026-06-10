@@ -64,7 +64,9 @@ struct PaywallView: View {
                             title: String(localized: "paywall_feature_analytics"),
                             color: SP.Colors.accent
                         )
-                        premiumFeature(icon: "book.fill", title: String(localized: "paywall_feature_diary"), color: SP.Colors.warmth)
+                        // Дневник в Free безлимитный (Decision 2026-05-01) —
+                        // вместо него рекламируем реальную Premium-фичу: Watch.
+                        premiumFeature(icon: "applewatch", title: String(localized: "paywall_feature_watch"), color: SP.Colors.warmth)
                         premiumFeature(icon: "paintpalette.fill", title: String(localized: "paywall_feature_themes"), color: SP.Colors.success)
                         premiumFeature(icon: "heart.text.square.fill", title: String(localized: "paywall_feature_heart"), color: SP.Colors.danger)
                     }

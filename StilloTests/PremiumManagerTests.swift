@@ -6,7 +6,8 @@ import Testing
 struct PremiumManagerTests {
     @Test
     func freeTierConstantsAreSensible() {
-        #expect(PremiumManager.freeDiaryLimit == 3)
+        // Decision 2026-05-01 (Pricing C): дневник в Free безлимитный.
+        #expect(PremiumManager.freeDiaryLimit == Int.max)
         #expect(PremiumManager.freeTechniqueID == "fourSevenEight")
         #expect(PremiumManager.monthlyID == "com.stillo.premium.monthly")
         #expect(PremiumManager.yearlyID == "com.stillo.premium.yearly")

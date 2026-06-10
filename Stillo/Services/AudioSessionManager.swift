@@ -14,8 +14,10 @@ import os.log
 /// **Активация сессии**: setActive(true) вызывается ровно один раз — при
 /// первой настройке. Повторная активация на каждом голосовом фрагменте
 /// создаёт гонку с уже играющим ambient-плеером (50–200 мс заиканий
-/// в SOS-флоу). Деактивация — только через `teardown()` при app
-/// terminate; в обычной жизни iOS сам управляет жизненным циклом сессии.
+/// в SOS-флоу). Деактивация сессии в обычной жизни запрещена (антипаттерн
+/// №1: setActive(false) убивает ambient); `teardown()` — аварийный путь,
+/// сейчас намеренно нигде не вызывается, iOS сам управляет жизненным
+/// циклом сессии.
 @MainActor
 enum AudioSessionManager {
     private static let log = Logger(subsystem: "MSK-PRODUKT.StopPanic", category: "AudioSession")
@@ -46,8 +48,11 @@ enum AudioSessionManager {
         configureForAmbient()
     }
 
-    /// Полностью отключить сессию. Вызывается из AudioController.silenceAll
-    /// при переходе в .background.
+    /// Полностью отключить сессию. АВАРИЙНЫЙ путь: сейчас намеренно не
+    /// вызывается нигде в коде и оставлен на случай экстренной деактивации.
+    /// В обычной жизни деактивация запрещена — setActive(false) убивает
+    /// играющий ambient (антипаттерн №1); жизненным циклом сессии
+    /// управляет iOS.
     static func teardown() {
         do {
             try AVAudioSession.sharedInstance().setActive(false, options: [.notifyOthersOnDeactivation])

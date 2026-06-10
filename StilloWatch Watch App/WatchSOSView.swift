@@ -41,6 +41,8 @@ struct WatchSOSView: View {
     @State
     private var sosTriggered = false
     @State
+    private var deliveryStatus: WatchConnectionManager.SOSDeliveryStatus?
+    @State
     private var pulseScale: CGFloat = 1.0
     @State
     private var rippleScale: CGFloat = 0.8
@@ -87,7 +89,15 @@ struct WatchSOSView: View {
             .font(.system(.caption2, design: .rounded))
             .foregroundStyle(.secondary)
 
-        if connectivity.isPhoneReachable {
+        if deliveryStatus == .queued {
+            HStack(spacing: 4) {
+                Image(systemName: "clock.arrow.circlepath")
+                    .font(.system(size: 10))
+                Text(String(localized: "watch.sos_queued"))
+                    .font(.system(size: 10))
+            }
+            .foregroundStyle(.orange)
+        } else if deliveryStatus == .delivered, connectivity.isPhoneReachable {
             HStack(spacing: 4) {
                 Image(systemName: "checkmark.circle.fill")
                     .font(.system(size: 10))
@@ -102,6 +112,7 @@ struct WatchSOSView: View {
         Button {
             WKInterfaceDevice.current().play(.click)
             sosTriggered = false
+            deliveryStatus = nil
             rippleScale = 0.8
             rippleOpacity = 0.5
         } label: {
@@ -281,7 +292,7 @@ struct WatchSOSView: View {
         isCountingDown = false
         sosTriggered = true
         WKInterfaceDevice.current().play(.failure)
-        connectivity.triggerSOSOnPhone()
+        deliveryStatus = connectivity.triggerSOSOnPhone()
     }
 }
 

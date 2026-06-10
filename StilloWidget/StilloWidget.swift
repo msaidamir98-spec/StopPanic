@@ -66,7 +66,7 @@ struct SOSWidgetView: View {
     private var inlineView: some View {
         HStack(spacing: 4) {
             Image(systemName: "hand.raised.fill")
-            Text("Stillō SOS")
+            Text(String(localized: "widget.sos_inline_title"))
         }
         .widgetURL(URL(string: "stillo://sos"))
     }
@@ -78,7 +78,7 @@ struct SOSWidgetView: View {
             VStack(alignment: .leading, spacing: 2) {
                 Text("SOS")
                     .font(.system(size: 14, weight: .heavy))
-                Text("Tap for help")
+                Text(String(localized: "widget.sos_tap_hint"))
                     .font(.system(size: 10))
                     .opacity(0.7)
             }
@@ -111,7 +111,7 @@ struct BreathWidgetView: View {
         case .accessoryInline:
             HStack(spacing: 4) {
                 Image(systemName: "wind")
-                Text("4-7-8 Breathing")
+                Text(String(localized: "widget.breathe_title"))
             }
             .widgetURL(URL(string: "stillo://breathe"))
         default:
@@ -134,8 +134,8 @@ struct SOSWidget: Widget {
         StaticConfiguration(kind: kind, provider: SOSWidgetProvider()) { entry in
             SOSWidgetView(entry: entry)
         }
-        .configurationDisplayName("SOS")
-        .description("Quick access to emergency help")
+        .configurationDisplayName(String(localized: "widget.sos_title"))
+        .description(String(localized: "widget.sos_description"))
         .supportedFamilies([.accessoryCircular, .accessoryInline, .accessoryRectangular])
     }
 }
@@ -149,8 +149,8 @@ struct BreathWidget: Widget {
         StaticConfiguration(kind: kind, provider: SOSWidgetProvider()) { entry in
             BreathWidgetView(entry: entry)
         }
-        .configurationDisplayName("4-7-8 Breathing")
-        .description("Start breathing from Lock Screen")
+        .configurationDisplayName(String(localized: "widget.breathe_title"))
+        .description(String(localized: "widget.breathe_description"))
         .supportedFamilies([.accessoryCircular, .accessoryInline])
     }
 }

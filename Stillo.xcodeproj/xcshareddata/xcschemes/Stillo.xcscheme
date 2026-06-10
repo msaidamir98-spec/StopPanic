@@ -30,6 +30,18 @@
       shouldUseLaunchSchemeArgsEnv = "YES"
       shouldAutocreateTestPlan = "YES"
       storeKitConfiguration = "Stillo/Products.storekit">
+      <Testables>
+         <TestableReference
+            skipped = "NO">
+            <BuildableReference
+               BuildableIdentifier = "primary"
+               BlueprintIdentifier = "DD10000000000003TESTSTGT"
+               BuildableName = "StilloTests.xctest"
+               BlueprintName = "StilloTests"
+               ReferencedContainer = "container:Stillo.xcodeproj">
+            </BuildableReference>
+         </TestableReference>
+      </Testables>
    </TestAction>
    <LaunchAction
       buildConfiguration = "Debug"

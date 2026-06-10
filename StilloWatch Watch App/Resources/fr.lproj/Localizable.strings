@@ -62,3 +62,9 @@
 "watch.ref_tingling" = "Picotements dans les mains, c'est normal";
 "watch.ref_unreality" = "Sensation d'irréalité possible";
 "watch.ref_disclaimer" = "À titre informatif uniquement — pas un avis médical";
+
+/* Emergency info & SOS delivery */
+"watch.emergency_title" = "Urgence";
+"watch.emergency_call_phone" = "Appelez le 112 depuis votre téléphone";
+"watch.emergency_crisis_line" = "Ligne d'écoute : 3114";
+"watch.sos_queued" = "Le SOS sera envoyé dès que l'iPhone sera disponible";

@@ -62,3 +62,9 @@
 "watch.ref_tingling" = "Покалывание в руках — нормально";
 "watch.ref_unreality" = "Может возникнуть чувство нереальности";
 "watch.ref_disclaimer" = "Только для информации — не медицинская рекомендация";
+
+/* Emergency info & SOS delivery */
+"watch.emergency_title" = "Экстренная помощь";
+"watch.emergency_call_phone" = "Позвоните 112 с телефона";
+"watch.emergency_crisis_line" = "Линия помощи: +7 495 989-50-50";
+"watch.sos_queued" = "SOS отправится, когда iPhone будет доступен";

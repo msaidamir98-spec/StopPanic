@@ -62,3 +62,9 @@
 "watch.ref_tingling" = "Formigamento nas mãos é normal";
 "watch.ref_unreality" = "Sensação de irrealidade pode ocorrer";
 "watch.ref_disclaimer" = "Apenas informativo — não é conselho médico";
+
+/* Emergency info & SOS delivery */
+"watch.emergency_title" = "Emergência";
+"watch.emergency_call_phone" = "Ligue para 192 do seu telefone";
+"watch.emergency_crisis_line" = "Linha de apoio: CVV 188";
+"watch.sos_queued" = "O SOS será enviado quando o iPhone estiver disponível";

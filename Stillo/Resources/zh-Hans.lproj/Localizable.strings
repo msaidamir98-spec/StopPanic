@@ -173,8 +173,8 @@
 "notif_breathing_body" = "2分钟的4-7-8技巧可以缓解焦虑。现在就试试吧。";
 "notif_hr_high_title" = "💓 心率偏高";
 "notif_hr_high_body %lld" = "心率 %lld BPM — 高于正常水平。试试4-7-8呼吸法来平静下来。";
-"notif_streak_title" = "🔥 别断了连续记录！";
-"notif_streak_body %lld" = "你已经连续%lld天了！继续坚持 — 2分钟呼吸练习。";
+"notif_streak_title" = "给自己一分钟的平静？";
+"notif_streak_body %lld" = "已坚持练习%lld天。今天想的话，做2分钟呼吸练习。";
 "notif_reflection_title" = "🌙 晚间反思";
 "notif_reflection_body" = "今天过得怎么样？把你的感受写进日记吧。";
 "notif_morning_title" = "☀️ 早上好";
@@ -185,7 +185,7 @@
 "paywall_subtitle" = "完全访问所有技巧";
 "paywall_feature_breathing" = "所有呼吸技巧";
 "paywall_feature_analytics" = "高级分析";
-"paywall_feature_diary" = "无限日记";
+"paywall_feature_watch" = "Apple Watch 应用";
 "paywall_feature_themes" = "所有主题";
 "paywall_feature_heart" = "智能心率提醒";
 "paywall_yearly" = "年付";
@@ -710,7 +710,10 @@
 "sos.grounding_sub" = "与你的感官连接";
 "sos.hint_exhale" = "慢慢呼气";
 "sos.hint_hold" = "屏住呼吸";
-"sos.hint_inhale" = "深吸一口气";
+"sos.hint_inhale" = "用鼻子慢慢吸气";
+"sos.psychoed_after" = "这波浪潮已经过去——你的身体本来也能自己应对。如果发作经常出现，认知行为疗法（CBT）专业人士能带来最好的长期效果。";
+"sos.psychoed_body" = "高峰会在几分钟内过去。这并不危险——你的身体只是在对肾上腺素做出反应，并不存在真正的危险。";
+"sos.psychoed_title" = "这是惊恐发作";
 "sos.save_and_close" = "保存并关闭";
 "sos.you_are_safe_detail" = "你挺过来了。你现在安全了。";
 "sos.you_did_it" = "你做到了！";
@@ -766,19 +769,10 @@
 "settings.title" = "Settings";
 "settings.voice_guide" = "Voice Guide";
 "settings.voice_enabled" = "Enable Voice Guide";
-"settings.voice_fallback_hint" = "Uses device voices. Add OpenAI key for premium quality.";
-"settings.openai_tts" = "OpenAI Voice (Premium)";
-"settings.openai_description" = "Natural, human voices by OpenAI. Much softer than device voices.";
-"settings.openai_enabled" = "Use OpenAI Voice";
-"settings.openai_no_key" = "No API key set";
-"settings.openai_voice" = "Voice";
-"settings.openai_test" = "Test Voice";
-"settings.openai_model" = "Quality";
 "settings.soundscape" = "Ambient Sounds";
 "settings.appearance" = "Appearance";
 "settings.notifications" = "Notifications";
 "settings.data" = "Data & Storage";
-"settings.clear_tts_cache" = "Clear Voice Cache";
 "settings.crisis_lines" = "Crisis Lines";
 "soundscape.title" = "Sounds";
 "insight.time_of_day" = "Time of Day";
@@ -804,8 +798,6 @@
 "settings.voice_premium_tip_title" = "更自然的语音";
 "settings.voice_premium_tip_body" = "让离线语音更温暖：打开 iOS 设置 → 辅助功能 → 朗读内容 → 语音 → 选择您的语言并下载 Premium 语音。Stillō 将自动使用它。";
 "settings.voice_source_bank" = "Premium pre-recorded voice";
-"settings.voice_source_openai" = "OpenAI neural voice (online)";
-"settings.voice_source_system" = "System voice (offline fallback)";
 
 // MARK: - Soundscape (Brown Noise)
 "soundscape.play" = "播放";
@@ -851,16 +843,32 @@
 "sound.calm_melody" = "宁静旋律";
 "sound.calm_melody_desc" = "柔和旋律，平息纷乱思绪";
 
-"settings.clear_tts_cache_sub" = "删除缓存的语音文件以释放存储空间";
 "settings.crisis_lines_sub" = "您所在地区的紧急求助热线";
+"heart.disclaimer_a11y_hint" = "打开完整免责声明和心理援助热线列表";
+"heart.crisis_line_title" = "如果你正处于紧急危险中";
+"heart.crisis_line_hint" = "打开 个人资料 → 设置 → 援助热线。已按地区预设 12 个国家的号码。";
+"settings.privacy.title" = "隐私";
+"settings.privacy.body" = "你的所有数据都保存在设备上。没有你的 iCloud 账户，Stillō 不会向云端发送任何内容。你可以永久删除全部历史记录——日记、会话、SOS 联系人。";
+"settings.privacy.delete_btn" = "删除我的所有数据";
+"settings.privacy.delete_a11y_hint" = "永久删除前需要两次确认";
+"settings.privacy.confirm1_title" = "删除所有数据？";
+"settings.privacy.confirm1_body" = "日记、呼吸会话、SOS 联系人、心情和成就都将被删除。此操作无法撤销。";
+"settings.privacy.confirm1_btn" = "继续";
+"settings.privacy.confirm2_title" = "确定要删除吗？";
+"settings.privacy.confirm2_body" = "最后提醒：确认后数据将无法恢复。";
+"settings.privacy.confirm2_btn" = "永久删除";
+"settings.privacy.done_title" = "完成";
+"settings.privacy.done_body %lld" = "已删除 %lld 条数据。";
+"settings.subscription.title" = "订阅";
+"settings.subscription.active" = "你的 Premium 已生效。谢谢！";
+"settings.subscription.inactive" = "Premium 解锁 Watch、HealthKit、扩展 Soundscape 和智能提醒。";
+"settings.subscription.upgrade_btn" = "获取 Premium";
+"settings.subscription.restore_btn" = "恢复购买";
+"notif_absence_title" = "需要时，Stillō 就在这里";
+"notif_absence_body" = "已经几天没有练习了。没有压力——只是想告诉你：4-7-8 呼吸法随时都在你的口袋里。";
 /* Settings — Voice/TTS (added 2026-04-18) */
-"settings.openai_status_no_key" = "API 密钥未配置";
-"settings.openai_status_ready" = "已连接 — 语音就绪";
 "settings.voice_no_phrases" = "没有可用的预录制短语";
-"settings.voice_openai_need_key" = "需要 API 密钥";
-"settings.voice_openai_ready" = "API 密钥已配置";
 "settings.voice_source" = "语音源";
-"settings.voice_system_hint" = "从 iOS 语音中选择";
 
 /* Voice — Cognitive reframing phrases (added 2026-04-18) */
 "voice.affirm_control" = "你掌控着一切。你的思维清晰。你的身体平静。";

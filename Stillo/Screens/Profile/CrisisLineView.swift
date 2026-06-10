@@ -38,7 +38,10 @@ struct CrisisLineView: View {
     }
 
     private var currentRegion: String {
-        Locale.current.language.region?.identifier ?? "US"
+        // Регион устройства, фолбэк на регион языка — синхронно с SOSService.getCrisisLine()
+        Locale.current.region?.identifier
+            ?? Locale.current.language.region?.identifier
+            ?? "US"
     }
 
     // MARK: - Helpers
@@ -211,7 +214,7 @@ struct CrisisLineView: View {
 
     private func countryName(for code: String) -> String {
         let names: [String: String] = [
-            "RU": String(localized: "country.ru"), "US": String(localized: "country.us"), "UK": String(localized: "country.uk"),
+            "RU": String(localized: "country.ru"), "US": String(localized: "country.us"), "GB": String(localized: "country.uk"),
             "DE": String(localized: "country.de"), "FR": String(localized: "country.fr"), "ES": String(localized: "country.es"),
             "IT": String(localized: "country.it"), "JP": String(localized: "country.jp"),
             "BR": String(localized: "country.br"), "CN": String(localized: "country.cn"),

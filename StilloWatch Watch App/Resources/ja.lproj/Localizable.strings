@@ -62,3 +62,9 @@
 "watch.ref_tingling" = "手のしびれはよくあることです";
 "watch.ref_unreality" = "非現実感が生じることがあります";
 "watch.ref_disclaimer" = "情報提供のみ — 医療アドバイスではありません";
+
+/* Emergency info & SOS delivery */
+"watch.emergency_title" = "緊急";
+"watch.emergency_call_phone" = "電話から119番（救急）に発信してください";
+"watch.emergency_crisis_line" = "こころの健康相談: 0570-064-556";
+"watch.sos_queued" = "iPhoneが利用可能になるとSOSを送信します";
