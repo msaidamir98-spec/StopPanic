@@ -1,0 +1,810 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover, user-scalable=no">
+<meta name="theme-color" content="#0F1021">
+<title>Stillō</title>
+<script src="https://telegram.org/js/telegram-web-app.js"></script>
+<style>
+  :root {
+    --bg: var(--tg-theme-bg-color, #0F1021);
+    --text: var(--tg-theme-text-color, #ECEDF8);
+    --hint: var(--tg-theme-hint-color, rgba(236, 237, 248, 0.55));
+    --card: var(--tg-theme-secondary-bg-color, rgba(255, 255, 255, 0.06));
+    --accent: #7C7CF0;
+    --calm: #5BC8AF;
+    --danger: #E2556B;
+    --radius: 20px;
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; -webkit-tap-highlight-color: transparent; }
+
+  html, body {
+    height: 100%;
+    background: var(--bg);
+    color: var(--text);
+    font-family: -apple-system, BlinkMacSystemFont, "SF Pro Rounded", "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+    font-size: 17px;
+    line-height: 1.45;
+    -webkit-font-smoothing: antialiased;
+    overscroll-behavior: none;
+  }
+
+  #app {
+    max-width: 520px;
+    margin: 0 auto;
+    min-height: 100%;
+    padding: max(20px, env(safe-area-inset-top)) 20px max(24px, env(safe-area-inset-bottom));
+    display: flex;
+    flex-direction: column;
+  }
+
+  .screen { display: flex; flex-direction: column; flex: 1; animation: fadeIn 0.35s ease both; }
+  @keyframes fadeIn { from { opacity: 0; transform: translateY(8px); } to { opacity: 1; transform: none; } }
+
+  h1 { font-size: 26px; font-weight: 700; letter-spacing: -0.02em; }
+  h2 { font-size: 22px; font-weight: 700; letter-spacing: -0.02em; }
+  .hint { color: var(--hint); font-size: 14px; }
+
+  button {
+    font: inherit;
+    color: inherit;
+    border: none;
+    background: none;
+    cursor: pointer;
+    touch-action: manipulation;
+  }
+
+  .btn {
+    display: block;
+    width: 100%;
+    min-height: 52px;
+    padding: 14px 20px;
+    border-radius: 16px;
+    font-size: 17px;
+    font-weight: 600;
+    background: var(--accent);
+    color: #fff;
+    transition: transform 0.15s ease, opacity 0.2s ease, filter 0.2s ease;
+  }
+  .btn:active { transform: scale(0.97); filter: brightness(0.92); }
+  .btn.calm { background: var(--calm); color: #07221C; }
+  .btn.ghost { background: var(--card); color: var(--text); }
+  .btn.subtle {
+    background: none;
+    color: var(--hint);
+    font-size: 15px;
+    font-weight: 500;
+    min-height: 48px;
+  }
+
+  .card {
+    background: var(--card);
+    border-radius: var(--radius);
+    padding: 18px;
+  }
+
+  /* ---------- Home ---------- */
+  .home-header { text-align: center; margin: 18px 0 8px; }
+  .home-logo { font-size: 30px; font-weight: 800; letter-spacing: 0.01em; }
+  .home-tagline { color: var(--hint); font-size: 14px; margin-top: 4px; }
+
+  .sos-wrap { flex: 1; display: flex; align-items: center; justify-content: center; padding: 28px 0; }
+  .sos-btn {
+    width: 220px;
+    height: 220px;
+    border-radius: 50%;
+    background: radial-gradient(circle at 32% 28%, #ef7287, var(--danger) 62%, #C23B52);
+    color: #fff;
+    font-size: 22px;
+    font-weight: 800;
+    line-height: 1.25;
+    box-shadow: 0 0 0 0 rgba(226, 85, 107, 0.45), 0 18px 44px rgba(226, 85, 107, 0.35);
+    animation: sosPulse 2.8s ease-in-out infinite;
+    transition: transform 0.15s ease;
+    padding: 16px;
+  }
+  .sos-btn:active { transform: scale(0.96); }
+  .sos-btn small { display: block; font-size: 15px; font-weight: 600; opacity: 0.9; margin-top: 6px; }
+  @keyframes sosPulse {
+    0%, 100% { box-shadow: 0 0 0 0 rgba(226, 85, 107, 0.40), 0 18px 44px rgba(226, 85, 107, 0.35); }
+    50% { box-shadow: 0 0 0 26px rgba(226, 85, 107, 0), 0 18px 44px rgba(226, 85, 107, 0.35); }
+  }
+
+  .home-links { display: flex; flex-direction: column; gap: 10px; }
+  .home-disclaimer {
+    margin-top: 18px;
+    text-align: center;
+    font-size: 12px;
+    color: var(--hint);
+    line-height: 1.5;
+  }
+
+  /* ---------- SOS flow chrome ---------- */
+  .flow-top { display: flex; align-items: center; justify-content: space-between; min-height: 48px; }
+  .dots { display: flex; gap: 8px; }
+  .dot { width: 8px; height: 8px; border-radius: 50%; background: var(--card); transition: background 0.3s ease, transform 0.3s ease; }
+  .dot.on { background: var(--calm); transform: scale(1.25); }
+  .x-btn {
+    width: 48px; height: 48px;
+    display: flex; align-items: center; justify-content: center;
+    border-radius: 50%;
+    color: var(--hint);
+    font-size: 22px;
+  }
+  .x-btn:active { background: var(--card); }
+
+  .flow-body { flex: 1; display: flex; flex-direction: column; align-items: center; justify-content: center; text-align: center; gap: 16px; padding: 12px 0; }
+
+  /* ---------- Breathing ---------- */
+  .breath-stage { position: relative; width: 250px; height: 250px; display: flex; align-items: center; justify-content: center; margin: 8px 0; }
+  .breath-ring {
+    position: absolute; inset: 0;
+    border-radius: 50%;
+    border: 1.5px solid rgba(124, 124, 240, 0.30);
+  }
+  .breath-circle {
+    width: 160px; height: 160px;
+    border-radius: 50%;
+    background: radial-gradient(circle at 34% 30%, rgba(255,255,255,0.22), rgba(255,255,255,0) 55%), linear-gradient(160deg, var(--accent), var(--calm));
+    display: flex; align-items: center; justify-content: center;
+    transform: scale(1);
+    will-change: transform;
+    box-shadow: 0 14px 40px rgba(124, 124, 240, 0.35);
+  }
+  .breath-count { font-size: 40px; font-weight: 800; color: #fff; text-shadow: 0 2px 10px rgba(0,0,0,0.25); }
+  .breath-phase { font-size: 26px; font-weight: 700; min-height: 36px; }
+  .breath-hint { color: var(--hint); font-size: 16px; min-height: 24px; }
+  .breath-cycles { color: var(--hint); font-size: 14px; }
+
+  /* ---------- Grounding ---------- */
+  .ground-emoji { font-size: 64px; line-height: 1; }
+
+  /* ---------- Final / lists ---------- */
+  .stat-row { display: flex; gap: 12px; width: 100%; }
+  .stat { flex: 1; text-align: center; }
+  .stat .v { font-size: 24px; font-weight: 800; color: var(--calm); }
+  .stat .l { font-size: 13px; color: var(--hint); margin-top: 2px; }
+
+  .list { display: flex; flex-direction: column; gap: 10px; margin-top: 16px; }
+  .crisis-line { display: flex; align-items: center; justify-content: space-between; gap: 12px; }
+  .crisis-line .info { min-width: 0; }
+  .crisis-line .name { font-weight: 600; font-size: 16px; }
+  .crisis-line .num { color: var(--hint); font-size: 14px; margin-top: 2px; }
+  .call-btn {
+    flex-shrink: 0;
+    display: flex; align-items: center; justify-content: center;
+    min-height: 48px;
+    padding: 0 18px;
+    border-radius: 14px;
+    background: var(--calm);
+    color: #07221C;
+    font-weight: 700;
+    font-size: 15px;
+    text-decoration: none;
+    transition: transform 0.15s ease;
+  }
+  .call-btn:active { transform: scale(0.96); }
+
+  .info-list { list-style: none; display: flex; flex-direction: column; gap: 10px; }
+  .info-list li { display: flex; gap: 10px; align-items: flex-start; font-size: 15px; }
+  .info-list li::before { content: "·"; color: var(--calm); font-weight: 800; }
+
+  .episode { display: flex; align-items: center; justify-content: space-between; gap: 12px; }
+  .episode .meta { font-size: 13px; color: var(--hint); margin-top: 2px; }
+
+  .empty { text-align: center; padding: 48px 16px; color: var(--hint); font-size: 15px; line-height: 1.6; }
+  .empty .e { font-size: 44px; margin-bottom: 12px; }
+
+  .back-row { margin-top: 20px; }
+
+  .star-btns { display: flex; flex-direction: column; gap: 10px; margin-top: 16px; }
+
+  .section-title { font-size: 14px; font-weight: 700; color: var(--hint); text-transform: uppercase; letter-spacing: 0.06em; margin: 22px 0 4px; }
+
+  @media (prefers-reduced-motion: reduce) {
+    * { animation: none !important; transition: none !important; }
+    .breath-circle { box-shadow: none; }
+  }
+</style>
+</head>
+<body>
+<div id="app"></div>
+
+<script>
+'use strict';
+
+// ============================================================
+// Заменить после создания бота
+var BOT_USERNAME = 'stillo_sos_bot'; // <-- замени, если в BotFather выбрал другой username
+// ============================================================
+
+var STORAGE_KEY = 'stillo_episodes';
+var MAX_EPISODES = 100;
+var BREATH_CYCLES_TOTAL = 3;
+var PSYCHOED_AUTOADVANCE_MS = 7000;
+
+// ---------- Telegram (graceful) ----------
+var tg = (window.Telegram && window.Telegram.WebApp) ? window.Telegram.WebApp : null;
+if (tg) {
+  try { tg.ready(); tg.expand(); } catch (e) { /* noop */ }
+}
+
+function haptic(style) {
+  try {
+    if (tg && tg.HapticFeedback && tg.HapticFeedback.impactOccurred) {
+      tg.HapticFeedback.impactOccurred(style || 'light');
+    }
+  } catch (e) { /* noop */ }
+}
+
+// ---------- i18n (verified app strings — do not rephrase) ----------
+var I18N = {
+  ru: {
+    'app.name': 'Stillō',
+    'general.next': 'Далее →',
+    'general.skip': 'Пропустить',
+    'general.close': 'Закрыть',
+    'sos.title': 'SOS — Мне плохо',
+    'sos.psychoed_title': 'Это паническая атака',
+    'sos.psychoed_body': 'Пик проходит за несколько минут. Это не опасно: тело реагирует на адреналин, а не на реальную угрозу.',
+    'sos.psychoed_after': 'Волна прошла — и тело справилось бы с ней само. Если атаки повторяются часто, лучший долгосрочный результат даёт работа со специалистом (КПТ).',
+    'sos.hint_inhale': 'Медленный вдох носом',
+    'sos.hint_hold': 'Задержи дыхание',
+    'sos.hint_exhale': 'Медленно выдохни',
+    'sos.breatheIn': 'Вдох',
+    'sos.hold': 'Задержка',
+    'sos.breatheOut': 'Выдох',
+    'sos.you_did_it': 'Ты справился!',
+    'sos.you_are_safe_detail': 'Ты справился. Ты в безопасности.',
+    'sos.grounding': 'Упражнение заземления',
+    'sos.grounding_sub': 'Соединись со своими чувствами',
+    'sos.ground_see_title': '5 вещей, которые ты видишь',
+    'sos.ground_see_sub': 'Оглянись и назови, что видишь',
+    'sos.ground_touch_title': '4 вещи, которые ты можешь потрогать',
+    'sos.ground_touch_sub': 'Почувствуй текстуры вокруг себя',
+    'sos.ground_hear_title': '2 вещи, которые ты слышишь',
+    'sos.ground_hear_sub': 'Сосредоточься на звуках вокруг',
+    'sos.ground_smell_title': '1 вещь, которую ты ощущаешь на запах',
+    'sos.ground_smell_sub': 'Обрати внимание на запахи вокруг',
+    'sos.ground_taste_title': '1 вещь, которую ты ощущаешь на вкус',
+    'sos.ground_taste_sub': 'Обрати внимание на вкус во рту',
+    'sos.ground_next': 'Далее',
+    'sos.feeling_better': 'Стало лучше?',
+    'sos.breath_cycles': 'Циклы дыхания',
+    'sos.duration': 'Длительность',
+    'sos.save_and_close': 'Сохранить и закрыть',
+    'breath_478_name': '4-7-8 Дыхание',
+    'breath_478_sub': 'Самое мощное для паники',
+    'crisis.title': 'Телефон доверия',
+    'crisis.subtitle': 'Если тебе плохо — позвони. Это бесплатно, анонимно, круглосуточно.',
+    'crisis.not_alone': 'Ты не один',
+    'crisis.call': 'Позвонить',
+    'crisis.important': 'Важно помнить',
+    'crisis.info_free': 'Звонки бесплатные и анонимные',
+    'crisis.info_24h': 'Специалисты работают круглосуточно',
+    'crisis.info_any_issue': 'Можно звонить по любому вопросу',
+    'crisis.info_panic_safe': 'Тревога — это не опасно, она пройдёт',
+    'crisis.emergency_112': '⚠️ При угрозе жизни звони 112',
+    'onboarding.disclaimer': 'Stillō — помощник, НЕ замена врачу. При подозрении на сердечную проблему всегда вызывайте скорую.',
+    // Web-app strings (not from iOS bundle)
+    'web.tagline': 'Точка покоя',
+    'web.history': 'История',
+    'web.support': '⭐ Поддержать',
+    'web.history_empty': 'Здесь появятся завершённые SOS-сессии. Пока пусто — и это хорошо.',
+    'web.support_body': 'Stillō — бесплатный инструмент. Поддержка помогает развивать проект.',
+    'web.stars': 'звёзд',
+    'web.cycle': 'Цикл'
+  },
+  en: {
+    'app.name': 'Stillō',
+    'general.next': 'Next →',
+    'general.skip': 'Skip',
+    'general.close': 'Close',
+    'sos.title': 'SOS — I need help',
+    'sos.psychoed_title': 'This is a panic attack',
+    'sos.psychoed_body': 'It peaks within minutes and passes. It is not dangerous — your body is reacting to adrenaline, not to real danger.',
+    'sos.psychoed_after': 'The wave passed — and your body would have handled it on its own. If attacks repeat often, a CBT specialist gives the best long-term results.',
+    'sos.hint_inhale': 'Slow breath in through your nose',
+    'sos.hint_hold': 'Hold your breath',
+    'sos.hint_exhale': 'Exhale slowly',
+    'sos.breatheIn': 'Breathe In',
+    'sos.hold': 'Hold',
+    'sos.breatheOut': 'Breathe Out',
+    'sos.you_did_it': 'You did it!',
+    'sos.you_are_safe_detail': 'You got through it. You are safe now.',
+    'sos.grounding': 'Grounding exercise',
+    'sos.grounding_sub': 'Connect with your senses',
+    'sos.ground_see_title': '5 things you can see',
+    'sos.ground_see_sub': 'Look around and name what you see',
+    'sos.ground_touch_title': '4 things you can touch',
+    'sos.ground_touch_sub': 'Feel the textures around you',
+    'sos.ground_hear_title': '2 things you can hear',
+    'sos.ground_hear_sub': 'Focus on any sounds around you',
+    'sos.ground_smell_title': '1 thing you can smell',
+    'sos.ground_smell_sub': 'Notice any scents around you',
+    'sos.ground_taste_title': '1 thing you can taste',
+    'sos.ground_taste_sub': 'Notice any taste in your mouth',
+    'sos.ground_next': 'Next',
+    'sos.feeling_better': 'Feeling better?',
+    'sos.breath_cycles': 'Breathing cycles',
+    'sos.duration': 'Duration',
+    'sos.save_and_close': 'Save & Close',
+    'breath_478_name': '4-7-8 Breathing',
+    'breath_478_sub': 'Most powerful for panic',
+    'crisis.title': 'Crisis Hotline',
+    'crisis.subtitle': "If you're struggling — call. It's free, anonymous, 24/7.",
+    'crisis.not_alone': 'You are not alone',
+    'crisis.call': 'Call',
+    'crisis.important': 'Important to remember',
+    'crisis.info_free': 'Calls are free and anonymous',
+    'crisis.info_24h': 'Specialists are available 24/7',
+    'crisis.info_any_issue': 'You can call about anything',
+    'crisis.info_panic_safe': 'Anxiety is not dangerous — it will pass',
+    'crisis.emergency_112': '⚠️ If life is at risk, call 911',
+    'onboarding.disclaimer': 'Stillō is a helper, NOT a replacement for a doctor. If you suspect a heart problem, always call emergency services.',
+    // Web-app strings (not from iOS bundle)
+    'web.tagline': 'A point of calm',
+    'web.history': 'History',
+    'web.support': '⭐ Support',
+    'web.history_empty': "Completed SOS sessions will appear here. Nothing yet — and that's a good thing.",
+    'web.support_body': 'Stillō is a free tool. Your support helps the project grow.',
+    'web.stars': 'stars',
+    'web.cycle': 'Cycle'
+  }
+};
+
+var LANG = (function () {
+  var code = null;
+  try {
+    code = tg && tg.initDataUnsafe && tg.initDataUnsafe.user && tg.initDataUnsafe.user.language_code;
+  } catch (e) { /* noop */ }
+  if (!code) { code = navigator.language || 'en'; }
+  return String(code).toLowerCase().indexOf('ru') === 0 ? 'ru' : 'en';
+})();
+
+function t(key) {
+  return I18N[LANG][key] || I18N.en[key] || key;
+}
+
+// ---------- Crisis lines ----------
+var CRISIS_LINES = [
+  { region: 'RU', name: { ru: 'Линия ЦЭПП МЧС (24/7)', en: 'EMERCOM Psychological Help Line, Russia (24/7)' }, display: '+7 495 989-50-50', tel: '+74959895050' },
+  { region: 'RU', name: { ru: 'Детский телефон доверия', en: "Children's Helpline, Russia" }, display: '8-800-2000-122', tel: '88002000122' },
+  { region: 'US', name: { ru: '988 Suicide & Crisis Lifeline (США)', en: '988 Suicide & Crisis Lifeline (US)' }, display: '988', tel: '988' },
+  { region: 'GB', name: { ru: 'Samaritans (Великобритания)', en: 'Samaritans (UK)' }, display: '116 123', tel: '116123' },
+  { region: 'DE', name: { ru: 'TelefonSeelsorge (Германия)', en: 'TelefonSeelsorge (Germany)' }, display: '0800 111 0 111', tel: '08001110111' },
+  { region: 'FR', name: { ru: '3114 (Франция)', en: '3114 (France)' }, display: '3114', tel: '3114' },
+  { region: 'ES', name: { ru: 'Línea 024 (Испания)', en: 'Línea 024 (Spain)' }, display: '024', tel: '024' }
+];
+
+function sortedCrisisLines() {
+  var home = LANG === 'ru' ? 'RU' : 'US';
+  var first = [], rest = [];
+  for (var i = 0; i < CRISIS_LINES.length; i++) {
+    (CRISIS_LINES[i].region === home ? first : rest).push(CRISIS_LINES[i]);
+  }
+  return first.concat(rest);
+}
+
+// ---------- Storage (CloudStorage → localStorage fallback) ----------
+function cloudAvailable() {
+  try {
+    return !!(tg && tg.CloudStorage && tg.CloudStorage.getItem && tg.isVersionAtLeast && tg.isVersionAtLeast('6.9'));
+  } catch (e) { return false; }
+}
+
+function localLoad() {
+  try {
+    var raw = localStorage.getItem(STORAGE_KEY);
+    var arr = raw ? JSON.parse(raw) : [];
+    return Array.isArray(arr) ? arr : [];
+  } catch (e) { return []; }
+}
+
+function localSave(list) {
+  try { localStorage.setItem(STORAGE_KEY, JSON.stringify(list)); } catch (e) { /* noop */ }
+}
+
+function loadEpisodes(cb) {
+  if (cloudAvailable()) {
+    try {
+      tg.CloudStorage.getItem(STORAGE_KEY, function (err, value) {
+        if (err || !value) { cb(localLoad()); return; }
+        try {
+          var arr = JSON.parse(value);
+          cb(Array.isArray(arr) ? arr : []);
+        } catch (e) { cb(localLoad()); }
+      });
+      return;
+    } catch (e) { /* fall through */ }
+  }
+  cb(localLoad());
+}
+
+function saveEpisode(episode, cb) {
+  loadEpisodes(function (list) {
+    list.push(episode);
+    if (list.length > MAX_EPISODES) { list = list.slice(list.length - MAX_EPISODES); }
+    localSave(list); // always mirror locally
+    if (cloudAvailable()) {
+      try {
+        tg.CloudStorage.setItem(STORAGE_KEY, JSON.stringify(list), function () { cb(); });
+        return;
+      } catch (e) { /* noop */ }
+    }
+    cb();
+  });
+}
+
+// ---------- Mini router ----------
+var app = document.getElementById('app');
+var activeTimers = [];
+
+function later(fn, ms) {
+  var id = setTimeout(fn, ms);
+  activeTimers.push(id);
+  return id;
+}
+
+function clearTimers() {
+  for (var i = 0; i < activeTimers.length; i++) { clearTimeout(activeTimers[i]); }
+  activeTimers = [];
+}
+
+function render(html) {
+  clearTimers();
+  app.innerHTML = '';
+  var screen = document.createElement('div');
+  screen.className = 'screen';
+  screen.innerHTML = html;
+  app.appendChild(screen);
+  window.scrollTo(0, 0);
+  return screen;
+}
+
+function esc(s) {
+  return String(s).replace(/[&<>"']/g, function (c) {
+    return { '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c];
+  });
+}
+
+var reducedMotion = false;
+try {
+  reducedMotion = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+} catch (e) { /* noop */ }
+
+// ---------- SOS flow chrome ----------
+function flowTop(step) {
+  var dots = '';
+  for (var i = 0; i < 4; i++) {
+    dots += '<span class="dot' + (i <= step ? ' on' : '') + '"></span>';
+  }
+  return '<div class="flow-top">' +
+    '<div class="dots">' + dots + '</div>' +
+    '<button class="x-btn" id="flow-close" aria-label="' + esc(t('general.close')) + '">✕</button>' +
+    '</div>';
+}
+
+function bindFlowClose(screen) {
+  screen.querySelector('#flow-close').addEventListener('click', function () { showHome(); });
+}
+
+// ---------- Session state ----------
+var session = { startTs: 0, cycles: 0 };
+
+// ---------- Screen: Home ----------
+function showHome() {
+  var screen = render(
+    '<div class="home-header">' +
+      '<div class="home-logo">' + esc(t('app.name')) + '</div>' +
+      '<div class="home-tagline">' + esc(t('web.tagline')) + '</div>' +
+    '</div>' +
+    '<div class="sos-wrap">' +
+      '<button class="sos-btn" id="sos">SOS<small>' + esc(t('sos.title').replace('SOS — ', '')) + '</small></button>' +
+    '</div>' +
+    '<div class="home-links">' +
+      '<button class="btn ghost" id="go-crisis">' + esc(t('crisis.title')) + '</button>' +
+      '<button class="btn ghost" id="go-history">' + esc(t('web.history')) + '</button>' +
+      '<button class="btn ghost" id="go-support">' + esc(t('web.support')) + '</button>' +
+    '</div>' +
+    '<p class="home-disclaimer">' + esc(t('onboarding.disclaimer')) + '</p>'
+  );
+  screen.querySelector('#sos').addEventListener('click', function () {
+    haptic('medium');
+    session = { startTs: Date.now(), cycles: 0 };
+    showPsychoed();
+  });
+  screen.querySelector('#go-crisis').addEventListener('click', showCrisis);
+  screen.querySelector('#go-history').addEventListener('click', showHistory);
+  screen.querySelector('#go-support').addEventListener('click', showSupport);
+}
+
+// ---------- Screen: SOS step A — psychoeducation ----------
+function showPsychoed() {
+  var screen = render(
+    flowTop(0) +
+    '<div class="flow-body">' +
+      '<h1>' + esc(t('sos.psychoed_title')) + '</h1>' +
+      '<p style="font-size:18px; max-width:340px;">' + esc(t('sos.psychoed_body')) + '</p>' +
+    '</div>' +
+    '<button class="btn calm" id="next">' + esc(t('general.next')) + '</button>'
+  );
+  bindFlowClose(screen);
+  var advanced = false;
+  function go() {
+    if (advanced) { return; }
+    advanced = true;
+    showBreathing();
+  }
+  screen.querySelector('#next').addEventListener('click', go);
+  later(go, PSYCHOED_AUTOADVANCE_MS);
+}
+
+// ---------- Screen: SOS step B — 4-7-8 breathing ----------
+var BREATH_PHASES = [
+  { label: 'sos.breatheIn', hint: 'sos.hint_inhale', dur: 4, grow: true },
+  { label: 'sos.hold', hint: 'sos.hint_hold', dur: 7, grow: true },
+  { label: 'sos.breatheOut', hint: 'sos.hint_exhale', dur: 8, grow: false }
+];
+
+function showBreathing() {
+  var screen = render(
+    flowTop(1) +
+    '<div class="flow-body">' +
+      '<h2>' + esc(t('breath_478_name')) + '</h2>' +
+      '<p class="hint">' + esc(t('breath_478_sub')) + '</p>' +
+      '<div class="breath-stage">' +
+        '<div class="breath-ring"></div>' +
+        '<div class="breath-circle" id="circle"><span class="breath-count" id="count"></span></div>' +
+      '</div>' +
+      '<div class="breath-phase" id="phase"></div>' +
+      '<div class="breath-hint" id="phase-hint"></div>' +
+      '<div class="breath-cycles" id="cycles"></div>' +
+    '</div>' +
+    '<button class="btn subtle" id="skip">' + esc(t('general.skip')) + '</button>'
+  );
+  bindFlowClose(screen);
+
+  var circle = screen.querySelector('#circle');
+  var countEl = screen.querySelector('#count');
+  var phaseEl = screen.querySelector('#phase');
+  var hintEl = screen.querySelector('#phase-hint');
+  var cyclesEl = screen.querySelector('#cycles');
+  var cycle = 0;
+  var phaseIdx = 0;
+  var done = false;
+
+  function finish() {
+    if (done) { return; }
+    done = true;
+    showGrounding(0);
+  }
+
+  screen.querySelector('#skip').addEventListener('click', finish);
+
+  function runPhase() {
+    if (done) { return; }
+    var phase = BREATH_PHASES[phaseIdx];
+    haptic('light');
+    phaseEl.textContent = t(phase.label);
+    hintEl.textContent = t(phase.hint);
+    cyclesEl.textContent = t('web.cycle') + ' ' + (cycle + 1) + ' / ' + BREATH_CYCLES_TOTAL;
+
+    if (!reducedMotion) {
+      circle.style.transition = 'transform ' + phase.dur + 's cubic-bezier(0.4, 0, 0.2, 1)';
+      circle.style.transform = phase.grow ? 'scale(1.45)' : 'scale(1)';
+    }
+
+    // per-second countdown inside the circle (also serves as the
+    // reduced-motion text timer)
+    var remaining = phase.dur;
+    countEl.textContent = String(remaining);
+    function tick() {
+      remaining -= 1;
+      if (remaining > 0) {
+        countEl.textContent = String(remaining);
+        later(tick, 1000);
+      }
+    }
+    later(tick, 1000);
+
+    later(function () {
+      phaseIdx += 1;
+      if (phaseIdx >= BREATH_PHASES.length) {
+        phaseIdx = 0;
+        cycle += 1;
+        session.cycles = cycle;
+        if (cycle >= BREATH_CYCLES_TOTAL) {
+          haptic('medium');
+          finish();
+          return;
+        }
+      }
+      runPhase();
+    }, phase.dur * 1000);
+  }
+
+  runPhase();
+}
+
+// ---------- Screen: SOS step C — grounding 5-4-3-2-1 ----------
+var GROUND_STEPS = [
+  { emoji: '👁️', key: 'see' },
+  { emoji: '✋', key: 'touch' },
+  { emoji: '👂', key: 'hear' },
+  { emoji: '👃', key: 'smell' },
+  { emoji: '👅', key: 'taste' }
+];
+
+function showGrounding(idx) {
+  var step = GROUND_STEPS[idx];
+  var screen = render(
+    flowTop(2) +
+    '<div class="flow-body">' +
+      '<p class="hint" style="text-transform:uppercase; letter-spacing:0.06em; font-weight:700;">' + esc(t('sos.grounding')) + '</p>' +
+      '<p class="hint">' + esc(t('sos.grounding_sub')) + ' · ' + (idx + 1) + '/5</p>' +
+      '<div class="ground-emoji">' + step.emoji + '</div>' +
+      '<h2 style="max-width:330px;">' + esc(t('sos.ground_' + step.key + '_title')) + '</h2>' +
+      '<p class="hint" style="font-size:16px; max-width:320px;">' + esc(t('sos.ground_' + step.key + '_sub')) + '</p>' +
+    '</div>' +
+    '<button class="btn calm" id="next">' + esc(t('sos.ground_next')) + '</button>'
+  );
+  bindFlowClose(screen);
+  screen.querySelector('#next').addEventListener('click', function () {
+    haptic('light');
+    if (idx + 1 < GROUND_STEPS.length) {
+      showGrounding(idx + 1);
+    } else {
+      showFinal();
+    }
+  });
+}
+
+// ---------- Screen: SOS step D — final ----------
+function formatDuration(sec) {
+  var m = Math.floor(sec / 60);
+  var s = sec % 60;
+  return m + ':' + (s < 10 ? '0' : '') + s;
+}
+
+function showFinal() {
+  var durationSec = Math.max(1, Math.round((Date.now() - session.startTs) / 1000));
+  var screen = render(
+    flowTop(3) +
+    '<div class="flow-body">' +
+      '<div class="ground-emoji">✅</div>' +
+      '<h1>' + esc(t('sos.you_did_it')) + '</h1>' +
+      '<p style="font-size:18px;">' + esc(t('sos.you_are_safe_detail')) + '</p>' +
+      '<p class="hint">' + esc(t('sos.feeling_better')) + '</p>' +
+      '<div class="card stat-row" style="width:100%;">' +
+        '<div class="stat"><div class="v">' + formatDuration(durationSec) + '</div><div class="l">' + esc(t('sos.duration')) + '</div></div>' +
+        '<div class="stat"><div class="v">' + session.cycles + '</div><div class="l">' + esc(t('sos.breath_cycles')) + '</div></div>' +
+      '</div>' +
+      '<div class="card" style="width:100%; text-align:left;"><p style="font-size:15px; color:var(--hint); line-height:1.55;">' + esc(t('sos.psychoed_after')) + '</p></div>' +
+    '</div>' +
+    '<button class="btn calm" id="save">' + esc(t('sos.save_and_close')) + '</button>'
+  );
+  bindFlowClose(screen);
+  var saving = false;
+  screen.querySelector('#save').addEventListener('click', function () {
+    if (saving) { return; }
+    saving = true;
+    haptic('medium');
+    saveEpisode({ ts: session.startTs, durationSec: durationSec, cycles: session.cycles }, function () {
+      showHome();
+    });
+  });
+}
+
+// ---------- Screen: Crisis ----------
+function showCrisis() {
+  var lines = sortedCrisisLines();
+  var linesHtml = '';
+  for (var i = 0; i < lines.length; i++) {
+    var line = lines[i];
+    linesHtml +=
+      '<div class="card crisis-line">' +
+        '<div class="info">' +
+          '<div class="name">' + esc(line.name[LANG] || line.name.en) + '</div>' +
+          '<div class="num">' + esc(line.display) + '</div>' +
+        '</div>' +
+        '<a class="call-btn" href="tel:' + esc(line.tel) + '">' + esc(t('crisis.call')) + '</a>' +
+      '</div>';
+  }
+  var screen = render(
+    '<h1>' + esc(t('crisis.title')) + '</h1>' +
+    '<p class="hint" style="margin-top:6px; font-size:16px;">' + esc(t('crisis.subtitle')) + '</p>' +
+    '<p style="margin-top:10px; font-weight:600; color:var(--calm);">' + esc(t('crisis.not_alone')) + '</p>' +
+    '<div class="list">' + linesHtml + '</div>' +
+    '<div class="card" style="margin-top:14px;">' +
+      '<p style="font-weight:700; margin-bottom:4px;">' + esc(t('crisis.emergency_112')) + '</p>' +
+    '</div>' +
+    '<p class="section-title">' + esc(t('crisis.important')) + '</p>' +
+    '<div class="card"><ul class="info-list">' +
+      '<li>' + esc(t('crisis.info_free')) + '</li>' +
+      '<li>' + esc(t('crisis.info_24h')) + '</li>' +
+      '<li>' + esc(t('crisis.info_any_issue')) + '</li>' +
+      '<li>' + esc(t('crisis.info_panic_safe')) + '</li>' +
+    '</ul></div>' +
+    '<div class="back-row"><button class="btn ghost" id="back">' + esc(t('general.close')) + '</button></div>'
+  );
+  screen.querySelector('#back').addEventListener('click', showHome);
+}
+
+// ---------- Screen: History ----------
+function showHistory() {
+  loadEpisodes(function (list) {
+    var body;
+    if (!list.length) {
+      body = '<div class="empty"><div class="e">🕊️</div>' + esc(t('web.history_empty')) + '</div>';
+    } else {
+      var items = '';
+      var sorted = list.slice().sort(function (a, b) { return (b.ts || 0) - (a.ts || 0); });
+      for (var i = 0; i < sorted.length; i++) {
+        var ep = sorted[i];
+        var date = new Date(ep.ts || 0);
+        var dateStr = date.toLocaleString(LANG === 'ru' ? 'ru-RU' : 'en-US', {
+          day: 'numeric', month: 'short', year: 'numeric', hour: '2-digit', minute: '2-digit'
+        });
+        items +=
+          '<div class="card episode">' +
+            '<div>' +
+              '<div style="font-weight:600;">' + esc(dateStr) + '</div>' +
+              '<div class="meta">' +
+                esc(t('sos.duration')) + ': ' + esc(formatDuration(ep.durationSec || 0)) +
+                ' · ' + esc(t('sos.breath_cycles')) + ': ' + esc(String(ep.cycles || 0)) +
+              '</div>' +
+            '</div>' +
+            '<div>✅</div>' +
+          '</div>';
+      }
+      body = '<div class="list">' + items + '</div>';
+    }
+    var screen = render(
+      '<h1>' + esc(t('web.history')) + '</h1>' +
+      body +
+      '<div class="back-row" style="margin-top:auto; padding-top:20px;"><button class="btn ghost" id="back">' + esc(t('general.close')) + '</button></div>'
+    );
+    screen.querySelector('#back').addEventListener('click', showHome);
+  });
+}
+
+// ---------- Screen: Support ----------
+function openSupport(amount) {
+  var url = 'https://t.me/' + BOT_USERNAME + '?start=support_' + amount;
+  if (tg && tg.openTelegramLink) {
+    try { tg.openTelegramLink(url); return; } catch (e) { /* noop */ }
+  }
+  window.open(url, '_blank');
+}
+
+function showSupport() {
+  var amounts = [100, 250, 500];
+  var btns = '';
+  for (var i = 0; i < amounts.length; i++) {
+    btns += '<button class="btn ghost star-amt" data-amount="' + amounts[i] + '">⭐ ' + amounts[i] + ' ' + esc(t('web.stars')) + '</button>';
+  }
+  var screen = render(
+    '<h1>' + esc(t('web.support')) + '</h1>' +
+    '<div class="card" style="margin-top:16px;"><p style="font-size:16px; line-height:1.55;">' + esc(t('web.support_body')) + '</p></div>' +
+    '<div class="star-btns">' + btns + '</div>' +
+    '<div class="back-row" style="margin-top:auto; padding-top:20px;"><button class="btn ghost" id="back">' + esc(t('general.close')) + '</button></div>'
+  );
+  var amountBtns = screen.querySelectorAll('.star-amt');
+  for (var j = 0; j < amountBtns.length; j++) {
+    amountBtns[j].addEventListener('click', function () {
+      haptic('light');
+      openSupport(this.getAttribute('data-amount'));
+    });
+  }
+  screen.querySelector('#back').addEventListener('click', showHome);
+}
+
+// ---------- Boot ----------
+document.documentElement.lang = LANG;
+showHome();
+</script>
+</body>
+</html>
