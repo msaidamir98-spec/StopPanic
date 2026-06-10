@@ -1,0 +1,19 @@
+[Unit]
+Description=Stillo Telegram bot (panic attack self-help)
+After=network-online.target
+Wants=network-online.target
+
+[Service]
+Type=simple
+# Замени msk на пользователя на твоём VPS.
+User=msk
+WorkingDirectory=/home/msk/StopPanic/telegram/bot
+EnvironmentFile=/home/msk/StopPanic/telegram/bot/.env
+ExecStart=/home/msk/StopPanic/telegram/bot/venv/bin/python bot.py
+Restart=always
+RestartSec=5
+StandardOutput=journal
+StandardError=journal
+
+[Install]
+WantedBy=multi-user.target
