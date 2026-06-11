@@ -79,3 +79,6 @@ Stillo/Services/OpenAITTSConfig.swift
 
 # Telegram notifier config
 .stillo_notify.env
+
+# Секреты Telegram-бота — НИКОГДА не коммитить
+telegram/bot/.env

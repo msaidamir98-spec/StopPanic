@@ -1,5 +1,14 @@
 # Stillō — Pre-App-Store Todo
 
+## 🆕 2026-06-10: TG Mini App (канал первых денег при бюджете ₽0)
+
+**✅ ЗАПУЩЕНО 2026-06-10 ночью:** бот @stillo_sos_bot создан, Menu Button «Stillō SOS» → https://msaidamir98-spec.github.io/StopPanic/app/ — Mini App открывается и работает внутри Telegram (проверено live). Файл доставлен в репо web-коммитом `bf155db`.
+**Осталось руками:**
+- [ ] VPS: `telegram/bot/.env` с токеном (он в чате BotFather) → `systemctl enable --now stillo-bot` — нужен для ответа на /start, /crisis и Stars-донатов (Mini App работает и без этого)
+- [ ] `git pull --rebase && git push` на Mac (web-коммит bf155db разъехался с локальными 3 коммитами)
+- [ ] Первый пост в TG с личной историей + ссылка t.me/stillo_sos_bot — начало теста спроса
+**Метрика 30 дней:** ≥50 платящих TG или ≥500 установок iOS → go Android-порт (см. Decisions/2026-06-10).
+
 > Обновлено: 2026-06-10. История прошлых сессий — внизу.
 > Источник истины по состоянию: `obsiddian/StopPanic/StopPanic — Кристалл знания.md`
 
