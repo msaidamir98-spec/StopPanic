@@ -14,15 +14,6 @@
 | Стек | Swift 5 (approachable concurrency, MainActor default), SwiftUI, Core Data (+CloudKit private), HealthKit (read-only HR/HRV), StoreKit 2, WatchConnectivity, BGTaskScheduler, AVFoundation |
 | Зависимости | 0 сторонних |
 
-## Источники истины
-
-**Не доверяй этому README в деталях — доверяй vault:**
-
-1. `/Users/msk/obsiddian/StopPanic/StopPanic — Кристалл знания.md` — сжатое состояние проекта
-2. `/Users/msk/obsiddian/StopPanic/Баги/История багов и решений.md` — root causes, антипаттерны
-3. `tasks/todo.md` — текущий чеклист до App Store
-4. `.claude/agents/stillo-ios-dev.md`, `.claude/agents/stillo-qa.md` — правила для AI-агентов
-
 ## Архитектура (кратко)
 
 - `@Observable AppCoordinator` (Core/AppCoordinator.swift) — DI-контейнер, создаёт 18 сервисов в `bootstrap()`, раздаёт через `@Environment`.
