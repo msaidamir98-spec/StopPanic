@@ -2,10 +2,10 @@
 <html lang="ru">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover, user-scalable=no">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <meta name="theme-color" content="#0F1021">
 <title>Stillō</title>
-<script src="https://telegram.org/js/telegram-web-app.js"></script>
+<script src="https://telegram.org/js/telegram-web-app.js" defer></script>
 <style>
   :root {
     --bg: var(--tg-theme-bg-color, #0F1021);
@@ -31,6 +31,17 @@
     overscroll-behavior: none;
   }
 
+  body::before {
+    content: "";
+    position: fixed;
+    inset: 0;
+    pointer-events: none;
+    z-index: 0;
+    background:
+      radial-gradient(85% 55% at 50% -5%, rgba(124, 124, 240, 0.18), transparent 70%),
+      radial-gradient(75% 45% at 50% 105%, rgba(91, 200, 175, 0.10), transparent 70%);
+  }
+
   #app {
     max-width: 520px;
     margin: 0 auto;
@@ -38,6 +49,8 @@
     padding: max(20px, env(safe-area-inset-top)) 20px max(24px, env(safe-area-inset-bottom));
     display: flex;
     flex-direction: column;
+    position: relative;
+    z-index: 1;
   }
 
   .screen { display: flex; flex-direction: column; flex: 1; animation: fadeIn 0.35s ease both; }
@@ -134,6 +147,8 @@
     font-size: 22px;
   }
   .x-btn:active { background: var(--card); }
+  .flow-actions { display: flex; align-items: center; gap: 2px; }
+  h1[tabindex="-1"]:focus, h2[tabindex="-1"]:focus { outline: none; }
 
   .flow-body { flex: 1; display: flex; flex-direction: column; align-items: center; justify-content: center; text-align: center; gap: 16px; padding: 12px 0; }
 
@@ -215,10 +230,7 @@
 <script>
 'use strict';
 
-// ============================================================
-// Заменить после создания бота
-var BOT_USERNAME = 'stillo_sos_bot'; // <-- замени, если в BotFather выбрал другой username
-// ============================================================
+var BOT_USERNAME = 'stillo_sos_bot';
 
 var STORAGE_KEY = 'stillo_episodes';
 var MAX_EPISODES = 100;
@@ -226,15 +238,151 @@ var BREATH_CYCLES_TOTAL = 3;
 var PSYCHOED_AUTOADVANCE_MS = 7000;
 
 // ---------- Telegram (graceful) ----------
-var tg = (window.Telegram && window.Telegram.WebApp) ? window.Telegram.WebApp : null;
-if (tg) {
-  try { tg.ready(); tg.expand(); } catch (e) { /* noop */ }
-}
+// telegram-web-app.js is loaded with `defer`, so `tg` is resolved in boot()
+// (DOMContentLoaded) — never at parse time. Offline/browser → stays null.
+var tg = null;
 
 function haptic(style) {
   try {
     if (tg && tg.HapticFeedback && tg.HapticFeedback.impactOccurred) {
       tg.HapticFeedback.impactOccurred(style || 'light');
+    }
+  } catch (e) { /* noop */ }
+}
+
+// ---------- Sound (Web Audio API, gentle, opt-out) ----------
+// Everything is synthesised — no audio files. Slow, soft envelopes so it
+// never startles someone mid-panic. Muted state is remembered across sessions.
+var SOUND_KEY = 'stillo_sound';
+var soundOn = (function () {
+  try { var v = localStorage.getItem(SOUND_KEY); return v === null ? true : v === '1'; }
+  catch (e) { return true; }
+})();
+var audioCtx = null, masterGain = null, ambientNodes = null, cueNodes = null;
+
+function ensureAudio() {
+  if (!soundOn) { return false; }
+  try {
+    if (!audioCtx) {
+      var AC = window.AudioContext || window.webkitAudioContext;
+      if (!AC) { return false; }
+      audioCtx = new AC();
+      masterGain = audioCtx.createGain();
+      masterGain.gain.value = 0.9;
+      masterGain.connect(audioCtx.destination);
+    }
+    if (audioCtx.state === 'suspended') { try { audioCtx.resume(); } catch (e) { /* noop */ } }
+    return true;
+  } catch (e) { return false; }
+}
+
+function setSound(on) {
+  soundOn = on;
+  try { localStorage.setItem(SOUND_KEY, on ? '1' : '0'); } catch (e) { /* noop */ }
+  if (on) {
+    ensureAudio();
+    // Un-muting mid-breathing must bring the ambient pad back.
+    if (currentScreen === 'breath') { startAmbient(); }
+  } else {
+    stopAmbient();
+    stopCue();
+  }
+}
+
+// Soft low pad that plays only while breathing.
+function startAmbient() {
+  if (!ensureAudio() || ambientNodes) { return; }
+  try {
+    var now = audioCtx.currentTime;
+    var o1 = audioCtx.createOscillator();
+    var o2 = audioCtx.createOscillator();
+    var g = audioCtx.createGain();
+    o1.type = 'sine'; o2.type = 'sine';
+    o1.frequency.value = 110;     // A2
+    o2.frequency.value = 164.81;  // E3 — soft fifth
+    o2.detune.value = -3;
+    g.gain.setValueAtTime(0.0001, now);
+    g.gain.exponentialRampToValueAtTime(0.05, now + 1.4);
+    o1.connect(g); o2.connect(g); g.connect(masterGain);
+    o1.start(now); o2.start(now);
+    ambientNodes = { o1: o1, o2: o2, g: g };
+  } catch (e) { /* noop */ }
+}
+
+function stopAmbient() {
+  if (!ambientNodes || !audioCtx) { ambientNodes = null; return; }
+  try {
+    var n = ambientNodes; ambientNodes = null;
+    var now = audioCtx.currentTime;
+    n.g.gain.cancelScheduledValues(now);
+    n.g.gain.setValueAtTime(Math.max(0.0001, n.g.gain.value), now);
+    n.g.gain.exponentialRampToValueAtTime(0.0001, now + 0.6);
+    n.o1.stop(now + 0.65); n.o2.stop(now + 0.65);
+    n.o1.onended = function () {
+      try { n.o1.disconnect(); n.o2.disconnect(); n.g.disconnect(); } catch (e) { /* noop */ }
+    };
+  } catch (e) { /* noop */ }
+}
+
+function stopCue() {
+  if (!cueNodes || !audioCtx) { cueNodes = null; return; }
+  try {
+    var n = cueNodes; cueNodes = null;
+    var now = audioCtx.currentTime;
+    n.g.gain.cancelScheduledValues(now);
+    n.g.gain.setValueAtTime(Math.max(0.0001, n.g.gain.value), now);
+    n.g.gain.exponentialRampToValueAtTime(0.0001, now + 0.18);
+    n.o.stop(now + 0.2);
+    n.o.onended = function () {
+      try { n.o.disconnect(); n.g.disconnect(); } catch (e) { /* noop */ }
+    };
+  } catch (e) { /* noop */ }
+}
+
+// Breathing cue tone: 'in' rises, 'out' falls, 'hold' is steady & quiet.
+function breathCue(kind, dur) {
+  if (!ensureAudio()) { return; }
+  stopCue();
+  try {
+    var now = audioCtx.currentTime;
+    var o = audioCtx.createOscillator();
+    var g = audioCtx.createGain();
+    o.type = 'sine'; o.connect(g); g.connect(masterGain);
+    cueNodes = { o: o, g: g };
+    var lo = 196, hi = 311; // G3 .. D#4
+    var peak = kind === 'hold' ? 0.04 : 0.11;
+    g.gain.setValueAtTime(0.0001, now);
+    g.gain.exponentialRampToValueAtTime(peak, now + Math.min(0.8, dur * 0.25));
+    g.gain.exponentialRampToValueAtTime(0.0001, now + dur);
+    if (kind === 'in') {
+      o.frequency.setValueAtTime(lo, now);
+      o.frequency.linearRampToValueAtTime(hi, now + dur);
+    } else if (kind === 'out') {
+      o.frequency.setValueAtTime(hi, now);
+      o.frequency.linearRampToValueAtTime(lo, now + dur);
+    } else {
+      o.frequency.setValueAtTime(hi, now);
+    }
+    o.start(now); o.stop(now + dur + 0.05);
+  } catch (e) { /* noop */ }
+}
+
+// Soft major triad on completing the flow.
+function chime() {
+  if (!ensureAudio()) { return; }
+  try {
+    var now = audioCtx.currentTime;
+    var freqs = [523.25, 659.25, 783.99]; // C5 E5 G5
+    for (var i = 0; i < freqs.length; i++) {
+      var o = audioCtx.createOscillator();
+      var g = audioCtx.createGain();
+      o.type = 'sine'; o.frequency.value = freqs[i];
+      o.connect(g); g.connect(masterGain);
+      var s = now + i * 0.14;
+      g.gain.setValueAtTime(0.0001, s);
+      g.gain.exponentialRampToValueAtTime(0.16, s + 0.05);
+      g.gain.exponentialRampToValueAtTime(0.0001, s + 0.8);
+      o.start(s); o.stop(s + 0.85);
     }
   } catch (e) { /* noop */ }
 }
@@ -264,9 +412,9 @@ var I18N = {
     'sos.ground_see_sub': 'Оглянись и назови, что видишь',
     'sos.ground_touch_title': '4 вещи, которые ты можешь потрогать',
     'sos.ground_touch_sub': 'Почувствуй текстуры вокруг себя',
-    'sos.ground_hear_title': '2 вещи, которые ты слышишь',
+    'sos.ground_hear_title': '3 вещи, которые ты слышишь',
     'sos.ground_hear_sub': 'Сосредоточься на звуках вокруг',
-    'sos.ground_smell_title': '1 вещь, которую ты ощущаешь на запах',
+    'sos.ground_smell_title': '2 вещи, которые ты ощущаешь на запах',
     'sos.ground_smell_sub': 'Обрати внимание на запахи вокруг',
     'sos.ground_taste_title': '1 вещь, которую ты ощущаешь на вкус',
     'sos.ground_taste_sub': 'Обрати внимание на вкус во рту',
@@ -287,7 +435,7 @@ var I18N = {
     'crisis.info_any_issue': 'Можно звонить по любому вопросу',
     'crisis.info_panic_safe': 'Тревога — это не опасно, она пройдёт',
     'crisis.emergency_112': '⚠️ При угрозе жизни звони 112',
-    'onboarding.disclaimer': 'Stillō — помощник, НЕ замена врачу. При подозрении на сердечную проблему всегда вызывайте скорую.',
+    'onboarding.disclaimer': 'Stillō — помощник, НЕ замена врачу. При подозрении на сердечную проблему всегда вызывай скорую.',
     // Web-app strings (not from iOS bundle)
     'web.tagline': 'Точка покоя',
     'web.history': 'История',
@@ -295,7 +443,11 @@ var I18N = {
     'web.history_empty': 'Здесь появятся завершённые SOS-сессии. Пока пусто — и это хорошо.',
     'web.support_body': 'Stillō — бесплатный инструмент. Поддержка помогает развивать проект.',
     'web.stars': 'звёзд',
-    'web.cycle': 'Цикл'
+    'web.cycle': 'Цикл',
+    'web.sos_small': 'Помощь при панике',
+    'web.sound_on': 'Звук включён',
+    'web.sound_off': 'Звук выключен',
+    'web.step': 'Шаг'
   },
   en: {
     'app.name': 'Stillō',
@@ -320,9 +472,9 @@ var I18N = {
     'sos.ground_see_sub': 'Look around and name what you see',
     'sos.ground_touch_title': '4 things you can touch',
     'sos.ground_touch_sub': 'Feel the textures around you',
-    'sos.ground_hear_title': '2 things you can hear',
+    'sos.ground_hear_title': '3 things you can hear',
     'sos.ground_hear_sub': 'Focus on any sounds around you',
-    'sos.ground_smell_title': '1 thing you can smell',
+    'sos.ground_smell_title': '2 things you can smell',
     'sos.ground_smell_sub': 'Notice any scents around you',
     'sos.ground_taste_title': '1 thing you can taste',
     'sos.ground_taste_sub': 'Notice any taste in your mouth',
@@ -342,7 +494,7 @@ var I18N = {
     'crisis.info_24h': 'Specialists are available 24/7',
     'crisis.info_any_issue': 'You can call about anything',
     'crisis.info_panic_safe': 'Anxiety is not dangerous — it will pass',
-    'crisis.emergency_112': '⚠️ If life is at risk, call 911',
+    'crisis.emergency_112': '⚠️ If life is at risk, call your local emergency number (112 in the EU, 911 in the US)',
     'onboarding.disclaimer': 'Stillō is a helper, NOT a replacement for a doctor. If you suspect a heart problem, always call emergency services.',
     // Web-app strings (not from iOS bundle)
     'web.tagline': 'A point of calm',
@@ -351,18 +503,24 @@ var I18N = {
     'web.history_empty': "Completed SOS sessions will appear here. Nothing yet — and that's a good thing.",
     'web.support_body': 'Stillō is a free tool. Your support helps the project grow.',
     'web.stars': 'stars',
-    'web.cycle': 'Cycle'
+    'web.cycle': 'Cycle',
+    'web.sos_small': 'Panic help',
+    'web.sound_on': 'Sound on',
+    'web.sound_off': 'Sound off',
+    'web.step': 'Step'
   }
 };
 
-var LANG = (function () {
+var LANG = 'en'; // finalised in boot(), when the Telegram lib had a chance to load
+
+function detectLang() {
   var code = null;
   try {
     code = tg && tg.initDataUnsafe && tg.initDataUnsafe.user && tg.initDataUnsafe.user.language_code;
   } catch (e) { /* noop */ }
   if (!code) { code = navigator.language || 'en'; }
   return String(code).toLowerCase().indexOf('ru') === 0 ? 'ru' : 'en';
-})();
+}
 
 function t(key) {
   return I18N[LANG][key] || I18N.en[key] || key;
@@ -453,14 +611,35 @@ function clearTimers() {
   activeTimers = [];
 }
 
-function render(html) {
+// Which screen is on: 'home' | 'psychoed' | 'breath' | 'grounding' | 'final'
+// | 'crisis' | 'history' | 'support'. Drives BackButton and sound resume.
+var currentScreen = 'home';
+
+function updateBackButton() {
+  if (!tg || !tg.BackButton) { return; }
+  try {
+    if (currentScreen === 'home') { tg.BackButton.hide(); } else { tg.BackButton.show(); }
+  } catch (e) { /* noop */ }
+}
+
+function render(html, screenName) {
   clearTimers();
+  stopAmbient();
+  stopCue();
+  currentScreen = screenName || 'flow';
+  updateBackButton();
   app.innerHTML = '';
   var screen = document.createElement('div');
   screen.className = 'screen';
   screen.innerHTML = html;
   app.appendChild(screen);
   window.scrollTo(0, 0);
+  // Move focus to the screen heading so screen readers announce the change.
+  var h = screen.querySelector('h1, h2');
+  if (h) {
+    h.setAttribute('tabindex', '-1');
+    try { h.focus({ preventScroll: true }); } catch (e) { /* noop */ }
+  }
   return screen;
 }
 
@@ -482,13 +661,35 @@ function flowTop(step) {
     dots += '<span class="dot' + (i <= step ? ' on' : '') + '"></span>';
   }
   return '<div class="flow-top">' +
-    '<div class="dots">' + dots + '</div>' +
-    '<button class="x-btn" id="flow-close" aria-label="' + esc(t('general.close')) + '">✕</button>' +
+    '<div class="dots" role="progressbar" aria-valuemin="1" aria-valuemax="4" aria-valuenow="' + (step + 1) + '" aria-label="' + esc(t('web.step')) + ' ' + (step + 1) + ' / 4">' + dots + '</div>' +
+    '<div class="flow-actions">' +
+      // One-tap escape hatch to the hotlines from anywhere in the flow.
+      '<button class="x-btn" id="flow-crisis" aria-label="' + esc(t('crisis.title')) + '">☎️</button>' +
+      '<button class="x-btn" id="flow-sound" aria-pressed="' + (soundOn ? 'true' : 'false') + '" aria-label="' + esc(t(soundOn ? 'web.sound_on' : 'web.sound_off')) + '">' + (soundOn ? '🔊' : '🔇') + '</button>' +
+      '<button class="x-btn" id="flow-close" aria-label="' + esc(t('general.close')) + '">✕</button>' +
+    '</div>' +
     '</div>';
 }
 
 function bindFlowClose(screen) {
   screen.querySelector('#flow-close').addEventListener('click', function () { showHome(); });
+  var cb = screen.querySelector('#flow-crisis');
+  if (cb) {
+    cb.addEventListener('click', function () {
+      haptic('light');
+      showCrisis();
+    });
+  }
+  var sb = screen.querySelector('#flow-sound');
+  if (sb) {
+    sb.addEventListener('click', function () {
+      haptic('light');
+      setSound(!soundOn);
+      sb.textContent = soundOn ? '🔊' : '🔇';
+      sb.setAttribute('aria-pressed', soundOn ? 'true' : 'false');
+      sb.setAttribute('aria-label', t(soundOn ? 'web.sound_on' : 'web.sound_off'));
+    });
+  }
 }
 
 // ---------- Session state ----------
@@ -498,21 +699,26 @@ var session = { startTs: 0, cycles: 0 };
 function showHome() {
   var screen = render(
     '<div class="home-header">' +
-      '<div class="home-logo">' + esc(t('app.name')) + '</div>' +
+      '<h1 class="home-logo">' + esc(t('app.name')) + '</h1>' +
       '<div class="home-tagline">' + esc(t('web.tagline')) + '</div>' +
     '</div>' +
     '<div class="sos-wrap">' +
-      '<button class="sos-btn" id="sos">SOS<small>' + esc(t('sos.title').replace('SOS — ', '')) + '</small></button>' +
+      '<button class="sos-btn" id="sos">SOS<small>' + esc(t('web.sos_small')) + '</small></button>' +
     '</div>' +
     '<div class="home-links">' +
       '<button class="btn ghost" id="go-crisis">' + esc(t('crisis.title')) + '</button>' +
       '<button class="btn ghost" id="go-history">' + esc(t('web.history')) + '</button>' +
       '<button class="btn ghost" id="go-support">' + esc(t('web.support')) + '</button>' +
     '</div>' +
-    '<p class="home-disclaimer">' + esc(t('onboarding.disclaimer')) + '</p>'
+    '<p class="home-disclaimer">' + esc(t('onboarding.disclaimer')) + '</p>',
+    'home'
   );
+  var starting = false;
   screen.querySelector('#sos').addEventListener('click', function () {
+    if (starting) { return; } // double-tap guard
+    starting = true;
     haptic('medium');
+    ensureAudio(); // unlock audio on the user gesture (autoplay policy)
     session = { startTs: Date.now(), cycles: 0 };
     showPsychoed();
   });
@@ -544,9 +750,9 @@ function showPsychoed() {
 
 // ---------- Screen: SOS step B — 4-7-8 breathing ----------
 var BREATH_PHASES = [
-  { label: 'sos.breatheIn', hint: 'sos.hint_inhale', dur: 4, grow: true },
-  { label: 'sos.hold', hint: 'sos.hint_hold', dur: 7, grow: true },
-  { label: 'sos.breatheOut', hint: 'sos.hint_exhale', dur: 8, grow: false }
+  { label: 'sos.breatheIn', hint: 'sos.hint_inhale', dur: 4, grow: true, cue: 'in' },
+  { label: 'sos.hold', hint: 'sos.hint_hold', dur: 7, grow: true, cue: 'hold' },
+  { label: 'sos.breatheOut', hint: 'sos.hint_exhale', dur: 8, grow: false, cue: 'out' }
 ];
 
 function showBreathing() {
@@ -559,13 +765,15 @@ function showBreathing() {
         '<div class="breath-ring"></div>' +
         '<div class="breath-circle" id="circle"><span class="breath-count" id="count"></span></div>' +
       '</div>' +
-      '<div class="breath-phase" id="phase"></div>' +
-      '<div class="breath-hint" id="phase-hint"></div>' +
+      '<div class="breath-phase" id="phase" aria-live="polite"></div>' +
+      '<div class="breath-hint" id="phase-hint" aria-live="polite"></div>' +
       '<div class="breath-cycles" id="cycles"></div>' +
     '</div>' +
-    '<button class="btn subtle" id="skip">' + esc(t('general.skip')) + '</button>'
+    '<button class="btn subtle" id="skip">' + esc(t('general.skip')) + '</button>',
+    'breath'
   );
   bindFlowClose(screen);
+  startAmbient();
 
   var circle = screen.querySelector('#circle');
   var countEl = screen.querySelector('#count');
@@ -588,6 +796,7 @@ function showBreathing() {
     if (done) { return; }
     var phase = BREATH_PHASES[phaseIdx];
     haptic('light');
+    breathCue(phase.cue, phase.dur);
     phaseEl.textContent = t(phase.label);
     hintEl.textContent = t(phase.hint);
     cyclesEl.textContent = t('web.cycle') + ' ' + (cycle + 1) + ' / ' + BREATH_CYCLES_TOTAL;
@@ -687,6 +896,7 @@ function showFinal() {
     '<button class="btn calm" id="save">' + esc(t('sos.save_and_close')) + '</button>'
   );
   bindFlowClose(screen);
+  chime();
   var saving = false;
   screen.querySelector('#save').addEventListener('click', function () {
     if (saving) { return; }
@@ -777,7 +987,7 @@ function openSupport(amount) {
   if (tg && tg.openTelegramLink) {
     try { tg.openTelegramLink(url); return; } catch (e) { /* noop */ }
   }
-  window.open(url, '_blank');
+  window.open(url, '_blank', 'noopener');
 }
 
 function showSupport() {
@@ -803,8 +1013,31 @@ function showSupport() {
 }
 
 // ---------- Boot ----------
-document.documentElement.lang = LANG;
-showHome();
+// telegram-web-app.js is deferred → resolve tg on DOMContentLoaded. If the
+// lib failed to load (offline, plain browser), everything degrades gracefully.
+function boot() {
+  tg = (window.Telegram && window.Telegram.WebApp) ? window.Telegram.WebApp : null;
+  if (tg) {
+    try { tg.ready(); tg.expand(); } catch (e) { /* noop */ }
+    try { tg.BackButton.onClick(function () { showHome(); }); } catch (e) { /* noop */ }
+  }
+  LANG = detectLang();
+  document.documentElement.lang = LANG;
+  showHome();
+}
+
+// iOS/Telegram suspends AudioContext when the app goes background — resume.
+document.addEventListener('visibilitychange', function () {
+  if (!document.hidden && audioCtx && audioCtx.state === 'suspended') {
+    try { audioCtx.resume(); } catch (e) { /* noop */ }
+  }
+});
+
+if (document.readyState === 'loading') {
+  document.addEventListener('DOMContentLoaded', boot);
+} else {
+  boot();
+}
 </script>
 </body>
 </html>
